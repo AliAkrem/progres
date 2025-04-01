@@ -24,7 +24,7 @@ class ApiClient {
           // Add auth token if available
           final token = await _secureStorage.read(key: 'auth_token');
           if (token != null) {
-            options.headers['authorization'] = '$token'; // keep this line
+            options.headers['authorization'] = '$token';
           }
           return handler.next(options);
         },
@@ -43,9 +43,17 @@ class ApiClient {
   Future<void> saveUuid(String uuid) async {
     await _secureStorage.write(key: 'uuid', value: uuid);
   }
+  
+  Future<void> saveEtablissementId(String etablissementId) async {
+    await _secureStorage.write(key: 'etablissement_id', value: etablissementId);
+  }
 
   Future<String?> getUuid() async {
     return await _secureStorage.read(key: 'uuid');
+  }
+  
+  Future<String?> getEtablissementId() async {
+    return await _secureStorage.read(key: 'etablissement_id');
   }
 
   Future<bool> isLoggedIn() async {
@@ -56,6 +64,7 @@ class ApiClient {
   Future<void> logout() async {
     await _secureStorage.delete(key: 'auth_token');
     await _secureStorage.delete(key: 'uuid');
+    await _secureStorage.delete(key: 'etablissement_id');
   }
 
   Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {

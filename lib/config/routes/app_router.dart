@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/presentation/pages/login_page.dart';
 import 'package:progres/features/home/presentation/pages/home_page.dart';
 import 'package:progres/features/profile/presentation/pages/profile_page.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
+import 'package:progres/config/theme/app_theme.dart';
 
 class AppRouter {
   // Route names as static constants
@@ -13,12 +15,14 @@ class AppRouter {
   static const String home = 'home';
   static const String profile = 'profile';
   static const String settings = 'settings';
+  static const String academics = 'academics';
   
   // Route paths
   static const String loginPath = '/login';
   static const String homePath = '/home';
   static const String profilePath = '/profile';
   static const String settingsPath = '/settings';
+  static const String academicsPath = '/academics';
 
   late final GoRouter router;
 
@@ -71,6 +75,12 @@ class AppRouter {
             ),
           ],
         ),
+        // Add academics as a standalone route
+        GoRoute(
+          path: academicsPath,
+          name: academics,
+          builder: (context, state) => const AcademicPerformancePage(),
+        ),
       ],
     );
   }
@@ -86,25 +96,152 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int selectedIndex = _calculateSelectedIndex(context);
+    
     return Scaffold(
-      body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _calculateSelectedIndex(context),
-        onTap: (int idx) => _onItemTapped(idx, context),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+      body: Column(
+        children: [
+          // Claude-style app header
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 36, 
+                        height: 36,
+                        decoration: BoxDecoration(
+                          color: AppTheme.claudeSecondary,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.school_rounded,
+                          color: AppTheme.claudePrimary,
+                          size: 20,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        'Student Portal',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.claudeTextPrimary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.settings_outlined),
+                    onPressed: () {
+                      context.goNamed(AppRouter.settings);
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Academic',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          // Main content
+          Expanded(child: child),
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 4,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildNavItem(
+                  context, 
+                  0, 
+                  selectedIndex, 
+                  Icons.home_outlined, 
+                  Icons.home,
+                  'Home',
+                  () => context.goNamed(AppRouter.home),
+                ),
+                _buildNavItem(
+                  context, 
+                  1, 
+                  selectedIndex, 
+                  Icons.person_outline, 
+                  Icons.person,
+                  'Profile',
+                  () => context.goNamed(AppRouter.profile),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(
+    BuildContext context,
+    int index,
+    int selectedIndex,
+    IconData outlinedIcon,
+    IconData filledIcon,
+    String label,
+    VoidCallback onTap,
+  ) {
+    final bool isSelected = index == selectedIndex;
+    
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: isSelected 
+            ? BoxDecoration(
+                color: AppTheme.claudeSecondary,
+                borderRadius: BorderRadius.circular(12),
+              )
+            : null,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              isSelected ? filledIcon : outlinedIcon,
+              color: isSelected ? AppTheme.claudePrimary : AppTheme.claudeTextSecondary,
+              size: 24,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                color: isSelected ? AppTheme.claudePrimary : AppTheme.claudeTextSecondary,
+                fontSize: 12,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -115,25 +252,9 @@ class ScaffoldWithNavBar extends StatelessWidget {
       return 0;
     }
     if (location.startsWith(AppRouter.profilePath)) {
-      return 2;
+      return 1;
     }
     // Default to "Home" tab index
     return 0;
-  }
-
-  void _onItemTapped(int index, BuildContext context) {
-    switch (index) {
-      case 0:
-        context.goNamed(AppRouter.home);
-        break;
-      case 1:
-        // Academic page could be added here
-        // For now redirect to home
-        context.goNamed(AppRouter.home);
-        break;
-      case 2:
-        context.goNamed(AppRouter.profile);
-        break;
-    }
   }
 } 

@@ -244,6 +244,122 @@ Retrieves information about academic periods (semesters) for a specific educatio
 | libelleLongLt | string | Period name in Latin script |
 | rang | number | Period order/sequence number |
 
+### 7. Exam Results
+Retrieves the student's exam results for each period.
+
+- **Endpoint:** `/infos/planningSession/dia/{cardId}/noteExamens`
+- **Method:** `GET`
+- **Authentication:** Required (Bearer Token)
+- **Path Parameters:**
+  - `cardId`: Student record ID from Detailed Student Information response
+
+#### Response (200 OK)
+```json
+[
+    {
+        "autorisationDemandeRecours": false,
+        "dateDebutDepotRecours": "2025-01-20T09:00:00",
+        "dateLimiteDepotRecours": "2025-01-30T14:00:00",
+        "id": 173973137,
+        "idPeriode": 10,
+        "id_dia": 36641826,
+        "mcLibelleAr": "STRUCTURE MACHINE 1 ",
+        "mcLibelleFr": "STRUCTURE MACHINE 1 ",
+        "noteExamen": 12,
+        "planningSessionId": 266626,
+        "planningSessionIntitule": "session_1",
+        "rattachementMcCoefficient": 3,
+        "rattachementMcId": 1810097,
+        "recoursAccorde": null,
+        "recoursDemande": null
+    }
+    // ...[truncated]
+]
+```
+
+#### Response Fields
+| Field | Type | Description |
+|-------|------|-------------|
+| autorisationDemandeRecours | boolean | Whether appeal requests are authorized |
+| dateDebutDepotRecours | string | Start date for appeal requests |
+| dateLimiteDepotRecours | string | Deadline for appeal requests |
+| id | number | Exam record identifier |
+| idPeriode | number | Academic period identifier |
+| id_dia | number | Student record identifier |
+| mcLibelleAr | string | Course name in Arabic |
+| mcLibelleFr | string | Course name in French/Latin script |
+| noteExamen | number or null | Exam grade (can be null if not yet available) |
+| planningSessionId | number | Exam session identifier |
+| planningSessionIntitule | string | Exam session name |
+| rattachementMcCoefficient | number | Course coefficient/weight |
+| rattachementMcId | number | Course reference identifier |
+| recoursAccorde | boolean or null | Whether appeal was granted (null if no appeal) |
+| recoursDemande | boolean or null | Whether appeal was requested (null if no appeal) |
+
+### 8. Continuous Assessment Results
+Retrieves the student's continuous assessment results.
+
+- **Endpoint:** `/infos/controleContinue/dia/{cardId}/notesCC`
+- **Method:** `GET`
+- **Authentication:** Required (Bearer Token)
+- **Path Parameters:**
+  - `cardId`: Student record ID from Detailed Student Information response
+
+#### Response (200 OK)
+```json
+[
+    {
+        "absent": false,
+        "apCode": "PRJ",
+        "autorisationDemandeRecours": false,
+        "id": 105173271,
+        "id_dia": 13243010,
+        "llPeriode": "Semestre 4",
+        "llPeriodeAr": "السداسي 4",
+        "note": null,
+        "observation": null,
+        "rattachementMcMcLibelleAr": "Mémoire",
+        "rattachementMcMcLibelleFr": "Mémoire",
+        "recoursAccorde": null,
+        "recoursDemande": null
+    },
+    {
+        "absent": false,
+        "apCode": "TD",
+        "autorisationDemandeRecours": false,
+        "id": 97467071,
+        "id_dia": 13243010,
+        "llPeriode": "Semestre 3",
+        "llPeriodeAr": "السداسي 3",
+        "note": 14,
+        "observation": "",
+        "rattachementMcMcLibelleAr": "Base de données réparties",
+        "rattachementMcMcLibelleFr": "Base de données réparties",
+        "recoursAccorde": null,
+        "recoursDemande": null
+    }
+    // ...[truncated]
+]
+
+```
+
+#### Response Fields
+| Field | Type | Description |
+|-------|------|-------------|
+| absent | boolean | Whether student was absent for the assessment |
+| apCode | string | Assessment type code (PRJ=Project, TD=Tutorial work, TP=Practical work) |
+| autorisationDemandeRecours | boolean | Whether appeal requests are authorized |
+| id | number | Assessment record identifier |
+| id_dia | number | Student record identifier |
+| llPeriode | string | Period name in Latin script |
+| llPeriodeAr | string | Period name in Arabic |
+| note | number or null | Assessment grade (null if not yet available) |
+| observation | string or null | Additional comments/observations |
+| rattachementMcMcLibelleAr | string | Course name in Arabic |
+| rattachementMcMcLibelleFr | string | Course name in French/Latin script |
+| recoursAccorde | boolean or null | Whether appeal was granted (null if no appeal) |
+| recoursDemande | boolean or null | Whether appeal was requested (null if no appeal) |
+
 ## Implementation Guidelines
 
 ### Authentication Flow
@@ -251,7 +367,7 @@ Retrieves information about academic periods (semesters) for a specific educatio
 2. Store token securely in app storage
 3. Include token in all subsequent API requests as Bearer token:
    ```
-   authorization: <JWT token from the login response>
+   Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...[truncated]
    ```
 4. Handle token expiration by checking expiration date or handling 401 responses
 
@@ -284,21 +400,23 @@ Implement comprehensive error handling for these common scenarios:
 │             │       │             │       │             │
 └─────────────┘       └─────────────┘       └─────────────┘
                                                    │
-                                                   ▼
-                                            ┌─────────────┐
-                                            │             │
-                                            │  Get Profile│
-                                            │  Image      │
-                                            │             │
-                                            └─────────────┘
-                                                   │
-                                                   ▼
-                                            ┌─────────────┐       ┌─────────────┐
-                                            │             │       │             │
-                                            │  Get Inst.  │       │  Get Academic│
-                                            │  Logo       │──────▶│  Periods    │
-                                            │             │       │             │
-                                            └─────────────┘       └─────────────┘
+                 ┌───────────────────────────────┬─┴─┬─────────────────────┐
+                 ▼                               ▼   ▼                     ▼
+          ┌─────────────┐               ┌─────────────┐           ┌─────────────┐
+          │             │               │             │           │             │
+          │  Get Profile│               │  Get Inst.  │           │  Get Academic│
+          │  Image      │               │  Logo       │           │  Periods    │
+          │             │               │             │           │             │
+          └─────────────┘               └─────────────┘           └─────────────┘
+                                                                         │
+                                                        ┌────────────────┴────────────────┐
+                                                        ▼                                 ▼
+                                                ┌─────────────┐                   ┌─────────────┐
+                                                │             │                   │             │
+                                                │  Get Exam   │                   │  Get Cont.  │
+                                                │  Results    │                   │  Assessment │
+                                                │             │                   │             │
+                                                └─────────────┘                   └─────────────┘
 ```
 
 ## API Testing

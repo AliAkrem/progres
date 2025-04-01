@@ -1,4 +1,7 @@
 import 'package:progres/core/network/api_client.dart';
+import 'package:progres/features/academics/data/models/continuous_assessment.dart';
+import 'package:progres/features/academics/data/models/exam_result.dart';
+import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
@@ -57,6 +60,54 @@ class StudentRepositoryImpl {
 
       final response = await _apiClient.get('/infos/image/$uuid');
       return response.data as String;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<String> getInstitutionLogo(int etablissementId) async {
+    try {
+      final response = await _apiClient.get('/infos/logoEtablissement/$etablissementId');
+      return response.data as String;
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<List<AcademicPeriod>> getAcademicPeriods(int niveauId) async {
+    try {
+      final response = await _apiClient.get('/infos/niveau/$niveauId/periodes');
+      
+      final List<dynamic> periodsJson = response.data;
+      return periodsJson
+          .map((periodJson) => AcademicPeriod.fromJson(periodJson))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<List<ExamResult>> getExamResults(int cardId) async {
+    try {
+      final response = await _apiClient.get('/infos/planningSession/dia/$cardId/noteExamens');
+      
+      final List<dynamic> resultsJson = response.data;
+      return resultsJson
+          .map((resultJson) => ExamResult.fromJson(resultJson))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<List<ContinuousAssessment>> getContinuousAssessments(int cardId) async {
+    try {
+      final response = await _apiClient.get('/infos/controleContinue/dia/$cardId/notesCC');
+      
+      final List<dynamic> assessmentsJson = response.data;
+      return assessmentsJson
+          .map((assessmentJson) => ContinuousAssessment.fromJson(assessmentJson))
+          .toList();
     } catch (e) {
       rethrow;
     }

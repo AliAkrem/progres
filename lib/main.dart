@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
+import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
@@ -35,6 +36,12 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => ProfileBloc(
+              studentRepository: context.read<StudentRepositoryImpl>(),
+              authRepository: context.read<AuthRepositoryImpl>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => AcademicsBloc(
               studentRepository: context.read<StudentRepositoryImpl>(),
             ),
           ),
