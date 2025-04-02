@@ -4,25 +4,28 @@ import 'package:go_router/go_router.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/presentation/pages/login_page.dart';
-import 'package:progres/features/home/presentation/pages/home_page.dart';
+import 'package:progres/features/home/presentation/pages/dashboard_page.dart';
 import 'package:progres/features/profile/presentation/pages/profile_page.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
+import 'package:progres/layouts/main_shell.dart';
 import 'package:progres/config/theme/app_theme.dart';
 
 class AppRouter {
   // Route names as static constants
   static const String login = 'login';
-  static const String home = 'home';
+  static const String dashboard = 'dashboard';
   static const String profile = 'profile';
   static const String settings = 'settings';
-  static const String academics = 'academics';
+  static const String academicPerformance = 'academic_performance';
+  static const String assessments = 'assessments';
   
   // Route paths
   static const String loginPath = '/login';
-  static const String homePath = '/home';
+  static const String dashboardPath = '/dashboard';
   static const String profilePath = '/profile';
   static const String settingsPath = '/settings';
-  static const String academicsPath = '/academics';
+  static const String academicPerformancePath = 'academic_performance';
+  static const String assessmentsPath = '/assessments';
 
   late final GoRouter router;
 
@@ -38,9 +41,9 @@ class AppRouter {
           return loginPath;
         }
 
-        // If the user is logged in and is on the login page, redirect to home
+        // If the user is logged in and is on the login page, redirect to dashboard
         if (authState is AuthSuccess && isLoginRoute) {
-          return homePath;
+          return dashboardPath;
         }
 
         // Otherwise, no redirection needed
@@ -52,16 +55,24 @@ class AppRouter {
           name: login,
           builder: (context, state) => const LoginPage(),
         ),
+        
         // Shell route for the main app with bottom navigation
         ShellRoute(
           builder: (context, state, child) {
-            return ScaffoldWithNavBar(child: child);
+            return MainShell(child: child);
           },
           routes: [
             GoRoute(
-              path: homePath,
-              name: home,
-              builder: (context, state) => const HomePage(),
+              path: dashboardPath,
+              name: dashboard,
+              builder: (context, state) => const DashboardPage(),
+              routes: [
+                GoRoute(
+                  path: academicPerformancePath,
+                  name: academicPerformance,
+                  builder: (context, state) => const AcademicPerformancePage(),
+                ),
+              ]
             ),
             GoRoute(
               path: profilePath,
@@ -74,12 +85,6 @@ class AppRouter {
               builder: (context, state) => const SettingsPage(),
             ),
           ],
-        ),
-        // Add academics as a standalone route
-        GoRoute(
-          path: academicsPath,
-          name: academics,
-          builder: (context, state) => const AcademicPerformancePage(),
         ),
       ],
     );
@@ -104,7 +109,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
           // Claude-style app header
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
@@ -182,7 +186,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
                   Icons.home_outlined, 
                   Icons.home,
                   'Home',
-                  () => context.goNamed(AppRouter.home),
+                  () => context.goNamed(AppRouter.dashboard),
                 ),
                 _buildNavItem(
                   context, 
@@ -248,7 +252,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
 
   static int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith(AppRouter.homePath)) {
+    if (location.startsWith(AppRouter.dashboardPath)) {
       return 0;
     }
     if (location.startsWith(AppRouter.profilePath)) {

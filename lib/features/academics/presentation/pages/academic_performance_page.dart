@@ -122,8 +122,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Student information section
-          _buildStudentInfoCard(context, profileState),
           
           const SizedBox(height: 24),
           
@@ -172,7 +170,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -188,7 +185,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
   }
 
   Widget _buildAssessmentsTab(BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
-    // Group assessments by period
     final assessmentsByPeriod = _groupAssessmentsByPeriod(state.continuousAssessments);
     
     return SingleChildScrollView(
@@ -196,8 +192,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Student information section
-          _buildStudentInfoCard(context, profileState),
           
           const SizedBox(height: 24),
           
@@ -245,171 +239,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
               );
             }).toList(),
         ],
-      ),
-    );
-  }
-
-  Widget _buildStudentInfoCard(BuildContext context, ProfileLoaded profileState) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                // Profile image
-                if (profileState.profileImage != null)
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: MemoryImage(
-                      _decodeBase64Image(profileState.profileImage!),
-                    ),
-                  )
-                else
-                  const CircleAvatar(
-                    radius: 30,
-                    child: Icon(Icons.person),
-                  ),
-                const SizedBox(width: 16),
-                
-                // Student name and details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${profileState.basicInfo.prenomLatin} ${profileState.basicInfo.nomLatin}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        profileState.detailedInfo.numeroInscription,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const Divider(height: 24),
-            
-            // Academic details
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Academic Year',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        profileState.academicYear.code,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Level',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        profileState.detailedInfo.niveauLibelleLongLt,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Cycle',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        profileState.detailedInfo.refLibelleCycle,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Transport',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            profileState.detailedInfo.transportPaye
-                                ? Icons.check_circle
-                                : Icons.cancel,
-                            color: profileState.detailedInfo.transportPaye
-                                ? Colors.green
-                                : Colors.red,
-                            size: 16,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            profileState.detailedInfo.transportPaye
-                                ? 'Paid'
-                                : 'Not Paid',
-                            style: TextStyle(
-                              color: profileState.detailedInfo.transportPaye
-                                  ? Colors.green
-                                  : Colors.red,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }

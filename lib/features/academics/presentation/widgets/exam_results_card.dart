@@ -78,14 +78,14 @@ class ExamResultsCard extends StatelessWidget {
                 ),
               ],
             ),
-            const Divider(),
+            
 
             // List of exam results
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: examResults.length,
-              separatorBuilder: (context, index) => const Divider(height: 1, thickness: 0.5),
+              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 0 ,color: Colors.transparent,),
               itemBuilder: (context, index) {
                 final result = examResults[index];
                 return Padding(
@@ -188,91 +188,17 @@ class ExamResultsCard extends StatelessWidget {
             ),
 
             // Summary section
-            const SizedBox(height: 16),
-            const Divider(),
-            SizedBox(
-              width: double.infinity,
-              child: _buildSummary(context),
-            ),
+            
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSummary(BuildContext context) {
-    // Calculate average grade for all available exam results
-    double average = 0;
-    double totalCoefficients = 0;
-    int gradeCount = 0;
-
-    for (final result in examResults) {
-      if (result.noteExamen != null) {
-        average += result.noteExamen! * result.rattachementMcCoefficient;
-        totalCoefficients += result.rattachementMcCoefficient;
-        gradeCount++;
-      }
-    }
-
-    if (gradeCount > 0 && totalCoefficients > 0) {
-      average = average / totalCoefficients;
-      
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Overall Average',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[600],
-                ),
-              ),
-              Text(
-                '${gradeCount}/${examResults.length} grades available',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: _getGradeColor(average),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              average.toStringAsFixed(2),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return const Text(
-        'Not enough data to calculate average',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontStyle: FontStyle.italic,
-          color: Colors.grey,
-        ),
-      );
-    }
-  }
 
   // Helper method to get color based on grade
   Color _getGradeColor(double grade) {
-    if (grade >= 14) return Colors.green;
-    if (grade >= 10) return Colors.blue;
-    if (grade >= 7) return Colors.orange;
+    if (grade >= 10) return Colors.green;
     return Colors.red;
   }
 } 

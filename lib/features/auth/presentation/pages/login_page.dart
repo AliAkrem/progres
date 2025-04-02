@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           if (state is AuthSuccess) {
             // Trigger profile data loading
             context.read<ProfileBloc>().add(LoadProfileEvent());
-            context.goNamed(AppRouter.home);
+            context.goNamed(AppRouter.dashboard);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
