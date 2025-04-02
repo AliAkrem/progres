@@ -1,6 +1,7 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/course_coefficient.dart';
+import 'package:progres/features/academics/data/models/course_session.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/academics/data/models/student_group.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
@@ -156,6 +157,19 @@ class StudentRepositoryImpl {
       final List<dynamic> enrollmentsJson = response.data;
       return enrollmentsJson
           .map((enrollmentJson) => Enrollment.fromJson(enrollmentJson))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<List<CourseSession>> getWeeklyTimetable(int enrollmentId) async {
+    try {
+      final response = await _apiClient.get('/infos/seanceEmploi/inscription/$enrollmentId');
+      
+      final List<dynamic> sessionsJson = response.data;
+      return sessionsJson
+          .map((sessionJson) => CourseSession.fromJson(sessionJson))
           .toList();
     } catch (e) {
       rethrow;

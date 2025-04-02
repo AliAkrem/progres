@@ -537,6 +537,72 @@ Returns an array of enrollment objects, each representing a student's enrollment
 ]
 ```
 
+# Week Timeline API Documentation
+
+## Get All Week Timeline
+
+Retrieves the weekly schedule/timetable for a specific student enrollment.
+
+### Endpoint
+```
+GET https://progres.mesrs.dz/api/infos/seanceEmploi/inscription/{id}
+```
+
+### Parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| id | integer | Yes | The enrollment identifier, obtained from the student details API response |
+
+### Response
+Returns an array of schedule objects, each representing a class session in the student's weekly timetable.
+
+### Response Fields
+| Field | Type | Description |
+|-------|------|-------------|
+| ap | string | Class type code (e.g., "CM" for course magistral/lecture) |
+| groupe | string | Student's assigned group/section |
+| id | integer | Enrollment identifier |
+| jourId | integer | Day identifier (1-7) |
+| jourLibelleAr | string | Day name (Arabic) |
+| jourLibelleFr | string | Day name (French) |
+| matiere | string | Course name (French/Latin script) |
+| matiereAr | string | Course name (Arabic script) |
+| nomEnseignantArabe | string | Instructor's last name (Arabic script) |
+| nomEnseignantLatin | string | Instructor's last name (Latin script) |
+| periodeId | integer | Time period identifier |
+| plageHoraireHeureDebut | string | Class start time (HH:MM:SS format) |
+| plageHoraireHeureFin | string | Class end time (HH:MM:SS format) |
+| plageHoraireLibelleFr | string | Time slot formatted (e.g., "13:00-14:30") |
+| prenomEnseignantArabe | string | Instructor's first name (Arabic script) |
+| prenomEnseignantLatin | string | Instructor's first name (Latin script) |
+| refLieuDesignation | string | Classroom/location designation |
+
+### Example Response
+```json
+[
+    {
+        "ap": "CM",
+        "groupe": "SECTION 1",
+        "id": 13243010,
+        "jourId": 5,
+        "jourLibelleAr": "Jeudi",
+        "jourLibelleFr": "Jeudi",
+        "matiere": "Systèmes embarqués et temps réels",
+        "matiereAr": "Systèmes embarqués et temps réels",
+        "nomEnseignantArabe": "يحياوي ",
+        "nomEnseignantLatin": "YAHYAOUI",
+        "periodeId": 2482111,
+        "plageHoraireHeureDebut": "13:00:00",
+        "plageHoraireHeureFin": "14:30:00",
+        "plageHoraireLibelleFr": "13:00-14:30",
+        "prenomEnseignantArabe": "خديجة",
+        "prenomEnseignantLatin": "Khadidja",
+        "refLieuDesignation": "salle 23_SE"
+    }
+]
+```
+
+
 
 
 
@@ -559,6 +625,11 @@ Implement comprehensive error handling for these common scenarios:
 - Server errors (500)
 - Timeout handling
 
+
+
+
+
+
 ### API Response Caching
 - Cache non-volatile information to reduce API calls
 - Implement TTL (Time-To-Live) for cached data
@@ -569,6 +640,9 @@ Implement comprehensive error handling for these common scenarios:
 - Never store raw passwords
 - Implement proper token storage using secure storage solutions
 - Clear sensitive data on logout
+
+
+
 
 ## Data Flow Diagram
 

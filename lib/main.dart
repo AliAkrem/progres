@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:calendar_view/calendar_view.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
+import 'package:progres/features/academics/presentation/bloc/timeline_bloc.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
@@ -47,21 +49,29 @@ class MyApp extends StatelessWidget {
             ),
           ),
           BlocProvider(
+            create: (context) => TimelineBloc(
+              studentRepository: context.read<StudentRepositoryImpl>(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => ThemeBloc()..add(LoadTheme()),
           ),
         ],
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-          builder: (context, themeState) {
-            final appRouter = AppRouter(context: context);
-            return MaterialApp.router(
-              title: 'Student Portal',
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: themeState.themeMode,
-              routerConfig: appRouter.router,
-            );
-          },
+        child: CalendarControllerProvider(
+          controller: EventController(),
+          child: BlocBuilder<ThemeBloc, ThemeState>(
+            builder: (context, themeState) {
+              final appRouter = AppRouter(context: context);
+              return MaterialApp.router(
+                title: 'Student Portal',
+                debugShowCheckedModeBanner: false,
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
+                themeMode: themeState.themeMode,
+                routerConfig: appRouter.router,
+              );
+            },
+          ),
         ),
       ),
     );

@@ -220,6 +220,18 @@ class _DashboardPageState extends State<DashboardPage> {
               color: AppTheme.claudePrimary,
               onTap: () => context.goNamed(AppRouter.enrollments),
             ),
+            
+            const SizedBox(height: 16),
+            
+            // Timeline Card
+            _buildPerformanceCard(
+              context,
+              title: 'Weekly Schedule',
+              description: 'View your weekly course timetable',
+              icon: Icons.calendar_today_rounded,
+              color: AppTheme.claudePrimary,
+              onTap: () => context.goNamed(AppRouter.timeline),
+            ),
 
             const SizedBox(height: 32),
           ],
