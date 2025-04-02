@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
+import 'package:progres/features/academics/presentation/pages/subjects_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/presentation/pages/login_page.dart';
 import 'package:progres/features/home/presentation/pages/dashboard_page.dart';
@@ -18,6 +19,7 @@ class AppRouter {
   static const String settings = 'settings';
   static const String academicPerformance = 'academic_performance';
   static const String assessments = 'assessments';
+  static const String subjects = 'subjects';
   
   // Route paths
   static const String loginPath = '/login';
@@ -26,6 +28,7 @@ class AppRouter {
   static const String settingsPath = '/settings';
   static const String academicPerformancePath = 'academic_performance';
   static const String assessmentsPath = '/assessments';
+  static const String subjectsPath = 'subjects';
 
   late final GoRouter router;
 
@@ -71,6 +74,11 @@ class AppRouter {
                   path: academicPerformancePath,
                   name: academicPerformance,
                   builder: (context, state) => const AcademicPerformancePage(),
+                ),
+                GoRoute(
+                  path: subjectsPath,
+                  name: subjects,
+                  builder: (context, state) => const SubjectsPage(),
                 ),
               ]
             ),

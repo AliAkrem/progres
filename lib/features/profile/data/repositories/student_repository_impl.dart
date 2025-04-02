@@ -1,5 +1,6 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
+import 'package:progres/features/academics/data/models/course_coefficient.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
@@ -107,6 +108,21 @@ class StudentRepositoryImpl {
       final List<dynamic> assessmentsJson = response.data;
       return assessmentsJson
           .map((assessmentJson) => ContinuousAssessment.fromJson(assessmentJson))
+          .toList();
+    } catch (e) {
+      rethrow;
+    }
+  }
+  
+  Future<List<CourseCoefficient>> getCourseCoefficients(int ouvertureOffreFormationId, int niveauId) async {
+    try {
+      final response = await _apiClient.get(
+        '/infos/offreFormation/$ouvertureOffreFormationId/niveau/$niveauId/Coefficients',
+      );
+      
+      final List<dynamic> coefficientsJson = response.data;
+      return coefficientsJson
+          .map((coefficientJson) => CourseCoefficient.fromJson(coefficientJson))
           .toList();
     } catch (e) {
       rethrow;

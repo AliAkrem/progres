@@ -185,7 +185,17 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.academicPerformancePath),
             ),
             
+            const SizedBox(height: 16),
             
+            // Subjects Card
+            _buildPerformanceCard(
+              context,
+              title: 'Subjects & Coefficients',
+              description: 'View your course subjects and their assessment weights',
+              icon: Icons.school_rounded,
+              color: AppTheme.claudePrimary,
+              onTap: () => context.goNamed(AppRouter.subjects),
+            ),
 
             const SizedBox(height: 32),
           ],

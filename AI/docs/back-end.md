@@ -273,7 +273,6 @@ Retrieves the student's exam results for each period.
         "recoursAccorde": null,
         "recoursDemande": null
     }
-    // ...[truncated]
 ]
 ```
 
@@ -338,9 +337,7 @@ Retrieves the student's continuous assessment results.
         "recoursAccorde": null,
         "recoursDemande": null
     }
-    // ...[truncated]
 ]
-
 ```
 
 #### Response Fields
@@ -359,6 +356,51 @@ Retrieves the student's continuous assessment results.
 | rattachementMcMcLibelleFr | string | Course name in French/Latin script |
 | recoursAccorde | boolean or null | Whether appeal was granted (null if no appeal) |
 | recoursDemande | boolean or null | Whether appeal was requested (null if no appeal) |
+
+### 9. Course Coefficients
+Retrieves the coefficient weights for each course in the educational program.
+
+- **Endpoint:** `/infos/offreFormation/{ouvertureOffreFormationId}/niveau/{niveauId}/Coefficients`
+- **Method:** `GET`
+- **Authentication:** Required (Bearer Token)
+- **Path Parameters:**
+  - `ouvertureOffreFormationId`: Educational offering ID from Detailed Student Information
+  - `niveauId`: Educational level ID from Detailed Student Information
+
+#### Response (200 OK)
+```json
+[
+    {
+        "coefficientControleContinu": 0.5,
+        "coefficientControleIntermediaire": 0,
+        "coefficientExamen": 0.5,
+        "mcLibelleAr": "قواعد البيانات الموزعة",
+        "mcLibelleFr": "Base de données réparties",
+        "periodeLibelleAr": "السداسي 3",
+        "periodeLibelleFr": "Semestre 3"
+    },
+    {
+        "coefficientControleContinu": 0.5,
+        "coefficientControleIntermediaire": 0,
+        "coefficientExamen": 0.5,
+        "mcLibelleAr": "استخراج البيانات",
+        "mcLibelleFr": "Data mining",
+        "periodeLibelleAr": "السداسي 3",
+        "periodeLibelleFr": "Semestre 3"
+    }
+]
+```
+
+#### Response Fields
+| Field | Type | Description |
+|-------|------|-------------|
+| coefficientControleContinu | number | Weight coefficient for continuous assessment (0-1) |
+| coefficientControleIntermediaire | number | Weight coefficient for intermediate assessment (0-1) |
+| coefficientExamen | number | Weight coefficient for final exam (0-1) |
+| mcLibelleAr | string | Course name in Arabic |
+| mcLibelleFr | string | Course name in French/Latin script |
+| periodeLibelleAr | string | Period name in Arabic |
+| periodeLibelleFr | string | Period name in French/Latin script |
 
 ## Implementation Guidelines
 
@@ -400,14 +442,14 @@ Implement comprehensive error handling for these common scenarios:
 │             │       │             │       │             │
 └─────────────┘       └─────────────┘       └─────────────┘
                                                    │
-                 ┌───────────────────────────────┬─┴─┬─────────────────────┐
-                 ▼                               ▼   ▼                     ▼
-          ┌─────────────┐               ┌─────────────┐           ┌─────────────┐
-          │             │               │             │           │             │
-          │  Get Profile│               │  Get Inst.  │           │  Get Academic│
-          │  Image      │               │  Logo       │           │  Periods    │
-          │             │               │             │           │             │
-          └─────────────┘               └─────────────┘           └─────────────┘
+                 ┌───────────────────────────────┬─┴─┬───────────────────────┬─────────────────┐
+                 ▼                               ▼   ▼                       ▼                 ▼
+          ┌─────────────┐               ┌─────────────┐           ┌──────────────┐      ┌──────────────┐
+          │             │               │             │           │              │      │              │
+          │  Get Profile│               │  Get Inst.  │           │  Get Academic│      │  Get Course  │
+          │  Image      │               │  Logo       │           │  Periods     │      │  Coefficients│
+          │             │               │             │           │              │      │              │
+          └─────────────┘               └─────────────┘           └──────────────┘      └──────────────┘
                                                                          │
                                                         ┌────────────────┴────────────────┐
                                                         ▼                                 ▼
@@ -418,13 +460,3 @@ Implement comprehensive error handling for these common scenarios:
                                                 │             │                   │             │
                                                 └─────────────┘                   └─────────────┘
 ```
-
-## API Testing
-- Use Postman or similar tools for API testing
-- Test with valid and invalid credentials
-- Verify proper error handling
-- Check response formats and data validity
-
-## API Versioning
-Current API version: v1
-Future versions should follow the pattern: `/api/vX/` where X is the version number
