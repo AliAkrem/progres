@@ -7,7 +7,6 @@ import 'package:progres/features/academics/data/models/continuous_assessment.dar
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
 import 'package:progres/features/academics/presentation/widgets/continuous_assessment_card.dart';
 import 'package:progres/features/academics/presentation/widgets/exam_results_card.dart';
-import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 
 class AcademicPerformancePage extends StatefulWidget {
@@ -116,6 +115,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
   Widget _buildExamsTab(BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
     // Group exams by period
     final examsByPeriod = _groupExamsByPeriod(state.examResults);
+    final theme = Theme.of(context);
     
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -126,14 +126,14 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
           const SizedBox(height: 24),
           
           if (examsByPeriod.isEmpty)
-            const Center(
+            Center(
               child: Padding(
-                padding: EdgeInsets.all(32.0),
+                padding: const EdgeInsets.all(32.0),
                 child: Text(
                   'No exam results available',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
-                    color: Colors.grey,
+                    color: theme.textTheme.bodyMedium?.color,
                   ),
                 ),
               ),
@@ -170,6 +170,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -186,6 +187,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
 
   Widget _buildAssessmentsTab(BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
     final assessmentsByPeriod = _groupAssessmentsByPeriod(state.continuousAssessments);
+    final theme = Theme.of(context);
     
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -196,14 +198,14 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
           const SizedBox(height: 24),
           
           if (assessmentsByPeriod.isEmpty)
-            const Center(
+            Center(
               child: Padding(
-                padding: EdgeInsets.all(32.0),
+                padding: const EdgeInsets.all(32.0),
                 child: Text(
                   'No continuous assessment results available',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
-                    color: Colors.grey,
+                    color: theme.textTheme.bodyMedium?.color,
                   ),
                 ),
               ),

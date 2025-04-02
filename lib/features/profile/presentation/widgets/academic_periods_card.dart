@@ -41,7 +41,7 @@ class AcademicPeriodsCard extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    '${period.libelleLongFrNiveau}',
+                    period.libelleLongFrNiveau,
                     style: const TextStyle(
                       fontSize: 12,
                     ),

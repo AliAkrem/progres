@@ -24,7 +24,7 @@ class ApiClient {
           // Add auth token if available
           final token = await _secureStorage.read(key: 'auth_token');
           if (token != null) {
-            options.headers['authorization'] = '$token';
+            options.headers['authorization'] = token;
           }
           return handler.next(options);
         },

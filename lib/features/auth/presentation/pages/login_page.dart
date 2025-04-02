@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
     
     return Scaffold(
-      backgroundColor: AppTheme.claudeBackground,
+      backgroundColor: theme.brightness == Brightness.dark ? const Color(0xFF2D2B21) : AppTheme.claudeBackground,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -74,10 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                             width: 72,
                             height: 72,
                             decoration: BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.claudePrimary.withOpacity(0.2) ,
                               shape: BoxShape.circle,
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Icon(
                                 Icons.school_rounded,
                                 color: AppTheme.claudePrimary,
@@ -98,9 +98,12 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 32),
                           TextFormField(
                             controller: _usernameController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Student Code',
-                              prefixIcon: Icon(Icons.person_outline),
+                              prefixIcon: Icon(
+                                Icons.person_outline,
+                                color: theme.inputDecorationTheme.prefixIconColor,
+                              ),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -112,9 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                           const SizedBox(height: 16),
                           TextFormField(
                             controller: _passwordController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               labelText: 'Password',
-                              prefixIcon: Icon(Icons.lock_outline),
+                              prefixIcon: Icon(
+                                Icons.lock_outline,
+                                color: theme.inputDecorationTheme.prefixIconColor,
+                              ),
                             ),
                             obscureText: true,
                             validator: (value) {
@@ -157,15 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           const SizedBox(height: 16),
-                          TextButton(
-                            onPressed: () {
-                              // For forgot password functionality
-                            },
-                            style: TextButton.styleFrom(
-                              foregroundColor: AppTheme.claudeTextSecondary,
-                            ),
-                            child: const Text("Forgot your password?"),
-                          ),
+
                         ],
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
+import 'package:progres/config/theme/app_theme.dart';
 
 class ContinuousAssessmentCard extends StatelessWidget {
   final List<ContinuousAssessment> assessments;
@@ -11,15 +12,17 @@ class ContinuousAssessmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     if (assessments.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 12.0),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
             'No continuous assessments available yet',
             style: TextStyle(
               fontStyle: FontStyle.italic,
-              color: Colors.grey,
+              color: theme.textTheme.bodyMedium?.color,
             ),
           ),
         ),
@@ -40,7 +43,9 @@ class ContinuousAssessmentCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+        side: BorderSide(color: theme.brightness == Brightness.light 
+            ? AppTheme.claudeBorder 
+            : const Color(0xFF3F3C34)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -51,7 +56,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent,),
+              separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseAssessments = groupedByCourse[courseTitle]!;
@@ -63,15 +68,16 @@ class ContinuousAssessmentCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
                         courseTitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
+                          color: theme.textTheme.titleMedium?.color,
                         ),
                       ),
                     ),
                     
                     // Group by assessment type (TP, TD, PRJ)
-                    ...groupAssessmentsByType(courseAssessments),
+                    ...groupAssessmentsByType(courseAssessments, theme),
                     
                   ],
                 );
@@ -86,7 +92,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
     );
   }
   
-  List<Widget> groupAssessmentsByType(List<ContinuousAssessment> courseAssessments) {
+  List<Widget> groupAssessmentsByType(List<ContinuousAssessment> courseAssessments, ThemeData theme) {
     // Group by type (TP, TD, PRJ)
     final Map<String, List<ContinuousAssessment>> groupedByType = {};
     for (var assessment in courseAssessments) {
@@ -101,7 +107,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
     
     groupedByType.forEach((type, typeAssessments) {
       // Add type header
-            final assessment = typeAssessments[0];
+      final assessment = typeAssessments[0];
 
       typeWidgets.add(
         Padding(
@@ -124,37 +130,40 @@ class ContinuousAssessmentCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: Divider(
                   indent: 8,
+                  color: theme.brightness == Brightness.light 
+                      ? null 
+                      : const Color(0xFF3F3C34),
                 ),
               ), 
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: assessment.note != null
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: _getGradeColor(assessment.note!),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            '${assessment.note}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13,
-                            ),
-                          ),
-                        )
-                      : const Text(
-                          'N/A',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey,
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: assessment.note != null
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: _getGradeColor(assessment.note!),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          '${assessment.note}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 13,
                           ),
                         ),
-                ),
+                      )
+                    : Text(
+                        'N/A',
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: theme.textTheme.bodyMedium?.color,
+                        ),
+                      ),
+              ),
            
             ],
           ),
@@ -171,21 +180,21 @@ class ContinuousAssessmentCard extends StatelessWidget {
  
   // Helper method to get color based on grade
   Color _getGradeColor(double grade) {
-    if (grade >= 10) return Colors.green;
-    return Colors.red;
+    if (grade >= 10) return AppTheme.accentGreen;
+    return AppTheme.accentRed;
   }
   
   // Helper method to get color based on assessment type
   Color _getTypeColor(String type) {
     switch (type.toUpperCase()) {
       case 'PROJECT':
-        return Colors.purple;
+        return AppTheme.claudePrimary;
       case 'TUTORIAL WORK':
-        return Colors.teal;
+        return AppTheme.claudeSecondary;
       case 'PRACTICAL WORK':
-        return Colors.indigo;
+        return AppTheme.accentBlue;
       default:
-        return Colors.blueGrey;
+        return AppTheme.claudeTextSecondary;
     }
   }
 } 

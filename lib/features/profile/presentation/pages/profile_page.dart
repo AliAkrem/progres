@@ -55,15 +55,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   
   Widget _buildLoadingState() {
+    final theme = Theme.of(context);
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(color: AppTheme.claudePrimary),
+          const CircularProgressIndicator(color: AppTheme.claudePrimary),
           const SizedBox(height: 24),
           Text(
             'Loading profile data...',
-            style: TextStyle(color: AppTheme.claudeTextSecondary),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
         ],
       ),
@@ -71,6 +73,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   
   Widget _buildErrorState(ProfileError state) {
+    final theme = Theme.of(context);
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 16),
           Text(
             'Error: ${state.message}',
-            style: TextStyle(color: AppTheme.claudeTextSecondary),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
@@ -160,20 +164,6 @@ class _ProfilePageState extends State<ProfilePage> {
           
           const SizedBox(height: 24),
           
-          // Contact Information
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: _buildInfoSection(
-              title: 'Contact Information',
-              children: [
-                _buildInfoRow('Email', 'student@university.edu'),
-                _buildInfoRow('Phone', 'Not Available'),
-                _buildInfoRow('Address', 'Not Available'),
-              ],
-            ),
-          ),
-          
-          const SizedBox(height: 24),
           
           // Academic Information
           Padding(
@@ -191,22 +181,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           
           const SizedBox(height: 24),
-          
-          // Academic Services
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: _buildInfoSection(
-              title: 'Academic Services',
-              children: [
-                _buildInfoRow('Transport', state.detailedInfo.transportPaye ? 'Paid' : 'Unpaid', 
-                  valueColor: state.detailedInfo.transportPaye ? Colors.green : Colors.red,
-                ),
-                _buildInfoRow('Housing', 'Not Available'),
-              ],
-            ),
-          ),
-          
-          const SizedBox(height: 24),
+ 
           
 
         ],
@@ -229,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
+                border: Border.all(color: theme.brightness == Brightness.light ? Colors.white : const Color(0xFF3F3C34), width: 4),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -246,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         fit: BoxFit.cover,
                       ),
                     )
-                  : CircleAvatar(
+                  : const CircleAvatar(
                       backgroundColor: AppTheme.claudeSecondary,
                       child: Icon(
                         Icons.person_rounded,
@@ -268,24 +243,22 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 4),
           Text(
             '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
-            style: theme.textTheme.bodyLarge?.copyWith(
-              color: AppTheme.claudeTextSecondary,
-            ),
+            style: theme.textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-              color: AppTheme.claudeSecondary,
+              color: theme.brightness == Brightness.light ? AppTheme.claudeSecondary.withOpacity(0.1) : AppTheme.claudeSecondary.withOpacity(0.3),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
               'ID: ${state.detailedInfo.numeroInscription}',
               style: TextStyle(
-                color: AppTheme.claudePrimary,
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
+                color: theme.textTheme.titleMedium?.color,
               ),
             ),
           ),
@@ -300,12 +273,14 @@ class _ProfilePageState extends State<ProfilePage> {
     required String value,
     Color? valueColor,
   }) {
+    final theme = Theme.of(context);
+    
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppTheme.claudeBorder),
+        border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.claudeBorder : const Color(0xFF3F3C34)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -322,7 +297,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Icon(
                 icon,
                 size: 16,
-                color: AppTheme.claudeTextSecondary,
+                color: theme.textTheme.bodyMedium?.color,
               ),
               const SizedBox(width: 6),
               Expanded(
@@ -330,7 +305,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   title,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppTheme.claudeTextSecondary,
+                    color: theme.textTheme.bodyMedium?.color,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -343,7 +318,7 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: valueColor,
+              color: valueColor ?? theme.textTheme.titleMedium?.color,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -357,23 +332,26 @@ class _ProfilePageState extends State<ProfilePage> {
     required String title,
     required List<Widget> children,
   }) {
+    final theme = Theme.of(context);
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
+            color: theme.textTheme.titleLarge?.color,
           ),
         ),
         const SizedBox(height: 16),
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppTheme.claudeBorder),
+            border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.claudeBorder : const Color(0xFF3F3C34)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.03),
@@ -395,6 +373,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   
   Widget _buildInfoRow(String label, String value, {Color? valueColor}) {
+    final theme = Theme.of(context);
+    
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Column(
@@ -404,7 +384,7 @@ class _ProfilePageState extends State<ProfilePage> {
             label,
             style: TextStyle(
               fontSize: 14,
-              color: AppTheme.claudeTextSecondary,
+              color: theme.textTheme.bodyMedium?.color,
             ),
           ),
           const SizedBox(height: 4),
@@ -413,87 +393,11 @@ class _ProfilePageState extends State<ProfilePage> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
-              color: valueColor ?? AppTheme.claudeTextPrimary,
+              color: valueColor ?? theme.textTheme.titleMedium?.color,
             ),
           ),
         ],
       ),
-    );
-  }
-  
-  Widget _buildAcademicPeriods(ProfileLoaded state) {
-    if (state.academicPeriods.isEmpty) {
-      return const SizedBox();
-    }
-    
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Academic Periods',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppTheme.claudeBorder),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.03),
-                blurRadius: 10,
-                offset: const Offset(0, 5),
-              ),
-            ],
-          ),
-          child: ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: state.academicPeriods.length,
-            separatorBuilder: (context, index) => Divider(
-              color: AppTheme.claudeBorder,
-              height: 1,
-            ),
-            itemBuilder: (context, index) {
-              final period = state.academicPeriods[index];
-              return ListTile(
-                title: Text(
-                  period.code,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                subtitle: Text(
-                  'Period ${period.rang}',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppTheme.claudeTextSecondary,
-                  ),
-                ),
-                trailing: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    period.libelleLongLt,
-                    style: TextStyle(
-                      color: AppTheme.claudePrimary,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
     );
   }
   

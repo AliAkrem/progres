@@ -14,6 +14,7 @@ class MainShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int selectedIndex = _calculateSelectedIndex(context);
+    final theme = Theme.of(context);
     
     return Scaffold(
       body: SafeArea(
@@ -21,52 +22,44 @@ class MainShell extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
+          color: theme.colorScheme.surface,
+          boxShadow: theme.brightness == Brightness.dark 
+              ? [BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 10,
+                  offset: const Offset(0, -5),
+                )]
+              : [BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, -5),
+                )],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(24),
-              border: Border.all(
-                color: AppTheme.claudeBorder,
-                width: 1.5,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: NavigationBar(
+            selectedIndex: selectedIndex,
+            elevation: 0,
+            backgroundColor: theme.colorScheme.surface,
+            height: 70,
+            indicatorColor: AppTheme.claudePrimary.withOpacity(0.15),
+            destinations: [
+              _buildNavDestination(
+                context,
+                icon: Icons.dashboard_rounded,
+                selectedIcon: Icons.dashboard_rounded,
+                label: 'Dashboard',
               ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: NavigationBar(
-                selectedIndex: selectedIndex,
-                elevation: 0,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                height: 70,
-                destinations: [
-                  _buildNavDestination(
-                    context,
-                    icon: Icons.dashboard_rounded,
-                    selectedIcon: Icons.dashboard_rounded,
-                    label: 'Dashboard',
-                  ),
-                  _buildNavDestination(
-                    context,
-                    icon: Icons.person_outline_rounded,
-                    selectedIcon: Icons.person_rounded,
-                    label: 'Profile',
-                  ),
-                ],
-                onDestinationSelected: (index) {
-                  _onItemTapped(index, context);
-                },
+              _buildNavDestination(
+                context,
+                icon: Icons.person_outline_rounded,
+                selectedIcon: Icons.person_rounded,
+                label: 'Profile',
               ),
-            ),
+            ],
+            onDestinationSelected: (index) {
+              _onItemTapped(index, context);
+            },
           ),
         ),
       ),
@@ -79,11 +72,16 @@ class MainShell extends StatelessWidget {
     required IconData selectedIcon,
     required String label,
   }) {
+    final theme = Theme.of(context);
+    
     return NavigationDestination(
-      icon: Icon(icon),
+      icon: Icon(
+        icon,
+        color: theme.brightness == Brightness.dark ? Colors.grey[400] : Colors.grey[600],
+      ),
       selectedIcon: Icon(
         selectedIcon,
-        color: AppTheme.claudePrimary,
+        color:  AppTheme.claudePrimary,
       ),
       label: label,
     );

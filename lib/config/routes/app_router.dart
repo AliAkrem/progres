@@ -127,23 +127,22 @@ class ScaffoldWithNavBar extends StatelessWidget {
                       Container(
                         width: 36, 
                         height: 36,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: AppTheme.claudeSecondary,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.school_rounded,
                           color: AppTheme.claudePrimary,
                           size: 20,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
+                      const Text(
                         'Student Portal',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: AppTheme.claudeTextPrimary,
                         ),
                       ),
                     ],

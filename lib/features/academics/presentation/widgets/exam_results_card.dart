@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
+import 'package:progres/config/theme/app_theme.dart';
 
 class ExamResultsCard extends StatelessWidget {
   final List<ExamResult> examResults;
@@ -11,15 +12,17 @@ class ExamResultsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
     if (examResults.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 12.0),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
             'No exam results available yet',
             style: TextStyle(
               fontStyle: FontStyle.italic,
-              color: Colors.grey,
+              color: theme.textTheme.bodyMedium?.color,
             ),
           ),
         ),
@@ -31,7 +34,9 @@ class ExamResultsCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+        side: BorderSide(color: theme.brightness == Brightness.light 
+            ? AppTheme.claudeBorder 
+            : const Color(0xFF3F3C34)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -47,7 +52,7 @@ class ExamResultsCard extends StatelessWidget {
                     'Course',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
+                      color: theme.textTheme.bodyMedium?.color,
                       fontSize: 12,
                     ),
                   ),
@@ -59,7 +64,7 @@ class ExamResultsCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
+                      color: theme.textTheme.bodyMedium?.color,
                       fontSize: 12,
                     ),
                   ),
@@ -71,7 +76,7 @@ class ExamResultsCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
+                      color: theme.textTheme.bodyMedium?.color,
                       fontSize: 12,
                     ),
                   ),
@@ -85,7 +90,7 @@ class ExamResultsCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: examResults.length,
-              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 0 ,color: Colors.transparent,),
+              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 0, color: Colors.transparent),
               itemBuilder: (context, index) {
                 final result = examResults[index];
                 return Padding(
@@ -101,8 +106,9 @@ class ExamResultsCard extends StatelessWidget {
                           children: [
                             Text(
                               result.mcLibelleFr,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.w500,
+                                color: theme.textTheme.titleMedium?.color,
                               ),
                             ),
                             if (result.autorisationDemandeRecours && 
@@ -145,8 +151,9 @@ class ExamResultsCard extends StatelessWidget {
                           child: Text(
                             '${result.rattachementMcCoefficient}',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontWeight: FontWeight.w500,
+                              color: theme.textTheme.titleMedium?.color,
                             ),
                           ),
                         ),
@@ -172,11 +179,11 @@ class ExamResultsCard extends StatelessWidget {
                                     ),
                                   ),
                                 )
-                              : const Text(
+                              : Text(
                                   'N/A',
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
-                                    color: Colors.grey,
+                                    color: theme.textTheme.bodyMedium?.color,
                                   ),
                                 ),
                         ),
@@ -198,7 +205,7 @@ class ExamResultsCard extends StatelessWidget {
 
   // Helper method to get color based on grade
   Color _getGradeColor(double grade) {
-    if (grade >= 10) return Colors.green;
-    return Colors.red;
+    if (grade >= 10) return AppTheme.accentGreen;
+    return AppTheme.accentRed;
   }
 } 

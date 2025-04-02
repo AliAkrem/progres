@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
@@ -32,7 +30,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     'Error: ${state.message}',
-                    style: TextStyle(color: AppTheme.claudeTextSecondary),
+                    style: const TextStyle(color: AppTheme.claudeTextSecondary),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
@@ -55,11 +53,11 @@ class _HomePageState extends State<HomePage> {
                   Container(
                     width: 60,
                     height: 60,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppTheme.claudeSecondary,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.school_rounded,
                       color: AppTheme.claudePrimary,
                       size: 32,
@@ -71,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  const Text(
                     'Loading your profile data...',
                     style: TextStyle(color: AppTheme.claudeTextSecondary),
                   ),
@@ -116,7 +114,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -139,11 +137,11 @@ class _HomePageState extends State<HomePage> {
                         : Container(
                             width: 64,
                             height: 64,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.person,
                               color: AppTheme.claudePrimary,
                               size: 32,
@@ -181,7 +179,6 @@ class _HomePageState extends State<HomePage> {
               'Student Information',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppTheme.claudeTextPrimary,
               ),
             ),
           ),
@@ -193,7 +190,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -209,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                             color: AppTheme.claudeSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.school,
                             color: AppTheme.claudePrimary,
                             size: 24,
@@ -243,7 +240,6 @@ class _HomePageState extends State<HomePage> {
               'Academic Performance',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppTheme.claudeTextPrimary,
               ),
             ),
           ),
@@ -265,7 +261,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -281,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.sticky_note_2_outlined,
                               color: AppTheme.claudePrimary,
                               size: 24,
@@ -300,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'View all your exam results across different academic periods',
                         style: TextStyle(
                           color: AppTheme.claudeTextSecondary,
@@ -332,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -348,7 +344,7 @@ class _HomePageState extends State<HomePage> {
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.assessment_outlined,
                               color: AppTheme.claudePrimary,
                               size: 24,
@@ -367,7 +363,7 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         'View your continuous assessment marks and assignments',
                         style: TextStyle(
                           color: AppTheme.claudeTextSecondary,
@@ -387,7 +383,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -403,7 +399,7 @@ class _HomePageState extends State<HomePage> {
                             color: AppTheme.claudeSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.directions_bus,
                             color: AppTheme.claudePrimary,
                             size: 24,
@@ -472,7 +468,6 @@ class _HomePageState extends State<HomePage> {
                 'Current Periods',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.claudeTextPrimary,
                 ),
               ),
             ),
@@ -483,7 +478,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
@@ -506,7 +501,7 @@ class _HomePageState extends State<HomePage> {
                                 Container(
                                   width: 24,
                                   height: 24,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                     color: AppTheme.claudePrimary,
                                     shape: BoxShape.circle,
                                   ),
@@ -524,7 +519,7 @@ class _HomePageState extends State<HomePage> {
                                 const SizedBox(width: 8),
                                 Text(
                                   period.code,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: AppTheme.claudePrimary,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -557,7 +552,7 @@ class _HomePageState extends State<HomePage> {
             flex: 2,
             child: Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 color: AppTheme.claudeTextSecondary,
                 fontWeight: FontWeight.w500,
               ),

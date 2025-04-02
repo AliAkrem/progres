@@ -51,19 +51,20 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildErrorState(ProfileError state) {
+    final theme = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.error_outline_rounded,
             size: 48,
-            color: Colors.red.shade400,
+            color: AppTheme.accentRed,
           ),
           const SizedBox(height: 16),
           Text(
             'Error: ${state.message}',
-            style: TextStyle(color: AppTheme.claudeTextSecondary),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
@@ -79,6 +80,7 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildInitialState() {
+    final theme = Theme.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -86,11 +88,11 @@ class _DashboardPageState extends State<DashboardPage> {
           Container(
             width: 60,
             height: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.claudeSecondary,
               shape: BoxShape.circle,
             ),
-            child: Icon(
+            child: const Icon(
               Icons.dashboard_rounded,
               color: AppTheme.claudePrimary,
               size: 32,
@@ -104,7 +106,7 @@ class _DashboardPageState extends State<DashboardPage> {
           const SizedBox(height: 8),
           Text(
             'Loading your dashboard...',
-            style: TextStyle(color: AppTheme.claudeTextSecondary),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
           const SizedBox(height: 24),
           const CircularProgressIndicator(),
@@ -139,7 +141,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             fit: BoxFit.cover,
                           ),
                         )
-                      : Icon(
+                      : const Icon(
                           Icons.person,
                           size: 30,
                           color: AppTheme.claudePrimary,
@@ -159,9 +161,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       Text(
                         'Academic Year: ${state.academicYear.code}',
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: AppTheme.claudeTextSecondary,
-                        ),
+                        style: theme.textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -181,7 +181,7 @@ class _DashboardPageState extends State<DashboardPage> {
               title: 'Academic Performance',
               description: 'View your exam results from all semesters',
               icon: Icons.assignment_rounded,
-              color: const Color(0xFF6B4CF6),
+              color: AppTheme.claudePrimary,
               onTap: () => context.goNamed(AppRouter.academicPerformancePath),
             ),
             
@@ -195,13 +195,14 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   Widget _buildStatItem(BuildContext context, String title, String value, IconData icon) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: AppTheme.claudeBorder.withOpacity(0.5),
+          color: theme.brightness == Brightness.light ? AppTheme.claudeBorder.withOpacity(0.5) : const Color(0xFF3F3C34),
         ),
       ),
       child: Column(
@@ -212,13 +213,13 @@ class _DashboardPageState extends State<DashboardPage> {
               Icon(
                 icon,
                 size: 20,
-                color: AppTheme.claudeTextSecondary,
+                color: theme.textTheme.bodyMedium?.color,
               ),
               const SizedBox(width: 8),
               Text(
                 title,
                 style: TextStyle(
-                  color: AppTheme.claudeTextSecondary,
+                  color: theme.textTheme.bodyMedium?.color,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -227,9 +228,10 @@ class _DashboardPageState extends State<DashboardPage> {
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: theme.textTheme.titleLarge?.color,
             ),
           ),
         ],
@@ -245,13 +247,17 @@ class _DashboardPageState extends State<DashboardPage> {
     required Color color,
     required VoidCallback onTap,
   }) {
+    final theme = Theme.of(context);
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
         decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.claudeBorder),
+          border: Border.all(
+            color: theme.brightness == Brightness.light ? AppTheme.claudeBorder : const Color(0xFF3F3C34),
+          ),
           boxShadow: [
             BoxShadow(
               color: color.withOpacity(0.05),
@@ -291,7 +297,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   Text(
                     description,
                     style: TextStyle(
-                      color: AppTheme.claudeTextSecondary,
+                      color: theme.textTheme.bodyMedium?.color,
                     ),
                   ),
                 ],
@@ -299,7 +305,7 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
             Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppTheme.claudeTextSecondary,
+              color: theme.textTheme.bodyMedium?.color,
               size: 18,
             ),
           ],
