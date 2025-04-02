@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
+import 'package:progres/features/profile/data/models/enrollment.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
@@ -14,6 +15,8 @@ abstract class ProfileEvent extends Equatable {
 }
 
 class LoadProfileEvent extends ProfileEvent {}
+
+class LoadEnrollmentsEvent extends ProfileEvent {}
 
 // States
 abstract class ProfileState extends Equatable {
@@ -32,6 +35,7 @@ class ProfileLoaded extends ProfileState {
   final List<AcademicPeriod> academicPeriods;
   final String? profileImage;
   final String? institutionLogo;
+  final List<Enrollment>? enrollments;
 
   ProfileLoaded({
     required this.basicInfo,
@@ -40,7 +44,28 @@ class ProfileLoaded extends ProfileState {
     required this.academicPeriods,
     this.profileImage,
     this.institutionLogo,
+    this.enrollments,
   });
+  
+  ProfileLoaded copyWith({
+    StudentBasicInfo? basicInfo,
+    AcademicYear? academicYear,
+    StudentDetailedInfo? detailedInfo,
+    List<AcademicPeriod>? academicPeriods,
+    String? profileImage,
+    String? institutionLogo,
+    List<Enrollment>? enrollments,
+  }) {
+    return ProfileLoaded(
+      basicInfo: basicInfo ?? this.basicInfo,
+      academicYear: academicYear ?? this.academicYear,
+      detailedInfo: detailedInfo ?? this.detailedInfo,
+      academicPeriods: academicPeriods ?? this.academicPeriods,
+      profileImage: profileImage ?? this.profileImage,
+      institutionLogo: institutionLogo ?? this.institutionLogo,
+      enrollments: enrollments ?? this.enrollments,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -50,6 +75,7 @@ class ProfileLoaded extends ProfileState {
     academicPeriods,
     profileImage,
     institutionLogo,
+    enrollments,
   ];
 }
 
@@ -72,6 +98,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required this.authRepository,
   }) : super(ProfileInitial()) {
     on<LoadProfileEvent>(_onLoadProfile);
+    on<LoadEnrollmentsEvent>(_onLoadEnrollments);
   }
 
   Future<void> _onLoadProfile(
@@ -122,6 +149,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         profileImage: profileImage,
         institutionLogo: institutionLogo,
       ));
+    } catch (e) {
+      emit(ProfileError(e.toString()));
+    }
+  }
+  
+  Future<void> _onLoadEnrollments(
+    LoadEnrollmentsEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    try {
+      // Only proceed if we're already in the loaded state
+      if (state is! ProfileLoaded) {
+        return;
+      }
+      
+      final currentState = state as ProfileLoaded;
+      
+      // Fetch enrollments
+      final enrollments = await studentRepository.getStudentEnrollments();
+      
+      // Update state with enrollments
+      emit(currentState.copyWith(enrollments: enrollments));
     } catch (e) {
       emit(ProfileError(e.toString()));
     }

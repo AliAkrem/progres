@@ -196,6 +196,30 @@ class _DashboardPageState extends State<DashboardPage> {
               color: AppTheme.claudePrimary,
               onTap: () => context.goNamed(AppRouter.subjects),
             ),
+            
+            const SizedBox(height: 16),
+            
+            // Groups Card
+            _buildPerformanceCard(
+              context,
+              title: 'My Groups',
+              description: 'View your pedagogical groups for each semester',
+              icon: Icons.group_rounded,
+              color: AppTheme.claudePrimary,
+              onTap: () => context.goNamed(AppRouter.groups),
+            ),
+            
+            const SizedBox(height: 16),
+            
+            // Enrollments Card
+            _buildPerformanceCard(
+              context,
+              title: 'Academic History',
+              description: 'View your complete academic enrollment history',
+              icon: Icons.history_edu_rounded,
+              color: AppTheme.claudePrimary,
+              onTap: () => context.goNamed(AppRouter.enrollments),
+            ),
 
             const SizedBox(height: 32),
           ],

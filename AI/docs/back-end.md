@@ -402,6 +402,144 @@ Retrieves the coefficient weights for each course in the educational program.
 | periodeLibelleAr | string | Period name in Arabic |
 | periodeLibelleFr | string | Period name in French/Latin script |
 
+### 10.Student Groups API
+
+- Endpoint Details
+  - **URL:** `https://progres.mesrs.dz/api/infos/dia/{id}/groups`
+  - **Method:** `GET`
+  - **Authentication:** Required (Bearer Token)
+  - **Path Parameters:**
+    - `id`: Student record ID from Detailed Student Information response
+
+- Description
+Retrieves the pedagogical groups the student belongs to for each academic period.
+
+### Response Example
+```json
+[
+  {
+    "id": 36100628,
+    "nomGroupePedagogique": "Groupe 1",
+    "nomSection": "SECTION 1",
+    "periodeId": 2482173,
+    "periodeLibelleLongLt": "Semestre 4"
+  },
+  {
+    "id": 35045316,
+    "nomGroupePedagogique": "Groupe 1",
+    "nomSection": "SECTION 1",
+    "periodeId": 2482111,
+    "periodeLibelleLongLt": "Semestre 3"
+  }
+]
+```
+
+## Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| id | number | Group assignment identifier |
+| nomGroupePedagogique | string | Pedagogical group name |
+| nomSection | string | Section name |
+| periodeId | number | Academic period identifier |
+| periodeLibelleLongLt | string | Period name in Latin script (e.g., "Semestre 3") |
+
+## Usage Notes
+- This endpoint provides information about which pedagogical groups a student belongs to across different semesters
+- The information can be used to display group assignments in the student profile or academic information screens
+- Group information is often used for class scheduling and administrative purposes
+
+
+
+# Student Enrollment API Documentation
+
+### 11.Get All Student Enrollments
+
+Retrieves the complete enrollment history for a specific student.
+
+- Endpoint
+```
+GET https://progres.mesrs.dz/api/infos/bac/{uuid}/dias
+```
+
+-  Parameters
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| uuid | string | Yes | The unique identifier of the student, obtained from the login API response |
+
+- Response
+Returns an array of enrollment objects, each representing a student's enrollment for a specific academic year.
+
+- Response Fields
+| Field | Type | Description |
+|-------|------|-------------|
+| anneeAcademiqueCode | string | Academic year code (e.g., "2024/2025") |
+| anneeAcademiqueId | integer | Unique identifier for the academic year |
+| id | integer | Enrollment identifier |
+| individuDateNaissance | string | Student's date of birth (YYYY-MM-DD format) |
+| individuLieuNaissance | string | Student's place of birth (Latin script) |
+| individuLieuNaissanceArabe | string | Student's place of birth (Arabic script) |
+| individuNomArabe | string | Student's last name (Arabic script) |
+| individuNomLatin | string | Student's last name (Latin script) |
+| individuPrenomArabe | string | Student's first name (Arabic script) |
+| individuPrenomLatin | string | Student's first name (Latin script) |
+| llEtablissementArabe | string | Institution name (Arabic script) |
+| llEtablissementLatin | string | Institution name (Latin script) |
+| niveauId | integer | Level identifier |
+| niveauLibelleLongAr | string | Level description (Arabic script) |
+| niveauLibelleLongLt | string | Level description (Latin script) |
+| numeroInscription | string | Registration number |
+| ofLlDomaine | string | Field of study (Latin script) |
+| ofLlDomaineArabe | string | Field of study (Arabic script) |
+| ofLlFiliere | string | Major/specialization (Latin script) |
+| ofLlFiliereArabe | string | Major/specialization (Arabic script) |
+| ofLlSpecialite | string | Specific program (Latin script) |
+| ofLlSpecialiteArabe | string | Specific program (Arabic script) |
+| ouvertureOffreFormationId | integer | Program offering identifier |
+| refLibelleCycle | string | Degree cycle (Latin script) |
+| refLibelleCycleAr | string | Degree cycle (Arabic script) |
+| situationId | integer | Enrollment status identifier |
+| uuid | string | Student's unique identifier |
+
+### Example Response
+```json
+[
+  {
+    "anneeAcademiqueCode": "2024/2025",
+    "anneeAcademiqueId": 22,
+    "id": 13243010,
+    "individuDateNaissance": "2001-12-29",
+    "individuLieuNaissance": "MOHAMADIA",
+    "individuLieuNaissanceArabe": "المحمدية",
+    "individuNomArabe": "بركة",
+    "individuNomLatin": "BARKA",
+    "individuPrenomArabe": "علي أكرم",
+    "individuPrenomLatin": "ALI AKREM",
+    "llEtablissementArabe": "جامعة معسكر",
+    "llEtablissementLatin": "université de mascara",
+    "niveauId": 13,
+    "niveauLibelleLongAr": "الماستر",
+    "niveauLibelleLongLt": "Master 2",
+    "numeroInscription": "UN29012024202038045295",
+    "ofLlDomaine": "Mathématiques et Informatique",
+    "ofLlDomaineArabe": "رياضيات و إعلام آلي",
+    "ofLlFiliere": "Informatique",
+    "ofLlFiliereArabe": "إعلام آلي",
+    "ofLlSpecialite": "Réseaux et systèmes distribués",
+    "ofLlSpecialiteArabe": " شبكات والأنظمة الموزعة",
+    "ouvertureOffreFormationId": 79464,
+    "refLibelleCycle": "master",
+    "refLibelleCycleAr": "الماستر",
+    "situationId": 26,
+    "uuid": "0f5b98ee-2428-4d42-aafd-71533b450262"
+  },
+  // ...[trancared]
+]
+```
+
+
+
+
 ## Implementation Guidelines
 
 ### Authentication Flow
