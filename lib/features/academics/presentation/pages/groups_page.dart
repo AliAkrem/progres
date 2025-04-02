@@ -31,6 +31,9 @@ class _GroupsPageState extends State<GroupsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
@@ -38,8 +41,12 @@ class _GroupsPageState extends State<GroupsPage> {
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, profileState) {
           if (profileState is! ProfileLoaded) {
-            return const Center(
-              child: Text('Profile data not loaded. Please go back and try again.'),
+            return Center(
+              child: Text(
+                'Profile data not loaded. Please go back and try again.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+              ),
             );
           }
           
@@ -51,30 +58,40 @@ class _GroupsPageState extends State<GroupsPage> {
                 );
               } else if (state is AcademicsError) {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Error: ${state.message}'),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<AcademicsBloc>().add(
-                                LoadStudentGroups(
-                                  cardId: profileState.detailedInfo.id,
-                                ),
-                              );
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Error: ${state.message}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<AcademicsBloc>().add(
+                                  LoadStudentGroups(
+                                    cardId: profileState.detailedInfo.id,
+                                  ),
+                                );
+                          },
+                          child: const Text('Retry'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } else if (state is AcademicsLoaded && state.studentGroups != null) {
                 // Build the groups page with periods and groups
                 return _buildGroupsContent(context, state.studentGroups!);
               } else {
-                return const Center(
-                  child: Text('No group data available'),
+                return Center(
+                  child: Text(
+                    'No group data available',
+                    style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                  ),
                 );
               }
             },
@@ -86,6 +103,9 @@ class _GroupsPageState extends State<GroupsPage> {
 
   Widget _buildGroupsContent(BuildContext context, List<StudentGroup> groups) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
     
     if (groups.isEmpty) {
       return Center(
@@ -94,13 +114,15 @@ class _GroupsPageState extends State<GroupsPage> {
           children: [
             Icon(
               Icons.group_off_outlined, 
-              size: 64,
+              size: isSmallScreen ? 56 : 64,
               color: theme.disabledColor,
             ),
             const SizedBox(height: 16),
             Text(
               'No groups assigned',
-              style: theme.textTheme.titleLarge,
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: isSmallScreen ? 18 : 20,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -108,6 +130,7 @@ class _GroupsPageState extends State<GroupsPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                fontSize: isSmallScreen ? 14 : 16,
               ),
             ),
           ],
@@ -128,7 +151,7 @@ class _GroupsPageState extends State<GroupsPage> {
     final sortedPeriods = groupsByPeriod.keys.toList()..sort();
     
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(horizontalPadding),
       child: Column(
         children: [
           // Program information
@@ -141,7 +164,7 @@ class _GroupsPageState extends State<GroupsPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(isSmallScreen ? 14 : 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -149,13 +172,15 @@ class _GroupsPageState extends State<GroupsPage> {
                     'Pedagogical Groups',
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: isSmallScreen ? 18 : 20,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: isSmallScreen ? 6 : 8),
                   Text(
                     'These are the groups you belong to for each semester. Groups are used for scheduling and pedagogical organization.',
                     style: TextStyle(
                       color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                      fontSize: isSmallScreen ? 13 : 14,
                     ),
                   ),
                 ],
@@ -163,14 +188,17 @@ class _GroupsPageState extends State<GroupsPage> {
             ),
           ),
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 20 : 24),
           
           // Periods and groups
           for (var period in sortedPeriods) ...[
             // Period header
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 12 : 16, 
+                vertical: isSmallScreen ? 10 : 12
+              ),
               decoration: BoxDecoration(
                 color: AppTheme.claudePrimary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
@@ -180,17 +208,18 @@ class _GroupsPageState extends State<GroupsPage> {
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppTheme.claudePrimary,
+                  fontSize: isSmallScreen ? 14 : 16,
                 ),
               ),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Groups for this period
             ...groupsByPeriod[period]!.map((group) => 
               Card(
                 elevation: 0,
-                margin: const EdgeInsets.only(bottom: 12),
+                margin: EdgeInsets.only(bottom: isSmallScreen ? 10 : 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
@@ -200,26 +229,26 @@ class _GroupsPageState extends State<GroupsPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(isSmallScreen ? 14 : 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: isSmallScreen ? 36 : 40,
+                            height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.group_rounded,
                               color: AppTheme.claudePrimary,
-                              size: 24,
+                              size: isSmallScreen ? 20 : 24,
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: isSmallScreen ? 12 : 16),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,23 +257,24 @@ class _GroupsPageState extends State<GroupsPage> {
                                   group.nomGroupePedagogique,
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: isSmallScreen ? 14 : 16,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                SizedBox(height: isSmallScreen ? 3 : 4),
                                 Row(
                                   children: [
                                     Icon(
                                       Icons.view_module_outlined,
-                                      size: 14,
+                                      size: isSmallScreen ? 12 : 14,
                                       color: theme.brightness == Brightness.light 
                                           ? Colors.grey.shade600
                                           : Colors.grey.shade400,
                                     ),
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: isSmallScreen ? 3 : 4),
                                     Text(
                                       'Section: ${group.nomSection}',
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: isSmallScreen ? 12 : 14,
                                         color: theme.brightness == Brightness.light 
                                             ? Colors.grey.shade600 
                                             : Colors.grey.shade400,
@@ -263,7 +293,7 @@ class _GroupsPageState extends State<GroupsPage> {
               ),
             ).toList(),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
           ],
         ],
       ),

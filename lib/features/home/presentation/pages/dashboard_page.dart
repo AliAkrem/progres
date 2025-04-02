@@ -27,6 +27,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
@@ -52,56 +55,70 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildErrorState(ProfileError state) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            size: 48,
-            color: AppTheme.accentRed,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Error: ${state.message}',
-            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () {
-              context.read<ProfileBloc>().add(LoadProfileEvent());
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
-          ),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              size: isSmallScreen ? 40 : 48,
+              color: AppTheme.accentRed,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Error: ${state.message}',
+              style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.read<ProfileBloc>().add(LoadProfileEvent());
+              },
+              icon: const Icon(Icons.refresh),
+              label: const Text('Retry'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildInitialState() {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 60,
-            height: 60,
+            width: isSmallScreen ? 50 : 60,
+            height: isSmallScreen ? 50 : 60,
             decoration: const BoxDecoration(
               color: AppTheme.claudeSecondary,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.dashboard_rounded,
               color: AppTheme.claudePrimary,
-              size: 32,
+              size: isSmallScreen ? 26 : 32,
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
           Text(
             'Welcome!',
-            style: Theme.of(context).textTheme.displayMedium,
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+              fontSize: isSmallScreen ? 26 : 32,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -117,11 +134,14 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildDashboard(ProfileLoaded state) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
     
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(horizontalPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -129,25 +149,25 @@ class _DashboardPageState extends State<DashboardPage> {
             Row(
               children: [
                 CircleAvatar(
-                  radius: 30,
+                  radius: isSmallScreen ? 26 : 30,
                   backgroundColor: AppTheme.claudeSecondary,
                   child: state.profileImage != null
                       ? ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(isSmallScreen ? 26 : 30),
                           child: Image.memory(
                             _decodeBase64Image(state.profileImage!),
-                            width: 60,
-                            height: 60,
+                            width: isSmallScreen ? 52 : 60,
+                            height: isSmallScreen ? 52 : 60,
                             fit: BoxFit.cover,
                           ),
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.person,
-                          size: 30,
+                          size: isSmallScreen ? 26 : 30,
                           color: AppTheme.claudePrimary,
                         ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: isSmallScreen ? 12 : 16),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,12 +176,16 @@ class _DashboardPageState extends State<DashboardPage> {
                         'Hello, ${state.basicInfo.prenomLatin}',
                         style: theme.textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
-                          fontSize: 24,
+                          fontSize: isSmallScreen ? 20 : 24,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         'Academic Year: ${state.academicYear.code}',
-                        style: theme.textTheme.bodyLarge,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontSize: isSmallScreen ? 13 : 14,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
@@ -169,11 +193,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ],
             ),
             
-            const SizedBox(height: 32),
-            
-          
-            
-     
+            SizedBox(height: isSmallScreen ? 24 : 32),
             
             // Exams Card
             _buildPerformanceCard(
@@ -185,7 +205,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.academicPerformancePath),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Subjects Card
             _buildPerformanceCard(
@@ -197,7 +217,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.subjects),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Groups Card
             _buildPerformanceCard(
@@ -209,7 +229,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.groups),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Enrollments Card
             _buildPerformanceCard(
@@ -221,7 +241,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.enrollments),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Timeline Card
             _buildPerformanceCard(
@@ -233,7 +253,7 @@ class _DashboardPageState extends State<DashboardPage> {
               onTap: () => context.goNamed(AppRouter.timeline),
             ),
 
-            const SizedBox(height: 32),
+            SizedBox(height: isSmallScreen ? 24 : 32),
           ],
         ),
       ),
@@ -242,8 +262,11 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget _buildStatItem(BuildContext context, String title, String value, IconData icon) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(isSmallScreen ? 12 : 16),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
@@ -258,24 +281,25 @@ class _DashboardPageState extends State<DashboardPage> {
             children: [
               Icon(
                 icon,
-                size: 20,
+                size: isSmallScreen ? 18 : 20,
                 color: theme.textTheme.bodyMedium?.color,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: isSmallScreen ? 6 : 8),
               Text(
                 title,
                 style: TextStyle(
                   color: theme.textTheme.bodyMedium?.color,
                   fontWeight: FontWeight.w500,
+                  fontSize: isSmallScreen ? 13 : 14,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isSmallScreen ? 6 : 8),
           Text(
             value,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: isSmallScreen ? 16 : 18,
               fontWeight: FontWeight.bold,
               color: theme.textTheme.titleLarge?.color,
             ),
@@ -294,6 +318,9 @@ class _DashboardPageState extends State<DashboardPage> {
     required VoidCallback onTap,
   }) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -312,12 +339,12 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ],
         ),
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
         child: Row(
           children: [
             Container(
-              width: 60,
-              height: 60,
+              width: isSmallScreen ? 50 : 60,
+              height: isSmallScreen ? 50 : 60,
               decoration: BoxDecoration(
                 color: color.withOpacity(0.1),
                 shape: BoxShape.circle,
@@ -325,10 +352,10 @@ class _DashboardPageState extends State<DashboardPage> {
               child: Icon(
                 icon,
                 color: color,
-                size: 30,
+                size: isSmallScreen ? 26 : 30,
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: isSmallScreen ? 12 : 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,15 +363,20 @@ class _DashboardPageState extends State<DashboardPage> {
                   Text(
                     title,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                      fontSize: isSmallScreen ? 16 : 18,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: isSmallScreen ? 2 : 4),
                   Text(
                     description,
                     style: TextStyle(
                       color: theme.textTheme.bodyMedium?.color,
+                      fontSize: isSmallScreen ? 13 : 14,
                     ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -352,7 +384,7 @@ class _DashboardPageState extends State<DashboardPage> {
             Icon(
               Icons.arrow_forward_ios_rounded,
               color: theme.textTheme.bodyMedium?.color,
-              size: 18,
+              size: isSmallScreen ? 16 : 18,
             ),
           ],
         ),

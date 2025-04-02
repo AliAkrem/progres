@@ -44,15 +44,28 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Academic Performance'),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Exam Results'),
-            Tab(text: 'Continuous Assessment'),
+          tabs: [
+            Tab(
+              text: 'Exam Results', 
+              height: isSmallScreen ? 40 : 46
+            ),
+            Tab(
+              text: 'Continuous Assessment',
+              height: isSmallScreen ? 40 : 46
+            ),
           ],
+          labelStyle: TextStyle(
+            fontSize: isSmallScreen ? 13 : 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
@@ -71,22 +84,29 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                 );
               } else if (state is AcademicsError) {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Error: ${state.message}'),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<AcademicsBloc>().add(
-                                LoadAcademicPerformance(
-                                  cardId: profileState.detailedInfo.id,
-                                ),
-                              );
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Error: ${state.message}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<AcademicsBloc>().add(
+                                  LoadAcademicPerformance(
+                                    cardId: profileState.detailedInfo.id,
+                                  ),
+                                );
+                          },
+                          child: const Text('Retry'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } else if (state is AcademicsLoaded) {
@@ -116,24 +136,28 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
     // Group exams by period
     final examsByPeriod = _groupExamsByPeriod(state.examResults);
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
     
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(horizontalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
           
           if (examsByPeriod.isEmpty)
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: EdgeInsets.all(isSmallScreen ? 24.0 : 32.0),
                 child: Text(
                   'No exam results available',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: theme.textTheme.bodyMedium?.color,
+                    fontSize: isSmallScreen ? 14 : 16,
                   ),
                 ),
               ),
@@ -157,9 +181,9 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                 children: [
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, 
-                      vertical: 8.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isSmallScreen ? 12.0 : 16.0, 
+                      vertical: isSmallScreen ? 6.0 : 8.0,
                     ),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
@@ -167,16 +191,16 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                     ),
                     child: Text(
                       periodName,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 16 : 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: isSmallScreen ? 6 : 8),
                   ExamResultsCard(examResults: entry.value),
-                  const SizedBox(height: 16),
+                  SizedBox(height: isSmallScreen ? 12 : 16),
                 ],
               );
             }).toList(),
@@ -188,24 +212,28 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
   Widget _buildAssessmentsTab(BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
     final assessmentsByPeriod = _groupAssessmentsByPeriod(state.continuousAssessments);
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
     
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.all(horizontalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
           
           if (assessmentsByPeriod.isEmpty)
             Center(
               child: Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: EdgeInsets.all(isSmallScreen ? 24.0 : 32.0),
                 child: Text(
                   'No continuous assessment results available',
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: theme.textTheme.bodyMedium?.color,
+                    fontSize: isSmallScreen ? 14 : 16,
                   ),
                 ),
               ),
@@ -217,9 +245,9 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                 children: [
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, 
-                      vertical: 8.0,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isSmallScreen ? 12.0 : 16.0, 
+                      vertical: isSmallScreen ? 6.0 : 8.0,
                     ),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
@@ -227,16 +255,16 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage> with 
                     ),
                     child: Text(
                       entry.key,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: isSmallScreen ? 16 : 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: isSmallScreen ? 6 : 8),
                   ContinuousAssessmentCard(assessments: entry.value),
-                  const SizedBox(height: 16),
+                  SizedBox(height: isSmallScreen ? 12 : 16),
                 ],
               );
             }).toList(),

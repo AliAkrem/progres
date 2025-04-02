@@ -28,6 +28,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -74,36 +77,47 @@ class _ProfilePageState extends State<ProfilePage> {
   
   Widget _buildErrorState(ProfileError state) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline,
-            size: 48,
-            color: Colors.red.shade400,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'Error: ${state.message}',
-            style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: () {
-              context.read<ProfileBloc>().add(LoadProfileEvent());
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
-          ),
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline,
+              size: isSmallScreen ? 40 : 48,
+              color: Colors.red.shade400,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Error: ${state.message}',
+              style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () {
+                context.read<ProfileBloc>().add(LoadProfileEvent());
+              },
+              icon: const Icon(Icons.refresh),
+              label: const Text('Retry'),
+            ),
+          ],
+        ),
       ),
     );
   }
   
   Widget _buildProfileContent(ProfileLoaded state) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
     
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -112,12 +126,12 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           // Profile header
           _buildProfileHeader(state, theme),
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
 
           
           // Status cards
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 0, horizontalPadding, isSmallScreen ? 12 : 16),
             child: Row(
               children: [
                 Expanded(
@@ -127,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     value: state.detailedInfo.niveauLibelleLongLt,
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: isSmallScreen ? 12 : 16),
                 Expanded(
                   child: _buildStatusCard(
                     icon: Icons.calendar_today_rounded,
@@ -135,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     value: state.academicYear.code,
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: isSmallScreen ? 12 : 16),
                 Expanded(
                   child: _buildStatusCard(
                     icon: Icons.directions_bus_rounded,
@@ -150,7 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
           
           // Personal Information
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
               title: 'Personal Information',
               children: [
@@ -162,12 +176,12 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
           
           
           // Academic Information
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
               title: 'Current Academic Status',
               children: [
@@ -180,7 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 16 : 24),
  
           
 
@@ -190,18 +204,26 @@ class _ProfilePageState extends State<ProfilePage> {
   }
   
   Widget _buildProfileHeader(ProfileLoaded state, ThemeData theme) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Container(
       width: double.infinity,
       color: theme.colorScheme.surface,
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+      padding: EdgeInsets.fromLTRB(
+        isSmallScreen ? 16 : 24, 
+        isSmallScreen ? 12 : 16, 
+        isSmallScreen ? 16 : 24, 
+        isSmallScreen ? 20 : 24
+      ),
       child: Column(
         children: [
           // Profile image
           Hero(
             tag: 'profile-image',
             child: Container(
-              width: 120,
-              height: 120,
+              width: isSmallScreen ? 100 : 120,
+              height: isSmallScreen ? 100 : 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: theme.brightness == Brightness.light ? Colors.white : const Color(0xFF3F3C34), width: 4),
@@ -215,40 +237,46 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: state.profileImage != null
                   ? ClipRRect(
-                      borderRadius: BorderRadius.circular(60),
+                      borderRadius: BorderRadius.circular(isSmallScreen ? 50 : 60),
                       child: Image.memory(
                         _decodeBase64Image(state.profileImage!),
                         fit: BoxFit.cover,
                       ),
                     )
-                  : const CircleAvatar(
+                  : CircleAvatar(
                       backgroundColor: AppTheme.claudeSecondary,
                       child: Icon(
                         Icons.person_rounded,
-                        size: 60,
+                        size: isSmallScreen ? 50 : 60,
                         color: AppTheme.claudePrimary,
                       ),
                     ),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: isSmallScreen ? 12 : 16),
           // Student name
           Text(
             '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: isSmallScreen ? 20 : 24,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
           Text(
             '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
-            style: theme.textTheme.bodyLarge,
+            style: theme.textTheme.bodyLarge?.copyWith(
+              fontSize: isSmallScreen ? 14 : 16,
+            ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: isSmallScreen ? 10 : 12),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 14 : 16, 
+              vertical: isSmallScreen ? 6 : 8
+            ),
             decoration: BoxDecoration(
               color: theme.brightness == Brightness.light ? AppTheme.claudeSecondary.withOpacity(0.1) : AppTheme.claudeSecondary.withOpacity(0.3),
               borderRadius: BorderRadius.circular(20),
@@ -257,7 +285,7 @@ class _ProfilePageState extends State<ProfilePage> {
               'ID: ${state.detailedInfo.numeroInscription}',
               style: TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 14,
+                fontSize: isSmallScreen ? 13 : 14,
                 color: theme.textTheme.titleMedium?.color,
               ),
             ),
@@ -274,9 +302,11 @@ class _ProfilePageState extends State<ProfilePage> {
     Color? valueColor,
   }) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(isSmallScreen ? 10 : 12),
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
@@ -296,15 +326,15 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Icon(
                 icon,
-                size: 16,
+                size: isSmallScreen ? 14 : 16,
                 color: theme.textTheme.bodyMedium?.color,
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: isSmallScreen ? 4 : 6),
               Expanded(
                 child: Text(
                   title,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: isSmallScreen ? 11 : 12,
                     color: theme.textTheme.bodyMedium?.color,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -312,11 +342,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isSmallScreen ? 6 : 8),
           Text(
             value,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: isSmallScreen ? 13 : 14,
               fontWeight: FontWeight.bold,
               color: valueColor ?? theme.textTheme.titleMedium?.color,
             ),
@@ -333,6 +363,8 @@ class _ProfilePageState extends State<ProfilePage> {
     required List<Widget> children,
   }) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,12 +372,12 @@ class _ProfilePageState extends State<ProfilePage> {
         Text(
           title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: isSmallScreen ? 16 : 18,
             fontWeight: FontWeight.bold,
             color: theme.textTheme.titleLarge?.color,
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: isSmallScreen ? 12 : 16),
         Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -361,7 +393,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: children,
@@ -374,24 +406,26 @@ class _ProfilePageState extends State<ProfilePage> {
   
   Widget _buildInfoRow(String label, String value, {Color? valueColor}) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.only(bottom: isSmallScreen ? 12 : 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: isSmallScreen ? 13 : 14,
               color: theme.textTheme.bodyMedium?.color,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: isSmallScreen ? 3 : 4),
           Text(
             value,
             style: TextStyle(
-              fontSize: 16,
+              fontSize: isSmallScreen ? 14 : 16,
               fontWeight: FontWeight.w600,
               color: valueColor ?? theme.textTheme.titleMedium?.color,
             ),

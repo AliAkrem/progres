@@ -32,6 +32,9 @@ class _SubjectsPageState extends State<SubjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Subjects & Coefficients'),
@@ -39,8 +42,12 @@ class _SubjectsPageState extends State<SubjectsPage> {
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, profileState) {
           if (profileState is! ProfileLoaded) {
-            return const Center(
-              child: Text('Profile data not loaded. Please go back and try again.'),
+            return Center(
+              child: Text(
+                'Profile data not loaded. Please go back and try again.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+              ),
             );
           }
           
@@ -52,31 +59,41 @@ class _SubjectsPageState extends State<SubjectsPage> {
                 );
               } else if (state is AcademicsError) {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Error: ${state.message}'),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<AcademicsBloc>().add(
-                                LoadCourseCoefficients(
-                                  ouvertureOffreFormationId: profileState.detailedInfo.ouvertureOffreFormationId,
-                                  niveauId: profileState.detailedInfo.niveauId,
-                                ),
-                              );
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ],
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Error: ${state.message}',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<AcademicsBloc>().add(
+                                  LoadCourseCoefficients(
+                                    ouvertureOffreFormationId: profileState.detailedInfo.ouvertureOffreFormationId,
+                                    niveauId: profileState.detailedInfo.niveauId,
+                                  ),
+                                );
+                          },
+                          child: const Text('Retry'),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               } else if (state is AcademicsLoaded && state.courseCoefficients != null) {
                 // Build the subjects page with periods and courses
                 return _buildSubjectsContent(context, state.courseCoefficients!);
               } else {
-                return const Center(
-                  child: Text('No subject data available'),
+                return Center(
+                  child: Text(
+                    'No subject data available',
+                    style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                  ),
                 );
               }
             },
@@ -88,6 +105,9 @@ class _SubjectsPageState extends State<SubjectsPage> {
 
   Widget _buildSubjectsContent(BuildContext context, List<CourseCoefficient> coefficients) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
     
     // Group courses by period
     final Map<String, List<CourseCoefficient>> coursesByPeriod = {};
@@ -102,7 +122,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
     final sortedPeriods = coursesByPeriod.keys.toList()..sort();
     
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(horizontalPadding),
       child: Column(
         children: [
           // Program information
@@ -115,7 +135,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(isSmallScreen ? 14 : 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -123,13 +143,15 @@ class _SubjectsPageState extends State<SubjectsPage> {
                     'Coefficients by Subject',
                     style: theme.textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
+                      fontSize: isSmallScreen ? 18 : 20,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: isSmallScreen ? 6 : 8),
                   Text(
                     'These coefficients define how each assessment type contributes to your final grade for each subject.',
                     style: TextStyle(
                       color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+                      fontSize: isSmallScreen ? 13 : 14,
                     ),
                   ),
                 ],
@@ -137,14 +159,17 @@ class _SubjectsPageState extends State<SubjectsPage> {
             ),
           ),
           
-          const SizedBox(height: 24),
+          SizedBox(height: isSmallScreen ? 20 : 24),
           
           // Periods and courses
           for (var period in sortedPeriods) ...[
             // Period header
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 12 : 16, 
+                vertical: isSmallScreen ? 10 : 12
+              ),
               decoration: BoxDecoration(
                 color: AppTheme.claudePrimary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
@@ -154,15 +179,16 @@ class _SubjectsPageState extends State<SubjectsPage> {
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: AppTheme.claudePrimary,
+                  fontSize: isSmallScreen ? 14 : 16,
                 ),
               ),
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: isSmallScreen ? 12 : 16),
             
             // Table header
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 12 : 16),
               child: Row(
                 children: [
                   Expanded(
@@ -171,6 +197,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                       'Subject',
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: isSmallScreen ? 12 : 13,
                       ),
                     ),
                   ),
@@ -181,6 +208,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: isSmallScreen ? 12 : 13,
                       ),
                     ),
                   ),
@@ -191,6 +219,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: isSmallScreen ? 12 : 13,
                       ),
                     ),
                   ),
@@ -201,6 +230,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                       textAlign: TextAlign.center,
                       style: theme.textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
+                        fontSize: isSmallScreen ? 12 : 13,
                       ),
                     ),
                   ),
@@ -213,7 +243,10 @@ class _SubjectsPageState extends State<SubjectsPage> {
             // Course rows
             for (var coefficient in coursesByPeriod[period]!)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding: EdgeInsets.symmetric(
+                  vertical: isSmallScreen ? 10 : 12, 
+                  horizontal: isSmallScreen ? 12 : 16
+                ),
                 child: Row(
                   children: [
                     // Subject name
@@ -224,6 +257,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: theme.textTheme.titleMedium?.color,
+                          fontSize: isSmallScreen ? 12 : 14,
                         ),
                       ),
                     ),
@@ -267,7 +301,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                 ),
               ),
             
-            const SizedBox(height: 24),
+            SizedBox(height: isSmallScreen ? 20 : 24),
           ],
         ],
       ),
@@ -275,19 +309,25 @@ class _SubjectsPageState extends State<SubjectsPage> {
   }
   
   Widget _buildCoefficientChip(double coefficient, Color bgColor, Color textColor) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     final percentage = (coefficient * 100).toInt();
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(
+        horizontal: isSmallScreen ? 6 : 8, 
+        vertical: isSmallScreen ? 3 : 4
+      ),
       decoration: BoxDecoration(
         color: coefficient > 0 ? bgColor : Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(isSmallScreen ? 10 : 12),
       ),
       child: Text(
         '$percentage%',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: coefficient > 0 ? textColor : Colors.grey.shade700,
-          fontSize: 13,
+          fontSize: isSmallScreen ? 11 : 13,
         ),
       ),
     );

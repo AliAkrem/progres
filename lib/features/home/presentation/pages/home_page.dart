@@ -16,6 +16,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Scaffold(
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
@@ -31,6 +34,9 @@ class _HomePageState extends State<HomePage> {
                   Text(
                     'Error: ${state.message}',
                     style: const TextStyle(color: AppTheme.claudeTextSecondary),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
@@ -51,22 +57,24 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: isSmallScreen ? 50 : 60,
+                    height: isSmallScreen ? 50 : 60,
                     decoration: const BoxDecoration(
                       color: AppTheme.claudeSecondary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.school_rounded,
                       color: AppTheme.claudePrimary,
-                      size: 32,
+                      size: isSmallScreen ? 26 : 32,
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: isSmallScreen ? 16 : 24),
                   Text(
                     'Welcome!',
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: isSmallScreen ? 26 : 32,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -86,6 +94,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildDashboard(ProfileLoaded state) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
     
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -95,13 +106,13 @@ class _HomePageState extends State<HomePage> {
           // Institution Logo if available
           if (state.institutionLogo != null)
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
+              padding: EdgeInsets.fromLTRB(horizontalPadding, 8, horizontalPadding, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.memory(
                     _decodeBase64Image(state.institutionLogo!),
-                    height: 60,
+                    height: isSmallScreen ? 50 : 60,
                   ),
                 ],
               ),
@@ -109,7 +120,7 @@ class _HomePageState extends State<HomePage> {
           
           // Welcome Card
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 20, horizontalPadding, 0),
             child: Card(
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -117,13 +128,13 @@ class _HomePageState extends State<HomePage> {
                 side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                 child: Row(
                   children: [
                     state.profileImage != null
                         ? Container(
-                            width: 64,
-                            height: 64,
+                            width: isSmallScreen ? 56 : 64,
+                            height: isSmallScreen ? 56 : 64,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
@@ -135,19 +146,19 @@ class _HomePageState extends State<HomePage> {
                             ),
                           )
                         : Container(
-                            width: 64,
-                            height: 64,
+                            width: isSmallScreen ? 56 : 64,
+                            height: isSmallScreen ? 56 : 64,
                             decoration: const BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.person,
                               color: AppTheme.claudePrimary,
-                              size: 32,
+                              size: isSmallScreen ? 28 : 32,
                             ),
                           ),
-                    const SizedBox(width: 20),
+                    SizedBox(width: isSmallScreen ? 12 : 20),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,12 +167,15 @@ class _HomePageState extends State<HomePage> {
                             'Welcome, ${state.basicInfo.prenomLatin}',
                             style: theme.textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.bold,
+                              fontSize: isSmallScreen ? 18 : 20,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 4),
                           Text(
                             'Current Academic Year: ${state.academicYear.code}',
                             style: theme.textTheme.bodyMedium,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -174,18 +188,19 @@ class _HomePageState extends State<HomePage> {
           
           // Section header
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 12),
             child: Text(
               'Student Information',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: isSmallScreen ? 15 : 16,
               ),
             ),
           ),
           
           // Academic Info Card
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: Card(
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -193,35 +208,36 @@ class _HomePageState extends State<HomePage> {
                 side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
+                          width: isSmallScreen ? 36 : 40,
+                          height: isSmallScreen ? 36 : 40,
                           decoration: BoxDecoration(
                             color: AppTheme.claudeSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.school,
                             color: AppTheme.claudePrimary,
-                            size: 24,
+                            size: isSmallScreen ? 20 : 24,
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: isSmallScreen ? 12 : 16),
                         Text(
                           'Academic Status',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
+                            fontSize: isSmallScreen ? 15 : 16,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: isSmallScreen ? 16 : 24),
                     _buildInfoRow('Level', state.detailedInfo.niveauLibelleLongLt),
                     _buildInfoRow('Cycle', state.detailedInfo.refLibelleCycle),
                     _buildInfoRow('Registration', state.detailedInfo.numeroInscription),
@@ -235,18 +251,19 @@ class _HomePageState extends State<HomePage> {
           
           // Academic Performance Section
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 12),
             child: Text(
               'Academic Performance',
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.bold,
+                fontSize: isSmallScreen ? 15 : 16,
               ),
             ),
           ),
           
           // Exam Results Card
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: InkWell(
               onTap: () {
                 // Navigate to exams tab of academic performance
@@ -264,42 +281,44 @@ class _HomePageState extends State<HomePage> {
                   side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: isSmallScreen ? 36 : 40,
+                            height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.sticky_note_2_outlined,
                               color: AppTheme.claudePrimary,
-                              size: 24,
+                              size: isSmallScreen ? 20 : 24,
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: isSmallScreen ? 12 : 16),
                           Expanded(
                             child: Text(
                               'Exam Results',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
+                                fontSize: isSmallScreen ? 15 : 16,
                               ),
                             ),
                           ),
-                          const Icon(Icons.arrow_forward_ios, size: 16),
+                          Icon(Icons.arrow_forward_ios, size: isSmallScreen ? 14 : 16),
                         ],
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: isSmallScreen ? 8 : 12),
+                      Text(
                         'View all your exam results across different academic periods',
                         style: TextStyle(
                           color: AppTheme.claudeTextSecondary,
+                          fontSize: isSmallScreen ? 13 : 14,
                         ),
                       ),
                     ],
@@ -309,11 +328,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           
-          const SizedBox(height: 16),
+          SizedBox(height: isSmallScreen ? 12 : 16),
           
           // Continuous Assessment Card
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: InkWell(
               onTap: () {
                 // Navigate to continuous assessment tab of academic performance
@@ -331,42 +350,44 @@ class _HomePageState extends State<HomePage> {
                   side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: isSmallScreen ? 36 : 40,
+                            height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.assessment_outlined,
                               color: AppTheme.claudePrimary,
-                              size: 24,
+                              size: isSmallScreen ? 20 : 24,
                             ),
                           ),
-                          const SizedBox(width: 16),
+                          SizedBox(width: isSmallScreen ? 12 : 16),
                           Expanded(
                             child: Text(
                               'Continuous Assessment',
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.bold,
+                                fontSize: isSmallScreen ? 15 : 16,
                               ),
                             ),
                           ),
-                          const Icon(Icons.arrow_forward_ios, size: 16),
+                          Icon(Icons.arrow_forward_ios, size: isSmallScreen ? 14 : 16),
                         ],
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: isSmallScreen ? 8 : 12),
+                      Text(
                         'View your continuous assessment marks and assignments',
                         style: TextStyle(
                           color: AppTheme.claudeTextSecondary,
+                          fontSize: isSmallScreen ? 13 : 14,
                         ),
                       ),
                     ],
@@ -378,47 +399,52 @@ class _HomePageState extends State<HomePage> {
           
           // Transport Status Card
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: Card(
+              margin: EdgeInsets.only(top: isSmallScreen ? 12 : 16),
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
                 side: const BorderSide(color: AppTheme.claudeBorder),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
                         Container(
-                          width: 40,
-                          height: 40,
+                          width: isSmallScreen ? 36 : 40,
+                          height: isSmallScreen ? 36 : 40,
                           decoration: BoxDecoration(
                             color: AppTheme.claudeSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.directions_bus,
                             color: AppTheme.claudePrimary,
-                            size: 24,
+                            size: isSmallScreen ? 20 : 24,
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: isSmallScreen ? 12 : 16),
                         Text(
                           'Transport Status',
                           style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.bold,
+                            fontSize: isSmallScreen ? 15 : 16,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: isSmallScreen ? 16 : 24),
                     Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: isSmallScreen ? 10 : 12, 
+                            vertical: isSmallScreen ? 6 : 8
+                          ),
                           decoration: BoxDecoration(
                             color: state.detailedInfo.transportPaye
                                 ? Colors.green.withOpacity(0.1)
@@ -435,9 +461,9 @@ class _HomePageState extends State<HomePage> {
                                 color: state.detailedInfo.transportPaye
                                     ? Colors.green
                                     : Colors.red,
-                                size: 20,
+                                size: isSmallScreen ? 18 : 20,
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: isSmallScreen ? 6 : 8),
                               Text(
                                 state.detailedInfo.transportPaye
                                     ? 'Transport Fees Paid'
@@ -447,6 +473,7 @@ class _HomePageState extends State<HomePage> {
                                       ? Colors.green
                                       : Colors.red,
                                   fontWeight: FontWeight.w600,
+                                  fontSize: isSmallScreen ? 13 : 14,
                                 ),
                               ),
                             ],
@@ -463,17 +490,18 @@ class _HomePageState extends State<HomePage> {
           // Academic Periods Section
           if (state.academicPeriods.isNotEmpty) ...[
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+              padding: EdgeInsets.fromLTRB(horizontalPadding, 24, horizontalPadding, 12),
               child: Text(
                 'Current Periods',
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
+                  fontSize: isSmallScreen ? 15 : 16,
                 ),
               ),
             ),
             
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: Card(
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -481,16 +509,19 @@ class _HomePageState extends State<HomePage> {
                   side: const BorderSide(color: AppTheme.claudeBorder),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Wrap(
-                        spacing: 12,
-                        runSpacing: 12,
+                        spacing: isSmallScreen ? 8 : 12,
+                        runSpacing: isSmallScreen ? 8 : 12,
                         children: state.academicPeriods.map((period) {
                           return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: isSmallScreen ? 12 : 16, 
+                              vertical: isSmallScreen ? 8 : 10
+                            ),
                             decoration: BoxDecoration(
                               color: AppTheme.claudeSecondary,
                               borderRadius: BorderRadius.circular(8),
@@ -499,8 +530,8 @@ class _HomePageState extends State<HomePage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  width: 24,
-                                  height: 24,
+                                  width: isSmallScreen ? 22 : 24,
+                                  height: isSmallScreen ? 22 : 24,
                                   decoration: const BoxDecoration(
                                     color: AppTheme.claudePrimary,
                                     shape: BoxShape.circle,
@@ -508,20 +539,21 @@ class _HomePageState extends State<HomePage> {
                                   child: Center(
                                     child: Text(
                                       '${period.rang}',
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                      style: TextStyle(
+                                        fontSize: isSmallScreen ? 11 : 12,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 8),
+                                SizedBox(width: isSmallScreen ? 6 : 8),
                                 Text(
                                   period.code,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: AppTheme.claudePrimary,
                                     fontWeight: FontWeight.w600,
+                                    fontSize: isSmallScreen ? 13 : 14,
                                   ),
                                 ),
                               ],
@@ -537,13 +569,16 @@ class _HomePageState extends State<HomePage> {
           ],
           
           // Bottom padding
-          const SizedBox(height: 32),
+          SizedBox(height: isSmallScreen ? 24 : 32),
         ],
       ),
     );
   }
 
   Widget _buildInfoRow(String label, String value) {
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
+    
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -552,9 +587,10 @@ class _HomePageState extends State<HomePage> {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppTheme.claudeTextSecondary,
                 fontWeight: FontWeight.w500,
+                fontSize: isSmallScreen ? 13 : 14,
               ),
             ),
           ),
@@ -562,8 +598,9 @@ class _HomePageState extends State<HomePage> {
             flex: 3,
             child: Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
+                fontSize: isSmallScreen ? 13 : 14,
               ),
             ),
           ),

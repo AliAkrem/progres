@@ -12,6 +12,8 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     return Scaffold(
       appBar: AppBar(
@@ -20,10 +22,32 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.language, color: theme.iconTheme.color),
-            title: Text('Language', style: theme.textTheme.titleMedium),
-            subtitle: Text('English', style: theme.textTheme.bodyMedium),
-            trailing: Icon(Icons.arrow_forward_ios, size: 16, color: theme.iconTheme.color),
+            leading: Icon(
+              Icons.language, 
+              color: theme.iconTheme.color,
+              size: isSmallScreen ? 22 : 24,
+            ),
+            title: Text(
+              'Language',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: isSmallScreen ? 14 : 16,
+              ),
+            ),
+            subtitle: Text(
+              'English',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontSize: isSmallScreen ? 12 : 14,
+              ),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios, 
+              size: isSmallScreen ? 14 : 16, 
+              color: theme.iconTheme.color,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 16 : 24,
+              vertical: isSmallScreen ? 8 : 12,
+            ),
             onTap: () {
               // Language settings could be implemented here
             },
@@ -31,10 +55,32 @@ class SettingsPage extends StatelessWidget {
           BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, state) {
               return ListTile(
-                leading: Icon(Icons.dark_mode, color: theme.iconTheme.color),
-                title: Text('Theme', style: theme.textTheme.titleMedium),
-                subtitle: Text(_getThemeText(state.themeMode), style: theme.textTheme.bodyMedium),
-                trailing: Icon(Icons.arrow_forward_ios, size: 16, color: theme.iconTheme.color),
+                leading: Icon(
+                  Icons.dark_mode, 
+                  color: theme.iconTheme.color,
+                  size: isSmallScreen ? 22 : 24,
+                ),
+                title: Text(
+                  'Theme',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontSize: isSmallScreen ? 14 : 16,
+                  ),
+                ),
+                subtitle: Text(
+                  _getThemeText(state.themeMode),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontSize: isSmallScreen ? 12 : 14,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios, 
+                  size: isSmallScreen ? 14 : 16, 
+                  color: theme.iconTheme.color,
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: isSmallScreen ? 16 : 24,
+                  vertical: isSmallScreen ? 8 : 12,
+                ),
                 onTap: () {
                   _showThemeSelectionDialog(context, state.themeMode);
                 },
@@ -42,23 +88,57 @@ class SettingsPage extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: Icon(Icons.notifications, color: theme.iconTheme.color),
-            title: Text('Notifications', style: theme.textTheme.titleMedium),
-            trailing: Icon(Icons.arrow_forward_ios, size: 16, color: theme.iconTheme.color),
+            leading: Icon(
+              Icons.notifications, 
+              color: theme.iconTheme.color,
+              size: isSmallScreen ? 22 : 24,
+            ),
+            title: Text(
+              'Notifications',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: isSmallScreen ? 14 : 16,
+              ),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios, 
+              size: isSmallScreen ? 14 : 16, 
+              color: theme.iconTheme.color,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 16 : 24,
+              vertical: isSmallScreen ? 8 : 12,
+            ),
             onTap: () {
               // Notification settings could be implemented here
             },
           ),
-          const Divider(),
+          Divider(height: isSmallScreen ? 8 : 16),
           ListTile(
-            leading: Icon(Icons.info, color: theme.iconTheme.color),
-            title: Text('About', style: theme.textTheme.titleMedium),
-            trailing: Icon(Icons.arrow_forward_ios, size: 16, color: theme.iconTheme.color),
+            leading: Icon(
+              Icons.info, 
+              color: theme.iconTheme.color,
+              size: isSmallScreen ? 22 : 24,
+            ),
+            title: Text(
+              'About',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontSize: isSmallScreen ? 14 : 16,
+              ),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios, 
+              size: isSmallScreen ? 14 : 16, 
+              color: theme.iconTheme.color,
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 16 : 24,
+              vertical: isSmallScreen ? 8 : 12,
+            ),
             onTap: () {
               // About page could be implemented here
             },
           ),
-          const Divider(),
+          Divider(height: isSmallScreen ? 8 : 16),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state is AuthLoggedOut) {
@@ -66,14 +146,38 @@ class SettingsPage extends StatelessWidget {
               }
             },
             child: ListTile(
-              leading: const Icon(Icons.exit_to_app, color: AppTheme.accentRed),
-              title: const Text('Logout', style: TextStyle(color: AppTheme.accentRed)),
+              leading: Icon(
+                Icons.exit_to_app, 
+                color: AppTheme.accentRed,
+                size: isSmallScreen ? 22 : 24,
+              ),
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                  color: AppTheme.accentRed,
+                  fontSize: isSmallScreen ? 14 : 16,
+                ),
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 16 : 24,
+                vertical: isSmallScreen ? 8 : 12,
+              ),
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('Logout', style: theme.textTheme.titleLarge),
-                    content: Text('Are you sure you want to logout?', style: theme.textTheme.bodyMedium),
+                    title: Text(
+                      'Logout',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontSize: isSmallScreen ? 18 : 20,
+                      ),
+                    ),
+                    content: Text(
+                      'Are you sure you want to logout?',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: isSmallScreen ? 14 : 16,
+                      ),
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
@@ -110,11 +214,24 @@ class SettingsPage extends StatelessWidget {
 
   void _showThemeSelectionDialog(BuildContext context, ThemeMode currentThemeMode) {
     final theme = Theme.of(context);
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select Theme', style: theme.textTheme.titleLarge),
+        title: Text(
+          'Select Theme',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontSize: isSmallScreen ? 18 : 20,
+          ),
+        ),
+        contentPadding: EdgeInsets.fromLTRB(
+          24, 
+          isSmallScreen ? 16 : 20, 
+          24, 
+          isSmallScreen ? 16 : 20
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -129,7 +246,10 @@ class SettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(
+              'Cancel',
+              style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+            ),
           ),
         ],
       ),
@@ -145,6 +265,8 @@ class SettingsPage extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     final isSelected = themeMode == currentThemeMode;
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 360;
     
     // Use a more neutral color for icons in dark mode that contrasts well
     final iconColor = isSelected 
@@ -155,6 +277,7 @@ class SettingsPage extends StatelessWidget {
       leading: Icon(
         icon, 
         color: iconColor,
+        size: isSmallScreen ? 22 : 24,
       ),
       title: Text(
         title, 
@@ -163,11 +286,20 @@ class SettingsPage extends StatelessWidget {
               ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary)
               : theme.textTheme.titleMedium?.color,
           fontWeight: isSelected ? FontWeight.bold : null,
+          fontSize: isSmallScreen ? 14 : 16,
         ),
       ),
       trailing: isSelected 
-          ? Icon(Icons.check, color: theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary) 
+          ? Icon(
+              Icons.check, 
+              color: theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary,
+              size: isSmallScreen ? 20 : 22,
+            ) 
           : null,
+      contentPadding: EdgeInsets.symmetric(
+        horizontal: isSmallScreen ? 12 : 16,
+        vertical: isSmallScreen ? 6 : 8,
+      ),
       onTap: () {
         context.read<ThemeBloc>().add(ThemeChanged(themeMode));
         // Navigator.pop(context);
