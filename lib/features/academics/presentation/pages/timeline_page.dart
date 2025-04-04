@@ -60,70 +60,7 @@ class _TimelinePageState extends State<TimelinePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weekly Schedule'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.today),
-            onPressed: () {
-              // Jump to the current week (starting from Saturday)
-              _currentWeekStart = _getStartOfWeek(DateTime.now());
-              _weekViewKey.currentState?.jumpToWeek(_currentWeekStart);
-              
-              // Update events for current week
-              if (_allSessions != null) {
-                _updateCalendarWithSessions(_allSessions!, _currentWeekStart);
-              }
-            },
-            tooltip: 'Go to current week',
-          ),
-          // Force reload button
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              // Force reload all sessions
-              final profileState = context.read<ProfileBloc>().state;
-              if (profileState is ProfileLoaded) {
-                // Show loading indicator
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Reloading schedule data...'),
-                    duration: Duration(seconds: 1),
-                  ),
-                );
-                
-                context.read<TimelineBloc>().add(
-                  LoadWeeklyTimetable(
-                    enrollmentId: profileState.detailedInfo.id,
-                    forceReload: true,
-                  ),
-                );
-              }
-            },
-            tooltip: 'Reload data',
-          ),
-          // Debug button
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: () {
-              // Print debug information about days
-              _printDebugInfo();
-              
-              // Show a snackbar with a count of events
-              int eventCount = 0;
-              if (_allSessions != null) {
-                eventCount = _allSessions!.length;
-              }
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Total sessions: $eventCount (See console for details)'),
-                  duration: const Duration(seconds: 3),
-                  behavior: SnackBarBehavior.floating,
-                ),
-              );
-            },
-            tooltip: 'Debug Info',
-          ),
-        ],
+       
       ),
       body: BlocListener<TimelineBloc, TimelineState>(
         listener: (context, state) {
@@ -177,11 +114,11 @@ class _TimelinePageState extends State<TimelinePage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildLegendItem('Lecture', Colors.blue.shade300),
+                      _buildLegendItem('Lecture',  AppTheme.accentGreen),
                       const SizedBox(width: 8),
-                      _buildLegendItem('Tutorial', Colors.green.shade300),
+                      _buildLegendItem('Tutorial', AppTheme.AppPrimary),
                       const SizedBox(width: 8),
-                      _buildLegendItem('Practical', Colors.orange.shade300),
+                      _buildLegendItem('Practical', AppTheme.accentBlue ),
                     ],
                   ),
                 ),
@@ -203,8 +140,10 @@ class _TimelinePageState extends State<TimelinePage> {
                         endHour: 20,
                         showVerticalLines: true,
                         liveTimeIndicatorSettings: const LiveTimeIndicatorSettings(
-                            showTimeBackgroundView: true,
-                            showTime: true,
+                            // showTimeBackgroundView: true,
+                            offset: 60,
+
+                            // showTime: true,
                             color: Colors.red),
                         onHeaderTitleTap: null,
                         showHalfHours: true,
@@ -384,11 +323,11 @@ class _TimelinePageState extends State<TimelinePage> {
     // Determine color based on session type
     Color bgColor;
     if (courseSession?.ap == 'CM') {
-      bgColor = Colors.blue.shade300;
+      bgColor = AppTheme.accentGreen ;
     } else if (courseSession?.ap == 'TD') {
-      bgColor = Colors.green.shade300;
+      bgColor =AppTheme.AppSecondary ;
     } else if (courseSession?.ap == 'TP') {
-      bgColor = Colors.orange.shade300;
+      bgColor = AppTheme.accentBlue ;
     } else {
       bgColor = Colors.grey.shade300;
     }
@@ -584,75 +523,6 @@ class _TimelinePageState extends State<TimelinePage> {
     return DateTime(date.year, date.month, date.day - daysToSaturday);
   }
 
-  // Debug helper to print information about the current week
-  void _printDebugInfo() {
-    print('\n--- DEBUG INFO ---');
-    print('Current week start: ${_formatDate(_currentWeekStart)} (weekday: ${_currentWeekStart.weekday})');
-    
-    if (_allSessions != null) {
-      print('Total sessions: ${_allSessions!.length}');
-      
-      // Group sessions by jourId
-      final Map<int, List<CourseSession>> sessionsByDay = {};
-      for (final session in _allSessions!) {
-        final dayId = session.jourId;
-        if (!sessionsByDay.containsKey(dayId)) {
-          sessionsByDay[dayId] = [];
-        }
-        sessionsByDay[dayId]!.add(session);
-      }
-      
-      // Print session counts by day
-      print('\nSessions by day (grouped by jourId):');
-      sessionsByDay.forEach((jourId, sessions) {
-        final frenchDay = sessions.first.jourLibelleFr;
-        print('jourId $jourId ($frenchDay): ${sessions.length} sessions');
-      });
-      
-      // Print sample mappings for all days with sessions
-      print('\nDay mappings for all days with sessions:');
-      sessionsByDay.forEach((jourId, sessions) {
-        final session = sessions.first;
-        final mappedDay = session.getDayDateTime(weekStart: _currentWeekStart);
-        print('jourId $jourId (${session.jourLibelleFr}) -> ${_formatDate(mappedDay)} (weekday: ${mappedDay.weekday})');
-      });
-      
-      // Verify mappings for all days of the week
-      print('\nVerifying jourId to day mappings for current week (${_formatDate(_currentWeekStart)}):');
-      for (int jourId = 1; jourId <= 7; jourId++) {
-        // Create a test session for this jourId
-        final testSession = CourseSession(
-          ap: 'TEST',
-          groupe: 'TEST',
-          id: 0,
-          jourId: jourId,
-          jourLibelleAr: '',
-          jourLibelleFr: 'Test Day $jourId',
-          matiere: 'Test',
-          matiereAr: '',
-          periodeId: 1,
-          plageHoraireHeureDebut: '08:00',
-          plageHoraireHeureFin: '09:00',
-          plageHoraireLibelleFr: '',
-        );
-        
-        final mappedDay = testSession.getDayDateTime(weekStart: _currentWeekStart);
-        print('jourId $jourId -> ${_formatDate(mappedDay)} (weekday: ${mappedDay.weekday})');
-      }
-      
-      // Check for Sunday events specifically
-      final sundayEvents = _allSessions!.where((s) => s.jourId == 2).toList();
-      print('\nSunday events (jourId=2): ${sundayEvents.length}');
-      for (int i = 0; i < min(sundayEvents.length, 3); i++) {
-        final session = sundayEvents[i];
-        final mappedDay = session.getDayDateTime(weekStart: _currentWeekStart);
-        print('  Sunday event ${i+1}: ${session.matiere} -> ${_formatDate(mappedDay)} (weekday: ${mappedDay.weekday})');
-      }
-    } else {
-      print('No sessions loaded');
-    }
-    print('------------------\n');
-  }
 
   // Calculate optimal view width based on screen size
   double _getOptimalViewWidth(BuildContext context) {
