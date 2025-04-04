@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
+import 'package:progres/features/academics/presentation/bloc/transcripts_bloc.dart';
 
 // Events
 abstract class AuthEvent {}
@@ -12,7 +14,11 @@ class LoginEvent extends AuthEvent {
   LoginEvent({required this.username, required this.password});
 }
 
-class LogoutEvent extends AuthEvent {}
+class LogoutEvent extends AuthEvent {
+  final BuildContext? context;
+  
+  LogoutEvent({this.context});
+}
 
 class CheckAuthStatusEvent extends AuthEvent {}
 
@@ -65,6 +71,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
       await authRepository.logout();
+      
+      // Clear transcript cache if available (will be no-op if the bloc doesn't exist yet)
+      try {
+        event.context?.read<TranscriptsBloc>().add(ClearTranscriptCache());
+      } catch (e) {
+        // Ignore errors if bloc is not available
+        print('Note: Could not clear transcript cache. ${e.toString()}');
+      }
+      
       emit(AuthLoggedOut());
     } catch (e) {
       emit(AuthError(e.toString()));

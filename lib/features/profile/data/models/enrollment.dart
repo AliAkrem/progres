@@ -64,4 +64,28 @@ class Enrollment {
       situationId: json['situationId'] as int,
     );
   }
+  
+  Map<String, dynamic> toJson() {
+    return {
+      'anneeAcademiqueCode': anneeAcademiqueCode,
+      'anneeAcademiqueId': anneeAcademiqueId,
+      'id': id,
+      'llEtablissementArabe': llEtablissementArabe,
+      'llEtablissementLatin': llEtablissementLatin,
+      'niveauId': niveauId,
+      'niveauLibelleLongAr': niveauLibelleLongAr,
+      'niveauLibelleLongLt': niveauLibelleLongLt,
+      'numeroInscription': numeroInscription,
+      'ofLlDomaine': ofLlDomaine,
+      'ofLlDomaineArabe': ofLlDomaineArabe,
+      'ofLlFiliere': ofLlFiliere,
+      'ofLlFiliereArabe': ofLlFiliereArabe,
+      'ofLlSpecialite': ofLlSpecialite,
+      'ofLlSpecialiteArabe': ofLlSpecialiteArabe,
+      'ouvertureOffreFormationId': ouvertureOffreFormationId,
+      'refLibelleCycle': refLibelleCycle,
+      'refLibelleCycleAr': refLibelleCycleAr,
+      'situationId': situationId,
+    };
+  }
 } 

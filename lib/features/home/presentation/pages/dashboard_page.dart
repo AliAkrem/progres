@@ -241,6 +241,13 @@ class _DashboardPageState extends State<DashboardPage> {
                   color: AppTheme.AppPrimary,
                   onTap: () => context.goNamed(AppRouter.timeline),
                 ),
+                _buildGridCard(
+                  context,
+                  title: 'Academic Transcripts',
+                  icon: Icons.menu_book_rounded,
+                  color: AppTheme.AppPrimary,
+                  onTap: () => context.goNamed(AppRouter.transcripts),
+                ),
               ],
             ),
 

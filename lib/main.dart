@@ -6,10 +6,12 @@ import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
 import 'package:progres/features/academics/presentation/bloc/timeline_bloc.dart';
+import 'package:progres/features/academics/presentation/bloc/transcripts_bloc.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:progres/features/academics/data/services/transcript_cache_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => StudentRepositoryImpl(),
+        ),
+        RepositoryProvider(
+          create: (context) => TranscriptCacheService(),
         ),
       ],
       child: MultiBlocProvider(
@@ -51,6 +56,12 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (context) => TimelineBloc(
               studentRepository: context.read<StudentRepositoryImpl>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => TranscriptsBloc(
+              studentRepository: context.read<StudentRepositoryImpl>(),
+              cacheService: context.read<TranscriptCacheService>(),
             ),
           ),
           BlocProvider(

@@ -186,7 +186,7 @@ class SettingsPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          context.read<AuthBloc>().add(LogoutEvent());
+                          context.read<AuthBloc>().add(LogoutEvent(context: context));
                         },
                         child: const Text('Logout'),
                       ),

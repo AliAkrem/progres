@@ -5,6 +5,7 @@ import 'package:progres/features/academics/presentation/pages/academic_performan
 import 'package:progres/features/academics/presentation/pages/groups_page.dart';
 import 'package:progres/features/academics/presentation/pages/subjects_page.dart';
 import 'package:progres/features/academics/presentation/pages/timeline_page.dart';
+import 'package:progres/features/academics/presentation/pages/transcripts_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/presentation/pages/login_page.dart';
 import 'package:progres/features/home/presentation/pages/dashboard_page.dart';
@@ -26,6 +27,7 @@ class AppRouter {
   static const String groups = 'groups';
   static const String enrollments = 'enrollments';
   static const String timeline = 'timeline';
+  static const String transcripts = 'transcripts';
   
   // Route paths
   static const String loginPath = '/login';
@@ -38,6 +40,7 @@ class AppRouter {
   static const String groupsPath = 'groups';
   static const String enrollmentsPath = 'enrollments';
   static const String timelinePath = 'timeline';
+  static const String transcriptsPath = 'transcripts';
 
   late final GoRouter router;
 
@@ -103,6 +106,11 @@ class AppRouter {
                   path: timelinePath,
                   name: timeline,
                   builder: (context, state) => const TimelinePage(),
+                ),
+                GoRoute(
+                  path: transcriptsPath,
+                  name: transcripts,
+                  builder: (context, state) => const TranscriptsPage(),
                 ),
               ]
             ),
