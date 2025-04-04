@@ -74,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       
       // Clear transcript cache if available (will be no-op if the bloc doesn't exist yet)
       try {
-        event.context?.read<TranscriptsBloc>().add(ClearTranscriptCache());
+        event.context?.read<TranscriptsBloc>().add(const ClearTranscriptCache());
       } catch (e) {
         // Ignore errors if bloc is not available
         print('Note: Could not clear transcript cache. ${e.toString()}');

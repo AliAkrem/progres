@@ -112,10 +112,8 @@ class TranscriptsBloc extends Bloc<TranscriptsEvent, TranscriptsState> {
       try {
         annualSummary = await studentRepository.getAnnualTranscriptSummary(event.enrollmentId);
         // Cache the annual summary
-        if (annualSummary != null) {
-          await cacheService.cacheAnnualSummary(event.enrollmentId, annualSummary);
-        }
-      } catch (e) {
+        await cacheService.cacheAnnualSummary(event.enrollmentId, annualSummary);
+            } catch (e) {
         print('Error loading annual summary: $e');
         // Try to get from cache if network request fails
         annualSummary = await cacheService.getCachedAnnualSummary(event.enrollmentId);

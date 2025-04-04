@@ -28,9 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 360;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -385,7 +383,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: theme.textTheme.bodyMedium?.color,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             Text(
               value,
               style: TextStyle(

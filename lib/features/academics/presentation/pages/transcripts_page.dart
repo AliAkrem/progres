@@ -103,11 +103,11 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
         },
         builder: (context, state) {
           if (state is TranscriptsInitial) {
-            return Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
+            return const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
           } else if (state is TranscriptsError) {
             return Center(child: Text('Error: ${state.message}', style: theme.textTheme.bodyLarge));
           } else if (_enrollments.isEmpty) {
-            return Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
+            return const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
           } else {
             return _buildContent(state, theme);
           }
@@ -155,7 +155,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
         // Main content
         Expanded(
           child: state is TranscriptsLoading 
-            ? Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary))
+            ? const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary))
             : state is TranscriptsLoaded 
               ? _buildTranscriptsView(state, theme)
               : Center(
@@ -231,11 +231,11 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppTheme.AppPrimary.withOpacity(0.1),
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         topRight: Radius.circular(12),
                       ),
-                      border: Border(
+                      border: const Border(
                         bottom: BorderSide(
                           color: AppTheme.AppBorder,
                           width: 1,
@@ -247,7 +247,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -255,7 +255,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                                 size: 24,
                                 color: AppTheme.AppPrimary,
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Text(
                                 'ANNUAL RESULTS',
                                 style: TextStyle(
@@ -307,7 +307,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                     children: [
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.school,
                             size: 18,
                             color: AppTheme.AppPrimary,
@@ -478,7 +478,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
             // Semester header with title and stats
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.calendar_month,
                   size: 18,
                   color: AppTheme.AppPrimary,

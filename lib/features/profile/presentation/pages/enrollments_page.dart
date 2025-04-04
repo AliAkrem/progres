@@ -77,8 +77,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   }
 
   Widget _buildEnrollmentsList(BuildContext context, List<Enrollment> enrollments) {
-    final theme = Theme.of(context);
-    
+
     // Sort enrollments by academic year (newest first)
     final sortedEnrollments = List<Enrollment>.from(enrollments)
       ..sort((a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId));

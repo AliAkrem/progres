@@ -59,7 +59,6 @@ class CourseSession {
     );
   }
   
-  // Helper methods to get the start and end times as DateTime objects
   DateTime get startTime {
     final parts = plageHoraireHeureDebut.split(':');
     return DateTime(

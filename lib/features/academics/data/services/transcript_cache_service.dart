@@ -46,7 +46,7 @@ class TranscriptCacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final transcriptsJson = transcripts.map((t) => t.toJson()).toList();
-      await prefs.setString('${_transcriptsKeyPrefix}$enrollmentId', jsonEncode(transcriptsJson));
+      await prefs.setString('$_transcriptsKeyPrefix$enrollmentId', jsonEncode(transcriptsJson));
       await prefs.setString('${_lastUpdatedKeyPrefix}transcript_$enrollmentId', DateTime.now().toIso8601String());
       return true;
     } catch (e) {
@@ -59,7 +59,7 @@ class TranscriptCacheService {
   Future<List<AcademicTranscript>?> getCachedTranscripts(int enrollmentId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final transcriptsString = prefs.getString('${_transcriptsKeyPrefix}$enrollmentId');
+      final transcriptsString = prefs.getString('$_transcriptsKeyPrefix$enrollmentId');
       
       if (transcriptsString == null) return null;
       
@@ -75,7 +75,7 @@ class TranscriptCacheService {
   Future<bool> cacheAnnualSummary(int enrollmentId, AnnualTranscriptSummary summary) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('${_annualSummaryKeyPrefix}$enrollmentId', jsonEncode(summary.toJson()));
+      await prefs.setString('$_annualSummaryKeyPrefix$enrollmentId', jsonEncode(summary.toJson()));
       await prefs.setString('${_lastUpdatedKeyPrefix}summary_$enrollmentId', DateTime.now().toIso8601String());
       return true;
     } catch (e) {
@@ -88,7 +88,7 @@ class TranscriptCacheService {
   Future<AnnualTranscriptSummary?> getCachedAnnualSummary(int enrollmentId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final summaryString = prefs.getString('${_annualSummaryKeyPrefix}$enrollmentId');
+      final summaryString = prefs.getString('$_annualSummaryKeyPrefix$enrollmentId');
       
       if (summaryString == null) return null;
       
@@ -105,8 +105,8 @@ class TranscriptCacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final key = enrollmentId != null 
-          ? '${_lastUpdatedKeyPrefix}${dataType}_$enrollmentId' 
-          : '${_lastUpdatedKeyPrefix}$dataType';
+          ? '$_lastUpdatedKeyPrefix${dataType}_$enrollmentId' 
+          : '$_lastUpdatedKeyPrefix$dataType';
       
       final timestamp = prefs.getString(key);
       if (timestamp == null) return null;

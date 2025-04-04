@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 8.0,
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:progres/features/academics/data/models/course_session.dart';
+import 'package:progres/features/timeline/data/models/course_session.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 
 // Events

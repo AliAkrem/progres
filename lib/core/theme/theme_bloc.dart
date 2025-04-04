@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/core/theme/theme_service.dart';
 
-// Theme Events
 abstract class ThemeEvent extends Equatable {
   const ThemeEvent();
 
@@ -22,7 +21,6 @@ class ThemeChanged extends ThemeEvent {
 
 class LoadTheme extends ThemeEvent {}
 
-// Theme State
 class ThemeState extends Equatable {
   final ThemeMode themeMode;
 
@@ -32,7 +30,6 @@ class ThemeState extends Equatable {
   List<Object> get props => [themeMode];
 }
 
-// Theme Bloc
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeBloc() : super(const ThemeState(themeMode: ThemeMode.system)) {
     on<LoadTheme>(_onLoadTheme);
