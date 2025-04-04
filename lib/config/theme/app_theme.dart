@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Brand colors
-  static const Color AppPrimary = Color(0xFFDA7756); // Main color
-  static const Color AppSecondary = Color(0xFFBD5D3A); // Button color
+  static const Color AppPrimary = Color(0xFF00C48C); // Main color
+  static const Color AppSecondary = Color(0xFF00C990); // Button color
   static const Color AppBackground = Color(0xFFEEECE2); // Background
   static const Color AppTextSecondary = Color(0xFF6E6E80); // Secondary Text
   static const Color AppBorder = Color(0xFFE6E6EF); // Border Color
   
   // Accent colors
-  static const Color accentGreen = Color(0xFF00C48C);
+  static const Color accentGreen = Color(0xFF2BDD66);
   static const Color accentBlue = Color(0xFF1A73E8);
   static const Color accentRed = Color(0xFFEB5757);
   static const Color accentYellow = Color(0xFFF2C94C);
