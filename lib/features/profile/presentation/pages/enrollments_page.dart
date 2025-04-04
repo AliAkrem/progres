@@ -88,40 +88,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header card
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(
-                color: theme.dividerColor.withOpacity(0.2),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Academic Enrollment History',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Your complete academic enrollment history across all years and institutions.',
-                    style: TextStyle(
-                      color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          const SizedBox(height: 24),
-          
+
           // Timeline of enrollments
           for (var enrollment in sortedEnrollments) ...[
             _buildEnrollmentCard(context, enrollment),

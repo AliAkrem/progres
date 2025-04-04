@@ -124,45 +124,6 @@ class _SubjectsPageState extends State<SubjectsPage> {
       padding: EdgeInsets.all(isSmallScreen ? 12.0 : 16.0),
       child: Column(
         children: [
-          // Program information
-          Card(
-            elevation: 1,
-            margin: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-              side: BorderSide(
-                color: theme.brightness == Brightness.light 
-                  ? AppTheme.AppBorder 
-                  : const Color(0xFF3F3C34)
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(isSmallScreen ? 14 : 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Coefficients by Subject',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: isSmallScreen ? 18 : 20,
-                    ),
-                  ),
-                  SizedBox(height: isSmallScreen ? 6 : 8),
-                  Text(
-                    'These coefficients define how each assessment type contributes to your final grade for each subject.',
-                    style: TextStyle(
-                      color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
-                      fontSize: isSmallScreen ? 13 : 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          SizedBox(height: isSmallScreen ? 20 : 24),
-          
           // Periods and courses
           for (var period in sortedPeriods) ...[
             // Period header
@@ -230,21 +191,22 @@ class _SubjectsPageState extends State<SubjectsPage> {
                         _buildAssessmentTypeRow(
                           'Continuous Assessment',
                           coefficient.coefficientControleContinu,
-                          AppTheme.accentGreen,
+                          AppTheme.AppSecondary, 
                           theme
                         ),
                         
                         _buildAssessmentTypeRow(
                           'Intermediate Assessment',
                           coefficient.coefficientControleIntermediaire,
-                          AppTheme.AppSecondary, 
+                          AppTheme.accentBlue,
                           theme
                         ),
                         
                         _buildAssessmentTypeRow(
                           'Final Examination',
                           coefficient.coefficientExamen,
-                          AppTheme.accentBlue,
+                          AppTheme.accentGreen,
+
                           theme
                         ),
                       ],

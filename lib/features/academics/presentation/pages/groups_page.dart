@@ -154,41 +154,7 @@ class _GroupsPageState extends State<GroupsPage> {
       padding: EdgeInsets.all(horizontalPadding),
       child: Column(
         children: [
-          // Program information
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              side: BorderSide(
-                color: theme.dividerColor.withOpacity(0.2),
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(isSmallScreen ? 14 : 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Pedagogical Groups',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: isSmallScreen ? 18 : 20,
-                    ),
-                  ),
-                  SizedBox(height: isSmallScreen ? 6 : 8),
-                  Text(
-                    'These are the groups you belong to for each semester. Groups are used for scheduling and pedagogical organization.',
-                    style: TextStyle(
-                      color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
-                      fontSize: isSmallScreen ? 13 : 14,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          
-          SizedBox(height: isSmallScreen ? 20 : 24),
+     
           
           // Periods and groups
           for (var period in sortedPeriods) ...[
@@ -239,7 +205,7 @@ class _GroupsPageState extends State<GroupsPage> {
                             width: isSmallScreen ? 36 : 40,
                             height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
-                              color: AppTheme.AppSecondary,
+                              color:   AppTheme.AppPrimary.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
