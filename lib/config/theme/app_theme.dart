@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Brand colors
-  static const Color claudePrimary = Color(0xFFDA7756); // Main color
-  static const Color claudeSecondary = Color(0xFFBD5D3A); // Button color
-  static const Color claudeBackground = Color(0xFFEEECE2); // Background
-  static const Color claudeTextSecondary = Color(0xFF6E6E80); // Secondary Text
-  static const Color claudeBorder = Color(0xFFE6E6EF); // Border Color
+  static const Color AppPrimary = Color(0xFFDA7756); // Main color
+  static const Color AppSecondary = Color(0xFFBD5D3A); // Button color
+  static const Color AppBackground = Color(0xFFEEECE2); // Background
+  static const Color AppTextSecondary = Color(0xFF6E6E80); // Secondary Text
+  static const Color AppBorder = Color(0xFFE6E6EF); // Border Color
   
   // Accent colors
   static const Color accentGreen = Color(0xFF00C48C);
@@ -17,13 +17,13 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      primaryColor: claudePrimary,
-      scaffoldBackgroundColor: claudeBackground,
+      primaryColor: AppPrimary,
+      scaffoldBackgroundColor: AppBackground,
       colorScheme: const ColorScheme.light(
-        primary: claudePrimary,
+        primary: AppPrimary,
         onPrimary: Colors.white,
-        secondary: claudeSecondary,
-        onSecondary: claudePrimary,
+        secondary: AppSecondary,
+        onSecondary: AppPrimary,
         surface: Colors.white,
         error: accentRed,
         onError: Colors.white,
@@ -80,21 +80,21 @@ class AppTheme {
         ),
         bodyMedium: TextStyle(
           fontSize: 14,
-          color: claudeTextSecondary,
+          color: AppTextSecondary,
         ),
         bodySmall: TextStyle(
           fontSize: 12,
-          color: claudeTextSecondary,
+          color: AppTextSecondary,
         ),
         labelLarge: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: claudePrimary,
+          color: AppPrimary,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: claudePrimary,
+          backgroundColor: AppPrimary,
           foregroundColor: Colors.white,
           textStyle: const TextStyle(
             fontSize: 16,
@@ -113,8 +113,8 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: claudePrimary,
-          side: const BorderSide(color: claudePrimary, width: 1.5),
+          foregroundColor: AppPrimary,
+          side: const BorderSide(color: AppPrimary, width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -131,7 +131,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: claudePrimary,
+          foregroundColor: AppPrimary,
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -154,15 +154,15 @@ class AppTheme {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: claudeBorder, width: 1.5),
+          borderSide: const BorderSide(color: AppBorder, width: 1.5),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: claudeBorder, width: 1.5),
+          borderSide: const BorderSide(color: AppBorder, width: 1.5),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: claudePrimary, width: 1.5),
+          borderSide: const BorderSide(color: AppPrimary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -173,11 +173,11 @@ class AppTheme {
           borderSide: const BorderSide(color: accentRed, width: 1.5),
         ),
         labelStyle: const TextStyle(
-          color: claudeTextSecondary,
+          color: AppTextSecondary,
           fontSize: 16,
         ),
         hintStyle: const TextStyle(
-          color: claudeTextSecondary,
+          color: AppTextSecondary,
           fontSize: 16,
         ),
         errorStyle: const TextStyle(
@@ -189,48 +189,48 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: claudeBorder, width: 1.5),
+          side: const BorderSide(color: AppBorder, width: 1.5),
         ),
         color: Colors.white,
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: Colors.white,
-        indicatorColor: claudeSecondary,
+        indicatorColor: AppSecondary,
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const TextStyle(
-              color: claudePrimary,
+              color: AppPrimary,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             );
           }
           return const TextStyle(
-            color: claudeTextSecondary,
+            color: AppTextSecondary,
             fontSize: 12,
           );
         }),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const IconThemeData(
-              color: claudePrimary,
+              color: AppPrimary,
               size: 24,
             );
           }
           return const IconThemeData(
-            color: claudePrimary,
+            color: AppPrimary,
             size: 24,
           );
         }),
       ),
       dividerTheme: const DividerThemeData(
-        color: claudeBorder,
+        color: AppBorder,
         thickness: 1,
         space: 1,
       ),
       tabBarTheme: const TabBarTheme(
-        labelColor: claudePrimary,
-        unselectedLabelColor: claudeTextSecondary,
-        indicatorColor: claudePrimary,
+        labelColor: AppPrimary,
+        unselectedLabelColor: AppTextSecondary,
+        indicatorColor: AppPrimary,
         labelStyle: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
@@ -246,12 +246,12 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
-      primaryColor: claudePrimary,
-      scaffoldBackgroundColor: const Color(0xFF2D2B21), // Darker version of claudeBackground
+      primaryColor: AppPrimary,
+      scaffoldBackgroundColor: const Color(0xFF2D2B21), // Darker version of AppBackground
       colorScheme: const ColorScheme.dark(
-        primary: claudePrimary,
+        primary: AppPrimary,
         onPrimary: Colors.white,
-        secondary: claudeSecondary,
+        secondary: AppSecondary,
         onSecondary: Colors.white,
         surface: Color(0xFF33312A), // Darker version of background
         onSurface: Colors.white,
@@ -330,12 +330,12 @@ class AppTheme {
         labelLarge: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: claudePrimary,
+          color: AppPrimary,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: claudePrimary,
+          backgroundColor: AppPrimary,
           foregroundColor: Colors.white,
           textStyle: const TextStyle(
             fontSize: 16,
@@ -354,8 +354,8 @@ class AppTheme {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: claudePrimary,
-          side: const BorderSide(color: claudePrimary, width: 1.5),
+          foregroundColor: AppPrimary,
+          side: const BorderSide(color: AppPrimary, width: 1.5),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -372,7 +372,7 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: claudePrimary,
+          foregroundColor: AppPrimary,
           textStyle: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -403,7 +403,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: claudePrimary, width: 1.5),
+          borderSide: const BorderSide(color: AppPrimary, width: 1.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -436,11 +436,11 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: const Color(0xFF33312A), // Darker version of background
-        indicatorColor: claudePrimary.withOpacity(0.2),
+        indicatorColor: AppPrimary.withOpacity(0.2),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const TextStyle(
-              color: claudePrimary,
+              color: AppPrimary,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             );
@@ -453,7 +453,7 @@ class AppTheme {
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const IconThemeData(
-              color: claudePrimary,
+              color: AppPrimary,
               size: 24,
             );
           }
@@ -469,9 +469,9 @@ class AppTheme {
         space: 1,
       ),
       tabBarTheme: const TabBarTheme(
-        labelColor: claudePrimary,
+        labelColor: AppPrimary,
         unselectedLabelColor: Color(0xFFADAEBD),
-        indicatorColor: claudePrimary,
+        indicatorColor: AppPrimary,
         labelStyle: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,

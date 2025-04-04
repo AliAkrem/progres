@@ -145,8 +145,8 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
       } else {
         // Should not happen, but just in case
         emit(AcademicsLoaded(
-          examResults: [],
-          continuousAssessments: [],
+          examResults: const [],
+          continuousAssessments: const [],
           courseCoefficients: coefficients,
         ));
       }
@@ -174,8 +174,8 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
       } else {
         // Should not happen, but just in case
         emit(AcademicsLoaded(
-          examResults: [],
-          continuousAssessments: [],
+          examResults: const [],
+          continuousAssessments: const [],
           studentGroups: groups,
         ));
       }

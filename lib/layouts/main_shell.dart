@@ -42,7 +42,7 @@ class MainShell extends StatelessWidget {
             elevation: 0,
             backgroundColor: theme.colorScheme.surface,
             height: 70,
-            indicatorColor: AppTheme.claudePrimary.withOpacity(0.15),
+            indicatorColor: AppTheme.AppPrimary.withOpacity(0.15),
             destinations: [
               _buildNavDestination(
                 context,
@@ -81,7 +81,7 @@ class MainShell extends StatelessWidget {
       ),
       selectedIcon: Icon(
         selectedIcon,
-        color:  AppTheme.claudePrimary,
+        color:  AppTheme.AppPrimary,
       ),
       label: label,
     );

@@ -13,15 +13,42 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+  bool _obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeOut,
+      ),
+    );
+    _animationController.forward();
+  }
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -32,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     final isSmallScreen = screenSize.width < 360;
     
     return Scaffold(
-      backgroundColor: theme.brightness == Brightness.dark ? const Color(0xFF2D2B21) : AppTheme.claudeBackground,
+      backgroundColor: theme.brightness == Brightness.dark ? const Color(0xFF2D2B21) : AppTheme.AppBackground,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -40,155 +67,236 @@ class _LoginPageState extends State<LoginPage> {
             context.read<ProfileBloc>().add(LoadProfileEvent());
             context.goNamed(AppRouter.dashboard);
           } else if (state is AuthError) {
+            // Display a user-friendly error message
+            String userFriendlyMessage = 'Unable to sign in. Please check your student code and password.';
+            
+            // Handle specific errors if we can identify them
+            if (state.message.contains('403')) {
+              userFriendlyMessage = 'Incorrect student code or password. Please try again.';
+            } else if (state.message.contains('timeout') || state.message.contains('connect')) {
+              userFriendlyMessage = 'Network connection error. Please check your internet connection and try again.';
+            }
+            
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text(userFriendlyMessage),
                 backgroundColor: Colors.red.shade700,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
+                margin: EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
               ),
             );
           }
         },
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 420),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isSmallScreen ? 16.0 : 24.0,
+                    vertical: 24.0,
                   ),
-                  elevation: 0,
-                  child: Padding(
-                    padding: EdgeInsets.all(isSmallScreen ? 24.0 : 32.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Logo or icon representing Claude
-                          Container(
-                            width: isSmallScreen ? 64 : 72,
-                            height: isSmallScreen ? 64 : 72,
-                            decoration: BoxDecoration(
-                              color: AppTheme.claudePrimary.withOpacity(0.2) ,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.school_rounded,
-                                color: AppTheme.claudePrimary,
-                                size: isSmallScreen ? 32 : 36,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: isSmallScreen ? 20 : 24),
-                          Text(
-                            'Student Portal',
-                            style: theme.textTheme.displayMedium?.copyWith(
-                              fontSize: isSmallScreen ? 26 : 32,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Sign in to your account',
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          SizedBox(height: isSmallScreen ? 24 : 32),
-                          TextFormField(
-                            controller: _usernameController,
-                            decoration: InputDecoration(
-                              labelText: 'Student Code',
-                              prefixIcon: Icon(
-                                Icons.person_outline,
-                                color: theme.inputDecorationTheme.prefixIconColor,
-                                size: isSmallScreen ? 20 : 24,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 12 : 16,
-                                horizontal: isSmallScreen ? 12 : 16,
-                              ),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your student code';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: isSmallScreen ? 12 : 16),
-                          TextFormField(
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                                color: theme.inputDecorationTheme.prefixIconColor,
-                                size: isSmallScreen ? 20 : 24,
-                              ),
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: isSmallScreen ? 12 : 16,
-                                horizontal: isSmallScreen ? 12 : 16,
-                              ),
-                            ),
-                            obscureText: true,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: isSmallScreen ? 20 : 24),
-                          BlocBuilder<AuthBloc, AuthState>(
-                            builder: (context, state) {
-                              return SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: state is AuthLoading
-                                      ? null
-                                      : () {
-                                          if (_formKey.currentState!.validate()) {
-                                            context.read<AuthBloc>().add(
-                                                  LoginEvent(
-                                                    username: _usernameController.text,
-                                                    password: _passwordController.text,
-                                                  ),
-                                                );
-                                          }
-                                        },
-                                  style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: isSmallScreen ? 12 : 16,
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 420),
+                    child: Padding(
+                      padding: const EdgeInsets.all( 8.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Logo and header
+                            Hero(
+                              tag: 'app_logo',
+                              child: Container(
+                                width: isSmallScreen ? 72 : 88,
+                                height: isSmallScreen ? 72 : 88,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.AppPrimary.withOpacity(0.15),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppTheme.AppPrimary.withOpacity(0.2),
+                                      blurRadius: 12,
+                                      spreadRadius: 2,
                                     ),
-                                  ),
-                                  child: state is AuthLoading
-                                      ? const SizedBox(
-                                          height: 20,
-                                          width: 20,
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
-                                            strokeWidth: 2,
-                                          ),
-                                        )
-                                      : Text(
-                                          'Sign In',
-                                          style: TextStyle(
-                                            fontSize: isSmallScreen ? 14 : 16,
-                                          ),
-                                        ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: isSmallScreen ? 12 : 16),
-
-                        ],
+                                child: Center(
+                                  child: Icon(
+                                    Icons.school_rounded,
+                                    color: AppTheme.AppPrimary,
+                                    size: isSmallScreen ? 36 : 44,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: isSmallScreen ? 28 : 32),
+                            Text(
+                              'Student Portal',
+                              style: theme.textTheme.displayMedium?.copyWith(
+                                fontSize: isSmallScreen ? 28 : 34,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              'Sign in to your account',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontSize: isSmallScreen ? 14 : 16,
+                                color: theme.brightness == Brightness.dark 
+                                  ? Colors.white70 
+                                  : Colors.black54,
+                              ),
+                            ),
+                            SizedBox(height: isSmallScreen ? 36 : 44),
+                            
+                            // Student code field
+                            TextFormField(
+                              controller: _usernameController,
+                              decoration: InputDecoration(
+                                labelText: 'Student Code',
+                                hintText: 'Enter your student code',
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                  color: theme.inputDecorationTheme.prefixIconColor,
+                                  size: isSmallScreen ? 20 : 24,
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: theme.brightness == Brightness.dark 
+                                      ? Colors.white30 
+                                      : Colors.black12,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: isSmallScreen ? 16 : 20,
+                                  horizontal: isSmallScreen ? 16 : 20,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your student code';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: isSmallScreen ? 20 : 24),
+                            
+                            // Password field
+                            TextFormField(
+                              controller: _passwordController,
+                              decoration: InputDecoration(
+                                labelText: 'Password',
+                                hintText: 'Enter your password',
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  color: theme.inputDecorationTheme.prefixIconColor,
+                                  size: isSmallScreen ? 20 : 24,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                                    color: theme.brightness == Brightness.dark 
+                                      ? Colors.white60 
+                                      : Colors.black45,
+                                    size: isSmallScreen ? 20 : 22,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _obscurePassword = !_obscurePassword;
+                                    });
+                                  },
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: theme.brightness == Brightness.dark 
+                                      ? Colors.white30 
+                                      : Colors.black12,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: isSmallScreen ? 16 : 20,
+                                  horizontal: isSmallScreen ? 16 : 20,
+                                ),
+                              ),
+                              obscureText: _obscurePassword,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your password';
+                                }
+                                return null;
+                              },
+                            ),
+                            
+                            
+                            
+                            SizedBox(height: isSmallScreen ? 28 : 36),
+                            
+                            // Sign in button
+                            BlocBuilder<AuthBloc, AuthState>(
+                              builder: (context, state) {
+                                return SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: state is AuthLoading
+                                        ? null
+                                        : () {
+                                            if (_formKey.currentState!.validate()) {
+                                              context.read<AuthBloc>().add(
+                                                    LoginEvent(
+                                                      username: _usernameController.text,
+                                                      password: _passwordController.text,
+                                                    ),
+                                                  );
+                                            }
+                                          },
+                                    style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: isSmallScreen ? 16 : 20,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      elevation: 2,
+                                    ),
+                                    child: state is AuthLoading
+                                        ? const SizedBox(
+                                            height: 24,
+                                            width: 24,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2.5,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Sign In',
+                                            style: TextStyle(
+                                              fontSize: isSmallScreen ? 16 : 18,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(height: isSmallScreen ? 24 : 28),
+                            
+                             ],
+                        ),
                       ),
                     ),
                   ),

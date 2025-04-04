@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(color: AppTheme.claudePrimary),
+          const CircularProgressIndicator(color: AppTheme.AppPrimary),
           const SizedBox(height: 24),
           Text(
             'Loading profile data...',
@@ -131,32 +131,25 @@ class _ProfilePageState extends State<ProfilePage> {
           
           // Status cards
           Padding(
-            padding: EdgeInsets.fromLTRB(horizontalPadding, 0, horizontalPadding, isSmallScreen ? 12 : 16),
-            child: Row(
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 0, horizontalPadding, isSmallScreen ? 16 : 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: _buildStatusCard(
-                    icon: Icons.school_rounded,
-                    title: 'Level',
-                    value: state.detailedInfo.niveauLibelleLongLt,
+                Text(
+                  'Current Status',
+                  style: TextStyle(
+                    fontSize: isSmallScreen ? 16 : 18,
+                    fontWeight: FontWeight.bold,
+                    color: theme.textTheme.titleLarge?.color,
                   ),
                 ),
-                SizedBox(width: isSmallScreen ? 12 : 16),
-                Expanded(
-                  child: _buildStatusCard(
-                    icon: Icons.calendar_today_rounded,
-                    title: 'Academic Year',
-                    value: state.academicYear.code,
-                  ),
-                ),
-                SizedBox(width: isSmallScreen ? 12 : 16),
-                Expanded(
-                  child: _buildStatusCard(
-                    icon: Icons.directions_bus_rounded,
-                    title: 'Transport',
-                    value: state.detailedInfo.transportPaye ? 'Paid' : 'Unpaid',
-                    valueColor: state.detailedInfo.transportPaye ? Colors.green : Colors.red,
-                  ),
+                SizedBox(height: isSmallScreen ? 12 : 16),
+                _buildUnifiedStatusCard(
+                  theme: theme,
+                  isSmallScreen: isSmallScreen,
+                  levelValue: state.detailedInfo.niveauLibelleLongLt,
+                  academicYearValue: state.academicYear.code,
+                  transportPaid: state.detailedInfo.transportPaye,
                 ),
               ],
             ),
@@ -244,11 +237,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     )
                   : CircleAvatar(
-                      backgroundColor: AppTheme.claudeSecondary,
+                      backgroundColor: AppTheme.AppSecondary,
                       child: Icon(
                         Icons.person_rounded,
                         size: isSmallScreen ? 50 : 60,
-                        color: AppTheme.claudePrimary,
+                        color: AppTheme.AppPrimary,
                       ),
                     ),
             ),
@@ -278,7 +271,7 @@ class _ProfilePageState extends State<ProfilePage> {
               vertical: isSmallScreen ? 6 : 8
             ),
             decoration: BoxDecoration(
-              color: theme.brightness == Brightness.light ? AppTheme.claudeSecondary.withOpacity(0.1) : AppTheme.claudeSecondary.withOpacity(0.3),
+              color: theme.brightness == Brightness.light ? AppTheme.AppSecondary.withOpacity(0.1) : AppTheme.AppSecondary.withOpacity(0.3),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -295,22 +288,19 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
   
-  Widget _buildStatusCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    Color? valueColor,
+  Widget _buildUnifiedStatusCard({
+    required ThemeData theme,
+    required bool isSmallScreen,
+    required String levelValue,
+    required String academicYearValue,
+    required bool transportPaid,
   }) {
-    final theme = Theme.of(context);
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 360;
-    
     return Container(
-      padding: EdgeInsets.all(isSmallScreen ? 10 : 12),
+      width: double.infinity,
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.claudeBorder : const Color(0xFF3F3C34)),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.AppBorder : const Color(0xFF3F3C34)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -319,42 +309,96 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: isSmallScreen ? 14 : 16,
+      child: Padding(
+        padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
+        child: Column(
+          children: [
+            _buildStatusRow(
+              theme: theme,
+              isSmallScreen: isSmallScreen,
+              icon: Icons.school_rounded,
+              title: 'Level',
+              value: levelValue,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
+              child: Divider(
+                color: theme.brightness == Brightness.light 
+                  ? Colors.black.withOpacity(0.1) 
+                  : Colors.white.withOpacity(0.1),
+                height: 1,
+              ),
+            ),
+            _buildStatusRow(
+              theme: theme,
+              isSmallScreen: isSmallScreen,
+              icon: Icons.calendar_today_rounded,
+              title: 'Academic Year',
+              value: academicYearValue,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
+              child: Divider(
+                color: theme.brightness == Brightness.light 
+                  ? Colors.black.withOpacity(0.1) 
+                  : Colors.white.withOpacity(0.1),
+                height: 1,
+              ),
+            ),
+            _buildStatusRow(
+              theme: theme,
+              isSmallScreen: isSmallScreen,
+              icon: Icons.directions_bus_rounded,
+              title: 'Transport',
+              value: transportPaid ? 'Paid' : 'Unpaid',
+              valueColor: transportPaid ? Colors.green : Colors.red,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  Widget _buildStatusRow({
+    required ThemeData theme,
+    required bool isSmallScreen,
+    required IconData icon,
+    required String title,
+    required String value,
+    Color? valueColor,
+  }) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: isSmallScreen ? 18 : 20,
+          color: theme.brightness == Brightness.light ? AppTheme.AppPrimary.withOpacity(0.7) : AppTheme.AppPrimary,
+        ),
+        SizedBox(width: isSmallScreen ? 12 : 16),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: isSmallScreen ? 13 : 14,
                 color: theme.textTheme.bodyMedium?.color,
               ),
-              SizedBox(width: isSmallScreen ? 4 : 6),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: isSmallScreen ? 11 : 12,
-                    color: theme.textTheme.bodyMedium?.color,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: isSmallScreen ? 6 : 8),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: isSmallScreen ? 13 : 14,
-              fontWeight: FontWeight.bold,
-              color: valueColor ?? theme.textTheme.titleMedium?.color,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
+            SizedBox(height: 4),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: isSmallScreen ? 14 : 16,
+                fontWeight: FontWeight.bold,
+                color: valueColor ?? theme.textTheme.titleMedium?.color,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
+      ],
     );
   }
   
@@ -383,7 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.claudeBorder : const Color(0xFF3F3C34)),
+            border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.AppBorder : const Color(0xFF3F3C34)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.03),

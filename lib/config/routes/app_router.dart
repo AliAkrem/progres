@@ -138,7 +138,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          // Claude-style app header
+          // App-style app header
           Container(
             decoration: BoxDecoration(
               boxShadow: [
@@ -160,12 +160,12 @@ class ScaffoldWithNavBar extends StatelessWidget {
                         width: 36, 
                         height: 36,
                         decoration: const BoxDecoration(
-                          color: AppTheme.claudeSecondary,
+                          color: AppTheme.AppSecondary,
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.school_rounded,
-                          color: AppTheme.claudePrimary,
+                          color: AppTheme.AppPrimary,
                           size: 20,
                         ),
                       ),
@@ -254,7 +254,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: isSelected 
             ? BoxDecoration(
-                color: AppTheme.claudeSecondary,
+                color: AppTheme.AppSecondary,
                 borderRadius: BorderRadius.circular(12),
               )
             : null,
@@ -263,14 +263,14 @@ class ScaffoldWithNavBar extends StatelessWidget {
           children: [
             Icon(
               isSelected ? filledIcon : outlinedIcon,
-              color: isSelected ? AppTheme.claudePrimary : AppTheme.claudeTextSecondary,
+              color: isSelected ? AppTheme.AppPrimary : AppTheme.AppTextSecondary,
               size: 24,
             ),
             const SizedBox(height: 4),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? AppTheme.claudePrimary : AppTheme.claudeTextSecondary,
+                color: isSelected ? AppTheme.AppPrimary : AppTheme.AppTextSecondary,
                 fontSize: 12,
                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
               ),

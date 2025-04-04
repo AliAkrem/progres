@@ -200,14 +200,14 @@ class _GroupsPageState extends State<GroupsPage> {
                 vertical: isSmallScreen ? 10 : 12
               ),
               decoration: BoxDecoration(
-                color: AppTheme.claudePrimary.withOpacity(0.1),
+                color: AppTheme.AppPrimary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
                 period,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppTheme.claudePrimary,
+                  color: AppTheme.AppPrimary,
                   fontSize: isSmallScreen ? 14 : 16,
                 ),
               ),
@@ -224,7 +224,7 @@ class _GroupsPageState extends State<GroupsPage> {
                   borderRadius: BorderRadius.circular(12),
                   side: BorderSide(
                     color: theme.brightness == Brightness.light 
-                        ? AppTheme.claudeBorder 
+                        ? AppTheme.AppBorder 
                         : Colors.grey.shade800,
                   ),
                 ),
@@ -239,12 +239,12 @@ class _GroupsPageState extends State<GroupsPage> {
                             width: isSmallScreen ? 36 : 40,
                             height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.AppSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               Icons.group_rounded,
-                              color: AppTheme.claudePrimary,
+                              color: AppTheme.AppPrimary,
                               size: isSmallScreen ? 20 : 24,
                             ),
                           ),

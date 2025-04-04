@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     'Error: ${state.message}',
-                    style: const TextStyle(color: AppTheme.claudeTextSecondary),
+                    style: const TextStyle(color: AppTheme.AppTextSecondary),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
@@ -60,12 +60,12 @@ class _HomePageState extends State<HomePage> {
                     width: isSmallScreen ? 50 : 60,
                     height: isSmallScreen ? 50 : 60,
                     decoration: const BoxDecoration(
-                      color: AppTheme.claudeSecondary,
+                      color: AppTheme.AppSecondary,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.school_rounded,
-                      color: AppTheme.claudePrimary,
+                      color: AppTheme.AppPrimary,
                       size: isSmallScreen ? 26 : 32,
                     ),
                   ),
@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 8),
                   const Text(
                     'Loading your profile data...',
-                    style: TextStyle(color: AppTheme.claudeTextSecondary),
+                    style: TextStyle(color: AppTheme.AppTextSecondary),
                   ),
                   const SizedBox(height: 24),
                   const CircularProgressIndicator(),
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: const BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.AppBorder),
               ),
               child: Padding(
                 padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -149,12 +149,12 @@ class _HomePageState extends State<HomePage> {
                             width: isSmallScreen ? 56 : 64,
                             height: isSmallScreen ? 56 : 64,
                             decoration: const BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.AppSecondary,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
                               Icons.person,
-                              color: AppTheme.claudePrimary,
+                              color: AppTheme.AppPrimary,
                               size: isSmallScreen ? 28 : 32,
                             ),
                           ),
@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: const BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.AppBorder),
               ),
               child: Padding(
                 padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -218,12 +218,12 @@ class _HomePageState extends State<HomePage> {
                           width: isSmallScreen ? 36 : 40,
                           height: isSmallScreen ? 36 : 40,
                           decoration: BoxDecoration(
-                            color: AppTheme.claudeSecondary,
+                            color: AppTheme.AppSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.school,
-                            color: AppTheme.claudePrimary,
+                            color: AppTheme.AppPrimary,
                             size: isSmallScreen ? 20 : 24,
                           ),
                         ),
@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.AppBorder),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -291,12 +291,12 @@ class _HomePageState extends State<HomePage> {
                             width: isSmallScreen ? 36 : 40,
                             height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.AppSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               Icons.sticky_note_2_outlined,
-                              color: AppTheme.claudePrimary,
+                              color: AppTheme.AppPrimary,
                               size: isSmallScreen ? 20 : 24,
                             ),
                           ),
@@ -317,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'View all your exam results across different academic periods',
                         style: TextStyle(
-                          color: AppTheme.claudeTextSecondary,
+                          color: AppTheme.AppTextSecondary,
                           fontSize: isSmallScreen ? 13 : 14,
                         ),
                       ),
@@ -347,7 +347,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.AppBorder),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -360,12 +360,12 @@ class _HomePageState extends State<HomePage> {
                             width: isSmallScreen ? 36 : 40,
                             height: isSmallScreen ? 36 : 40,
                             decoration: BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.AppSecondary,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Icon(
                               Icons.assessment_outlined,
-                              color: AppTheme.claudePrimary,
+                              color: AppTheme.AppPrimary,
                               size: isSmallScreen ? 20 : 24,
                             ),
                           ),
@@ -386,7 +386,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'View your continuous assessment marks and assignments',
                         style: TextStyle(
-                          color: AppTheme.claudeTextSecondary,
+                          color: AppTheme.AppTextSecondary,
                           fontSize: isSmallScreen ? 13 : 14,
                         ),
                       ),
@@ -405,7 +405,7 @@ class _HomePageState extends State<HomePage> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
-                side: const BorderSide(color: AppTheme.claudeBorder),
+                side: const BorderSide(color: AppTheme.AppBorder),
               ),
               child: Padding(
                 padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -418,12 +418,12 @@ class _HomePageState extends State<HomePage> {
                           width: isSmallScreen ? 36 : 40,
                           height: isSmallScreen ? 36 : 40,
                           decoration: BoxDecoration(
-                            color: AppTheme.claudeSecondary,
+                            color: AppTheme.AppSecondary,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Icon(
                             Icons.directions_bus,
-                            color: AppTheme.claudePrimary,
+                            color: AppTheme.AppPrimary,
                             size: isSmallScreen ? 20 : 24,
                           ),
                         ),
@@ -506,7 +506,7 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: AppTheme.claudeBorder),
+                  side: const BorderSide(color: AppTheme.AppBorder),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
@@ -523,7 +523,7 @@ class _HomePageState extends State<HomePage> {
                               vertical: isSmallScreen ? 8 : 10
                             ),
                             decoration: BoxDecoration(
-                              color: AppTheme.claudeSecondary,
+                              color: AppTheme.AppSecondary,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Row(
@@ -533,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                                   width: isSmallScreen ? 22 : 24,
                                   height: isSmallScreen ? 22 : 24,
                                   decoration: const BoxDecoration(
-                                    color: AppTheme.claudePrimary,
+                                    color: AppTheme.AppPrimary,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Center(
@@ -551,7 +551,7 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   period.code,
                                   style: TextStyle(
-                                    color: AppTheme.claudePrimary,
+                                    color: AppTheme.AppPrimary,
                                     fontWeight: FontWeight.w600,
                                     fontSize: isSmallScreen ? 13 : 14,
                                   ),
@@ -588,7 +588,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               label,
               style: TextStyle(
-                color: AppTheme.claudeTextSecondary,
+                color: AppTheme.AppTextSecondary,
                 fontWeight: FontWeight.w500,
                 fontSize: isSmallScreen ? 13 : 14,
               ),

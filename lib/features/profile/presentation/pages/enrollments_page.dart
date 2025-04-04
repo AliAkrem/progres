@@ -142,7 +142,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
           color: theme.brightness == Brightness.light 
-              ? AppTheme.claudeBorder 
+              ? AppTheme.AppBorder 
               : Colors.grey.shade800,
         ),
       ),
@@ -155,7 +155,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.claudePrimary,
+                color: AppTheme.AppPrimary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(

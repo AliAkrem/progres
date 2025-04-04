@@ -35,7 +35,7 @@ class ExamResultsCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(color: theme.brightness == Brightness.light 
-            ? AppTheme.claudeBorder 
+            ? AppTheme.AppBorder 
             : const Color(0xFF3F3C34)),
       ),
       child: Padding(

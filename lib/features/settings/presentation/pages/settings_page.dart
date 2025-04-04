@@ -270,7 +270,7 @@ class SettingsPage extends StatelessWidget {
     
     // Use a more neutral color for icons in dark mode that contrasts well
     final iconColor = isSelected 
-        ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary)
+        ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary)
         : theme.iconTheme.color;
 
     return ListTile(
@@ -283,7 +283,7 @@ class SettingsPage extends StatelessWidget {
         title, 
         style: TextStyle(
           color: isSelected 
-              ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary)
+              ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary)
               : theme.textTheme.titleMedium?.color,
           fontWeight: isSelected ? FontWeight.bold : null,
           fontSize: isSmallScreen ? 14 : 16,
@@ -292,7 +292,7 @@ class SettingsPage extends StatelessWidget {
       trailing: isSelected 
           ? Icon(
               Icons.check, 
-              color: theme.brightness == Brightness.dark ? Colors.white : AppTheme.claudePrimary,
+              color: theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary,
               size: isSmallScreen ? 20 : 22,
             ) 
           : null,

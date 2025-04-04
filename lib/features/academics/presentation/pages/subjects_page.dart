@@ -107,7 +107,6 @@ class _SubjectsPageState extends State<SubjectsPage> {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    final horizontalPadding = isSmallScreen ? 12.0 : 16.0;
     
     // Group courses by period
     final Map<String, List<CourseCoefficient>> coursesByPeriod = {};
@@ -122,16 +121,19 @@ class _SubjectsPageState extends State<SubjectsPage> {
     final sortedPeriods = coursesByPeriod.keys.toList()..sort();
     
     return SingleChildScrollView(
-      padding: EdgeInsets.all(horizontalPadding),
+      padding: EdgeInsets.all(isSmallScreen ? 12.0 : 16.0),
       child: Column(
         children: [
           // Program information
           Card(
-            elevation: 0,
+            elevation: 1,
+            margin: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               side: BorderSide(
-                color: theme.dividerColor.withOpacity(0.2),
+                color: theme.brightness == Brightness.light 
+                  ? AppTheme.AppBorder 
+                  : const Color(0xFF3F3C34)
               ),
             ),
             child: Padding(
@@ -164,171 +166,157 @@ class _SubjectsPageState extends State<SubjectsPage> {
           // Periods and courses
           for (var period in sortedPeriods) ...[
             // Period header
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? 12 : 16, 
-                vertical: isSmallScreen ? 10 : 12
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.claudePrimary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                period,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.claudePrimary,
-                  fontSize: isSmallScreen ? 14 : 16,
-                ),
-              ),
-            ),
-            
-            SizedBox(height: isSmallScreen ? 12 : 16),
-            
-            // Table header
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 12 : 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Subject',
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: isSmallScreen ? 12 : 13,
-                      ),
-                    ),
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(
+                  horizontal: isSmallScreen ? 12 : 16, 
+                  vertical: isSmallScreen ? 10 : 12
+                ),
+                decoration: BoxDecoration(
+                  color: AppTheme.AppPrimary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  period,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.AppPrimary,
+                    fontSize: isSmallScreen ? 14 : 16,
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Continuous',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: isSmallScreen ? 12 : 13,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Intermediate',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: isSmallScreen ? 12 : 13,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Final Exam',
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: isSmallScreen ? 12 : 13,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             
-            const Divider(),
-            
-            // Course rows
-            for (var coefficient in coursesByPeriod[period]!)
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: isSmallScreen ? 10 : 12, 
-                  horizontal: isSmallScreen ? 12 : 16
-                ),
-                child: Row(
-                  children: [
-                    // Subject name
-                    Expanded(
-                      flex: 3,
-                      child: Text(
-                        coefficient.mcLibelleFr,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: theme.textTheme.titleMedium?.color,
-                          fontSize: isSmallScreen ? 12 : 14,
-                        ),
-                      ),
-                    ),
-                    
-                    // Continuous coefficient
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: _buildCoefficientChip(
-                          coefficient.coefficientControleContinu,
-                          Colors.green.shade100,
-                          Colors.green.shade800,
-                        ),
-                      ),
-                    ),
-                    
-                    // Intermediate coefficient
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: _buildCoefficientChip(
-                          coefficient.coefficientControleIntermediaire,
-                          Colors.orange.shade100,
-                          Colors.orange.shade800,
-                        ),
-                      ),
-                    ),
-                    
-                    // Final exam coefficient
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: _buildCoefficientChip(
-                          coefficient.coefficientExamen,
-                          Colors.blue.shade100,
-                          Colors.blue.shade800,
-                        ),
-                      ),
-                    ),
-                  ],
+            // Card for subjects in this period
+            Card(
+              elevation: 1,
+              margin: EdgeInsets.only(bottom: isSmallScreen ? 20 : 24),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: theme.brightness == Brightness.light 
+                    ? AppTheme.AppBorder 
+                    : const Color(0xFF3F3C34)
                 ),
               ),
-            
-            SizedBox(height: isSmallScreen ? 20 : 24),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: coursesByPeriod[period]!.length,
+                  separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent, height: 24),
+                  itemBuilder: (context, index) {
+                    final coefficient = coursesByPeriod[period]![index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Subject name
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            coefficient.mcLibelleFr,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: theme.textTheme.titleMedium?.color,
+                            ),
+                          ),
+                        ),
+                        
+                        // Assessment types
+                        _buildAssessmentTypeRow(
+                          'Continuous Assessment',
+                          coefficient.coefficientControleContinu,
+                          AppTheme.accentGreen,
+                          theme
+                        ),
+                        
+                        _buildAssessmentTypeRow(
+                          'Intermediate Assessment',
+                          coefficient.coefficientControleIntermediaire,
+                          AppTheme.AppSecondary, 
+                          theme
+                        ),
+                        
+                        _buildAssessmentTypeRow(
+                          'Final Examination',
+                          coefficient.coefficientExamen,
+                          AppTheme.accentBlue,
+                          theme
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ],
       ),
     );
   }
   
-  Widget _buildCoefficientChip(double coefficient, Color bgColor, Color textColor) {
-    final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 360;
-    
+  Widget _buildAssessmentTypeRow(String type, double coefficient, Color typeColor, ThemeData theme) {
     final percentage = (coefficient * 100).toInt();
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: isSmallScreen ? 6 : 8, 
-        vertical: isSmallScreen ? 3 : 4
-      ),
-      decoration: BoxDecoration(
-        color: coefficient > 0 ? bgColor : Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(isSmallScreen ? 10 : 12),
-      ),
-      child: Text(
-        '$percentage%',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: coefficient > 0 ? textColor : Colors.grey.shade700,
-          fontSize: isSmallScreen ? 11 : 13,
-        ),
+    
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: typeColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: typeColor),
+            ),
+            child: Text(
+              type,
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: typeColor,
+                fontSize: 12,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Divider(
+              indent: 8,
+              color: theme.brightness == Brightness.light 
+                  ? null 
+                  : const Color(0xFF3F3C34),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: coefficient > 0
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: typeColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '$percentage%',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 13,
+                      ),
+                    ),
+                  )
+                : Text(
+                    'N/A',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
+          ),
+        ],
       ),
     );
   }

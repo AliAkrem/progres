@@ -263,11 +263,11 @@ class _TimelinePageState extends State<TimelinePage> {
                           return Container(
                             decoration: BoxDecoration(
                               color: date.day == DateTime.now().day ? 
-                                  AppTheme.claudePrimary.withOpacity(0.1) : 
+                                  AppTheme.AppPrimary.withOpacity(0.1) : 
                                   Colors.transparent,
                               border: Border(
                                 bottom: BorderSide(
-                                  color: AppTheme.claudePrimary.withOpacity(0.2),
+                                  color: AppTheme.AppPrimary.withOpacity(0.2),
                                   width: 0.5,
                                 ),
                               ),
@@ -282,7 +282,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
                                     color: date.day == DateTime.now().day ? 
-                                      AppTheme.claudePrimary : null,
+                                      AppTheme.AppPrimary : null,
                                   ),
                                 ),
                                 Text(
@@ -290,7 +290,7 @@ class _TimelinePageState extends State<TimelinePage> {
                                   style: TextStyle(
                                     fontSize: 9,
                                     color: date.day == DateTime.now().day ? 
-                                      AppTheme.claudePrimary : null,
+                                      AppTheme.AppPrimary : null,
                                   ),
                                 ),
                               ],
@@ -338,7 +338,7 @@ class _TimelinePageState extends State<TimelinePage> {
                           }
                           
                           // For date debugging - print first few events
-                          if (events.length > 0) {
+                          if (events.isNotEmpty) {
                             final session = events.first.event as CourseSession?;
                             if (session != null) {
                               print('  Event for jourId: ${session.jourId}, ${session.jourLibelleFr} -> ${session.matiere}');
@@ -351,7 +351,7 @@ class _TimelinePageState extends State<TimelinePage> {
                           return AnimatedContainer(
                             duration: const Duration(milliseconds: 300),
                             padding: const EdgeInsets.symmetric(vertical: 4),
-                            color: AppTheme.claudePrimary.withOpacity(_isWeekHeaderAnimating ? 0.3 : 0.1),
+                            color: AppTheme.AppPrimary.withOpacity(_isWeekHeaderAnimating ? 0.3 : 0.1),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -418,7 +418,7 @@ class _TimelinePageState extends State<TimelinePage> {
         children: [
           Text(
             event.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
               fontSize: 11,

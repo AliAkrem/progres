@@ -44,7 +44,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(color: theme.brightness == Brightness.light 
-            ? AppTheme.claudeBorder 
+            ? AppTheme.AppBorder 
             : const Color(0xFF3F3C34)),
       ),
       child: Padding(
@@ -188,13 +188,13 @@ class ContinuousAssessmentCard extends StatelessWidget {
   Color _getTypeColor(String type) {
     switch (type.toUpperCase()) {
       case 'PROJECT':
-        return AppTheme.claudePrimary;
+        return AppTheme.AppPrimary;
       case 'TUTORIAL WORK':
-        return AppTheme.claudeSecondary;
+        return AppTheme.AppSecondary;
       case 'PRACTICAL WORK':
         return AppTheme.accentBlue;
       default:
-        return AppTheme.claudeTextSecondary;
+        return AppTheme.AppTextSecondary;
     }
   }
 } 
