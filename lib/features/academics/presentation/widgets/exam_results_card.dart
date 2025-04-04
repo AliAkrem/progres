@@ -29,6 +29,15 @@ class ExamResultsCard extends StatelessWidget {
       );
     }
 
+    // Group exam results by course
+    final Map<String, List<ExamResult>> groupedByCourse = {};
+    for (var result in examResults) {
+      if (!groupedByCourse.containsKey(result.mcLibelleFr)) {
+        groupedByCourse[result.mcLibelleFr] = [];
+      }
+      groupedByCourse[result.mcLibelleFr]!.add(result);
+    }
+
     return Card(
       elevation: 1,
       margin: EdgeInsets.zero,
@@ -43,165 +52,163 @@ class ExamResultsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header row
-            Row(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: Text(
-                    'Course',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.textTheme.bodyMedium?.color,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Coef',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.textTheme.bodyMedium?.color,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Text(
-                    'Grade',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: theme.textTheme.bodyMedium?.color,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            
-
-            // List of exam results
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: examResults.length,
-              separatorBuilder: (context, index) => const Divider(height: 8, thickness: 0, color: Colors.transparent),
+              itemCount: groupedByCourse.length,
+              separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent, height: 24),
               itemBuilder: (context, index) {
-                final result = examResults[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Course Name
-                      Expanded(
-                        flex: 6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                final courseTitle = groupedByCourse.keys.elementAt(index);
+                final courseResults = groupedByCourse[courseTitle]!;
+                
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Course title
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Text(
+                        courseTitle,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: theme.textTheme.titleMedium?.color,
+                        ),
+                      ),
+                    ),
+                    
+                    // Display exam results for this course
+                    ...courseResults.map((result) => _buildExamResultRow(result, theme)).toList(),
+                    
+                    // Appeal information if available
+                    if (courseResults.any((result) => result.autorisationDemandeRecours && 
+                        result.dateDebutDepotRecours != null &&
+                        result.dateLimiteDepotRecours != null))
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
                           children: [
+                            Icon(
+                              courseResults.first.recoursDemande == true 
+                                  ? Icons.check_circle_outline 
+                                  : Icons.info_outline,
+                              size: 14,
+                              color: courseResults.first.recoursDemande == true 
+                                  ? Colors.orange 
+                                  : Colors.grey,
+                            ),
+                            const SizedBox(width: 4),
                             Text(
-                              result.mcLibelleFr,
+                              courseResults.first.recoursDemande == true 
+                                  ? 'Appeal Requested' 
+                                  : 'Appeal Available',
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: theme.textTheme.titleMedium?.color,
+                                fontSize: 12,
+                                color: courseResults.first.recoursDemande == true 
+                                    ? Colors.orange 
+                                    : Colors.grey,
                               ),
                             ),
-                            if (result.autorisationDemandeRecours && 
-                                result.dateDebutDepotRecours != null &&
-                                result.dateLimiteDepotRecours != null)
-                              Row(
-                                children: [
-                                  Icon(
-                                    result.recoursDemande == true 
-                                        ? Icons.check_circle_outline 
-                                        : Icons.info_outline,
-                                    size: 14,
-                                    color: result.recoursDemande == true 
-                                        ? Colors.orange 
-                                        : Colors.grey,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    result.recoursDemande == true 
-                                        ? 'Appeal Requested' 
-                                        : 'Appeal Available',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: result.recoursDemande == true 
-                                          ? Colors.orange 
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
                           ],
                         ),
                       ),
-
-                      // Coefficient
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '${result.rattachementMcCoefficient}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: theme.textTheme.titleMedium?.color,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      // Grade
-                      Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: result.noteExamen != null
-                              ? Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: _getGradeColor(result.noteExamen!),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Text(
-                                    '${result.noteExamen}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                )
-                              : Text(
-                                  'N/A',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: theme.textTheme.bodyMedium?.color,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
                 );
               },
             ),
-
-            // Summary section
             
+            const SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
-
+  
+  Widget _buildExamResultRow(ExamResult result, ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+      child: Row(
+        children: [
+          // Exam type label
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: AppTheme.accentGreen.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: AppTheme.accentGreen),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "Exam",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.accentGreen,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  decoration: BoxDecoration(
+                    // color: AppTheme.accentGreen.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    'Coef: ${result.rattachementMcCoefficient}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.accentGreen,
+                      fontSize: 10,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          // Divider line
+          Expanded(
+            child: Divider(
+              indent: 8,
+              color: theme.brightness == Brightness.light 
+                  ? null 
+                  : const Color(0xFF3F3C34),
+            ),
+          ),
+          
+          // Grade
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: result.noteExamen != null
+                ? Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: _getGradeColor(result.noteExamen!),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${result.noteExamen}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 13,
+                      ),
+                    ),
+                  )
+                : Text(
+                    'N/A',
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
 
   // Helper method to get color based on grade
   Color _getGradeColor(double grade) {
