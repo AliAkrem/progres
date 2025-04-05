@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
-import 'package:progres/features/academics/presentation/bloc/transcripts_bloc.dart';
-
+import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
+import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
 // Events
 abstract class AuthEvent {}
 
@@ -74,7 +74,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       
       // Clear transcript cache if available (will be no-op if the bloc doesn't exist yet)
       try {
-        event.context?.read<TranscriptsBloc>().add(const ClearTranscriptCache());
+        event.context?.read<TranscriptBloc>().add(const ClearTranscriptCache());
       } catch (e) {
         // Ignore errors if bloc is not available
         print('Note: Could not clear transcript cache. ${e.toString()}');

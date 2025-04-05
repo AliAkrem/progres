@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/features/profile/data/models/enrollment.dart';
-import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:progres/features/enrollment/data/models/enrollment.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
 
 class EnrollmentsPage extends StatefulWidget {
   const EnrollmentsPage({super.key});
@@ -16,12 +18,8 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   void initState() {
     super.initState();
     
-    // Load enrollments if profile is loaded
-    final profileState = context.read<ProfileBloc>().state;
-    
-    if (profileState is ProfileLoaded && profileState.enrollments == null) {
-      context.read<ProfileBloc>().add(LoadEnrollmentsEvent());
-    }
+    // Load enrollments when page is opened
+    context.read<EnrollmentBloc>().add(const LoadEnrollmentsEvent());
   }
 
   @override
@@ -29,14 +27,31 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Academic History'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh Data',
+            onPressed: () {
+              context.read<EnrollmentBloc>().add(
+                const LoadEnrollmentsEvent(forceRefresh: true),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Refreshing data...'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+          ),
+        ],
       ),
-      body: BlocBuilder<ProfileBloc, ProfileState>(
+      body: BlocBuilder<EnrollmentBloc, EnrollmentState>(
         builder: (context, state) {
-          if (state is ProfileLoading) {
+          if (state is EnrollmentLoading || state is EnrollmentInitial) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is ProfileError) {
+          } else if (state is EnrollmentError) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -45,30 +60,24 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<ProfileBloc>().add(LoadEnrollmentsEvent());
+                      context.read<EnrollmentBloc>().add(const LoadEnrollmentsEvent());
                     },
                     child: const Text('Retry'),
                   ),
                 ],
               ),
             );
-          } else if (state is ProfileLoaded) {
-            if (state.enrollments == null) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            
-            if (state.enrollments!.isEmpty) {
+          } else if (state is EnrollmentsLoaded) {
+            if (state.enrollments.isEmpty) {
               return const Center(
                 child: Text('No enrollment history available'),
               );
             }
             
-            return _buildEnrollmentsList(context, state.enrollments!);
+            return _buildEnrollmentsList(context, state.enrollments);
           } else {
             return const Center(
-              child: Text('Please load your profile data first'),
+              child: Text('Something went wrong'),
             );
           }
         },

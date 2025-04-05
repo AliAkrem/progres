@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
-import 'package:progres/features/academics/data/models/course_coefficient.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 
@@ -55,30 +54,26 @@ class AcademicsLoading extends AcademicsState {}
 class AcademicsLoaded extends AcademicsState {
   final List<ExamResult> examResults;
   final List<ContinuousAssessment> continuousAssessments;
-  final List<CourseCoefficient>? courseCoefficients;
 
   AcademicsLoaded({
     required this.examResults,
     required this.continuousAssessments,
-    this.courseCoefficients,
   });
 
   AcademicsLoaded copyWith({
     List<ExamResult>? examResults,
     List<ContinuousAssessment>? continuousAssessments,
-    List<CourseCoefficient>? courseCoefficients,
   }) {
     return AcademicsLoaded(
       examResults: examResults ?? this.examResults,
       continuousAssessments:
           continuousAssessments ?? this.continuousAssessments,
-      courseCoefficients: courseCoefficients ?? this.courseCoefficients,
     );
   }
 
   @override
   List<Object?> get props =>
-      [examResults, continuousAssessments, courseCoefficients];
+      [examResults, continuousAssessments];
 }
 
 class AcademicsError extends AcademicsState {
@@ -93,10 +88,8 @@ class AcademicsError extends AcademicsState {
 // BLoC
 class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
   final StudentRepositoryImpl studentRepository;
-
   AcademicsBloc({required this.studentRepository}) : super(AcademicsInitial()) {
     on<LoadAcademicPerformance>(_onLoadAcademicPerformance);
-    on<LoadCourseCoefficients>(_onLoadCourseCoefficients);
   }
 
   Future<void> _onLoadAcademicPerformance(
@@ -119,37 +112,4 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
       emit(AcademicsError(e.toString()));
     }
   }
-
-  Future<void> _onLoadCourseCoefficients(
-    LoadCourseCoefficients event,
-    Emitter<AcademicsState> emit,
-  ) async {
-    try {
-      // If we're in initial state, emit loading
-      if (state is! AcademicsLoaded) {
-        emit(AcademicsLoading());
-      }
-
-      final coefficients = await studentRepository.getCourseCoefficients(
-        event.ouvertureOffreFormationId,
-        event.niveauId,
-      );
-
-      if (state is AcademicsLoaded) {
-        // Keep existing data and add coefficients
-        final currentState = state as AcademicsLoaded;
-        emit(currentState.copyWith(courseCoefficients: coefficients));
-      } else {
-        // Should not happen, but just in case
-        emit(AcademicsLoaded(
-          examResults: const [],
-          continuousAssessments: const [],
-          courseCoefficients: coefficients,
-        ));
-      }
-    } catch (e) {
-      emit(AcademicsError(e.toString()));
-    }
-  }
-
 }

@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/features/academics/data/models/academic_transcript.dart';
-import 'package:progres/features/academics/presentation/bloc/transcripts_bloc.dart';
-import 'package:progres/features/profile/data/models/enrollment.dart';
+import 'package:progres/features/transcript/data/models/academic_transcript.dart';
+import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
+import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
+import 'package:progres/features/transcript/presentation/bloc/transcript_state.dart';
+import 'package:progres/features/enrollment/data/models/enrollment.dart';
+import 'package:progres/features/transcript/presentation/widgets/result_item.dart';
+import 'package:progres/features/transcript/presentation/widgets/status_badge.dart';
+import 'package:progres/features/transcript/presentation/widgets/semester_info_chip.dart';
 
-class TranscriptsPage extends StatefulWidget {
-  const TranscriptsPage({super.key});
+class TranscriptPage extends StatefulWidget {
+  const TranscriptPage({super.key});
 
   @override
-  State<TranscriptsPage> createState() => _TranscriptsPageState();
+  State<TranscriptPage> createState() => _TranscriptPageState();
 }
 
-class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderStateMixin {
+class _TranscriptPageState extends State<TranscriptPage> with TickerProviderStateMixin {
   TabController? _tabController;
   List<Enrollment> _enrollments = [];
   int _currentIndex = 0;
@@ -22,7 +27,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
   void initState() {
     super.initState();
     // Load enrollments when page is opened
-    BlocProvider.of<TranscriptsBloc>(context).add(const LoadEnrollments());
+    BlocProvider.of<TranscriptBloc>(context).add(const LoadEnrollments());
   }
   
   @override
@@ -50,7 +55,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
             onPressed: () {
               if (_enrollments.isNotEmpty) {
                 // Force refresh current data
-                context.read<TranscriptsBloc>().add(
+                context.read<TranscriptBloc>().add(
                   LoadTranscripts(
                     enrollmentId: _enrollments[_currentIndex].id,
                     enrollment: _enrollments[_currentIndex],
@@ -69,7 +74,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
           ),
         ],
       ),
-      body: BlocConsumer<TranscriptsBloc, TranscriptsState>(
+      body: BlocConsumer<TranscriptBloc, TranscriptState>(
         listener: (context, state) {
           if (state is EnrollmentsLoaded && !_isTabControllerInitialized) {
             setState(() {
@@ -95,16 +100,11 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
               }
             });
           }
-          
-          // Handle case where annual summary is loaded
-          if (state is TranscriptsLoaded && state.annualSummary != null) {
-            print("Annual summary loaded in listener: ${state.annualSummary!.moyenne}");
-          }
         },
         builder: (context, state) {
-          if (state is TranscriptsInitial) {
+          if (state is TranscriptInitial) {
             return const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
-          } else if (state is TranscriptsError) {
+          } else if (state is TranscriptError) {
             return Center(child: Text('Error: ${state.message}', style: theme.textTheme.bodyLarge));
           } else if (_enrollments.isEmpty) {
             return const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary));
@@ -121,40 +121,34 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
       final enrollment = _enrollments[_currentIndex];
       
       // Load both transcripts and annual summary in a single request
-      context.read<TranscriptsBloc>().add(
+      context.read<TranscriptBloc>().add(
         LoadTranscripts(
           enrollmentId: enrollment.id,
           enrollment: enrollment,
         ),
       );
-      
-      // Annual summary is now loaded directly in the LoadTranscripts event
-      // No need for a separate LoadAnnualSummary event
     }
   }
   
-  Widget _buildContent(TranscriptsState state, ThemeData theme) {
-
+  Widget _buildContent(TranscriptState state, ThemeData theme) {
     return Column(
       children: [
         // Year tabs
         if (_tabController != null)
-          Container(
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              indicatorColor: AppTheme.AppSecondary,
-              tabs: _enrollments.map((enrollment) {
-                return Tab(
-                  text: enrollment.anneeAcademiqueCode,
-                );
-              }).toList(),
-            ),
+          TabBar(
+            controller: _tabController,
+            isScrollable: true,
+            indicatorColor: AppTheme.AppSecondary,
+            tabs: _enrollments.map((enrollment) {
+              return Tab(
+                text: enrollment.anneeAcademiqueCode,
+              );
+            }).toList(),
           ),
         
         // Main content
         Expanded(
-          child: state is TranscriptsLoading 
+          child: state is TranscriptLoading 
             ? const Center(child: CircularProgressIndicator(color: AppTheme.AppPrimary))
             : state is TranscriptsLoaded 
               ? _buildTranscriptsView(state, theme)
@@ -173,13 +167,8 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
   }
   
   Widget _buildTranscriptsView(TranscriptsLoaded state, ThemeData theme) {
-    // Debug print to check if annual summary is available
-    print('Building Transcripts View - Annual Summary is ${state.annualSummary == null ? 'NULL' : 'AVAILABLE'}');
-    if (state.annualSummary != null) {
-      print('Annual Summary Data: Average: ${state.annualSummary!.moyenne}, Credits: ${state.annualSummary!.creditAcquis}');
-    }
-        // Extract annual summary if available
-    final annualSummary = state.annualSummary ;
+    // Extract annual summary if available
+    final annualSummary = state.annualSummary;
     
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -270,29 +259,25 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              _buildResultItem(
-                                'Average',
-                                annualSummary.moyenne.toStringAsFixed(2),
-                                AppTheme.AppPrimary,
-                                Icons.bar_chart_rounded,
-                                theme,
+                              ResultItem(
+                                label: 'Average',
+                                value: annualSummary.moyenne.toStringAsFixed(2),
+                                color: AppTheme.AppPrimary,
+                                icon: Icons.bar_chart_rounded,
                                 compact: true,
                               ),
-                              _buildResultItem(
-                                'Credits',
-                                annualSummary.creditAcquis.toString(),
-                                AppTheme.accentBlue,
-                                Icons.school_rounded,
-                                theme,
+                              ResultItem(
+                                label: 'Credits',
+                                value: annualSummary.creditAcquis.toString(),
+                                color: AppTheme.accentBlue,
+                                icon: Icons.school_rounded,
                                 compact: true,
                               ),
                             ],
                           ),
                           const SizedBox(height: 16),
-                          _buildStatusBadge(
-                            annualSummary.typeDecisionLibelleFr,
-                            _getDecisionColor(annualSummary.typeDecisionLibelleFr),
-                            _getDecisionIcon(annualSummary.typeDecisionLibelleFr),
+                          StatusBadge(
+                            status: annualSummary.typeDecisionLibelleFr,
                           ),
                         ],
                       ),
@@ -351,113 +336,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
       ),
     );
   }
-  
-  Widget _buildResultItem(String label, String value, Color color, IconData icon, ThemeData theme, {bool compact = false}) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        padding: EdgeInsets.symmetric(
-          vertical: compact ? 10 : 16,
-          horizontal: compact ? 12 : 16,
-        ),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: color,
-              size: compact ? 22 : 28,
-            ),
-            SizedBox(height: compact ? 8 : 12),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: compact ? 11 : 13,
-                color: theme.textTheme.bodySmall?.color,
-              ),
-            ),
-            SizedBox(height: compact ? 4 : 8),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: compact ? 18 : 22,
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-  
-  Widget _buildStatusBadge(String status, Color color, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color,
-          width: 1.5,
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: color,
-            size: 18,
-          ),
-          const SizedBox(width: 8),
-          Text(
-            status
-                .replaceAll('Admis(e)', 'Passed')
-                .replaceAll('Ajourné(e)', 'Failed')
-                .replaceAll('(session normale)', '')
-                .trim(),
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-  
-  Color _getDecisionColor(String decision) {
-    if (decision.contains('Admis')) {
-      return AppTheme.accentGreen;
-    } else if (decision.contains('Ajourné')) {
-      return AppTheme.accentRed;
-    } else {
-      return AppTheme.accentYellow;
-    }
-  }
-  
-  IconData _getDecisionIcon(String decision) {
-    if (decision.contains('Admis')) {
-      return Icons.check_circle;
-    } else if (decision.contains('Ajourné')) {
-      return Icons.cancel;
-    } else {
-      return Icons.info;
-    }
-  }
-  
+    
   Widget _buildSemesterCard(AcademicTranscript transcript, ThemeData theme) {
     return Card(
       elevation: 1,
@@ -493,14 +372,14 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
                   ),
                 ),
                 const Spacer(),
-                _buildSemesterInfoChip(
-                  'Avg: ${transcript.moyenne.toStringAsFixed(2)}',
-                  AppTheme.AppPrimary,
+                SemesterInfoChip(
+                  label: 'Avg: ${transcript.moyenne.toStringAsFixed(2)}',
+                  color: AppTheme.AppPrimary,
                 ),
                 const SizedBox(width: 6),
-                _buildSemesterInfoChip(
-                  'CR: ${transcript.creditAcquis}',
-                  AppTheme.accentBlue,
+                SemesterInfoChip(
+                  label: 'CR: ${transcript.creditAcquis}',
+                  color: AppTheme.accentBlue,
                 ),
               ],
             ),
@@ -609,13 +488,13 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
           // Module name
           Text(
             module.mcLibelleFr,
-         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: theme.textTheme.titleMedium?.color,
-                        )
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: theme.textTheme.titleMedium?.color,
+            )
           ),
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
           
           // Coef info
           Row(
@@ -680,26 +559,7 @@ class _TranscriptsPageState extends State<TranscriptsPage> with TickerProviderSt
       ),
     );
   }
-  
-  Widget _buildSemesterInfoChip(String label, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: color),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: color,
-        ),
-      ),
-    );
-  }
-  
+      
   Color _getUeColor(String ueType) {
     switch (ueType) {
       case 'U.E.F':

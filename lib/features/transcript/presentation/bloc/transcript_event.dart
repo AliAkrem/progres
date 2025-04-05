@@ -1,13 +1,14 @@
-part of 'transcripts_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:progres/features/enrollment/data/models/enrollment.dart';
 
-abstract class TranscriptsEvent extends Equatable {
-  const TranscriptsEvent();
+abstract class TranscriptEvent extends Equatable {
+  const TranscriptEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class LoadEnrollments extends TranscriptsEvent {
+class LoadEnrollments extends TranscriptEvent {
   final bool forceRefresh;
   
   const LoadEnrollments({this.forceRefresh = false});
@@ -16,7 +17,7 @@ class LoadEnrollments extends TranscriptsEvent {
   List<Object?> get props => [forceRefresh];
 }
 
-class LoadTranscripts extends TranscriptsEvent {
+class LoadTranscripts extends TranscriptEvent {
   final int enrollmentId;
   final Enrollment enrollment;
   final bool forceRefresh;
@@ -31,7 +32,7 @@ class LoadTranscripts extends TranscriptsEvent {
   List<Object?> get props => [enrollmentId, enrollment, forceRefresh];
 }
 
-class LoadAnnualSummary extends TranscriptsEvent {
+class LoadAnnualSummary extends TranscriptEvent {
   final int enrollmentId;
   final bool forceRefresh;
 
@@ -44,6 +45,6 @@ class LoadAnnualSummary extends TranscriptsEvent {
   List<Object?> get props => [enrollmentId, forceRefresh];
 }
 
-class ClearTranscriptCache extends TranscriptsEvent {
+class ClearTranscriptCache extends TranscriptEvent {
   const ClearTranscriptCache();
 } 

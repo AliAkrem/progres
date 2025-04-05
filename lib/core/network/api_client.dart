@@ -21,7 +21,6 @@ class ApiClient {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          // Add auth token if available
           final token = await _secureStorage.read(key: 'auth_token');
           if (token != null) {
             options.headers['authorization'] = token;

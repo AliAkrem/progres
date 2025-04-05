@@ -1,17 +1,20 @@
-part of 'transcripts_bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:progres/features/transcript/data/models/academic_transcript.dart';
+import 'package:progres/features/enrollment/data/models/enrollment.dart';
+import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
 
-abstract class TranscriptsState extends Equatable {
-  const TranscriptsState();
+abstract class TranscriptState extends Equatable {
+  const TranscriptState();
 
   @override
   List<Object?> get props => [];
 }
 
-class TranscriptsInitial extends TranscriptsState {}
+class TranscriptInitial extends TranscriptState {}
 
-class TranscriptsLoading extends TranscriptsState {}
+class TranscriptLoading extends TranscriptState {}
 
-class EnrollmentsLoaded extends TranscriptsState {
+class EnrollmentsLoaded extends TranscriptState {
   final List<Enrollment> enrollments;
   final bool fromCache;
 
@@ -24,7 +27,7 @@ class EnrollmentsLoaded extends TranscriptsState {
   List<Object?> get props => [enrollments, fromCache];
 }
 
-class TranscriptsLoaded extends TranscriptsState {
+class TranscriptsLoaded extends TranscriptState {
   final List<AcademicTranscript> transcripts;
   final Enrollment selectedEnrollment;
   final AnnualTranscriptSummary? annualSummary;
@@ -41,10 +44,10 @@ class TranscriptsLoaded extends TranscriptsState {
   List<Object?> get props => [transcripts, selectedEnrollment, annualSummary, fromCache];
 }
 
-class TranscriptsError extends TranscriptsState {
+class TranscriptError extends TranscriptState {
   final String message;
 
-  const TranscriptsError({
+  const TranscriptError({
     required this.message,
   });
 

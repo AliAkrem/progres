@@ -1,45 +1,13 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:progres/features/academics/data/models/academic_transcript.dart';
-import 'package:progres/features/profile/data/models/enrollment.dart';
-import 'package:progres/features/profile/data/models/annual_transcript_summary.dart';
+import 'package:progres/features/transcript/data/models/academic_transcript.dart';
+import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
 
 class TranscriptCacheService {
   // Keys for SharedPreferences
-  static const String _enrollmentsKey = 'cached_enrollments';
   static const String _transcriptsKeyPrefix = 'cached_transcripts_';
   static const String _annualSummaryKeyPrefix = 'cached_annual_summary_';
   static const String _lastUpdatedKeyPrefix = 'last_updated_';
-
-  // Save enrollments to cache
-  Future<bool> cacheEnrollments(List<Enrollment> enrollments) async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final enrollmentsJson = enrollments.map((e) => e.toJson()).toList();
-      await prefs.setString(_enrollmentsKey, jsonEncode(enrollmentsJson));
-      await prefs.setString('${_lastUpdatedKeyPrefix}enrollments', DateTime.now().toIso8601String());
-      return true;
-    } catch (e) {
-      print('Error caching enrollments: $e');
-      return false;
-    }
-  }
-
-  // Retrieve enrollments from cache
-  Future<List<Enrollment>?> getCachedEnrollments() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final enrollmentsString = prefs.getString(_enrollmentsKey);
-      
-      if (enrollmentsString == null) return null;
-      
-      final List<dynamic> decodedJson = jsonDecode(enrollmentsString);
-      return decodedJson.map((json) => Enrollment.fromJson(json)).toList();
-    } catch (e) {
-      print('Error retrieving cached enrollments: $e');
-      return null;
-    }
-  }
 
   // Save transcripts for specific enrollment
   Future<bool> cacheTranscripts(int enrollmentId, List<AcademicTranscript> transcripts) async {
@@ -101,12 +69,10 @@ class TranscriptCacheService {
   }
 
   // Get last update timestamp for specific data
-  Future<DateTime?> getLastUpdated(String dataType, {int? enrollmentId}) async {
+  Future<DateTime?> getLastUpdated(String dataType, int enrollmentId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final key = enrollmentId != null 
-          ? '$_lastUpdatedKeyPrefix${dataType}_$enrollmentId' 
-          : '$_lastUpdatedKeyPrefix$dataType';
+      final key = '$_lastUpdatedKeyPrefix${dataType}_$enrollmentId';
       
       final timestamp = prefs.getString(key);
       if (timestamp == null) return null;
@@ -118,7 +84,7 @@ class TranscriptCacheService {
     }
   }
 
-  // Clear all cached data
+  // Clear all transcript cached data
   Future<bool> clearAllCache() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -127,8 +93,8 @@ class TranscriptCacheService {
       for (final key in keys) {
         if (key.startsWith(_transcriptsKeyPrefix) || 
             key.startsWith(_annualSummaryKeyPrefix) || 
-            key.startsWith(_lastUpdatedKeyPrefix) ||
-            key == _enrollmentsKey) {
+            key.startsWith('${_lastUpdatedKeyPrefix}transcript_') ||
+            key.startsWith('${_lastUpdatedKeyPrefix}summary_')) {
           await prefs.remove(key);
         }
       }
@@ -140,8 +106,8 @@ class TranscriptCacheService {
   }
 
   // Check if data is stale (older than specified duration)
-  Future<bool> isDataStale(String dataType, {int? enrollmentId, Duration staleDuration = const Duration(hours: 12)}) async {
-    final lastUpdated = await getLastUpdated(dataType, enrollmentId: enrollmentId);
+  Future<bool> isDataStale(String dataType, int enrollmentId, {Duration staleDuration = const Duration(hours: 12)}) async {
+    final lastUpdated = await getLastUpdated(dataType, enrollmentId);
     if (lastUpdated == null) return true;
     
     final now = DateTime.now();

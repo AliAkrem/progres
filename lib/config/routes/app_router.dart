@@ -5,11 +5,11 @@ import 'package:progres/features/academics/presentation/pages/academic_performan
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
 import 'package:progres/features/subject/presentation/pages/subject_page.dart';
 import 'package:progres/features/timeline/presentation/pages/timeline_page.dart';
-import 'package:progres/features/academics/presentation/pages/transcripts_page.dart';
+import 'package:progres/features/transcript/presentation/pages/transcript_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/auth/presentation/pages/login_page.dart';
 import 'package:progres/features/dashboard/presentation/pages/dashboard_page.dart';
-import 'package:progres/features/profile/presentation/pages/enrollments_page.dart';
+import 'package:progres/features/enrollment/presentation/pages/enrollments_page.dart';
 import 'package:progres/features/profile/presentation/pages/profile_page.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
 import 'package:progres/layouts/main_shell.dart';
@@ -108,7 +108,7 @@ class AppRouter {
                 GoRoute(
                   path: transcriptsPath,
                   name: transcripts,
-                  builder: (context, state) => const TranscriptsPage(),
+                  builder: (context, state) => const TranscriptPage(),
                 ),
               ]
             ),
