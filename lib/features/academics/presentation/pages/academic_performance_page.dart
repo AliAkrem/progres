@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
@@ -238,30 +236,28 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
             )
           else
             ...assessmentsByPeriod.entries.map((entry) {
-
               String periodName = entry.key;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                    Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? 12 : 16, 
-                vertical: isSmallScreen ? 10 : 12
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.AppPrimary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Text(
-                periodName,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.AppPrimary,
-                  fontSize: isSmallScreen ? 14 : 16,
-                ),
-              ),
-            ),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: isSmallScreen ? 12 : 16,
+                        vertical: isSmallScreen ? 10 : 12),
+                    decoration: BoxDecoration(
+                      color: AppTheme.AppPrimary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      periodName,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.AppPrimary,
+                        fontSize: isSmallScreen ? 14 : 16,
+                      ),
+                    ),
+                  ),
                   SizedBox(height: isSmallScreen ? 6 : 8),
                   ContinuousAssessmentCard(assessments: entry.value),
                   SizedBox(height: isSmallScreen ? 12 : 16),
@@ -271,11 +267,6 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
         ],
       ),
     );
-  }
-
-  // Helper method to decode base64 image
-  Uint8List _decodeBase64Image(String base64String) {
-    return base64Decode(base64String);
   }
 
   // Helper method to group exams by period

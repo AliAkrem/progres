@@ -7,7 +7,7 @@ class AppTheme {
   static const Color AppBackground = Color(0xFFEEECE2); // Background
   static const Color AppTextSecondary = Color(0xFF6E6E80); // Secondary Text
   static const Color AppBorder = Color(0xFFE6E6EF); // Border Color
-  
+
   // Accent colors
   static const Color accentGreen = Color(0xFF2BDD66);
   static const Color accentBlue = Color(0xFF1A73E8);
@@ -62,7 +62,7 @@ class AppTheme {
           fontWeight: FontWeight.w700,
         ),
         headlineSmall: TextStyle(
-          fontSize: 20, 
+          fontSize: 20,
           fontWeight: FontWeight.w700,
         ),
         titleLarge: TextStyle(
@@ -107,7 +107,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 24, 
+            horizontal: 24,
             vertical: 16,
           ),
           minimumSize: const Size(double.infinity, 56),
@@ -121,7 +121,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 24, 
+            horizontal: 24,
             vertical: 16,
           ),
           textStyle: const TextStyle(
@@ -142,7 +142,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 16, 
+            horizontal: 16,
             vertical: 8,
           ),
         ),
@@ -151,7 +151,7 @@ class AppTheme {
         filled: true,
         fillColor: Colors.white,
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20, 
+          horizontal: 20,
           vertical: 16,
         ),
         border: OutlineInputBorder(
@@ -249,7 +249,8 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       primaryColor: AppPrimary,
-      scaffoldBackgroundColor: const Color(0xFF2D2B21), // Darker version of AppBackground
+      scaffoldBackgroundColor:
+          const Color(0xFF2D2B21), // Darker version of AppBackground
       colorScheme: const ColorScheme.dark(
         primary: AppPrimary,
         onPrimary: Colors.white,
@@ -298,7 +299,7 @@ class AppTheme {
           color: Colors.white,
         ),
         headlineSmall: TextStyle(
-          fontSize: 20, 
+          fontSize: 20,
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),
@@ -348,7 +349,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 24, 
+            horizontal: 24,
             vertical: 16,
           ),
           minimumSize: const Size(double.infinity, 56),
@@ -362,7 +363,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 24, 
+            horizontal: 24,
             vertical: 16,
           ),
           textStyle: const TextStyle(
@@ -383,7 +384,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 16, 
+            horizontal: 16,
             vertical: 8,
           ),
         ),
@@ -392,16 +393,18 @@ class AppTheme {
         filled: true,
         fillColor: const Color(0xFF33312A), // Darker version of background
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 20, 
+          horizontal: 20,
           vertical: 16,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF3F3C34), width: 1.5), // Darker border color
+          borderSide: const BorderSide(
+              color: Color(0xFF3F3C34), width: 1.5), // Darker border color
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: Color(0xFF3F3C34), width: 1.5), // Darker border color
+          borderSide: const BorderSide(
+              color: Color(0xFF3F3C34), width: 1.5), // Darker border color
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -432,12 +435,14 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: Color(0xFF3F3C34), width: 1.5), // Darker border color
+          side: const BorderSide(
+              color: Color(0xFF3F3C34), width: 1.5), // Darker border color
         ),
         color: const Color(0xFF33312A), // Darker version of background
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: const Color(0xFF33312A), // Darker version of background
+        backgroundColor:
+            const Color(0xFF33312A), // Darker version of background
         indicatorColor: AppPrimary.withOpacity(0.2),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -485,4 +490,4 @@ class AppTheme {
       ),
     );
   }
-} 
+}
