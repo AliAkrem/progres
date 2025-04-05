@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calendar_view/calendar_view.dart';
 
-import 'package:progres/features/timeline/data/models/course_session.dart';
-import 'package:progres/features/timeline/data/blocs/timeline_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:progres/features/timeline/data/models/course_session.dart';
+import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
 import 'package:progres/features/timeline/presentation/widgets/error.dart';
 import 'package:progres/features/timeline/presentation/widgets/timeline.dart';
 

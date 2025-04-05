@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:progres/features/timeline/data/blocs/timeline_bloc.dart';
+import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
 
 Widget buildErrorState(TimelineError state, BuildContext context) {
   return Center(
