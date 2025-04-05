@@ -2,9 +2,7 @@ import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/academic_transcript.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/course_coefficient.dart';
-import 'package:progres/features/timeline/data/models/course_session.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
-import 'package:progres/features/academics/data/models/student_group.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/enrollment.dart';
@@ -134,18 +132,7 @@ class StudentRepositoryImpl {
     }
   }
   
-  Future<List<StudentGroup>> getStudentGroups(int cardId) async {
-    try {
-      final response = await _apiClient.get('/infos/dia/$cardId/groups');
-      
-      final List<dynamic> groupsJson = response.data;
-      return groupsJson
-          .map((groupJson) => StudentGroup.fromJson(groupJson))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
+
   
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {
