@@ -15,6 +15,9 @@ import 'package:progres/features/auth/data/repositories/auth_repository_impl.dar
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/academics/data/services/transcript_cache_service.dart';
+import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
+import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
+import 'package:progres/core/network/api_client.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +45,9 @@ class MyApp extends StatelessWidget {
         ),
         RepositoryProvider(
           create: (context) => StudentGroupsRepositoryImpl(),
+        ),
+        RepositoryProvider(
+          create: (context) => SubjectRepositoryImpl(apiClient: ApiClient()),
         ),
       ],
       child: MultiBlocProvider(
@@ -76,6 +82,11 @@ class MyApp extends StatelessWidget {
             create: (context) => TranscriptsBloc(
               studentRepository: context.read<StudentRepositoryImpl>(),
               cacheService: context.read<TranscriptCacheService>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SubjectBloc(
+              subjectRepository: context.read<SubjectRepositoryImpl>(),
             ),
           ),
           BlocProvider(

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
-import 'package:progres/features/academics/presentation/pages/subjects_page.dart';
+import 'package:progres/features/subject/presentation/pages/subject_page.dart';
 import 'package:progres/features/timeline/presentation/pages/timeline_page.dart';
 import 'package:progres/features/academics/presentation/pages/transcripts_page.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
@@ -88,7 +88,7 @@ class AppRouter {
                 GoRoute(
                   path: subjectsPath,
                   name: subjects,
-                  builder: (context, state) => const SubjectsPage(),
+                  builder: (context, state) => const SubjectPage(),
                 ),
                 GoRoute(
                   path: groupsPath,
