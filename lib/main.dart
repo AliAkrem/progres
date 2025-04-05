@@ -5,7 +5,7 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
-import 'package:progres/features/groups/data/repository/student_group_repository_impl.dart';
+import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/timeline/data/repositories/timeline_repository_impl.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';

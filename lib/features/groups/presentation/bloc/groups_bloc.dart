@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:progres/features/groups/data/models/student_group.dart';
-import 'package:progres/features/groups/data/repository/student_group_repository_impl.dart';
+import 'package:progres/features/groups/data/models/group.dart';
+import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
 
 class StudentGroupsEvent extends Equatable {
   @override
@@ -28,7 +28,7 @@ class StudentGroupsInitial extends StudentGroupsState {}
 class StudentGroupsLoading extends StudentGroupsState {}
 
 class StudentGroupsLoaded extends StudentGroupsState {
-  final List<StudentGroup>? studentGroups;
+  final List<StudentGroup> studentGroups;
 
   StudentGroupsLoaded({required this.studentGroups});
 
@@ -53,7 +53,8 @@ class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
     on<LoadStudentGroups>(_onLoadStudentGroups);
   }
 
-  Future<void> _onLoadStudentGroups(event, emit) async {
+  Future<void> _onLoadStudentGroups(
+      LoadStudentGroups event, Emitter<StudentGroupsState> emit) async {
     emit(StudentGroupsLoading());
     try {
       final studentGroups =

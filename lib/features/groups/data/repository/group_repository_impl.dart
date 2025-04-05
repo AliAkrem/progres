@@ -1,5 +1,5 @@
 import 'package:progres/core/network/api_client.dart';
-import 'package:progres/features/groups/data/models/student_group.dart';
+import 'package:progres/features/groups/data/models/group.dart';
 
 class StudentGroupsRepositoryImpl {
   final ApiClient _apiClient;
