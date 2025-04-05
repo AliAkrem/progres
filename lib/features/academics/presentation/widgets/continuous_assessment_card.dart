@@ -13,7 +13,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     if (assessments.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -43,9 +43,10 @@ class ContinuousAssessmentCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: theme.brightness == Brightness.light 
-            ? AppTheme.AppBorder 
-            : const Color(0xFF3F3C34)),
+        side: BorderSide(
+            color: theme.brightness == Brightness.light
+                ? AppTheme.AppBorder
+                : const Color(0xFF3F3C34)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,11 +57,12 @@ class ContinuousAssessmentCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent),
+              separatorBuilder: (context, index) =>
+                  const Divider(thickness: 0, color: Colors.transparent),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseAssessments = groupedByCourse[courseTitle]!;
-                
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -75,24 +77,22 @@ class ContinuousAssessmentCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    
+
                     // Group by assessment type (TP, TD, PRJ)
                     ...groupAssessmentsByType(courseAssessments, theme),
-                    
                   ],
                 );
               },
             ),
-            
             const SizedBox(height: 32),
-            
           ],
         ),
       ),
     );
   }
-  
-  List<Widget> groupAssessmentsByType(List<ContinuousAssessment> courseAssessments, ThemeData theme) {
+
+  List<Widget> groupAssessmentsByType(
+      List<ContinuousAssessment> courseAssessments, ThemeData theme) {
     // Group by type (TP, TD, PRJ)
     final Map<String, List<ContinuousAssessment>> groupedByType = {};
     for (var assessment in courseAssessments) {
@@ -102,9 +102,9 @@ class ContinuousAssessmentCard extends StatelessWidget {
       }
       groupedByType[type]!.add(assessment);
     }
-    
+
     List<Widget> typeWidgets = [];
-    
+
     groupedByType.forEach((type, typeAssessments) {
       // Add type header
       final assessment = typeAssessments[0];
@@ -133,16 +133,17 @@ class ContinuousAssessmentCard extends StatelessWidget {
               Expanded(
                 child: Divider(
                   indent: 8,
-                  color: theme.brightness == Brightness.light 
-                      ? null 
+                  color: theme.brightness == Brightness.light
+                      ? null
                       : const Color(0xFF3F3C34),
                 ),
-              ), 
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: assessment.note != null
                     ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 6),
                         decoration: BoxDecoration(
                           color: _getGradeColor(assessment.note!),
                           borderRadius: BorderRadius.circular(12),
@@ -164,26 +165,21 @@ class ContinuousAssessmentCard extends StatelessWidget {
                         ),
                       ),
               ),
-           
             ],
           ),
         ),
       );
-      
     });
-    
-    
+
     return typeWidgets;
   }
-  
 
- 
   // Helper method to get color based on grade
   Color _getGradeColor(double grade) {
     if (grade >= 10) return AppTheme.accentGreen;
     return AppTheme.accentRed;
   }
-  
+
   // Helper method to get color based on assessment type
   Color _getTypeColor(String type) {
     switch (type.toUpperCase()) {
@@ -197,4 +193,4 @@ class ContinuousAssessmentCard extends StatelessWidget {
         return AppTheme.AppTextSecondary;
     }
   }
-} 
+}

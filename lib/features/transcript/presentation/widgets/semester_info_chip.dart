@@ -29,4 +29,4 @@ class SemesterInfoChip extends StatelessWidget {
       ),
     );
   }
-} 
+}

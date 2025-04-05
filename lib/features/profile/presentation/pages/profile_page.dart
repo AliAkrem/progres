@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Load profile data if not already loaded
     final profileState = context.read<ProfileBloc>().state;
     if (profileState is! ProfileLoaded) {
@@ -28,7 +28,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -54,10 +53,10 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Widget _buildLoadingState() {
     final theme = Theme.of(context);
-    
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -72,12 +71,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Widget _buildErrorState(ProfileError state) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 16.0 : 24.0),
@@ -110,13 +109,13 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Widget _buildProfileContent(ProfileLoaded state) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
     final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
-    
+
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -126,10 +125,10 @@ class _ProfilePageState extends State<ProfilePage> {
           _buildProfileHeader(state, theme),
           SizedBox(height: isSmallScreen ? 16 : 24),
 
-          
           // Status cards
           Padding(
-            padding: EdgeInsets.fromLTRB(horizontalPadding, 0, horizontalPadding, isSmallScreen ? 16 : 24),
+            padding: EdgeInsets.fromLTRB(horizontalPadding, 0,
+                horizontalPadding, isSmallScreen ? 16 : 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -152,61 +151,60 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          
+
           // Personal Information
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
               title: 'Personal Information',
               children: [
-                _buildInfoRow('Full Name (Latin)', '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}'),
-                _buildInfoRow('Full Name (Arabic)', '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}'),
+                _buildInfoRow('Full Name (Latin)',
+                    '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}'),
+                _buildInfoRow('Full Name (Arabic)',
+                    '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}'),
                 _buildInfoRow('Birth Date', state.basicInfo.dateNaissance),
                 _buildInfoRow('Birth Place', state.basicInfo.lieuNaissance),
               ],
             ),
           ),
-          
+
           SizedBox(height: isSmallScreen ? 16 : 24),
-          
-          
+
           // Academic Information
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
               title: 'Current Academic Status',
               children: [
-                _buildInfoRow('Program', state.detailedInfo.niveauLibelleLongLt),
+                _buildInfoRow(
+                    'Program', state.detailedInfo.niveauLibelleLongLt),
                 _buildInfoRow('Level', state.detailedInfo.niveauLibelleLongLt),
                 _buildInfoRow('Cycle', state.detailedInfo.refLibelleCycle),
-                _buildInfoRow('Registration Number', state.detailedInfo.numeroInscription),
+                _buildInfoRow('Registration Number',
+                    state.detailedInfo.numeroInscription),
                 _buildInfoRow('Academic Year', state.academicYear.code),
               ],
             ),
           ),
-          
-          SizedBox(height: isSmallScreen ? 16 : 24),
- 
-          
 
+          SizedBox(height: isSmallScreen ? 16 : 24),
         ],
       ),
     );
   }
-  
+
   Widget _buildProfileHeader(ProfileLoaded state, ThemeData theme) {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Container(
       width: double.infinity,
       color: theme.colorScheme.surface,
       padding: EdgeInsets.fromLTRB(
-        isSmallScreen ? 16 : 24, 
-        isSmallScreen ? 12 : 16, 
-        isSmallScreen ? 16 : 24, 
-        isSmallScreen ? 20 : 24
-      ),
+          isSmallScreen ? 16 : 24,
+          isSmallScreen ? 12 : 16,
+          isSmallScreen ? 16 : 24,
+          isSmallScreen ? 20 : 24),
       child: Column(
         children: [
           // Profile image
@@ -217,7 +215,11 @@ class _ProfilePageState extends State<ProfilePage> {
               height: isSmallScreen ? 100 : 120,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: theme.brightness == Brightness.light ? Colors.white : const Color(0xFF3F3C34), width: 4),
+                border: Border.all(
+                    color: theme.brightness == Brightness.light
+                        ? Colors.white
+                        : const Color(0xFF3F3C34),
+                    width: 4),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -228,7 +230,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: state.profileImage != null
                   ? ClipRRect(
-                      borderRadius: BorderRadius.circular(isSmallScreen ? 50 : 60),
+                      borderRadius:
+                          BorderRadius.circular(isSmallScreen ? 50 : 60),
                       child: Image.memory(
                         _decodeBase64Image(state.profileImage!),
                         fit: BoxFit.cover,
@@ -265,11 +268,12 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: isSmallScreen ? 10 : 12),
           Container(
             padding: EdgeInsets.symmetric(
-              horizontal: isSmallScreen ? 14 : 16, 
-              vertical: isSmallScreen ? 6 : 8
-            ),
+                horizontal: isSmallScreen ? 14 : 16,
+                vertical: isSmallScreen ? 6 : 8),
             decoration: BoxDecoration(
-              color: theme.brightness == Brightness.light ? AppTheme.AppSecondary.withOpacity(0.1) : AppTheme.AppSecondary.withOpacity(0.3),
+              color: theme.brightness == Brightness.light
+                  ? AppTheme.AppSecondary.withOpacity(0.1)
+                  : AppTheme.AppSecondary.withOpacity(0.3),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -285,7 +289,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Widget _buildUnifiedStatusCard({
     required ThemeData theme,
     required bool isSmallScreen,
@@ -298,7 +302,10 @@ class _ProfilePageState extends State<ProfilePage> {
       decoration: BoxDecoration(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.AppBorder : const Color(0xFF3F3C34)),
+        border: Border.all(
+            color: theme.brightness == Brightness.light
+                ? AppTheme.AppBorder
+                : const Color(0xFF3F3C34)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -321,9 +328,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
               child: Divider(
-                color: theme.brightness == Brightness.light 
-                  ? Colors.black.withOpacity(0.1) 
-                  : Colors.white.withOpacity(0.1),
+                color: theme.brightness == Brightness.light
+                    ? Colors.black.withOpacity(0.1)
+                    : Colors.white.withOpacity(0.1),
                 height: 1,
               ),
             ),
@@ -337,9 +344,9 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
               child: Divider(
-                color: theme.brightness == Brightness.light 
-                  ? Colors.black.withOpacity(0.1) 
-                  : Colors.white.withOpacity(0.1),
+                color: theme.brightness == Brightness.light
+                    ? Colors.black.withOpacity(0.1)
+                    : Colors.white.withOpacity(0.1),
                 height: 1,
               ),
             ),
@@ -356,7 +363,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Widget _buildStatusRow({
     required ThemeData theme,
     required bool isSmallScreen,
@@ -370,7 +377,9 @@ class _ProfilePageState extends State<ProfilePage> {
         Icon(
           icon,
           size: isSmallScreen ? 18 : 20,
-          color: theme.brightness == Brightness.light ? AppTheme.AppPrimary.withOpacity(0.7) : AppTheme.AppPrimary,
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppPrimary.withOpacity(0.7)
+              : AppTheme.AppPrimary,
         ),
         SizedBox(width: isSmallScreen ? 12 : 16),
         Column(
@@ -399,7 +408,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
-  
+
   Widget _buildInfoSection({
     required String title,
     required List<Widget> children,
@@ -407,7 +416,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -425,7 +434,10 @@ class _ProfilePageState extends State<ProfilePage> {
           decoration: BoxDecoration(
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: theme.brightness == Brightness.light ? AppTheme.AppBorder : const Color(0xFF3F3C34)),
+            border: Border.all(
+                color: theme.brightness == Brightness.light
+                    ? AppTheme.AppBorder
+                    : const Color(0xFF3F3C34)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.03),
@@ -445,12 +457,12 @@ class _ProfilePageState extends State<ProfilePage> {
       ],
     );
   }
-  
+
   Widget _buildInfoRow(String label, String value, {Color? valueColor}) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Padding(
       padding: EdgeInsets.only(bottom: isSmallScreen ? 12 : 16),
       child: Column(
@@ -476,8 +488,8 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-  
+
   Uint8List _decodeBase64Image(String base64String) {
     return base64Decode(base64String);
   }
-} 
+}

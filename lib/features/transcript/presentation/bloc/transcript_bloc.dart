@@ -12,7 +12,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
   final EnrollmentCacheService enrollmentCacheService;
 
   TranscriptBloc({
-    required this.transcriptRepository, 
+    required this.transcriptRepository,
     required this.transcriptCacheService,
     required this.enrollmentCacheService,
   }) : super(TranscriptInitial()) {
@@ -28,12 +28,13 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
   ) async {
     try {
       emit(TranscriptLoading());
-      
+
       // If not forcing refresh, try to get from cache first
       if (!event.forceRefresh) {
         final isStale = await enrollmentCacheService.isDataStale();
         if (!isStale) {
-          final cachedEnrollments = await enrollmentCacheService.getCachedEnrollments();
+          final cachedEnrollments =
+              await enrollmentCacheService.getCachedEnrollments();
           if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
             print('Using cached enrollments');
             emit(EnrollmentsLoaded(
@@ -46,18 +47,19 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
       }
 
       final enrollments = await transcriptRepository.getStudentEnrollments();
-      
+
       // Cache the results
       await enrollmentCacheService.cacheEnrollments(enrollments);
-      
+
       emit(EnrollmentsLoaded(
         enrollments: enrollments,
         fromCache: false,
       ));
     } catch (e) {
       print('Error loading enrollments: $e');
-      
-      final cachedEnrollments = await enrollmentCacheService.getCachedEnrollments();
+
+      final cachedEnrollments =
+          await enrollmentCacheService.getCachedEnrollments();
       if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
         emit(EnrollmentsLoaded(
           enrollments: cachedEnrollments,
@@ -76,15 +78,20 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
     try {
       // If not forcing refresh, try to get from cache first
       if (!event.forceRefresh) {
-        final isTranscriptsStale = await transcriptCacheService.isDataStale('transcript', event.enrollmentId);
-        final isSummaryStale = await transcriptCacheService.isDataStale('summary', event.enrollmentId);
-        
+        final isTranscriptsStale = await transcriptCacheService.isDataStale(
+            'transcript', event.enrollmentId);
+        final isSummaryStale = await transcriptCacheService.isDataStale(
+            'summary', event.enrollmentId);
+
         if (!isTranscriptsStale && !isSummaryStale) {
-          final cachedTranscripts = await transcriptCacheService.getCachedTranscripts(event.enrollmentId);
-          final cachedSummary = await transcriptCacheService.getCachedAnnualSummary(event.enrollmentId);
-          
+          final cachedTranscripts = await transcriptCacheService
+              .getCachedTranscripts(event.enrollmentId);
+          final cachedSummary = await transcriptCacheService
+              .getCachedAnnualSummary(event.enrollmentId);
+
           if (cachedTranscripts != null && cachedTranscripts.isNotEmpty) {
-            print('Using cached transcripts and summary for enrollment ID: ${event.enrollmentId}');
+            print(
+                'Using cached transcripts and summary for enrollment ID: ${event.enrollmentId}');
             emit(TranscriptsLoaded(
               transcripts: cachedTranscripts,
               selectedEnrollment: event.enrollment,
@@ -95,27 +102,32 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
           }
         }
       }
-      
+
       emit(TranscriptLoading());
-      
+
       // Load transcripts from network
-      final transcripts = await transcriptRepository.getAcademicTranscripts(event.enrollmentId);
-      
+      final transcripts =
+          await transcriptRepository.getAcademicTranscripts(event.enrollmentId);
+
       // Cache the transcripts
-      await transcriptCacheService.cacheTranscripts(event.enrollmentId, transcripts);
-      
+      await transcriptCacheService.cacheTranscripts(
+          event.enrollmentId, transcripts);
+
       // Load annual summary
       AnnualTranscriptSummary? annualSummary;
       try {
-        annualSummary = await transcriptRepository.getAnnualTranscriptSummary(event.enrollmentId);
+        annualSummary = await transcriptRepository
+            .getAnnualTranscriptSummary(event.enrollmentId);
         // Cache the annual summary
-        await transcriptCacheService.cacheAnnualSummary(event.enrollmentId, annualSummary);
+        await transcriptCacheService.cacheAnnualSummary(
+            event.enrollmentId, annualSummary);
       } catch (e) {
         print('Error loading annual summary: $e');
         // Try to get from cache if network request fails
-        annualSummary = await transcriptCacheService.getCachedAnnualSummary(event.enrollmentId);
+        annualSummary = await transcriptCacheService
+            .getCachedAnnualSummary(event.enrollmentId);
       }
-      
+
       emit(TranscriptsLoaded(
         transcripts: transcripts,
         selectedEnrollment: event.enrollment,
@@ -124,11 +136,13 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
       ));
     } catch (e) {
       print('Error loading transcripts: $e');
-      
+
       // Try to load from cache if network request fails
-      final cachedTranscripts = await transcriptCacheService.getCachedTranscripts(event.enrollmentId);
-      final cachedSummary = await transcriptCacheService.getCachedAnnualSummary(event.enrollmentId);
-      
+      final cachedTranscripts =
+          await transcriptCacheService.getCachedTranscripts(event.enrollmentId);
+      final cachedSummary = await transcriptCacheService
+          .getCachedAnnualSummary(event.enrollmentId);
+
       if (cachedTranscripts != null && cachedTranscripts.isNotEmpty) {
         emit(TranscriptsLoaded(
           transcripts: cachedTranscripts,
@@ -151,9 +165,11 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
       if (currentState is TranscriptsLoaded) {
         // If not forcing refresh and we have data in cache, use it
         if (!event.forceRefresh) {
-          final isStale = await transcriptCacheService.isDataStale('summary', event.enrollmentId);
+          final isStale = await transcriptCacheService.isDataStale(
+              'summary', event.enrollmentId);
           if (!isStale) {
-            final cachedSummary = await transcriptCacheService.getCachedAnnualSummary(event.enrollmentId);
+            final cachedSummary = await transcriptCacheService
+                .getCachedAnnualSummary(event.enrollmentId);
             if (cachedSummary != null) {
               emit(TranscriptsLoaded(
                 transcripts: currentState.transcripts,
@@ -165,13 +181,15 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
             }
           }
         }
-        
+
         // Load from network
-        final annualSummary = await transcriptRepository.getAnnualTranscriptSummary(event.enrollmentId);
-        
+        final annualSummary = await transcriptRepository
+            .getAnnualTranscriptSummary(event.enrollmentId);
+
         // Cache the result
-        await transcriptCacheService.cacheAnnualSummary(event.enrollmentId, annualSummary);
-        
+        await transcriptCacheService.cacheAnnualSummary(
+            event.enrollmentId, annualSummary);
+
         emit(TranscriptsLoaded(
           transcripts: currentState.transcripts,
           selectedEnrollment: currentState.selectedEnrollment,
@@ -184,7 +202,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
       // Don't change state on error, just log
     }
   }
-  
+
   Future<void> _onClearCache(
     ClearTranscriptCache event,
     Emitter<TranscriptState> emit,
@@ -192,4 +210,4 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
     await transcriptCacheService.clearAllCache();
     await enrollmentCacheService.clearCache();
   }
-} 
+}

@@ -65,4 +65,4 @@ class AcademicPeriodsCard extends StatelessWidget {
       ),
     );
   }
-} 
+}

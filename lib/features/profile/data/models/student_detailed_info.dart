@@ -58,4 +58,4 @@ class StudentDetailedInfo {
       transportPaye: json['transportPaye'] as bool,
     );
   }
-} 
+}

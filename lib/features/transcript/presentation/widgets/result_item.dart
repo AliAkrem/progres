@@ -19,7 +19,7 @@ class ResultItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Expanded(
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -67,4 +67,4 @@ class ResultItem extends StatelessWidget {
       ),
     );
   }
-} 
+}

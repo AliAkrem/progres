@@ -32,4 +32,4 @@ class EnrollmentError extends EnrollmentState {
 
   @override
   List<Object?> get props => [message];
-} 
+}

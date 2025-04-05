@@ -4,8 +4,8 @@ import 'package:progres/features/transcript/data/models/annual_transcript_summar
 
 abstract class TranscriptRepository {
   Future<List<Enrollment>> getStudentEnrollments();
-  
+
   Future<List<AcademicTranscript>> getAcademicTranscripts(int enrollmentId);
-  
+
   Future<AnnualTranscriptSummary> getAnnualTranscriptSummary(int enrollmentId);
-} 
+}

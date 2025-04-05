@@ -10,9 +10,9 @@ abstract class TranscriptEvent extends Equatable {
 
 class LoadEnrollments extends TranscriptEvent {
   final bool forceRefresh;
-  
+
   const LoadEnrollments({this.forceRefresh = false});
-  
+
   @override
   List<Object?> get props => [forceRefresh];
 }
@@ -47,4 +47,4 @@ class LoadAnnualSummary extends TranscriptEvent {
 
 class ClearTranscriptCache extends TranscriptEvent {
   const ClearTranscriptCache();
-} 
+}

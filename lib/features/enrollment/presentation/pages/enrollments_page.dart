@@ -17,7 +17,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Load enrollments when page is opened
     context.read<EnrollmentBloc>().add(const LoadEnrollmentsEvent());
   }
@@ -33,8 +33,8 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             tooltip: 'Refresh Data',
             onPressed: () {
               context.read<EnrollmentBloc>().add(
-                const LoadEnrollmentsEvent(forceRefresh: true),
-              );
+                    const LoadEnrollmentsEvent(forceRefresh: true),
+                  );
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Refreshing data...'),
@@ -60,7 +60,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context.read<EnrollmentBloc>().add(const LoadEnrollmentsEvent());
+                      context
+                          .read<EnrollmentBloc>()
+                          .add(const LoadEnrollmentsEvent());
                     },
                     child: const Text('Retry'),
                   ),
@@ -73,7 +75,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 child: Text('No enrollment history available'),
               );
             }
-            
+
             return _buildEnrollmentsList(context, state.enrollments);
           } else {
             return const Center(
@@ -85,18 +87,17 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
     );
   }
 
-  Widget _buildEnrollmentsList(BuildContext context, List<Enrollment> enrollments) {
-
+  Widget _buildEnrollmentsList(
+      BuildContext context, List<Enrollment> enrollments) {
     // Sort enrollments by academic year (newest first)
     final sortedEnrollments = List<Enrollment>.from(enrollments)
       ..sort((a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId));
-    
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           // Timeline of enrollments
           for (var enrollment in sortedEnrollments) ...[
             _buildEnrollmentCard(context, enrollment),
@@ -106,18 +107,18 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       ),
     );
   }
-  
+
   Widget _buildEnrollmentCard(BuildContext context, Enrollment enrollment) {
     final theme = Theme.of(context);
-    
+
     return Card(
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: theme.brightness == Brightness.light 
-              ? AppTheme.AppBorder 
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
               : Colors.grey.shade800,
         ),
       ),
@@ -142,9 +143,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 16),
-            
+
             // Institution
             if (enrollment.llEtablissementLatin != null)
               Row(
@@ -152,7 +153,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.school_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light 
+                    color: theme.brightness == Brightness.light
                         ? Colors.grey.shade700
                         : Colors.grey.shade300,
                   ),
@@ -169,15 +170,15 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   ),
                 ],
               ),
-            
+
             if (enrollment.llEtablissementLatin != null)
               const SizedBox(height: 12),
-            
+
             // Program of study
-            if (enrollment.niveauLibelleLongLt != null || 
-                enrollment.refLibelleCycle != null || 
-                enrollment.ofLlDomaine != null || 
-                enrollment.ofLlFiliere != null || 
+            if (enrollment.niveauLibelleLongLt != null ||
+                enrollment.refLibelleCycle != null ||
+                enrollment.ofLlDomaine != null ||
+                enrollment.ofLlFiliere != null ||
                 enrollment.ofLlSpecialite != null)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +186,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.book_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light 
+                    color: theme.brightness == Brightness.light
                         ? Colors.grey.shade700
                         : Colors.grey.shade300,
                   ),
@@ -194,7 +195,8 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (enrollment.refLibelleCycle != null && enrollment.niveauLibelleLongLt != null)
+                        if (enrollment.refLibelleCycle != null &&
+                            enrollment.niveauLibelleLongLt != null)
                           Text(
                             '${enrollment.refLibelleCycle!.toUpperCase()} - ${enrollment.niveauLibelleLongLt}',
                             style: TextStyle(
@@ -212,22 +214,23 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                               color: theme.textTheme.titleMedium?.color,
                             ),
                           ),
-                        
                         if (enrollment.ofLlDomaine != null)
                           Text(
                             enrollment.ofLlDomaine!,
                             style: TextStyle(
                               fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+                              color: theme.textTheme.bodyMedium?.color
+                                  ?.withOpacity(0.8),
                             ),
                           ),
-                        
-                        if (enrollment.ofLlFiliere != null && enrollment.ofLlSpecialite != null)
+                        if (enrollment.ofLlFiliere != null &&
+                            enrollment.ofLlSpecialite != null)
                           Text(
                             '${enrollment.ofLlFiliere}: ${enrollment.ofLlSpecialite}',
                             style: TextStyle(
                               fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+                              color: theme.textTheme.bodyMedium?.color
+                                  ?.withOpacity(0.8),
                             ),
                           )
                         else if (enrollment.ofLlFiliere != null)
@@ -235,7 +238,8 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                             enrollment.ofLlFiliere!,
                             style: TextStyle(
                               fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8),
+                              color: theme.textTheme.bodyMedium?.color
+                                  ?.withOpacity(0.8),
                             ),
                           ),
                       ],
@@ -243,14 +247,14 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   ),
                 ],
               ),
-            
-            if (enrollment.niveauLibelleLongLt != null || 
-                enrollment.refLibelleCycle != null || 
-                enrollment.ofLlDomaine != null || 
-                enrollment.ofLlFiliere != null || 
+
+            if (enrollment.niveauLibelleLongLt != null ||
+                enrollment.refLibelleCycle != null ||
+                enrollment.ofLlDomaine != null ||
+                enrollment.ofLlFiliere != null ||
                 enrollment.ofLlSpecialite != null)
               const SizedBox(height: 12),
-            
+
             // Registration number
             if (enrollment.numeroInscription != null)
               Row(
@@ -258,7 +262,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.credit_card_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light 
+                    color: theme.brightness == Brightness.light
                         ? Colors.grey.shade700
                         : Colors.grey.shade300,
                   ),
@@ -293,4 +297,4 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       ),
     );
   }
-} 
+}

@@ -72,8 +72,7 @@ class AcademicsLoaded extends AcademicsState {
   }
 
   @override
-  List<Object?> get props =>
-      [examResults, continuousAssessments];
+  List<Object?> get props => [examResults, continuousAssessments];
 }
 
 class AcademicsError extends AcademicsState {

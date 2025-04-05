@@ -34,4 +34,4 @@ class AcademicPeriod {
       rang: json['rang'] as int,
     );
   }
-} 
+}

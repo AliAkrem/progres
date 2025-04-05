@@ -22,4 +22,4 @@ class StudentGroup {
       periodeLibelleLongLt: json['periodeLibelleLongLt'] as String,
     );
   }
-} 
+}

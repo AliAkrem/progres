@@ -19,8 +19,10 @@ class CourseCoefficient {
 
   factory CourseCoefficient.fromJson(Map<String, dynamic> json) {
     return CourseCoefficient(
-      coefficientControleContinu: _parseDouble(json['coefficientControleContinu']),
-      coefficientControleIntermediaire: _parseDouble(json['coefficientControleIntermediaire']),
+      coefficientControleContinu:
+          _parseDouble(json['coefficientControleContinu']),
+      coefficientControleIntermediaire:
+          _parseDouble(json['coefficientControleIntermediaire']),
       coefficientExamen: _parseDouble(json['coefficientExamen']),
       mcLibelleAr: json['mcLibelleAr'] as String,
       mcLibelleFr: json['mcLibelleFr'] as String,
@@ -28,7 +30,7 @@ class CourseCoefficient {
       periodeLibelleFr: json['periodeLibelleFr'] as String,
     );
   }
-  
+
   // Helper function to handle both int and double values
   static double _parseDouble(dynamic value) {
     if (value is int) {
@@ -38,4 +40,4 @@ class CourseCoefficient {
     }
     return 0.0; // Default fallback
   }
-} 
+}

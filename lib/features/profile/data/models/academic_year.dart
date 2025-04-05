@@ -13,4 +13,4 @@ class AcademicYear {
       code: json['code'] as String,
     );
   }
-} 
+}

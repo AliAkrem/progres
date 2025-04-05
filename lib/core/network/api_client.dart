@@ -42,7 +42,7 @@ class ApiClient {
   Future<void> saveUuid(String uuid) async {
     await _secureStorage.write(key: 'uuid', value: uuid);
   }
-  
+
   Future<void> saveEtablissementId(String etablissementId) async {
     await _secureStorage.write(key: 'etablissement_id', value: etablissementId);
   }
@@ -50,7 +50,7 @@ class ApiClient {
   Future<String?> getUuid() async {
     return await _secureStorage.read(key: 'uuid');
   }
-  
+
   Future<String?> getEtablissementId() async {
     return await _secureStorage.read(key: 'etablissement_id');
   }
@@ -66,7 +66,8 @@ class ApiClient {
     await _secureStorage.delete(key: 'etablissement_id');
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await _dio.get(path, queryParameters: queryParameters);
       return response;
@@ -83,4 +84,4 @@ class ApiClient {
       rethrow;
     }
   }
-} 
+}

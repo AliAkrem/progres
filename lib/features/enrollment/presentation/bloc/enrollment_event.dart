@@ -16,4 +16,4 @@ class LoadEnrollmentsEvent extends EnrollmentEvent {
   List<Object?> get props => [forceRefresh];
 }
 
-class ClearEnrollmentsCache extends EnrollmentEvent {} 
+class ClearEnrollmentsCache extends EnrollmentEvent {}

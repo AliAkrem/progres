@@ -9,7 +9,7 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
   final EnrollmentCacheService cacheService;
 
   EnrollmentBloc({
-    required this.enrollmentRepository, 
+    required this.enrollmentRepository,
     required this.cacheService,
   }) : super(EnrollmentInitial()) {
     on<LoadEnrollmentsEvent>(_onLoadEnrollments);
@@ -22,7 +22,7 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
   ) async {
     try {
       emit(EnrollmentLoading());
-      
+
       // If not forcing refresh, try to get from cache first
       if (!event.forceRefresh) {
         final isStale = await cacheService.isDataStale();
@@ -40,17 +40,17 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
       }
 
       final enrollments = await enrollmentRepository.getStudentEnrollments();
-      
+
       // Cache the results
       await cacheService.cacheEnrollments(enrollments);
-      
+
       emit(EnrollmentsLoaded(
         enrollments: enrollments,
         fromCache: false,
       ));
     } catch (e) {
       print('Error loading enrollments: $e');
-      
+
       final cachedEnrollments = await cacheService.getCachedEnrollments();
       if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
         emit(EnrollmentsLoaded(
@@ -62,11 +62,11 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
       }
     }
   }
-  
+
   Future<void> _onClearCache(
     ClearEnrollmentsCache event,
     Emitter<EnrollmentState> emit,
   ) async {
     await cacheService.clearCache();
   }
-} 
+}

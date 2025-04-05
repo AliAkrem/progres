@@ -14,11 +14,11 @@ class ThemeService {
   static Future<ThemeMode> getThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
     final themeString = prefs.getString(themeKey);
-    
+
     if (themeString == null) {
       return ThemeMode.system;
     }
-    
+
     switch (themeString) {
       case 'ThemeMode.light':
         return ThemeMode.light;
@@ -29,4 +29,4 @@ class ThemeService {
         return ThemeMode.system;
     }
   }
-} 
+}

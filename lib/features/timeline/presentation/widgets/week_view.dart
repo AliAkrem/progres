@@ -4,12 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/presentation/widgets/event.dart';
 
-WeekView<Object?> buildWeekView({
-  required BuildContext context,
-  required Key weekViewKey,
-  EventController<Object?>? eventController,
-  DateTime? currentWeekStart
-}) {
+WeekView<Object?> buildWeekView(
+    {required BuildContext context,
+    required Key weekViewKey,
+    EventController<Object?>? eventController,
+    DateTime? currentWeekStart}) {
   return WeekView(
     key: weekViewKey,
     minuteSlotSize: MinuteSlotSize.minutes60,
@@ -147,8 +146,7 @@ WeekView<Object?> buildWeekView({
   );
 }
 
-
-  String _formatDate(DateTime date) {
-    // Format as Day Month, Year (e.g., "12 Oct, 2023")
-    return DateFormat('d MMM, yyyy').format(date);
-  }
+String _formatDate(DateTime date) {
+  // Format as Day Month, Year (e.g., "12 Oct, 2023")
+  return DateFormat('d MMM, yyyy').format(date);
+}

@@ -15,7 +15,7 @@ class MainShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final int selectedIndex = _calculateSelectedIndex(context);
     final theme = Theme.of(context);
-    
+
     return Scaffold(
       body: SafeArea(
         child: child,
@@ -23,17 +23,21 @@ class MainShell extends StatelessWidget {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          boxShadow: theme.brightness == Brightness.dark 
-              ? [BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, -5),
-                )]
-              : [BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, -5),
-                )],
+          boxShadow: theme.brightness == Brightness.dark
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  )
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  )
+                ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
@@ -73,15 +77,17 @@ class MainShell extends StatelessWidget {
     required String label,
   }) {
     final theme = Theme.of(context);
-    
+
     return NavigationDestination(
       icon: Icon(
         icon,
-        color: theme.brightness == Brightness.dark ? Colors.grey[400] : Colors.grey[600],
+        color: theme.brightness == Brightness.dark
+            ? Colors.grey[400]
+            : Colors.grey[600],
       ),
       selectedIcon: Icon(
         selectedIcon,
-        color:  AppTheme.AppPrimary,
+        color: AppTheme.AppPrimary,
       ),
       label: label,
     );
@@ -108,4 +114,4 @@ class MainShell extends StatelessWidget {
         break;
     }
   }
-} 
+}

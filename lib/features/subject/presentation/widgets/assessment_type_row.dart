@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AssessmentTypeRow extends StatelessWidget {
   final String type;
-  final double coefficient; 
+  final double coefficient;
   final Color typeColor;
   final ThemeData theme;
 
@@ -17,7 +17,7 @@ class AssessmentTypeRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final percentage = (coefficient * 100).toInt();
-    
+
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
       child: Row(
@@ -41,8 +41,8 @@ class AssessmentTypeRow extends StatelessWidget {
           Expanded(
             child: Divider(
               indent: 8,
-              color: theme.brightness == Brightness.light 
-                  ? null 
+              color: theme.brightness == Brightness.light
+                  ? null
                   : const Color(0xFF3F3C34),
             ),
           ),
@@ -50,7 +50,8 @@ class AssessmentTypeRow extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             child: coefficient > 0
                 ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                       color: typeColor,
                       borderRadius: BorderRadius.circular(12),
@@ -76,4 +77,4 @@ class AssessmentTypeRow extends StatelessWidget {
       ),
     );
   }
-} 
+}

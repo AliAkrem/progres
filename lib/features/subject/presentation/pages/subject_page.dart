@@ -181,8 +181,8 @@ class SubjectsContent extends StatelessWidget {
   }
 
   Map<String, List<CourseCoefficient>> getCoursesbyPeriod() {
-      final Map<String, List<CourseCoefficient>> coursesByPeriod = {};
-    
+    final Map<String, List<CourseCoefficient>> coursesByPeriod = {};
+
     for (var coefficient in coefficients) {
       if (!coursesByPeriod.containsKey(coefficient.periodeLibelleFr)) {
         coursesByPeriod[coefficient.periodeLibelleFr] = [];
@@ -192,7 +192,6 @@ class SubjectsContent extends StatelessWidget {
     return coursesByPeriod;
   }
 }
-
 
 class InitialState extends StatelessWidget {
   const InitialState({

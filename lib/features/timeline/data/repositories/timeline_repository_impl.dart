@@ -7,10 +7,11 @@ class TimeLineRepositoryImpl {
   TimeLineRepositoryImpl({ApiClient? apiClient})
       : _apiClient = apiClient ?? ApiClient();
 
-   Future<List<CourseSession>> getWeeklyTimetable(int enrollmentId) async {
+  Future<List<CourseSession>> getWeeklyTimetable(int enrollmentId) async {
     try {
-      final response = await _apiClient.get('/infos/seanceEmploi/inscription/$enrollmentId');
-      
+      final response =
+          await _apiClient.get('/infos/seanceEmploi/inscription/$enrollmentId');
+
       final List<dynamic> sessionsJson = response.data;
       return sessionsJson
           .map((sessionJson) => CourseSession.fromJson(sessionJson))
@@ -19,5 +20,4 @@ class TimeLineRepositoryImpl {
       rethrow;
     }
   }
-
 }

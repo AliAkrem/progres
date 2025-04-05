@@ -40,4 +40,4 @@ class AuthResponse {
       'userName': userName,
     };
   }
-} 
+}

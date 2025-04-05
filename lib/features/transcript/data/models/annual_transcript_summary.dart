@@ -19,7 +19,7 @@ class AnnualTranscriptSummary {
       typeDecisionLibelleFr: json['typeDecisionLibelleFr'] as String,
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'creditAcquis': creditAcquis,
@@ -28,4 +28,4 @@ class AnnualTranscriptSummary {
       'typeDecisionLibelleFr': typeDecisionLibelleFr,
     };
   }
-} 
+}

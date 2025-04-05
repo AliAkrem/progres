@@ -18,7 +18,7 @@ class StatusBadge extends StatelessWidget {
         .replaceAll('Ajourné(e)', 'Failed')
         .replaceAll('(session normale)', '')
         .trim();
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class StatusBadge extends StatelessWidget {
       ),
     );
   }
-  
+
   Color _getDecisionColor(String decision) {
     if (decision.contains('Admis')) {
       return AppTheme.accentGreen;
@@ -60,7 +60,7 @@ class StatusBadge extends StatelessWidget {
       return AppTheme.accentYellow;
     }
   }
-  
+
   IconData _getDecisionIcon(String decision) {
     if (decision.contains('Admis')) {
       return Icons.check_circle;
@@ -70,4 +70,4 @@ class StatusBadge extends StatelessWidget {
       return Icons.info;
     }
   }
-} 
+}

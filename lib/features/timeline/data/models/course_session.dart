@@ -58,7 +58,7 @@ class CourseSession {
       refLieuDesignation: json['refLieuDesignation'] as String?,
     );
   }
-  
+
   DateTime get startTime {
     final parts = plageHoraireHeureDebut.split(':');
     return DateTime(
@@ -69,7 +69,7 @@ class CourseSession {
       int.parse(parts[1]),
     );
   }
-  
+
   DateTime get endTime {
     final parts = plageHoraireHeureFin.split(':');
     return DateTime(
@@ -80,12 +80,12 @@ class CourseSession {
       int.parse(parts[1]),
     );
   }
-  
+
   // Helper method to map jourId to a DateTime for the current week
   DateTime getDayDateTime({DateTime? weekStart}) {
     // Map jourId to correct weekday numbers based on the actual API data
     // According to the user, jourId 5 is Jeudi (Thursday)
-    
+
     // This mapping directly maps jourId to the day offset from Saturday
     // Since we use Saturday as the first day (index 0) in our week view
     final Map<int, int> jourIdToDayOffset = {
@@ -97,49 +97,54 @@ class CourseSession {
       6: 6, // jourId 6 = Thursday (offset 5)
       7: 7, // jourId 7 = Friday (offset 6)
     };
-    
+
     // Get the correct day offset from the jourId (default to 0 = Saturday if not found)
     final int dayOffset = jourIdToDayOffset[jourId] ?? 0;
-    
+
     // If no weekStart is provided, use the current week's Saturday
     final DateTime saturday = weekStart ?? _getStartOfCurrentWeek();
-    
+
     // Add the day offset to get to the correct day
     final result = saturday.add(Duration(days: dayOffset));
-    
+
     // Print debug info for Sunday specifically
-    if (jourId == 2) { // Sunday
-      print('SUNDAY EVENT: jourId $jourId ($jourLibelleFr) mapped to ${_formatDate(result)} (weekday: ${result.weekday})');
+    if (jourId == 2) {
+      // Sunday
+      print(
+          'SUNDAY EVENT: jourId $jourId ($jourLibelleFr) mapped to ${_formatDate(result)} (weekday: ${result.weekday})');
     }
-    
+
     return result;
   }
-  
+
   // Helper method to format dates for debugging
   String _formatDate(DateTime date) {
     return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
-  
+
   // Get the start of the current week (Saturday)
   DateTime _getStartOfCurrentWeek() {
     final now = DateTime.now();
     final currentWeekday = now.weekday; // 1-7 where 1 is Monday, 7 is Sunday
-    
+
     // Calculate days to subtract to get to the most recent Saturday
     // Saturday is weekday 6 in Dart
     int daysToSaturday;
-    
-    if (currentWeekday == 6) { // Already Saturday
+
+    if (currentWeekday == 6) {
+      // Already Saturday
       daysToSaturday = 0;
-    } else if (currentWeekday == 7) { // Sunday
+    } else if (currentWeekday == 7) {
+      // Sunday
       daysToSaturday = 1; // Go back 1 day to Saturday
-    } else { // Monday to Friday (1-5)
+    } else {
+      // Monday to Friday (1-5)
       daysToSaturday = currentWeekday + 1; // 2 for Monday, etc.
     }
-    
+
     return DateTime(now.year, now.month, now.day - daysToSaturday);
   }
-  
+
   // Get the type of class session
   String get sessionType {
     switch (ap) {
@@ -153,7 +158,7 @@ class CourseSession {
         return ap;
     }
   }
-  
+
   // Get instructor full name
   String? get instructorName {
     if (nomEnseignantLatin != null && prenomEnseignantLatin != null) {
@@ -170,4 +175,4 @@ class CourseSession {
   String toString() {
     return 'CourseSession(jourId: $jourId, day: $jourLibelleFr, matiere: $matiere, time: $plageHoraireHeureDebut-$plageHoraireHeureFin)';
   }
-} 
+}

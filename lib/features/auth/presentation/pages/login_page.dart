@@ -13,7 +13,8 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -35,7 +36,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         curve: Curves.easeInOut,
       ),
     );
-    _slideAnimation = Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeOut,
@@ -57,9 +59,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Scaffold(
-      backgroundColor: theme.brightness == Brightness.dark ? const Color(0xFF2D2B21) : AppTheme.AppBackground,
+      backgroundColor: theme.brightness == Brightness.dark
+          ? const Color(0xFF2D2B21)
+          : AppTheme.AppBackground,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -68,15 +72,19 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
             context.goNamed(AppRouter.dashboard);
           } else if (state is AuthError) {
             // Display a user-friendly error message
-            String userFriendlyMessage = 'Unable to sign in. Please check your student code and password.';
-            
+            String userFriendlyMessage =
+                'Unable to sign in. Please check your student code and password.';
+
             // Handle specific errors if we can identify them
             if (state.message.contains('403')) {
-              userFriendlyMessage = 'Incorrect student code or password. Please try again.';
-            } else if (state.message.contains('timeout') || state.message.contains('connect')) {
-              userFriendlyMessage = 'Network connection error. Please check your internet connection and try again.';
+              userFriendlyMessage =
+                  'Incorrect student code or password. Please try again.';
+            } else if (state.message.contains('timeout') ||
+                state.message.contains('connect')) {
+              userFriendlyMessage =
+                  'Network connection error. Please check your internet connection and try again.';
             }
-            
+
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(userFriendlyMessage),
@@ -107,7 +115,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   child: Container(
                     constraints: const BoxConstraints(maxWidth: 420),
                     child: Padding(
-                      padding: const EdgeInsets.all( 8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -125,7 +133,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppTheme.AppPrimary.withOpacity(0.2),
+                                      color:
+                                          AppTheme.AppPrimary.withOpacity(0.2),
                                       blurRadius: 12,
                                       spreadRadius: 2,
                                     ),
@@ -154,13 +163,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               'Sign in to your account',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontSize: isSmallScreen ? 14 : 16,
-                                color: theme.brightness == Brightness.dark 
-                                  ? Colors.white70 
-                                  : Colors.black54,
+                                color: theme.brightness == Brightness.dark
+                                    ? Colors.white70
+                                    : Colors.black54,
                               ),
                             ),
                             SizedBox(height: isSmallScreen ? 36 : 44),
-                            
+
                             // Student code field
                             TextFormField(
                               controller: _usernameController,
@@ -169,15 +178,16 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 hintText: 'Enter your student code',
                                 prefixIcon: Icon(
                                   Icons.person_outline,
-                                  color: theme.inputDecorationTheme.prefixIconColor,
+                                  color: theme
+                                      .inputDecorationTheme.prefixIconColor,
                                   size: isSmallScreen ? 20 : 24,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(
-                                    color: theme.brightness == Brightness.dark 
-                                      ? Colors.white30 
-                                      : Colors.black12,
+                                    color: theme.brightness == Brightness.dark
+                                        ? Colors.white30
+                                        : Colors.black12,
                                   ),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
@@ -193,7 +203,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               },
                             ),
                             SizedBox(height: isSmallScreen ? 20 : 24),
-                            
+
                             // Password field
                             TextFormField(
                               controller: _passwordController,
@@ -202,15 +212,18 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 hintText: 'Enter your password',
                                 prefixIcon: Icon(
                                   Icons.lock_outline,
-                                  color: theme.inputDecorationTheme.prefixIconColor,
+                                  color: theme
+                                      .inputDecorationTheme.prefixIconColor,
                                   size: isSmallScreen ? 20 : 24,
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                                    color: theme.brightness == Brightness.dark 
-                                      ? Colors.white60 
-                                      : Colors.black45,
+                                    _obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: theme.brightness == Brightness.dark
+                                        ? Colors.white60
+                                        : Colors.black45,
                                     size: isSmallScreen ? 20 : 22,
                                   ),
                                   onPressed: () {
@@ -222,9 +235,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(
-                                    color: theme.brightness == Brightness.dark 
-                                      ? Colors.white30 
-                                      : Colors.black12,
+                                    color: theme.brightness == Brightness.dark
+                                        ? Colors.white30
+                                        : Colors.black12,
                                   ),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
@@ -240,11 +253,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 return null;
                               },
                             ),
-                            
-                            
-                            
+
                             SizedBox(height: isSmallScreen ? 28 : 36),
-                            
+
                             // Sign in button
                             BlocBuilder<AuthBloc, AuthState>(
                               builder: (context, state) {
@@ -254,11 +265,16 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                     onPressed: state is AuthLoading
                                         ? null
                                         : () {
-                                            if (_formKey.currentState!.validate()) {
+                                            if (_formKey.currentState!
+                                                .validate()) {
                                               context.read<AuthBloc>().add(
                                                     LoginEvent(
-                                                      username: _usernameController.text,
-                                                      password: _passwordController.text,
+                                                      username:
+                                                          _usernameController
+                                                              .text,
+                                                      password:
+                                                          _passwordController
+                                                              .text,
                                                     ),
                                                   );
                                             }
@@ -294,8 +310,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                               },
                             ),
                             SizedBox(height: isSmallScreen ? 24 : 28),
-                            
-                             ],
+                          ],
                         ),
                       ),
                     ),
@@ -308,4 +323,4 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       ),
     );
   }
-} 
+}

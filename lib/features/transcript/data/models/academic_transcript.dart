@@ -39,7 +39,7 @@ class AcademicTranscript {
           .toList(),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'moyenne': moyenne,
@@ -90,11 +90,12 @@ class TranscriptUnit {
       ueNatureLcAr: json['ueNatureLcAr'] as String,
       ueNatureLcFr: json['ueNatureLcFr'] as String,
       bilanMcs: (json['bilanMcs'] as List<dynamic>)
-          .map((e) => TranscriptModuleComponent.fromJson(e as Map<String, dynamic>))
+          .map((e) =>
+              TranscriptModuleComponent.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'moyenne': moyenne,
@@ -137,7 +138,7 @@ class TranscriptModuleComponent {
       moyenneGenerale: (json['moyenneGenerale'] as num).toDouble(),
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'coefficient': coefficient,
@@ -148,4 +149,4 @@ class TranscriptModuleComponent {
       'moyenneGenerale': moyenneGenerale,
     };
   }
-} 
+}

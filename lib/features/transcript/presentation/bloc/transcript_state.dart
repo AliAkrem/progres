@@ -41,7 +41,8 @@ class TranscriptsLoaded extends TranscriptState {
   });
 
   @override
-  List<Object?> get props => [transcripts, selectedEnrollment, annualSummary, fromCache];
+  List<Object?> get props =>
+      [transcripts, selectedEnrollment, annualSummary, fromCache];
 }
 
 class TranscriptError extends TranscriptState {
@@ -53,4 +54,4 @@ class TranscriptError extends TranscriptState {
 
   @override
   List<Object?> get props => [message];
-} 
+}

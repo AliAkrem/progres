@@ -18,27 +18,28 @@ class AuthRepositoryImpl {
       );
 
       final authResponse = AuthResponse.fromJson(response.data);
-      
+
       // Save token and UUID for future API calls
       await _apiClient.saveToken(authResponse.token);
       await _apiClient.saveUuid(authResponse.uuid);
-      await _apiClient.saveEtablissementId(authResponse.etablissementId.toString());
-      
+      await _apiClient
+          .saveEtablissementId(authResponse.etablissementId.toString());
+
       return authResponse;
     } catch (e) {
       rethrow;
     }
   }
-  
+
   Future<void> logout() async {
     await _apiClient.logout();
   }
-  
+
   Future<bool> isLoggedIn() async {
     return await _apiClient.isLoggedIn();
   }
-  
+
   Future<String?> getEtablissementId() async {
     return await _apiClient.getEtablissementId();
   }
-} 
+}

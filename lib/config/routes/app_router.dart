@@ -27,7 +27,7 @@ class AppRouter {
   static const String enrollments = 'enrollments';
   static const String timeline = 'timeline';
   static const String transcripts = 'transcripts';
-  
+
   // Route paths
   static const String loginPath = '/login';
   static const String dashboardPath = '/dashboard';
@@ -69,49 +69,48 @@ class AppRouter {
           name: login,
           builder: (context, state) => const LoginPage(),
         ),
-        
         ShellRoute(
           builder: (context, state, child) {
             return MainShell(child: child);
           },
           routes: [
             GoRoute(
-              path: dashboardPath,
-              name: dashboard,
-              builder: (context, state) => const DashboardPage(),
-              routes: [
-                GoRoute(
-                  path: academicPerformancePath,
-                  name: academicPerformance,
-                  builder: (context, state) => const AcademicPerformancePage(),
-                ),
-                GoRoute(
-                  path: subjectsPath,
-                  name: subjects,
-                  builder: (context, state) => const SubjectPage(),
-                ),
-                GoRoute(
-                  path: groupsPath,
-                  name: groups,
-                  builder: (context, state) => const GroupsPage(),
-                ),
-                GoRoute(
-                  path: enrollmentsPath,
-                  name: enrollments,
-                  builder: (context, state) => const EnrollmentsPage(),
-                ),
-                GoRoute(
-                  path: timelinePath,
-                  name: timeline,
-                  builder: (context, state) => const TimelinePage(),
-                ),
-                GoRoute(
-                  path: transcriptsPath,
-                  name: transcripts,
-                  builder: (context, state) => const TranscriptPage(),
-                ),
-              ]
-            ),
+                path: dashboardPath,
+                name: dashboard,
+                builder: (context, state) => const DashboardPage(),
+                routes: [
+                  GoRoute(
+                    path: academicPerformancePath,
+                    name: academicPerformance,
+                    builder: (context, state) =>
+                        const AcademicPerformancePage(),
+                  ),
+                  GoRoute(
+                    path: subjectsPath,
+                    name: subjects,
+                    builder: (context, state) => const SubjectPage(),
+                  ),
+                  GoRoute(
+                    path: groupsPath,
+                    name: groups,
+                    builder: (context, state) => const GroupsPage(),
+                  ),
+                  GoRoute(
+                    path: enrollmentsPath,
+                    name: enrollments,
+                    builder: (context, state) => const EnrollmentsPage(),
+                  ),
+                  GoRoute(
+                    path: timelinePath,
+                    name: timeline,
+                    builder: (context, state) => const TimelinePage(),
+                  ),
+                  GoRoute(
+                    path: transcriptsPath,
+                    name: transcripts,
+                    builder: (context, state) => const TranscriptPage(),
+                  ),
+                ]),
             GoRoute(
               path: profilePath,
               name: profile,
@@ -128,4 +127,3 @@ class AppRouter {
     );
   }
 }
-

@@ -72,4 +72,4 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
       emit(SubjectError(e.toString()));
     }
   }
-} 
+}

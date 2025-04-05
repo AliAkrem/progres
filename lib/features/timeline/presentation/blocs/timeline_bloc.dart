@@ -58,7 +58,8 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   List<CourseSession>? _cachedSessions;
   DateTime? _lastLoaded;
 
-  TimelineBloc({required this.timeLineRepositoryImpl}) : super(TimelineInitial()) {
+  TimelineBloc({required this.timeLineRepositoryImpl})
+      : super(TimelineInitial()) {
     on<LoadWeeklyTimetable>(_onLoadWeeklyTimetable);
   }
 
@@ -68,8 +69,8 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   ) async {
     try {
       final now = DateTime.now();
-      final cacheStillValid = _lastLoaded != null && 
-          _cachedSessions != null && 
+      final cacheStillValid = _lastLoaded != null &&
+          _cachedSessions != null &&
           now.difference(_lastLoaded!).inMinutes < 30 &&
           !event.forceReload;
 
@@ -82,14 +83,15 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
         return;
       }
 
-      final sessions = await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
-      
+      final sessions =
+          await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
+
       _cachedSessions = sessions;
       _lastLoaded = now;
-      
+
       emit(TimelineLoaded(sessions: sessions, loadedAt: now));
     } catch (e) {
       emit(TimelineError(e.toString()));
     }
   }
-} 
+}

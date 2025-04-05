@@ -4,6 +4,7 @@ import 'package:progres/features/auth/data/repositories/auth_repository_impl.dar
 import 'package:progres/features/auth/data/models/auth_response.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
+
 // Events
 abstract class AuthEvent {}
 
@@ -16,7 +17,7 @@ class LoginEvent extends AuthEvent {
 
 class LogoutEvent extends AuthEvent {
   final BuildContext? context;
-  
+
   LogoutEvent({this.context});
 }
 
@@ -26,16 +27,21 @@ class CheckAuthStatusEvent extends AuthEvent {}
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
+
 class AuthLoading extends AuthState {}
+
 class AuthSuccess extends AuthState {
   final AuthResponse response;
   AuthSuccess(this.response);
 }
+
 class AuthError extends AuthState {
   final String message;
   AuthError(this.message);
 }
+
 class AuthLoggedOut extends AuthState {}
+
 class AuthChecking extends AuthState {}
 
 // Bloc
@@ -71,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
       await authRepository.logout();
-      
+
       // Clear transcript cache if available (will be no-op if the bloc doesn't exist yet)
       try {
         event.context?.read<TranscriptBloc>().add(const ClearTranscriptCache());
@@ -79,7 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // Ignore errors if bloc is not available
         print('Note: Could not clear transcript cache. ${e.toString()}');
       }
-      
+
       emit(AuthLoggedOut());
     } catch (e) {
       emit(AuthError(e.toString()));
@@ -112,4 +118,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthError(e.toString()));
     }
   }
-} 
+}

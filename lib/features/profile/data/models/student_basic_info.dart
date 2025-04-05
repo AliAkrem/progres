@@ -34,4 +34,4 @@ class StudentBasicInfo {
       prenomLatin: json['prenomLatin'] as String,
     );
   }
-} 
+}

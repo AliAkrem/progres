@@ -17,8 +17,7 @@ class TimelinePage extends StatefulWidget {
 
 class _TimelinePageState extends State<TimelinePage> {
   late EventController _eventController;
-  DateTime _currentWeekStart =
-      DateTime.now(); 
+  DateTime _currentWeekStart = DateTime.now();
 
   @override
   void initState() {

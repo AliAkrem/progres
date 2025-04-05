@@ -14,7 +14,7 @@ class SettingsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
         children: [
           ListTile(
             leading: Icon(
-              Icons.language, 
+              Icons.language,
               color: theme.iconTheme.color,
               size: isSmallScreen ? 22 : 24,
             ),
@@ -40,8 +40,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             trailing: Icon(
-              Icons.arrow_forward_ios, 
-              size: isSmallScreen ? 14 : 16, 
+              Icons.arrow_forward_ios,
+              size: isSmallScreen ? 14 : 16,
               color: theme.iconTheme.color,
             ),
             contentPadding: EdgeInsets.symmetric(
@@ -56,7 +56,7 @@ class SettingsPage extends StatelessWidget {
             builder: (context, state) {
               return ListTile(
                 leading: Icon(
-                  Icons.dark_mode, 
+                  Icons.dark_mode,
                   color: theme.iconTheme.color,
                   size: isSmallScreen ? 22 : 24,
                 ),
@@ -73,8 +73,8 @@ class SettingsPage extends StatelessWidget {
                   ),
                 ),
                 trailing: Icon(
-                  Icons.arrow_forward_ios, 
-                  size: isSmallScreen ? 14 : 16, 
+                  Icons.arrow_forward_ios,
+                  size: isSmallScreen ? 14 : 16,
                   color: theme.iconTheme.color,
                 ),
                 contentPadding: EdgeInsets.symmetric(
@@ -89,7 +89,7 @@ class SettingsPage extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.notifications, 
+              Icons.notifications,
               color: theme.iconTheme.color,
               size: isSmallScreen ? 22 : 24,
             ),
@@ -100,8 +100,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             trailing: Icon(
-              Icons.arrow_forward_ios, 
-              size: isSmallScreen ? 14 : 16, 
+              Icons.arrow_forward_ios,
+              size: isSmallScreen ? 14 : 16,
               color: theme.iconTheme.color,
             ),
             contentPadding: EdgeInsets.symmetric(
@@ -115,7 +115,7 @@ class SettingsPage extends StatelessWidget {
           Divider(height: isSmallScreen ? 8 : 16),
           ListTile(
             leading: Icon(
-              Icons.info, 
+              Icons.info,
               color: theme.iconTheme.color,
               size: isSmallScreen ? 22 : 24,
             ),
@@ -126,8 +126,8 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             trailing: Icon(
-              Icons.arrow_forward_ios, 
-              size: isSmallScreen ? 14 : 16, 
+              Icons.arrow_forward_ios,
+              size: isSmallScreen ? 14 : 16,
               color: theme.iconTheme.color,
             ),
             contentPadding: EdgeInsets.symmetric(
@@ -147,7 +147,7 @@ class SettingsPage extends StatelessWidget {
             },
             child: ListTile(
               leading: Icon(
-                Icons.exit_to_app, 
+                Icons.exit_to_app,
                 color: AppTheme.accentRed,
                 size: isSmallScreen ? 22 : 24,
               ),
@@ -186,7 +186,9 @@ class SettingsPage extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          context.read<AuthBloc>().add(LogoutEvent(context: context));
+                          context
+                              .read<AuthBloc>()
+                              .add(LogoutEvent(context: context));
                         },
                         child: const Text('Logout'),
                       ),
@@ -212,11 +214,12 @@ class SettingsPage extends StatelessWidget {
     }
   }
 
-  void _showThemeSelectionDialog(BuildContext context, ThemeMode currentThemeMode) {
+  void _showThemeSelectionDialog(
+      BuildContext context, ThemeMode currentThemeMode) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -227,16 +230,12 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
         contentPadding: EdgeInsets.fromLTRB(
-          24, 
-          isSmallScreen ? 16 : 20, 
-          24, 
-          isSmallScreen ? 16 : 20
-        ),
+            24, isSmallScreen ? 16 : 20, 24, isSmallScreen ? 16 : 20),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildThemeOption(context, ThemeMode.light, currentThemeMode, 'Light',
-                Icons.light_mode),
+            _buildThemeOption(context, ThemeMode.light, currentThemeMode,
+                'Light', Icons.light_mode),
             _buildThemeOption(context, ThemeMode.dark, currentThemeMode, 'Dark',
                 Icons.dark_mode),
             _buildThemeOption(context, ThemeMode.system, currentThemeMode,
@@ -267,34 +266,40 @@ class SettingsPage extends StatelessWidget {
     final isSelected = themeMode == currentThemeMode;
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-    
+
     // Use a more neutral color for icons in dark mode that contrasts well
-    final iconColor = isSelected 
-        ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary)
+    final iconColor = isSelected
+        ? (theme.brightness == Brightness.dark
+            ? Colors.white
+            : AppTheme.AppPrimary)
         : theme.iconTheme.color;
 
     return ListTile(
       leading: Icon(
-        icon, 
+        icon,
         color: iconColor,
         size: isSmallScreen ? 22 : 24,
       ),
       title: Text(
-        title, 
+        title,
         style: TextStyle(
-          color: isSelected 
-              ? (theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary)
+          color: isSelected
+              ? (theme.brightness == Brightness.dark
+                  ? Colors.white
+                  : AppTheme.AppPrimary)
               : theme.textTheme.titleMedium?.color,
           fontWeight: isSelected ? FontWeight.bold : null,
           fontSize: isSmallScreen ? 14 : 16,
         ),
       ),
-      trailing: isSelected 
+      trailing: isSelected
           ? Icon(
-              Icons.check, 
-              color: theme.brightness == Brightness.dark ? Colors.white : AppTheme.AppPrimary,
+              Icons.check,
+              color: theme.brightness == Brightness.dark
+                  ? Colors.white
+                  : AppTheme.AppPrimary,
               size: isSmallScreen ? 20 : 22,
-            ) 
+            )
           : null,
       contentPadding: EdgeInsets.symmetric(
         horizontal: isSmallScreen ? 12 : 16,
@@ -306,4 +311,4 @@ class SettingsPage extends StatelessWidget {
       },
     );
   }
-} 
+}

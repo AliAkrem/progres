@@ -43,7 +43,9 @@ class ExamResult {
       idDia: json['id_dia'] as int,
       mcLibelleAr: json['mcLibelleAr'] as String,
       mcLibelleFr: json['mcLibelleFr'] as String,
-      noteExamen: json['noteExamen'] != null ? (json['noteExamen'] as num).toDouble() : null,
+      noteExamen: json['noteExamen'] != null
+          ? (json['noteExamen'] as num).toDouble()
+          : null,
       planningSessionId: json['planningSessionId'] as int,
       planningSessionIntitule: json['planningSessionIntitule'] as String,
       rattachementMcCoefficient: json['rattachementMcCoefficient'] as int,
@@ -52,4 +54,4 @@ class ExamResult {
       recoursDemande: json['recoursDemande'] as bool?,
     );
   }
-} 
+}

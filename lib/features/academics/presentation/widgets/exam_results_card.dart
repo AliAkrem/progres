@@ -13,7 +13,7 @@ class ExamResultsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     if (examResults.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -43,9 +43,10 @@ class ExamResultsCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: theme.brightness == Brightness.light 
-            ? AppTheme.AppBorder 
-            : const Color(0xFF3F3C34)),
+        side: BorderSide(
+            color: theme.brightness == Brightness.light
+                ? AppTheme.AppBorder
+                : const Color(0xFF3F3C34)),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,11 +57,12 @@ class ExamResultsCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder: (context, index) => const Divider(thickness: 0, color: Colors.transparent, height: 24),
+              separatorBuilder: (context, index) => const Divider(
+                  thickness: 0, color: Colors.transparent, height: 24),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseResults = groupedByCourse[courseTitle]!;
-                
+
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -76,12 +78,15 @@ class ExamResultsCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    
+
                     // Display exam results for this course
-                    ...courseResults.map((result) => _buildExamResultRow(result, theme)).toList(),
-                    
+                    ...courseResults
+                        .map((result) => _buildExamResultRow(result, theme))
+                        .toList(),
+
                     // Appeal information if available
-                    if (courseResults.any((result) => result.autorisationDemandeRecours && 
+                    if (courseResults.any((result) =>
+                        result.autorisationDemandeRecours &&
                         result.dateDebutDepotRecours != null &&
                         result.dateLimiteDepotRecours != null))
                       Padding(
@@ -89,24 +94,25 @@ class ExamResultsCard extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              courseResults.first.recoursDemande == true 
-                                  ? Icons.check_circle_outline 
+                              courseResults.first.recoursDemande == true
+                                  ? Icons.check_circle_outline
                                   : Icons.info_outline,
                               size: 14,
-                              color: courseResults.first.recoursDemande == true 
-                                  ? Colors.orange 
+                              color: courseResults.first.recoursDemande == true
+                                  ? Colors.orange
                                   : Colors.grey,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              courseResults.first.recoursDemande == true 
-                                  ? 'Appeal Requested' 
+                              courseResults.first.recoursDemande == true
+                                  ? 'Appeal Requested'
                                   : 'Appeal Available',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: courseResults.first.recoursDemande == true 
-                                    ? Colors.orange 
-                                    : Colors.grey,
+                                color:
+                                    courseResults.first.recoursDemande == true
+                                        ? Colors.orange
+                                        : Colors.grey,
                               ),
                             ),
                           ],
@@ -116,14 +122,13 @@ class ExamResultsCard extends StatelessWidget {
                 );
               },
             ),
-            
             const SizedBox(height: 16),
           ],
         ),
       ),
     );
   }
-  
+
   Widget _buildExamResultRow(ExamResult result, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
@@ -150,7 +155,8 @@ class ExamResultsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                   decoration: BoxDecoration(
                     // color: AppTheme.accentGreen.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(4),
@@ -167,23 +173,24 @@ class ExamResultsCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Divider line
           Expanded(
             child: Divider(
               indent: 8,
-              color: theme.brightness == Brightness.light 
-                  ? null 
+              color: theme.brightness == Brightness.light
+                  ? null
                   : const Color(0xFF3F3C34),
             ),
           ),
-          
+
           // Grade
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: result.noteExamen != null
                 ? Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                       color: _getGradeColor(result.noteExamen!),
                       borderRadius: BorderRadius.circular(12),
@@ -215,4 +222,4 @@ class ExamResultsCard extends StatelessWidget {
     if (grade >= 10) return AppTheme.accentGreen;
     return AppTheme.accentRed;
   }
-} 
+}

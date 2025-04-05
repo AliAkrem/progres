@@ -87,7 +87,8 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => StudentGroupsBloc(
-              studentGroupsRepository: context.read<StudentGroupsRepositoryImpl>(),
+              studentGroupsRepository:
+                  context.read<StudentGroupsRepositoryImpl>(),
             ),
           ),
           BlocProvider(

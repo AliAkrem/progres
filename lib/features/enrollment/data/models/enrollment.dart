@@ -64,7 +64,7 @@ class Enrollment {
       situationId: json['situationId'] as int,
     );
   }
-  
+
   Map<String, dynamic> toJson() {
     return {
       'anneeAcademiqueCode': anneeAcademiqueCode,
@@ -88,4 +88,4 @@ class Enrollment {
       'situationId': situationId,
     };
   }
-} 
+}
