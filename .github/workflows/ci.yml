@@ -4,14 +4,41 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'lib/**'
   pull_request:
     branches:
       - master
+    paths:
+      - 'lib/**'
   workflow_dispatch:
-    # Allows manual triggering from the Actions tab
+    inputs:
+      force_run:
+        description: 'Force CI run even without lib changes'
+        required: false
+        default: 'false'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
+  security-check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && (github.event.pull_request.changed_files > 0 || github.event.inputs.force_run == 'true')
+    steps:
+      - name: Wait for pre-ci checks
+        run: |
+          # Wait for pre-ci-check to complete
+          while [[ "$(gh run list --workflow=protected-files-check.yml --json status --jq '.[0].status')" == "in_progress" ]]; do
+            sleep 5
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build:
+    needs: security-check
+    if: always() && (needs.security-check.result == 'success' || needs.security-check.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +60,7 @@ jobs:
         run: flutter analyze
       
       - name: Run tests
-        run: flutter test
+        run: flutter test --dart-define=TEST_usernam=${{ secrets.TEST_USERNAME }} --dart-define=TEST_password=${{ secrets.TEST_PASSWORD }}
         
       - name: Build APK
         run: flutter build apk --release
@@ -53,4 +80,4 @@ jobs:
             The APK is available as an artifact in this workflow run.
             Download the APK from: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
           pr_number: ${{ github.event.pull_request.number }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

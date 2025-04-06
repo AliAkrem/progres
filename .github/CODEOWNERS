@@ -1,0 +1,5 @@
+# CI/CD configuration files can only be modified by maintainers
+.github/workflows/*.yml @repo-maintainers
+.github/workflows/*.yaml @repo-maintainers
+**/CI.yml @repo-maintainers
+**/CD.yml @repo-maintainers
