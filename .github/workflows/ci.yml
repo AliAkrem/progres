@@ -60,7 +60,7 @@ jobs:
         run: flutter analyze
       
       - name: Run tests
-        run: flutter test --dart-define=TEST_usernam=${{ secrets.TEST_USERNAME }} --dart-define=TEST_password=${{ secrets.TEST_PASSWORD }}
+        run: flutter test --dart-define=TEST_USERNAME=${{ secrets.TEST_USERNAME }} --dart-define=TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}
         
       - name: Build APK
         run: flutter build apk --release
