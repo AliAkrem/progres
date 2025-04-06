@@ -8,14 +8,11 @@ This documentation covers the integration test setup for the Progres mobile appl
 ### Test Files
 - `helpers/mock_secure_storage.dart`: Mock implementation of secure storage
 - `helpers/test_http_override.dart`: HTTP client override for testing
-- `.env.test`: Test environment configuration file
 
 ### Environment Setup
-Tests use a `.env.test` file for configuration:
-```
-TEST_USERNAME=your_test_username
-TEST_PASSWORD=your_test_password
-```
+Tests require environment variables passed via dart-define:
+- TEST_USERNAME: Username for test authentication
+- TEST_PASSWORD: Password for test authentication
 
 ## Test Components
 
@@ -35,20 +32,16 @@ Custom HTTP client configuration for testing:
 
 ## Running Tests
 
-### Prerequisites
-1. Create `.env.test` file in project root
-
-```
-cp .env.example .env.test
-```
-
-2. Configure test credentials
-3. Ensure test dependencies are installed
 
 ### Execute Tests
 Run all integration tests:
 ```bash
-flutter test 
+flutter test --dart-define=TEST_USERNAME=your_test_username --dart-define=TEST_PASSWORD=your_test_password
+```
+
+You can also use default test values by running without parameters:
+```bash
+flutter test
 ```
 
 ## Best Practices
@@ -66,7 +59,8 @@ flutter test
 
 ### Security
 - Never commit real credentials
-- Use environment variables
+- Pass sensitive data through dart-define parameters
+- Don't store test credentials in version control
 
 ## Contributing
 When adding new tests:

@@ -3,15 +3,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../helpers/mock_secure_storage.dart';
 import '../helpers/test_http_override.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  setUpAll(() async {
-    await dotenv.load(fileName: '.env.test');
+  setUpAll(() {
     HttpOverrides.global = TestHttpOverrides();
   });
 
@@ -26,8 +24,8 @@ void main() {
 
   group('Auth API Tests', () {
     test('Login API should return valid AuthResponse', () async {
-      final username = dotenv.env['TEST_USERNAME'] ?? 'TEST_username_';
-      final password = dotenv.env['TEST_PASSWORD'] ?? 'TEST_password_';
+      const username = String.fromEnvironment('TEST_USERNAME', defaultValue: 'TEST_username_');
+      const password = String.fromEnvironment('TEST_PASSWORD', defaultValue: 'TEST_password_');
 
       final authResponse = await authRepository.login(username, password);
 
@@ -49,6 +47,7 @@ void main() {
       final isLoggedOut = await authRepository.isLoggedIn();
       expect(isLoggedOut, false);
     });
+
     test('Login API should handle invalid credentials', () async {
       final invalidUsername = 'invalid_username';
       final invalidPassword = 'invalid_password';
@@ -62,8 +61,8 @@ void main() {
     });
 
     test('Logout API should clear stored data', () async {
-      final username = dotenv.env['TEST_USERNAME'] ?? 'TEST_username_';
-      final password = dotenv.env['TEST_PASSWORD'] ?? 'TEST_password_';
+      const username = String.fromEnvironment('TEST_USERNAME', defaultValue: 'TEST_username_');
+      const password = String.fromEnvironment('TEST_PASSWORD', defaultValue: 'TEST_password_');
 
       // First login
       await authRepository.login(username, password);
