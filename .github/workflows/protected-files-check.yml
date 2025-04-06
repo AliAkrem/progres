@@ -18,15 +18,18 @@ jobs:
       contents: read
       pull-requests: read
     steps:
+      - uses: actions/checkout@v3
+      
       - name: Validate Author Permissions
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }} 
         run: |
-          # Check if PR author is in maintainers team using GitHub API
-          IS_MAINTAINER=$(gh api /orgs/${{ github.repository_owner }}/teams/repo-maintainers/memberships/${{ github.event.pull_request.user.login }} --silent && echo 'true' || echo 'false')
+          echo "Checking permissions for user: ${{ github.event.pull_request.user.login }}"
           
-          if [[ "$IS_MAINTAINER" == "false" ]]; then
-            echo "::error::Protected files can only be modified by maintainers"
+          if ! gh api \
+            /orgs/${{ github.repository_owner }}/teams/repo-maintainers/memberships/${{ github.event.pull_request.user.login }} \
+            --silent; then
+            echo "::error::Unable to verify team membership. User is not a maintainer."
             echo "::error::Please contact a maintainer for assistance"
             exit 1
           fi
