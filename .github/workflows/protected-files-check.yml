@@ -26,12 +26,11 @@ jobs:
         run: |
           echo "Checking permissions for user: ${{ github.event.pull_request.user.login }}"
           
-          if ! gh api \
-            /orgs/${{ github.repository_owner }}/teams/repo-maintainers/memberships/${{ github.event.pull_request.user.login }} \
-            --silent; then
-            echo "::error::Unable to verify team membership. User is not a maintainer."
-            echo "::error::Please contact a maintainer for assistance"
+          # Check if PR author is the repository owner
+          if [ "${{ github.repository_owner }}" = "${{ github.event.pull_request.user.login }}" ]; then
+            echo "Author is the repository owner and is authorized to modify protected files"
+          else
+            echo "::error::User is not the repository owner"
+            echo "::error::Only the repository owner can modify protected files"
             exit 1
           fi
-          
-          echo "Author is authorized to modify protected files"
