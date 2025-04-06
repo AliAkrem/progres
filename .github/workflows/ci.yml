@@ -40,6 +40,9 @@ jobs:
     needs: security-check
     if: always() && (needs.security-check.result == 'success' || needs.security-check.result == 'skipped')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
       
