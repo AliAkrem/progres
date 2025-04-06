@@ -11,56 +11,24 @@ on:
       - '**/ci.yml'
 
 jobs:
-  pre-ci-check:
-    name: Pre-CI Security Check
-    runs-on: ubuntu-latest
-    environment: security-check
-    outputs:
-      should-run: ${{ steps.check.outputs.should-run }}
-    steps:
-      - id: check
-        name: Validate Author Permissions
-        run: |
-          if [[ "${{ contains(github.event.pull_request.user.teams, 'repo-maintainers') }}" != "true" ]]; then
-            echo "::error::CI blocked - Protected files can only be modified by maintainers"
-            echo "should-run=false" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-          echo "should-run=true" >> $GITHUB_OUTPUT
-
-  verify-author:
-    needs: pre-ci-check
+  security-check:
+    name: Security Check
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
-    outputs:
-      is-authorized: ${{ steps.check-author.outputs.is-authorized }}
-    
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Check Author Authorization
-        id: check-author
+      - name: Validate Author Permissions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Check if PR author is in maintainers team
+          # Check if PR author is in maintainers team using GitHub API
           IS_MAINTAINER=$(gh api /orgs/${{ github.repository_owner }}/teams/repo-maintainers/memberships/${{ github.event.pull_request.user.login }} --silent && echo 'true' || echo 'false')
-          echo "is-authorized=$IS_MAINTAINER" >> $GITHUB_OUTPUT
           
           if [[ "$IS_MAINTAINER" == "false" ]]; then
             echo "::error::Protected files can only be modified by maintainers"
             echo "::error::Please contact a maintainer for assistance"
             exit 1
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  block-ci:
-    needs: verify-author
-    if: needs.verify-author.outputs.is-authorized != 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Block CI Execution
-        run: |
-          echo "Unauthorized modification of protected files"
-          exit 1
+          
+          echo "Author is authorized to modify protected files"
