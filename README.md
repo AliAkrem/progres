@@ -1,17 +1,18 @@
 # Progres
 
+Progres is an independently developed remake of Progres/Webetu with a focus on enhanced user experience.
+
 ![image1](https://github.com/user-attachments/assets/b33a0fda-5827-45b1-a526-204b2f408c79)
 
-
-## About
-Progres is an independently developed remake of Progres/Webetu with a focus on enhanced user experience through Material Design principles. This mobile application allows university students to access their academic information seamlessly, with or without an internet connection.
+I built this app because the original student portal (Progres/Webetu) is... well, not the best. It’s slow, outdated, and not very user-friendly. I wanted something faster, cleaner, and more reliable
+So I decided to rebuild it from scratch, with a better design and offline support. It's open-source too, so that anyone can improve it.
 
 > **Note:** This application is not officially affiliated with Progres/Webetu or any educational institution.
 
 ## Key Features
 
 - **Modern UI/UX** - Intuitive interface built with Material Design 3
-- **Bilingual Support** - Full support for both Arabic and French/Latin scripts
+- **Bilingual Support** - Full support for both Arabic scripts (will be supported sooner)
 - **Enhanced Performance** - Optimized for speed and reliability
 
 ## Screenshots
@@ -31,47 +32,32 @@ Progres is an independently developed remake of Progres/Webetu with a focus on e
 
 ## App Modules
 
-### Authentication
-Secure login with institutional credentials and robust session management
+ - **Authentication**
+ - **Student Profile**
+ - **Academic Records**
+ - **Performance Tracking**
+ - **Academic history**
+ - **Weekly Timeline**
 
-### Student Profile
-Complete personal information display with bilingual support
-
-### Academic Records
-- Current academic year details
-- Enrollment information
-- Educational level data
-- Transportation status
-
-### Performance Tracking
-- Exam results by course
-- Continuous assessment grades
-- Appeal window information
-
-### Weekly Timeline
-Interactive view of class schedule
 
 ## Technical Details
 
 ### Built With
 - Flutter for cross-platform compatibility
 - BLoC pattern for state management
-- Secure local storage for offline capabilities
-- RESTful API integration
+- local storage for offline capabilities
 
 ### Architecture
 - Clean architecture with separation of concerns
 - Repository pattern for data management
-- Service-oriented design for API communication
 
 ## Getting Started
 
 ### Prerequisites
-- Flutter SDK (version 3.0 or higher)
-- Dart SDK (version 2.17 or higher)
-- Android Studio or VS Code with Flutter extensions
+- Flutter SDK (version 3.22.2)
+- Dart SDK (version 3.4.3) 
 
-### Installation
+### Run Locally
 
 1. Clone the repository
    ```bash
@@ -83,7 +69,6 @@ Interactive view of class schedule
    cd progres
    ```
    
-
 3. Install dependencies
    ```bash
    flutter pub get
@@ -94,11 +79,12 @@ Interactive view of class schedule
    flutter run
    ```
 
-## Roadmap
+## In The Future  
 
+- [ ] Arabic language support
 - [ ] Push notifications for grade updates
-- [ ] iOS version
-
+- [ ] Push notifications for courses start
+   
 ## Contributing
 
 [View contributing guidelines](https://github.com/AliAkrem/progres/blob/master/CONTRIBUTING.md)
