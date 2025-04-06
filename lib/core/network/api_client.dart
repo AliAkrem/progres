@@ -4,9 +4,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class ApiClient {
   static const String baseUrl = 'https://progres.mesrs.dz/api';
   late final Dio _dio;
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  final FlutterSecureStorage _secureStorage;
 
-  ApiClient() {
+  ApiClient({FlutterSecureStorage? secureStorage})
+      : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
