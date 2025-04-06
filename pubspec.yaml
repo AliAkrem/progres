@@ -30,6 +30,7 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
 
+  flutter_dotenv: ^5.2.1
 
 flutter:
 
@@ -37,3 +38,5 @@ flutter:
   uses-material-design: true
 
 
+  assets:
+    - .env.test
