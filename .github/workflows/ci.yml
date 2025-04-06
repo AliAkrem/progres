@@ -65,23 +65,28 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
-          echo "Workflow files were changed. Checking permissions for user: ${{ github.event.pull_request.user.login }}"
-          
-          # Check if user is the repository owner
-          if [[ "${{ github.repository_owner }}" == "${{ github.event.pull_request.user.login }}" ]]; then
-            echo "User is the repository owner and is authorized to modify workflow files"
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "Workflow files were changed in a pull request. Checking permissions for user: ${{ github.event.pull_request.user.login }}"
+            
+            # Check if user is the repository owner
+            if [[ "${{ github.repository_owner }}" == "${{ github.event.pull_request.user.login }}" ]]; then
+              echo "User is the repository owner and is authorized to modify workflow files"
+            else
+              echo "::error::User is not the repository owner"
+              echo "::error::Only the repository owner can modify workflow files"
+              exit 1
+            fi
           else
-            echo "::error::User is not the repository owner"
-            echo "::error::Only the repository owner can modify workflow files"
-            exit 1
+            # For push events or manual workflow runs, we assume it's authorized
+            echo "Changes made through direct push to master or manual workflow run"
+            echo "Assuming changes are authorized"
           fi
 
   build:
     needs: [check-changes, security-check]
     if: |
-      always() &&
-      needs.check-changes.outputs.should_build == 'true' &&
-      (needs.security-check.result == 'success' || needs.security-check.result == 'skipped')
+      needs.check-changes.outputs.should_build == 'true' && 
+      (needs.security-check.result == 'success' || (needs.security-check.result == 'skipped' && needs.check-changes.outputs.workflow_changed != 'true'))
     runs-on: ubuntu-latest
     permissions:
       contents: read
