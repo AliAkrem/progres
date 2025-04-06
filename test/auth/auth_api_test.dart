@@ -60,7 +60,6 @@ void main() {
         expect(e, isA<Exception>());
       }
     });
-    
 
     test('Logout API should clear stored data', () async {
       final username = dotenv.env['TEST_USERNAME'] ?? 'TEST_username_';

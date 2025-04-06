@@ -99,23 +99,22 @@ class MockSecureStorage implements FlutterSecureStorage {
   MacOsOptions get mOptions => throw UnimplementedError();
 
   @override
-  Stream<bool>? get onCupertinoProtectedDataAvailabilityChanged => throw UnimplementedError();
+  Stream<bool>? get onCupertinoProtectedDataAvailabilityChanged =>
+      throw UnimplementedError();
 
   @override
-  void registerListener({required String key, required ValueChanged<String?> listener}) {
-  }
+  void registerListener(
+      {required String key, required ValueChanged<String?> listener}) {}
 
   @override
-  void unregisterAllListeners() {
-  }
+  void unregisterAllListeners() {}
 
   @override
-  void unregisterAllListenersForKey({required String key}) {
-  }
+  void unregisterAllListenersForKey({required String key}) {}
 
   @override
-  void unregisterListener({required String key, required ValueChanged<String?> listener}) {
-  }
+  void unregisterListener(
+      {required String key, required ValueChanged<String?> listener}) {}
 
   @override
   WindowsOptions get wOptions => throw UnimplementedError();
