@@ -1,8 +1,7 @@
 # Progres
 
-<p align="center">
-  <img src="assets/images/logos/logo.png" alt="Progres Logo" width="150">
-</p>
+![image1](https://github.com/user-attachments/assets/b33a0fda-5827-45b1-a526-204b2f408c79)
+
 
 ## About
 Progres is an independently developed remake of Progres/Webetu with a focus on enhanced user experience through Material Design principles. This mobile application allows university students to access their academic information seamlessly, with or without an internet connection.
@@ -102,13 +101,7 @@ Interactive view of class schedule
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+[View contributing guidelines](https://github.com/AliAkrem/progres/blob/master/CONTRIBUTING.md)
 
 ## License
 
@@ -118,5 +111,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <p align="center">
-  Made with ❤️ for students
+  Made with ❤️ by 
+</p>
+<p align="center">
+  <a href="https://github.com/aliakrem/progres/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=aliakrem/progres" />
+  </a>
 </p>
