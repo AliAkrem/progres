@@ -14,7 +14,7 @@
 
 <!-- Please follow this checklist and put an x in each of the boxes, like this: [x]. You can also fill these out after creating the PR. This is simply a reminder of what we are going to look for before merging your code. -->
 
-- [ ] I have read the [Contributing Guide](https://github.com/aliakrem/progres/blob/main/.github/CONTRIBUTING.md)
+- [ ] I have read the [Contributing Guide](https://github.com/aliakrem/progres/blob/master/.github/CONTRIBUTING.md)
 
 ## Further comments
 

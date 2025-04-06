@@ -38,5 +38,4 @@ flutter:
   uses-material-design: true
 
 
-  assets:
-    - .env.test
+
