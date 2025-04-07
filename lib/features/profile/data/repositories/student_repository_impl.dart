@@ -1,7 +1,6 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
-import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
@@ -114,24 +113,6 @@ class StudentRepositoryImpl {
       return assessmentsJson
           .map(
               (assessmentJson) => ContinuousAssessment.fromJson(assessmentJson))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<Enrollment>> getStudentEnrollments() async {
-    try {
-      final uuid = await _apiClient.getUuid();
-      if (uuid == null) {
-        throw Exception('UUID not found, please login again');
-      }
-
-      final response = await _apiClient.get('/infos/bac/$uuid/dias');
-
-      final List<dynamic> enrollmentsJson = response.data;
-      return enrollmentsJson
-          .map((enrollmentJson) => Enrollment.fromJson(enrollmentJson))
           .toList();
     } catch (e) {
       rethrow;
