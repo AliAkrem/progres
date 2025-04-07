@@ -195,7 +195,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Cached data - Pull to refresh',
+                    'Cached data',
                     style: TextStyle(
                       fontSize: 12,
                       color: theme.colorScheme.secondary,

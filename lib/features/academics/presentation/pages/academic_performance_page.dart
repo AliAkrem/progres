@@ -55,7 +55,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Academic Performance'),
@@ -130,23 +130,23 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                   child: Column(
                     children: [
                       if (state.fromCache)
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 16),
-                          color: Colors.amber.withOpacity(0.2),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, right: 16),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Icon(Icons.access_time,
-                                  size: 16, color: Colors.amber.shade800),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  'Viewing cached data. Pull down to refresh.',
-                                  style: TextStyle(
-                                    fontSize: isSmallScreen ? 12 : 13,
-                                    color: Colors.amber.shade800,
-                                  ),
+                              Icon(
+                                Icons.access_time,
+                                size: 14,
+                                color: theme.colorScheme.secondary,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Cached data',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.colorScheme.secondary,
+                                  fontStyle: FontStyle.italic,
                                 ),
                               ),
                             ],
