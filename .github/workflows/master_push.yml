@@ -7,6 +7,7 @@ on:
 
 jobs:  
   analyze-changes:
+    runs-on: ubuntu-latest
     outputs:
       should_build: ${{ steps.check_changes.outputs.should_build }}
     steps:
@@ -17,7 +18,7 @@ jobs:
       - name: Check for app changes
         id: check_changes
         run: |
-        
+
           # Get changed files from the last commit
           CHANGED_FILES=$(git log -1 --name-only --pretty=format:)
           APP_PATTERNS="lib/ pubspec.yaml test/ android/ ios/ linux/ macos/ web/ windows/ assets/"
