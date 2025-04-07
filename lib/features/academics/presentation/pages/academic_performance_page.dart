@@ -28,12 +28,19 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
     _tabController =
         TabController(length: 2, vsync: this, initialIndex: widget.initialTab);
 
+    _loadAcademicData(forceRefresh: false);
+  }
+
+  void _loadAcademicData({bool forceRefresh = false}) {
     // Load academic performance data if profile is loaded
     final profileState = context.read<ProfileBloc>().state;
 
     if (profileState is ProfileLoaded) {
       context.read<AcademicsBloc>().add(
-            LoadAcademicPerformance(cardId: profileState.detailedInfo.id),
+            LoadAcademicPerformance(
+              cardId: profileState.detailedInfo.id,
+              forceRefresh: forceRefresh,
+            ),
           );
     }
   }
@@ -48,10 +55,23 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
-
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Academic Performance'),
+        actions: [
+          BlocBuilder<AcademicsBloc, AcademicsState>(
+            builder: (context, state) {
+              return IconButton(
+                icon: const Icon(Icons.refresh),
+                tooltip: 'Refresh data',
+                onPressed: state is AcademicsLoading
+                    ? null
+                    : () => _loadAcademicData(forceRefresh: true),
+              );
+            },
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: [
@@ -94,13 +114,8 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () {
-                            context.read<AcademicsBloc>().add(
-                                  LoadAcademicPerformance(
-                                    cardId: profileState.detailedInfo.id,
-                                  ),
-                                );
-                          },
+                          onPressed: () =>
+                              _loadAcademicData(forceRefresh: true),
                           child: const Text('Retry'),
                         ),
                       ],
@@ -108,15 +123,49 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                   ),
                 );
               } else if (state is AcademicsLoaded) {
-                return TabBarView(
-                  controller: _tabController,
-                  children: [
-                    // Exam Results Tab - Now grouped by period
-                    _buildExamsTab(context, profileState, state),
+                return RefreshIndicator(
+                  onRefresh: () async {
+                    _loadAcademicData(forceRefresh: true);
+                  },
+                  child: Column(
+                    children: [
+                      if (state.fromCache)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8, right: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(
+                                Icons.access_time,
+                                size: 14,
+                                color: theme.colorScheme.secondary,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Cached data',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.colorScheme.secondary,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            // Exam Results Tab - Now grouped by period
+                            _buildExamsTab(context, profileState, state),
 
-                    // Continuous Assessment Tab
-                    _buildAssessmentsTab(context, profileState, state),
-                  ],
+                            // Continuous Assessment Tab
+                            _buildAssessmentsTab(context, profileState, state),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               } else {
                 return const Center(

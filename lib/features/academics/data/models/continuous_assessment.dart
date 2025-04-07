@@ -47,6 +47,24 @@ class ContinuousAssessment {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'absent': absent,
+      'apCode': apCode,
+      'autorisationDemandeRecours': autorisationDemandeRecours,
+      'id': id,
+      'id_dia': idDia,
+      'llPeriode': llPeriode,
+      'llPeriodeAr': llPeriodeAr,
+      'note': note,
+      'observation': observation,
+      'rattachementMcMcLibelleAr': rattachementMcMcLibelleAr,
+      'rattachementMcMcLibelleFr': rattachementMcMcLibelleFr,
+      'recoursAccorde': recoursAccorde,
+      'recoursDemande': recoursDemande,
+    };
+  }
+
   // Helper method to get the assessment type label
   String get assessmentTypeLabel {
     switch (apCode) {
