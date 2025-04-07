@@ -12,21 +12,19 @@ class EnrollmentRepositoryImpl implements EnrollmentRepository {
   @override
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {
-      final response = await _apiClient.get('/student/enrollments');
-
-      if (response.statusCode == 200) {
-        final jsonData = response.data;
-        if (jsonData['data'] != null) {
-          final List<dynamic> enrollmentsJson = jsonData['data'];
-          return enrollmentsJson
-              .map((json) => Enrollment.fromJson(json))
-              .toList();
-        }
+      final uuid = await _apiClient.getUuid();
+      if (uuid == null) {
+        throw Exception('UUID not found, please login again');
       }
 
-      throw Exception('Failed to load enrollments: ${response.statusCode}');
+      final response = await _apiClient.get('/infos/bac/$uuid/dias');
+
+      final List<dynamic> enrollmentsJson = response.data;
+      return enrollmentsJson
+          .map((enrollmentJson) => Enrollment.fromJson(enrollmentJson))
+          .toList();
     } catch (e) {
-      throw Exception('Error fetching enrollments: $e');
+      rethrow;
     }
   }
 }
