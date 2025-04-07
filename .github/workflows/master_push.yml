@@ -1,0 +1,76 @@
+name: Master Push CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:  
+  analyze-changes:
+    outputs:
+      should_build: ${{ steps.check_changes.outputs.should_build }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Check for app changes
+        id: check_changes
+        run: |
+        
+          # Get changed files from the last commit
+          CHANGED_FILES=$(git log -1 --name-only --pretty=format:)
+          APP_PATTERNS="lib/ pubspec.yaml test/ android/ ios/ linux/ macos/ web/ windows/ assets/"
+          
+          SHOULD_BUILD=false
+          for pattern in $APP_PATTERNS; do
+            # Check if any changed file matches app patterns
+            if echo "$CHANGED_FILES" | grep -q "$pattern"; then
+              SHOULD_BUILD=true
+              break
+            fi
+          done
+          
+          echo "should_build=$SHOULD_BUILD" >> $GITHUB_OUTPUT
+          if [ "$SHOULD_BUILD" = "true" ]; then
+            echo "App files were modified. Build will be triggered."
+          else
+            echo "Only documentation or non-app files were modified. Build will be skipped."
+          fi
+
+  build-app:
+    needs: analyze-changes
+    if: needs.analyze-changes.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.2'
+          channel: 'stable'
+          cache: true
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed lib/
+      
+      - name: Analyze project source
+        run: flutter analyze
+      
+      - name: Run tests
+        run: flutter test --dart-define=TEST_USERNAME=${{ secrets.TEST_USERNAME }} --dart-define=TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}
+        
+      - name: Build APK
+        run: flutter build apk --release
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
