@@ -54,4 +54,24 @@ class ExamResult {
       recoursDemande: json['recoursDemande'] as bool?,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'autorisationDemandeRecours': autorisationDemandeRecours,
+      'dateDebutDepotRecours': dateDebutDepotRecours,
+      'dateLimiteDepotRecours': dateLimiteDepotRecours,
+      'id': id,
+      'idPeriode': idPeriode,
+      'id_dia': idDia,
+      'mcLibelleAr': mcLibelleAr,
+      'mcLibelleFr': mcLibelleFr,
+      'noteExamen': noteExamen,
+      'planningSessionId': planningSessionId,
+      'planningSessionIntitule': planningSessionIntitule,
+      'rattachementMcCoefficient': rattachementMcCoefficient,
+      'rattachementMcId': rattachementMcId,
+      'recoursAccorde': recoursAccorde,
+      'recoursDemande': recoursDemande,
+    };
+  }
 }

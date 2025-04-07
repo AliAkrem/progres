@@ -4,6 +4,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
+import 'package:progres/features/academics/data/repository/academics_repository_impl.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
 import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
@@ -66,6 +67,10 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(
           create: (context) => EnrollmentRepositoryImpl(apiClient: ApiClient()),
         ),
+        RepositoryProvider(
+          create: (context) =>
+              AcademicPerformencetRepositoryImpl(apiClient: ApiClient()),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -82,7 +87,8 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => AcademicsBloc(
-              studentRepository: context.read<StudentRepositoryImpl>(),
+              academicPerformanceRepository:
+                  context.read<AcademicPerformencetRepositoryImpl>(),
             ),
           ),
           BlocProvider(
