@@ -55,7 +55,6 @@ Thank you for considering contributing to **progres**! Every contribution is val
 
 ## Code Standards
 
-- Follow the official [Flutter style guide](https://docs.flutter.dev/release/breaking-changes/style-guide)
 - Use [dart analyze](https://dart.dev/tools/dart-analyze) to ensure code quality
 - Format your code with `dart format`
 - Write clean, readable code with proper documentation
