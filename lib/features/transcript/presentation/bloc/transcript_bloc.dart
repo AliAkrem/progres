@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
-import 'package:progres/features/transcript/data/repositories/transcript_repository.dart';
+import 'package:progres/features/transcript/data/repositories/transcript_repository_impl.dart';
 import 'package:progres/features/transcript/data/services/transcript_cache_service.dart';
 import 'package:progres/features/enrollment/data/services/enrollment_cache_service.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_state.dart';
 
 class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
-  final TranscriptRepository transcriptRepository;
+  final TranscriptRepositoryImpl transcriptRepository;
   final TranscriptCacheService transcriptCacheService;
   final EnrollmentCacheService enrollmentCacheService;
 

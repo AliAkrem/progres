@@ -2,15 +2,13 @@ import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/transcript/data/models/academic_transcript.dart';
 import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
 import 'package:progres/features/enrollment/data/models/enrollment.dart';
-import 'package:progres/features/transcript/data/repositories/transcript_repository.dart';
 
-class TranscriptRepositoryImpl implements TranscriptRepository {
+class TranscriptRepositoryImpl {
   final ApiClient _apiClient;
 
   TranscriptRepositoryImpl({ApiClient? apiClient})
       : _apiClient = apiClient ?? ApiClient();
 
-  @override
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {
       final uuid = await _apiClient.getUuid();
@@ -29,7 +27,6 @@ class TranscriptRepositoryImpl implements TranscriptRepository {
     }
   }
 
-  @override
   Future<List<AcademicTranscript>> getAcademicTranscripts(
       int enrollmentId) async {
     try {
@@ -50,7 +47,6 @@ class TranscriptRepositoryImpl implements TranscriptRepository {
     }
   }
 
-  @override
   Future<AnnualTranscriptSummary> getAnnualTranscriptSummary(
       int enrollmentId) async {
     try {

@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:progres/features/enrollment/data/repositories/enrollment_repository.dart';
+import 'package:progres/features/enrollment/data/repositories/enrollment_repository_impl.dart';
 import 'package:progres/features/enrollment/data/services/enrollment_cache_service.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
 
 class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
-  final EnrollmentRepository enrollmentRepository;
+  final EnrollmentRepositoryImpl enrollmentRepository;
   final EnrollmentCacheService cacheService;
 
   EnrollmentBloc({

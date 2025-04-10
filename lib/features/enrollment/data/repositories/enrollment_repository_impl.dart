@@ -1,15 +1,13 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/enrollment/data/models/enrollment.dart';
-import 'package:progres/features/enrollment/data/repositories/enrollment_repository.dart';
 
-class EnrollmentRepositoryImpl implements EnrollmentRepository {
+class EnrollmentRepositoryImpl {
   final ApiClient _apiClient;
 
   EnrollmentRepositoryImpl({
     required ApiClient apiClient,
   }) : _apiClient = apiClient;
 
-  @override
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {
       final uuid = await _apiClient.getUuid();
