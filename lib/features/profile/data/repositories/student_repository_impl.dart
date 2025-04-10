@@ -1,11 +1,8 @@
 import 'package:progres/core/network/api_client.dart';
-import 'package:progres/features/academics/data/models/continuous_assessment.dart';
-import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
-import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
 
 class StudentRepositoryImpl {
   final ApiClient _apiClient;
@@ -84,58 +81,6 @@ class StudentRepositoryImpl {
       return periodsJson
           .map((periodJson) => AcademicPeriod.fromJson(periodJson))
           .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<ExamResult>> getExamResults(int cardId) async {
-    try {
-      final response = await _apiClient
-          .get('/infos/planningSession/dia/$cardId/noteExamens');
-
-      final List<dynamic> resultsJson = response.data;
-      return resultsJson
-          .map((resultJson) => ExamResult.fromJson(resultJson))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<ContinuousAssessment>> getContinuousAssessments(
-      int cardId) async {
-    try {
-      final response =
-          await _apiClient.get('/infos/controleContinue/dia/$cardId/notesCC');
-
-      final List<dynamic> assessmentsJson = response.data;
-      return assessmentsJson
-          .map(
-              (assessmentJson) => ContinuousAssessment.fromJson(assessmentJson))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<AnnualTranscriptSummary> getAnnualTranscriptSummary(
-      int enrollmentId) async {
-    try {
-      final uuid = await _apiClient.getUuid();
-      if (uuid == null) {
-        throw Exception('UUID not found, please login again');
-      }
-
-      final response = await _apiClient
-          .get('/infos/bac/$uuid/dia/$enrollmentId/annuel/bilan');
-
-      final List<dynamic> summaryJson = response.data;
-      if (summaryJson.isEmpty) {
-        throw Exception('No annual summary found');
-      }
-
-      return AnnualTranscriptSummary.fromJson(summaryJson.first);
     } catch (e) {
       rethrow;
     }
