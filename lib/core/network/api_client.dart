@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
@@ -19,21 +20,37 @@ class ApiClient {
       ),
     );
 
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (options, handler) async {
-          final token = await _secureStorage.read(key: 'auth_token');
-          if (token != null) {
-            options.headers['authorization'] = token;
-          }
-          return handler.next(options);
-        },
-        onError: (error, handler) {
-          // Handle errors
-          return handler.next(error);
-        },
-      ),
-    );
+    if (kIsWeb) {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) async {
+            final token = await _secureStorage.read(key: 'auth_token');
+            if (token != null) {
+              options.headers
+                  .remove('Authorization'); // Remove any capitalized version
+              options.headers['authorization'] = token; // Set lowercase version
+            }
+            return handler.next(options);
+          },
+        ),
+      );
+    } else {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) async {
+            final token = await _secureStorage.read(key: 'auth_token');
+            if (token != null) {
+              options.headers['authorization'] = token;
+            }
+            return handler.next(options);
+          },
+          onError: (error, handler) {
+            // Handle errors
+            return handler.next(error);
+          },
+        ),
+      );
+    }
   }
 
   Future<void> saveToken(String token) async {
