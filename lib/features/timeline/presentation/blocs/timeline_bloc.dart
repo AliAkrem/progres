@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/features/timeline/data/models/course_session.dart';
 import 'package:progres/features/timeline/data/repositories/timeline_repository_impl.dart';
+import 'package:progres/features/timeline/data/services/timeline_cache_service.dart';
 
 abstract class TimelineEvent extends Equatable {
   @override
@@ -19,6 +20,13 @@ class LoadWeeklyTimetable extends TimelineEvent {
 
   @override
   List<Object?> get props => [enrollmentId, forceReload];
+}
+
+class ClearTimelineCache extends TimelineEvent {
+  ClearTimelineCache();
+
+  @override
+  List<Object?> get props => [];
 }
 
 abstract class TimelineState extends Equatable {
@@ -55,12 +63,14 @@ class TimelineError extends TimelineState {
 // BLoC
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   final TimeLineRepositoryImpl timeLineRepositoryImpl;
-  List<CourseSession>? _cachedSessions;
-  DateTime? _lastLoaded;
+  final TimelineCacheService timelineCacheService;
 
-  TimelineBloc({required this.timeLineRepositoryImpl})
-      : super(TimelineInitial()) {
+  TimelineBloc({
+    required this.timeLineRepositoryImpl,
+    required this.timelineCacheService,
+  }) : super(TimelineInitial()) {
     on<LoadWeeklyTimetable>(_onLoadWeeklyTimetable);
+    on<ClearTimelineCache>(_onClearTimelineCache);
   }
 
   Future<void> _onLoadWeeklyTimetable(
@@ -68,30 +78,49 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
     Emitter<TimelineState> emit,
   ) async {
     try {
+      final String cacheKey = 'weekly_${event.enrollmentId}';
+      
+      if (!event.forceReload) {
+        final isStale = await timelineCacheService.isDataStale(cacheKey);
+        if (!isStale) {
+          final cachedEvents = await timelineCacheService.getCachedTimelineEvents(cacheKey);
+          if (cachedEvents != null && cachedEvents.isNotEmpty) {
+            // Convert cached data back to CourseSession objects
+            final List<CourseSession> sessions = 
+                List<Map<String, dynamic>>.from(cachedEvents)
+                .map((json) => CourseSession.fromJson(json))
+                .toList();
+                
+            emit(TimelineLoaded(
+              sessions: sessions,
+              loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
+            ));
+            return;
+          }
+        }
+      }
+
+      emit(TimelineLoading());
+      
+      // Load from network
+      final sessions = await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
+      
+      // Cache the results - convert CourseSession objects to JSON for caching
+      final List<Map<String, dynamic>> sessionsJson = 
+          sessions.map((session) => session.toJson()).toList();
+      await timelineCacheService.cacheTimelineEvents(cacheKey, sessionsJson);
+      
       final now = DateTime.now();
-      final cacheStillValid = _lastLoaded != null &&
-          _cachedSessions != null &&
-          now.difference(_lastLoaded!).inMinutes < 30 &&
-          !event.forceReload;
-
-      if (!cacheStillValid) {
-        emit(TimelineLoading());
-      }
-
-      if (cacheStillValid) {
-        emit(TimelineLoaded(sessions: _cachedSessions!));
-        return;
-      }
-
-      final sessions =
-          await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
-
-      _cachedSessions = sessions;
-      _lastLoaded = now;
-
       emit(TimelineLoaded(sessions: sessions, loadedAt: now));
     } catch (e) {
       emit(TimelineError(e.toString()));
     }
+  }
+  
+  Future<void> _onClearTimelineCache(
+    ClearTimelineCache event,
+    Emitter<TimelineState> emit,
+  ) async {
+    await timelineCacheService.clearCache();
   }
 }

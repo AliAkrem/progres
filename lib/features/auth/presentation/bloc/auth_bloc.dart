@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
+import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
 
 // Events
 abstract class AuthEvent {}
@@ -78,13 +81,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthLoading());
       await authRepository.logout();
 
-      // Clear transcript cache if available (will be no-op if the bloc doesn't exist yet)
       try {
         event.context?.read<TranscriptBloc>().add(const ClearTranscriptCache());
       } catch (e) {
-        // Ignore errors if bloc is not available
         print('Note: Could not clear transcript cache. ${e.toString()}');
       }
+      try {
+        event.context?.read<TimelineBloc>().add(ClearTimelineCache());
+      } catch (e) {
+        print('Note: Could not clear timeline cache. ${e.toString()}');
+      }
+
+
+      try {
+        event.context?.read<EnrollmentBloc>().add(ClearEnrollmentsCache());
+      } catch (e) {
+        print('Note: Could not clear timeline cache. ${e.toString()}');
+      }
+ 
 
       emit(AuthLoggedOut());
     } catch (e) {

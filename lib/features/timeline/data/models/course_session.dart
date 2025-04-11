@@ -175,4 +175,26 @@ class CourseSession {
   String toString() {
     return 'CourseSession(jourId: $jourId, day: $jourLibelleFr, matiere: $matiere, time: $plageHoraireHeureDebut-$plageHoraireHeureFin)';
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'ap': ap,
+      'groupe': groupe,
+      'id': id,
+      'jourId': jourId,
+      'jourLibelleAr': jourLibelleAr,
+      'jourLibelleFr': jourLibelleFr,
+      'matiere': matiere,
+      'matiereAr': matiereAr,
+      'nomEnseignantArabe': nomEnseignantArabe,
+      'nomEnseignantLatin': nomEnseignantLatin,
+      'periodeId': periodeId,
+      'plageHoraireHeureDebut': plageHoraireHeureDebut,
+      'plageHoraireHeureFin': plageHoraireHeureFin,
+      'plageHoraireLibelleFr': plageHoraireLibelleFr,
+      'prenomEnseignantArabe': prenomEnseignantArabe,
+      'prenomEnseignantLatin': prenomEnseignantLatin,
+      'refLieuDesignation': refLieuDesignation,
+    };
+  }
 }

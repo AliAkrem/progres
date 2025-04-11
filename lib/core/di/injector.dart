@@ -61,8 +61,9 @@ Future<void> initDependencies() async {
         studentGroupsRepository: injector(),
       ));
   injector.registerFactory(() => TimelineBloc(
-        timeLineRepositoryImpl: injector(),
-      ));
+    timeLineRepositoryImpl: injector(),
+    timelineCacheService: injector(),
+  ));
   injector.registerFactory(() => SubjectBloc(
         subjectRepository: injector(),
       ));
