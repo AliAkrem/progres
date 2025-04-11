@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ApiClient {
@@ -19,38 +18,21 @@ class ApiClient {
         },
       ),
     );
-
-    if (kIsWeb) {
-      _dio.interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            final token = await _secureStorage.read(key: 'auth_token');
-            if (token != null) {
-              options.headers
-                  .remove('Authorization'); // Remove any capitalized version
-              options.headers['authorization'] = token; // Set lowercase version
-            }
-            return handler.next(options);
-          },
-        ),
-      );
-    } else {
-      _dio.interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            final token = await _secureStorage.read(key: 'auth_token');
-            if (token != null) {
-              options.headers['authorization'] = token;
-            }
-            return handler.next(options);
-          },
-          onError: (error, handler) {
-            // Handle errors
-            return handler.next(error);
-          },
-        ),
-      );
-    }
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await _secureStorage.read(key: 'auth_token');
+          if (token != null) {
+            options.headers['authorization'] = token;
+          }
+          return handler.next(options);
+        },
+        onError: (error, handler) {
+          // Handle errors
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   Future<void> saveToken(String token) async {
@@ -97,6 +79,47 @@ class ApiClient {
   Future<Response> post(String path, {dynamic data}) async {
     try {
       final response = await _dio.post(path, data: data);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+}
+
+
+class WebApiClient extends ApiClient {
+  static const String proxyBaseUrl =
+      'https://buvfbqwsfcjiqdrqczma.supabase.co/functions/v1/proxy-progres';
+
+  @override
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
+    try {
+      final Map<String, dynamic> proxyQueryParams = {
+        'endpoint': "api" + path,
+        ...?queryParameters,
+      };
+
+      final response = await _dio.get(
+        proxyBaseUrl,
+        queryParameters: proxyQueryParams,
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Response> post(String path, {dynamic data}) async {
+    try {
+      final response = await _dio.post(
+        proxyBaseUrl,
+        queryParameters: {
+          'endpoint': 'api' + path,
+        },
+        data: data,
+      );
       return response;
     } catch (e) {
       rethrow;
