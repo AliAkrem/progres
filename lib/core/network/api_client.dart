@@ -86,7 +86,6 @@ class ApiClient {
   }
 }
 
-
 class WebApiClient extends ApiClient {
   static const String proxyBaseUrl =
       'https://buvfbqwsfcjiqdrqczma.supabase.co/functions/v1/proxy-progres';

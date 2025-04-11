@@ -79,18 +79,19 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
   ) async {
     try {
       final String cacheKey = 'weekly_${event.enrollmentId}';
-      
+
       if (!event.forceReload) {
         final isStale = await timelineCacheService.isDataStale(cacheKey);
         if (!isStale) {
-          final cachedEvents = await timelineCacheService.getCachedTimelineEvents(cacheKey);
+          final cachedEvents =
+              await timelineCacheService.getCachedTimelineEvents(cacheKey);
           if (cachedEvents != null && cachedEvents.isNotEmpty) {
             // Convert cached data back to CourseSession objects
-            final List<CourseSession> sessions = 
+            final List<CourseSession> sessions =
                 List<Map<String, dynamic>>.from(cachedEvents)
-                .map((json) => CourseSession.fromJson(json))
-                .toList();
-                
+                    .map((json) => CourseSession.fromJson(json))
+                    .toList();
+
             emit(TimelineLoaded(
               sessions: sessions,
               loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
@@ -101,22 +102,23 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       }
 
       emit(TimelineLoading());
-      
+
       // Load from network
-      final sessions = await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
-      
+      final sessions =
+          await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
+
       // Cache the results - convert CourseSession objects to JSON for caching
-      final List<Map<String, dynamic>> sessionsJson = 
+      final List<Map<String, dynamic>> sessionsJson =
           sessions.map((session) => session.toJson()).toList();
       await timelineCacheService.cacheTimelineEvents(cacheKey, sessionsJson);
-      
+
       final now = DateTime.now();
       emit(TimelineLoaded(sessions: sessions, loadedAt: now));
     } catch (e) {
       emit(TimelineError(e.toString()));
     }
   }
-  
+
   Future<void> _onClearTimelineCache(
     ClearTimelineCache event,
     Emitter<TimelineState> emit,

@@ -25,7 +25,7 @@ import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.da
 final injector = GetIt.instance;
 
 Future<void> initDependencies() async {
-  injector.registerLazySingleton(() => kIsWeb ? WebApiClient() :  ApiClient());
+  injector.registerLazySingleton(() => kIsWeb ? WebApiClient() : ApiClient());
   injector
       .registerLazySingleton(() => AuthRepositoryImpl(apiClient: injector()));
   injector.registerLazySingleton(
@@ -61,9 +61,9 @@ Future<void> initDependencies() async {
         studentGroupsRepository: injector(),
       ));
   injector.registerFactory(() => TimelineBloc(
-    timeLineRepositoryImpl: injector(),
-    timelineCacheService: injector(),
-  ));
+        timeLineRepositoryImpl: injector(),
+        timelineCacheService: injector(),
+      ));
   injector.registerFactory(() => SubjectBloc(
         subjectRepository: injector(),
       ));

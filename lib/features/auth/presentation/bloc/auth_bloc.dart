@@ -92,13 +92,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print('Note: Could not clear timeline cache. ${e.toString()}');
       }
 
-
       try {
         event.context?.read<EnrollmentBloc>().add(ClearEnrollmentsCache());
       } catch (e) {
         print('Note: Could not clear timeline cache. ${e.toString()}');
       }
- 
 
       emit(AuthLoggedOut());
     } catch (e) {
