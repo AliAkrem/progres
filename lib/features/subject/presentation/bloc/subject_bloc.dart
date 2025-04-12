@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
+import 'package:progres/features/subject/data/services/subject_cache_service.dart';
 import '../../data/models/course_coefficient.dart';
 
 abstract class SubjectEvent extends Equatable {
@@ -15,6 +16,19 @@ class LoadSubjectCoefficients extends SubjectEvent {
   LoadSubjectCoefficients({
     required this.ouvertureOffreFormationId,
     required this.niveauId,
+  });
+
+  @override
+  List<Object?> get props => [ouvertureOffreFormationId, niveauId];
+}
+
+class ClearSubjectCache extends SubjectEvent {
+  final int? ouvertureOffreFormationId;
+  final int? niveauId;
+
+  ClearSubjectCache({
+    this.ouvertureOffreFormationId,
+    this.niveauId,
   });
 
   @override
@@ -50,9 +64,14 @@ class SubjectError extends SubjectState {
 
 class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
   final SubjectRepositoryImpl subjectRepository;
+  final SubjectCacheService cacheService;
 
-  SubjectBloc({required this.subjectRepository}) : super(SubjectInitial()) {
+  SubjectBloc({
+    required this.subjectRepository,
+    required this.cacheService,
+  }) : super(SubjectInitial()) {
     on<LoadSubjectCoefficients>(_onLoadSubjectCoefficients);
+    on<ClearSubjectCache>(_onClearSubjectCache);
   }
 
   Future<void> _onLoadSubjectCoefficients(
@@ -61,8 +80,26 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
   ) async {
     try {
       emit(SubjectLoading());
+      final cachedCoefficients =
+          await cacheService.getCachedSubjectCoefficients(
+        event.ouvertureOffreFormationId,
+        event.niveauId,
+      );
 
+      if (cachedCoefficients != null) {
+        emit(SubjectLoaded(courseCoefficients: cachedCoefficients));
+        return;
+      }
+
+      // If cache is stale or empty, fetch from API
       final coefficients = await subjectRepository.getCourseCoefficients(
+        event.ouvertureOffreFormationId,
+        event.niveauId,
+      );
+
+      // Cache the results
+      await cacheService.cacheSubjectCoefficients(
+        coefficients,
         event.ouvertureOffreFormationId,
         event.niveauId,
       );
@@ -70,6 +107,26 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
       emit(SubjectLoaded(courseCoefficients: coefficients));
     } catch (e) {
       emit(SubjectError(e.toString()));
+    }
+  }
+
+  Future<void> _onClearSubjectCache(
+    ClearSubjectCache event,
+    Emitter<SubjectState> emit,
+  ) async {
+    try {
+      if (event.ouvertureOffreFormationId != null && event.niveauId != null) {
+        // Clear specific cache
+        await cacheService.clearSpecificCache(
+          event.ouvertureOffreFormationId!,
+          event.niveauId!,
+        );
+      } else {
+        // Clear all caches
+        await cacheService.clearAllCache();
+      }
+    } catch (e) {
+      print('Error clearing subject cache: $e');
     }
   }
 }

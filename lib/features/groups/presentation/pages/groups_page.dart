@@ -13,6 +13,8 @@ class GroupsPage extends StatefulWidget {
 }
 
 class _GroupsPageState extends State<GroupsPage> {
+  late final int studentId;
+
   @override
   void initState() {
     super.initState();
@@ -21,12 +23,31 @@ class _GroupsPageState extends State<GroupsPage> {
     final profileState = context.read<ProfileBloc>().state;
 
     if (profileState is ProfileLoaded) {
+      studentId = profileState.detailedInfo.id;
+      _loadGroups();
+    }
+  }
+
+  void _loadGroups() {
+    context.read<StudentGroupsBloc>().add(
+          LoadStudentGroups(
+            cardId: studentId,
+          ),
+        );
+  }
+
+  Future<void> _refreshGroups() async {
+    if (context.read<ProfileBloc>().state is ProfileLoaded) {
+      // Clear cache and reload from API
+      context.read<StudentGroupsBloc>().add(ClearGroupsCache());
       context.read<StudentGroupsBloc>().add(
             LoadStudentGroups(
-              cardId: profileState.detailedInfo.id,
+              cardId: studentId,
             ),
           );
     }
+    // Simulating network delay for better UX
+    return Future.delayed(const Duration(milliseconds: 500));
   }
 
   @override
@@ -34,6 +55,13 @@ class _GroupsPageState extends State<GroupsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Groups'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refreshGroups,
+            tooltip: 'Refresh groups',
+          ),
+        ],
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, profileState) {
@@ -51,8 +79,11 @@ class _GroupsPageState extends State<GroupsPage> {
                   state: state,
                 );
               } else if (state is StudentGroupsLoaded) {
-                return GroupsContent(
-                  groups: state.studentGroups,
+                return RefreshIndicator(
+                  onRefresh: _refreshGroups,
+                  child: GroupsContent(
+                    groups: state.studentGroups,
+                  ),
                 );
               } else {
                 return _buildIinitialState();
@@ -82,9 +113,19 @@ class _GroupsPageState extends State<GroupsPage> {
     final isSmallScreen = screenSize.width < 360;
 
     return Center(
-      child: Text(
-        'No group data available',
-        style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No group data available',
+            style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _loadGroups,
+            child: const Text('Load Groups'),
+          ),
+        ],
       ),
     );
   }

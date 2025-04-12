@@ -4,6 +4,8 @@ import 'package:progres/features/auth/data/repositories/auth_repository_impl.dar
 import 'package:progres/features/auth/data/models/auth_response.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
+import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
+import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
@@ -95,7 +97,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         event.context?.read<EnrollmentBloc>().add(ClearEnrollmentsCache());
       } catch (e) {
-        print('Note: Could not clear timeline cache. ${e.toString()}');
+        print('Note: Could not clear enrollment cache. ${e.toString()}');
+      }
+
+      try {
+        event.context?.read<StudentGroupsBloc>().add(ClearGroupsCache());
+      } catch (e) {
+        print('Note: Could not clear groups cache. ${e.toString()}');
+      }
+
+      try {
+        event.context?.read<SubjectBloc>().add(ClearSubjectCache());
+      } catch (e) {
+        print('Note: Could not clear subject cache. ${e.toString()}');
       }
 
       emit(AuthLoggedOut());

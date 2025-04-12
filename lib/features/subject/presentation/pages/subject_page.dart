@@ -15,6 +15,9 @@ class SubjectPage extends StatefulWidget {
 }
 
 class _SubjectPageState extends State<SubjectPage> {
+  late final int ouvertureOffreFormationId;
+  late final int niveauId;
+
   @override
   void initState() {
     super.initState();
@@ -22,14 +25,40 @@ class _SubjectPageState extends State<SubjectPage> {
     final profileState = context.read<ProfileBloc>().state;
 
     if (profileState is ProfileLoaded) {
+      ouvertureOffreFormationId =
+          profileState.detailedInfo.ouvertureOffreFormationId;
+      niveauId = profileState.detailedInfo.niveauId;
+      _loadSubjects();
+    }
+  }
+
+  void _loadSubjects() {
+    context.read<SubjectBloc>().add(
+          LoadSubjectCoefficients(
+            ouvertureOffreFormationId: ouvertureOffreFormationId,
+            niveauId: niveauId,
+          ),
+        );
+  }
+
+  Future<void> _refreshSubjects() async {
+    if (context.read<ProfileBloc>().state is ProfileLoaded) {
+      // Clear cache and reload from API
+      context.read<SubjectBloc>().add(
+            ClearSubjectCache(
+              ouvertureOffreFormationId: ouvertureOffreFormationId,
+              niveauId: niveauId,
+            ),
+          );
       context.read<SubjectBloc>().add(
             LoadSubjectCoefficients(
-              ouvertureOffreFormationId:
-                  profileState.detailedInfo.ouvertureOffreFormationId,
-              niveauId: profileState.detailedInfo.niveauId,
+              ouvertureOffreFormationId: ouvertureOffreFormationId,
+              niveauId: niveauId,
             ),
           );
     }
+    // Simulating network delay for better UX
+    return Future.delayed(const Duration(milliseconds: 500));
   }
 
   @override
@@ -37,6 +66,13 @@ class _SubjectPageState extends State<SubjectPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Subjects & Coefficients'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refreshSubjects,
+            tooltip: 'Refresh subjects',
+          ),
+        ],
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, profileState) {
@@ -51,16 +87,18 @@ class _SubjectPageState extends State<SubjectPage> {
               } else if (state is SubjectError) {
                 return ErrorLoadingSubjectState(
                   message: state.message,
-                  ouvertureOffreFormationId:
-                      profileState.detailedInfo.ouvertureOffreFormationId,
-                  niveauId: profileState.detailedInfo.niveauId,
+                  ouvertureOffreFormationId: ouvertureOffreFormationId,
+                  niveauId: niveauId,
                 );
               } else if (state is SubjectLoaded) {
-                return SubjectsContent(
-                  coefficients: state.courseCoefficients,
+                return RefreshIndicator(
+                  onRefresh: _refreshSubjects,
+                  child: SubjectsContent(
+                    coefficients: state.courseCoefficients,
+                  ),
                 );
               } else {
-                return const InitialState();
+                return InitialState(onReload: _loadSubjects);
               }
             },
           );
@@ -194,8 +232,11 @@ class SubjectsContent extends StatelessWidget {
 }
 
 class InitialState extends StatelessWidget {
+  final VoidCallback onReload;
+
   const InitialState({
     super.key,
+    required this.onReload,
   });
 
   @override
@@ -203,9 +244,19 @@ class InitialState extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
     return Center(
-      child: Text(
-        'No subject data available',
-        style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No subject data available',
+            style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: onReload,
+            child: const Text('Load Subjects'),
+          ),
+        ],
       ),
     );
   }

@@ -81,23 +81,20 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       final String cacheKey = 'weekly_${event.enrollmentId}';
 
       if (!event.forceReload) {
-        final isStale = await timelineCacheService.isDataStale(cacheKey);
-        if (!isStale) {
-          final cachedEvents =
-              await timelineCacheService.getCachedTimelineEvents(cacheKey);
-          if (cachedEvents != null && cachedEvents.isNotEmpty) {
-            // Convert cached data back to CourseSession objects
-            final List<CourseSession> sessions =
-                List<Map<String, dynamic>>.from(cachedEvents)
-                    .map((json) => CourseSession.fromJson(json))
-                    .toList();
+        final cachedEvents =
+            await timelineCacheService.getCachedTimelineEvents(cacheKey);
+        if (cachedEvents != null && cachedEvents.isNotEmpty) {
+          // Convert cached data back to CourseSession objects
+          final List<CourseSession> sessions =
+              List<Map<String, dynamic>>.from(cachedEvents)
+                  .map((json) => CourseSession.fromJson(json))
+                  .toList();
 
-            emit(TimelineLoaded(
-              sessions: sessions,
-              loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
-            ));
-            return;
-          }
+          emit(TimelineLoaded(
+            sessions: sessions,
+            loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
+          ));
+          return;
         }
       }
 

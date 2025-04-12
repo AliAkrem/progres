@@ -25,17 +25,14 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
 
       // If not forcing refresh, try to get from cache first
       if (!event.forceRefresh) {
-        final isStale = await cacheService.isDataStale();
-        if (!isStale) {
-          final cachedEnrollments = await cacheService.getCachedEnrollments();
-          if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
-            print('Using cached enrollments');
-            emit(EnrollmentsLoaded(
-              enrollments: cachedEnrollments,
-              fromCache: true,
-            ));
-            return;
-          }
+        final cachedEnrollments = await cacheService.getCachedEnrollments();
+        if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
+          print('Using cached enrollments');
+          emit(EnrollmentsLoaded(
+            enrollments: cachedEnrollments,
+            fromCache: true,
+          ));
+          return;
         }
       }
 

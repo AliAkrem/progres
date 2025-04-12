@@ -10,10 +10,12 @@ import 'package:progres/features/enrollment/data/repositories/enrollment_reposit
 import 'package:progres/features/enrollment/data/services/enrollment_cache_service.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
+import 'package:progres/features/groups/data/services/groups_cache_service.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
+import 'package:progres/features/subject/data/services/subject_cache_service.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/timeline/data/repositories/timeline_repository_impl.dart';
 import 'package:progres/features/timeline/data/services/timeline_cache_service.dart';
@@ -45,6 +47,8 @@ Future<void> initDependencies() async {
   injector.registerLazySingleton(() => TimelineCacheService());
   injector.registerLazySingleton(() => EnrollmentCacheService());
   injector.registerLazySingleton(() => TranscriptCacheService());
+  injector.registerLazySingleton(() => GroupsCacheService());
+  injector.registerLazySingleton(() => SubjectCacheService());
 
   // Register BLoCs
   injector.registerFactory(() => ThemeBloc()..add(LoadTheme()));
@@ -59,6 +63,7 @@ Future<void> initDependencies() async {
       ));
   injector.registerFactory(() => StudentGroupsBloc(
         studentGroupsRepository: injector(),
+        cacheService: injector(),
       ));
   injector.registerFactory(() => TimelineBloc(
         timeLineRepositoryImpl: injector(),
@@ -66,6 +71,7 @@ Future<void> initDependencies() async {
       ));
   injector.registerFactory(() => SubjectBloc(
         subjectRepository: injector(),
+        cacheService: injector(),
       ));
   injector.registerFactory(() => TranscriptBloc(
         transcriptRepository: injector(),

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/groups/data/models/group.dart';
 import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
+import 'package:progres/features/groups/data/services/groups_cache_service.dart';
 
 class StudentGroupsEvent extends Equatable {
   @override
@@ -17,6 +18,8 @@ class LoadStudentGroups extends StudentGroupsEvent {
   @override
   List<Object?> get props => [cardId];
 }
+
+class ClearGroupsCache extends StudentGroupsEvent {}
 
 class StudentGroupsState extends Equatable {
   @override
@@ -47,21 +50,42 @@ class StudentGroupsError extends StudentGroupsState {
 
 class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
   final StudentGroupsRepositoryImpl studentGroupsRepository;
+  final GroupsCacheService cacheService;
 
-  StudentGroupsBloc({required this.studentGroupsRepository})
-      : super(StudentGroupsInitial()) {
+  StudentGroupsBloc({
+    required this.studentGroupsRepository,
+    required this.cacheService,
+  }) : super(StudentGroupsInitial()) {
     on<LoadStudentGroups>(_onLoadStudentGroups);
+    on<ClearGroupsCache>(_onClearCache);
   }
 
   Future<void> _onLoadStudentGroups(
       LoadStudentGroups event, Emitter<StudentGroupsState> emit) async {
     emit(StudentGroupsLoading());
     try {
+      final cachedGroups = await cacheService.getCachedGroups();
+
+      if (cachedGroups != null) {
+        emit(StudentGroupsLoaded(studentGroups: cachedGroups));
+        return;
+      }
+
+      // If cache is stale or empty, fetch from API
       final studentGroups =
           await studentGroupsRepository.getStudentGroups(event.cardId);
+
+      // Cache the results
+      await cacheService.cacheGroups(studentGroups);
+
       emit(StudentGroupsLoaded(studentGroups: studentGroups));
     } catch (e) {
       emit(StudentGroupsError(e.toString()));
     }
+  }
+
+  Future<void> _onClearCache(
+      ClearGroupsCache event, Emitter<StudentGroupsState> emit) async {
+    await cacheService.clearCache();
   }
 }

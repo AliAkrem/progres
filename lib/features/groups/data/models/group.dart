@@ -22,4 +22,14 @@ class StudentGroup {
       periodeLibelleLongLt: json['periodeLibelleLongLt'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nomGroupePedagogique': nomGroupePedagogique,
+      'nomSection': nomSection,
+      'periodeId': periodeId,
+      'periodeLibelleLongLt': periodeLibelleLongLt,
+    };
+  }
 }

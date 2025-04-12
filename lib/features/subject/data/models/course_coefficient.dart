@@ -31,6 +31,18 @@ class CourseCoefficient {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'coefficientControleContinu': coefficientControleContinu,
+      'coefficientControleIntermediaire': coefficientControleIntermediaire,
+      'coefficientExamen': coefficientExamen,
+      'mcLibelleAr': mcLibelleAr,
+      'mcLibelleFr': mcLibelleFr,
+      'periodeLibelleAr': periodeLibelleAr,
+      'periodeLibelleFr': periodeLibelleFr,
+    };
+  }
+
   // Helper function to handle both int and double values
   static double _parseDouble(dynamic value) {
     if (value is int) {

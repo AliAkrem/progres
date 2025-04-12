@@ -73,14 +73,4 @@ class TimelineCacheService {
       return false;
     }
   }
-
-  // Check if data is stale (older than specified duration)
-  Future<bool> isDataStale(String periodIdentifier,
-      {Duration staleDuration = const Duration(hours: 2)}) async {
-    final lastUpdated = await getLastUpdated(periodIdentifier);
-    if (lastUpdated == null) return true;
-
-    final now = DateTime.now();
-    return now.difference(lastUpdated) > staleDuration;
-  }
 }
