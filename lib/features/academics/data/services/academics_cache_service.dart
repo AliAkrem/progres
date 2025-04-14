@@ -11,9 +11,13 @@ class AcademicsCacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(
-          '$_academicsDataKeyPrefix$identifier', jsonEncode(data));
-      await prefs.setString('$_lastUpdatedKeyPrefix$identifier',
-          DateTime.now().toIso8601String());
+        '$_academicsDataKeyPrefix$identifier',
+        jsonEncode(data),
+      );
+      await prefs.setString(
+        '$_lastUpdatedKeyPrefix$identifier',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching academics data: $e');
@@ -72,8 +76,10 @@ class AcademicsCacheService {
   }
 
   // Check if data is stale (older than specified duration)
-  Future<bool> isDataStale(String identifier,
-      {Duration staleDuration = const Duration(hours: 2)}) async {
+  Future<bool> isDataStale(
+    String identifier, {
+    Duration staleDuration = const Duration(hours: 2),
+  }) async {
     final lastUpdated = await getLastUpdated(identifier);
     if (lastUpdated == null) return true;
 

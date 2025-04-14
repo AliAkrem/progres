@@ -11,14 +11,20 @@ class TranscriptCacheService {
 
   // Save transcripts for specific enrollment
   Future<bool> cacheTranscripts(
-      int enrollmentId, List<AcademicTranscript> transcripts) async {
+    int enrollmentId,
+    List<AcademicTranscript> transcripts,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final transcriptsJson = transcripts.map((t) => t.toJson()).toList();
       await prefs.setString(
-          '$_transcriptsKeyPrefix$enrollmentId', jsonEncode(transcriptsJson));
-      await prefs.setString('${_lastUpdatedKeyPrefix}transcript_$enrollmentId',
-          DateTime.now().toIso8601String());
+        '$_transcriptsKeyPrefix$enrollmentId',
+        jsonEncode(transcriptsJson),
+      );
+      await prefs.setString(
+        '${_lastUpdatedKeyPrefix}transcript_$enrollmentId',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching transcripts: $e');
@@ -28,11 +34,13 @@ class TranscriptCacheService {
 
   // Retrieve transcripts for specific enrollment
   Future<List<AcademicTranscript>?> getCachedTranscripts(
-      int enrollmentId) async {
+    int enrollmentId,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final transcriptsString =
-          prefs.getString('$_transcriptsKeyPrefix$enrollmentId');
+      final transcriptsString = prefs.getString(
+        '$_transcriptsKeyPrefix$enrollmentId',
+      );
 
       if (transcriptsString == null) return null;
 
@@ -48,13 +56,19 @@ class TranscriptCacheService {
 
   // Save annual summary for specific enrollment
   Future<bool> cacheAnnualSummary(
-      int enrollmentId, AnnualTranscriptSummary summary) async {
+    int enrollmentId,
+    AnnualTranscriptSummary summary,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('$_annualSummaryKeyPrefix$enrollmentId',
-          jsonEncode(summary.toJson()));
-      await prefs.setString('${_lastUpdatedKeyPrefix}summary_$enrollmentId',
-          DateTime.now().toIso8601String());
+      await prefs.setString(
+        '$_annualSummaryKeyPrefix$enrollmentId',
+        jsonEncode(summary.toJson()),
+      );
+      await prefs.setString(
+        '${_lastUpdatedKeyPrefix}summary_$enrollmentId',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching annual summary: $e');
@@ -64,11 +78,13 @@ class TranscriptCacheService {
 
   // Retrieve annual summary for specific enrollment
   Future<AnnualTranscriptSummary?> getCachedAnnualSummary(
-      int enrollmentId) async {
+    int enrollmentId,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final summaryString =
-          prefs.getString('$_annualSummaryKeyPrefix$enrollmentId');
+      final summaryString = prefs.getString(
+        '$_annualSummaryKeyPrefix$enrollmentId',
+      );
 
       if (summaryString == null) return null;
 
@@ -118,8 +134,11 @@ class TranscriptCacheService {
   }
 
   // Check if data is stale (older than specified duration)
-  Future<bool> isDataStale(String dataType, int enrollmentId,
-      {Duration staleDuration = const Duration(hours: 12)}) async {
+  Future<bool> isDataStale(
+    String dataType,
+    int enrollmentId, {
+    Duration staleDuration = const Duration(hours: 12),
+  }) async {
     final lastUpdated = await getLastUpdated(dataType, enrollmentId);
     if (lastUpdated == null) return true;
 

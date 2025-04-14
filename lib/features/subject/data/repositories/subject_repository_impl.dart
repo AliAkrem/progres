@@ -5,10 +5,12 @@ class SubjectRepositoryImpl {
   final ApiClient _apiClient;
 
   SubjectRepositoryImpl({required ApiClient apiClient})
-      : _apiClient = apiClient;
+    : _apiClient = apiClient;
 
   Future<List<CourseCoefficient>> getCourseCoefficients(
-      int ouvertureOffreFormationId, int niveauId) async {
+    int ouvertureOffreFormationId,
+    int niveauId,
+  ) async {
     try {
       final response = await _apiClient.get(
         '/infos/offreFormation/$ouvertureOffreFormationId/niveau/$niveauId/Coefficients',

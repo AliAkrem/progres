@@ -14,7 +14,9 @@ class GroupsCacheService {
       final groupsJson = groups.map((g) => g.toJson()).toList();
       await prefs.setString(_groupsKey, jsonEncode(groupsJson));
       await prefs.setString(
-          '${_lastUpdatedKeyPrefix}groups', DateTime.now().toIso8601String());
+        '${_lastUpdatedKeyPrefix}groups',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching groups: $e');

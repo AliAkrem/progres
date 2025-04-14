@@ -28,22 +28,30 @@ final injector = GetIt.instance;
 
 Future<void> initDependencies() async {
   injector.registerLazySingleton(() => kIsWeb ? WebApiClient() : ApiClient());
-  injector
-      .registerLazySingleton(() => AuthRepositoryImpl(apiClient: injector()));
   injector.registerLazySingleton(
-      () => StudentRepositoryImpl(apiClient: injector()));
+    () => AuthRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => TimeLineRepositoryImpl(apiClient: injector()));
+    () => StudentRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => StudentGroupsRepositoryImpl(apiClient: injector()));
+    () => TimeLineRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => SubjectRepositoryImpl(apiClient: injector()));
+    () => StudentGroupsRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => TranscriptRepositoryImpl(apiClient: injector()));
+    () => SubjectRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => EnrollmentRepositoryImpl(apiClient: injector()));
+    () => TranscriptRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(
-      () => AcademicPerformencetRepositoryImpl(apiClient: injector()));
+    () => EnrollmentRepositoryImpl(apiClient: injector()),
+  );
+  injector.registerLazySingleton(
+    () => AcademicPerformencetRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(() => TimelineCacheService());
   injector.registerLazySingleton(() => EnrollmentCacheService());
   injector.registerLazySingleton(() => TranscriptCacheService());
@@ -53,33 +61,41 @@ Future<void> initDependencies() async {
   // Register BLoCs
   injector.registerFactory(() => ThemeBloc()..add(LoadTheme()));
   injector.registerFactory(
-      () => AuthBloc(authRepository: injector())..add(CheckAuthStatusEvent()));
-  injector.registerFactory(() => ProfileBloc(
-        studentRepository: injector(),
-        authRepository: injector(),
-      ));
-  injector.registerFactory(() => AcademicsBloc(
-        academicPerformanceRepository: injector(),
-      ));
-  injector.registerFactory(() => StudentGroupsBloc(
-        studentGroupsRepository: injector(),
-        cacheService: injector(),
-      ));
-  injector.registerFactory(() => TimelineBloc(
-        timeLineRepositoryImpl: injector(),
-        timelineCacheService: injector(),
-      ));
-  injector.registerFactory(() => SubjectBloc(
-        subjectRepository: injector(),
-        cacheService: injector(),
-      ));
-  injector.registerFactory(() => TranscriptBloc(
-        transcriptRepository: injector(),
-        transcriptCacheService: injector(),
-        enrollmentCacheService: injector(),
-      ));
-  injector.registerFactory(() => EnrollmentBloc(
-        enrollmentRepository: injector(),
-        cacheService: injector(),
-      ));
+    () => AuthBloc(authRepository: injector())..add(CheckAuthStatusEvent()),
+  );
+  injector.registerFactory(
+    () =>
+        ProfileBloc(studentRepository: injector(), authRepository: injector()),
+  );
+  injector.registerFactory(
+    () => AcademicsBloc(academicPerformanceRepository: injector()),
+  );
+  injector.registerFactory(
+    () => StudentGroupsBloc(
+      studentGroupsRepository: injector(),
+      cacheService: injector(),
+    ),
+  );
+  injector.registerFactory(
+    () => TimelineBloc(
+      timeLineRepositoryImpl: injector(),
+      timelineCacheService: injector(),
+    ),
+  );
+  injector.registerFactory(
+    () => SubjectBloc(subjectRepository: injector(), cacheService: injector()),
+  );
+  injector.registerFactory(
+    () => TranscriptBloc(
+      transcriptRepository: injector(),
+      transcriptCacheService: injector(),
+      enrollmentCacheService: injector(),
+    ),
+  );
+  injector.registerFactory(
+    () => EnrollmentBloc(
+      enrollmentRepository: injector(),
+      cacheService: injector(),
+    ),
+  );
 }

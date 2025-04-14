@@ -34,28 +34,28 @@ class _SubjectPageState extends State<SubjectPage> {
 
   void _loadSubjects() {
     context.read<SubjectBloc>().add(
-          LoadSubjectCoefficients(
-            ouvertureOffreFormationId: ouvertureOffreFormationId,
-            niveauId: niveauId,
-          ),
-        );
+      LoadSubjectCoefficients(
+        ouvertureOffreFormationId: ouvertureOffreFormationId,
+        niveauId: niveauId,
+      ),
+    );
   }
 
   Future<void> _refreshSubjects() async {
     if (context.read<ProfileBloc>().state is ProfileLoaded) {
       // Clear cache and reload from API
       context.read<SubjectBloc>().add(
-            ClearSubjectCache(
-              ouvertureOffreFormationId: ouvertureOffreFormationId,
-              niveauId: niveauId,
-            ),
-          );
+        ClearSubjectCache(
+          ouvertureOffreFormationId: ouvertureOffreFormationId,
+          niveauId: niveauId,
+        ),
+      );
       context.read<SubjectBloc>().add(
-            LoadSubjectCoefficients(
-              ouvertureOffreFormationId: ouvertureOffreFormationId,
-              niveauId: niveauId,
-            ),
-          );
+        LoadSubjectCoefficients(
+          ouvertureOffreFormationId: ouvertureOffreFormationId,
+          niveauId: niveauId,
+        ),
+      );
     }
     // Simulating network delay for better UX
     return Future.delayed(const Duration(milliseconds: 500));
@@ -136,10 +136,11 @@ class SubjectsContent extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(
-                    horizontal: isSmallScreen ? 12 : 16,
-                    vertical: isSmallScreen ? 10 : 12),
+                  horizontal: isSmallScreen ? 12 : 16,
+                  vertical: isSmallScreen ? 10 : 12,
+                ),
                 decoration: BoxDecoration(
-                  color: AppTheme.AppPrimary.withOpacity(0.1),
+                  color: AppTheme.AppPrimary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -159,9 +160,11 @@ class SubjectsContent extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(
-                    color: theme.brightness == Brightness.light
-                        ? AppTheme.AppBorder
-                        : const Color(0xFF3F3C34)),
+                  color:
+                      theme.brightness == Brightness.light
+                          ? AppTheme.AppBorder
+                          : const Color(0xFF3F3C34),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -169,8 +172,12 @@ class SubjectsContent extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: coursesByPeriod[period]!.length,
-                  separatorBuilder: (context, index) => const Divider(
-                      thickness: 0, color: Colors.transparent, height: 24),
+                  separatorBuilder:
+                      (context, index) => const Divider(
+                        thickness: 0,
+                        color: Colors.transparent,
+                        height: 24,
+                      ),
                   itemBuilder: (context, index) {
                     final coefficient = coursesByPeriod[period]![index];
                     return Column(
@@ -234,10 +241,7 @@ class SubjectsContent extends StatelessWidget {
 class InitialState extends StatelessWidget {
   final VoidCallback onReload;
 
-  const InitialState({
-    super.key,
-    required this.onReload,
-  });
+  const InitialState({super.key, required this.onReload});
 
   @override
   Widget build(BuildContext context) {
@@ -263,22 +267,16 @@ class InitialState extends StatelessWidget {
 }
 
 class LoadingState extends StatelessWidget {
-  const LoadingState({
-    super.key,
-  });
+  const LoadingState({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }
 
 class ErroLoadProfileData extends StatelessWidget {
-  const ErroLoadProfileData({
-    super.key,
-  });
+  const ErroLoadProfileData({super.key});
 
   @override
   Widget build(BuildContext context) {

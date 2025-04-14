@@ -20,13 +20,14 @@ Widget buildGridCard(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: theme.brightness == Brightness.light
-              ? AppTheme.AppBorder
-              : const Color(0xFF3F3C34),
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : const Color(0xFF3F3C34),
         ),
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.05),
+            color: color.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -41,14 +42,10 @@ Widget buildGridCard(
             width: isSmallScreen ? 48 : 56,
             height: isSmallScreen ? 48 : 56,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: color,
-              size: isSmallScreen ? 24 : 28,
-            ),
+            child: Icon(icon, color: color, size: isSmallScreen ? 24 : 28),
           ),
           SizedBox(height: isSmallScreen ? 12 : 16),
           Text(

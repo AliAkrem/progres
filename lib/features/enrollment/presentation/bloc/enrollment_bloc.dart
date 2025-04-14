@@ -28,10 +28,9 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
         final cachedEnrollments = await cacheService.getCachedEnrollments();
         if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
           print('Using cached enrollments');
-          emit(EnrollmentsLoaded(
-            enrollments: cachedEnrollments,
-            fromCache: true,
-          ));
+          emit(
+            EnrollmentsLoaded(enrollments: cachedEnrollments, fromCache: true),
+          );
           return;
         }
       }
@@ -41,19 +40,15 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
       // Cache the results
       await cacheService.cacheEnrollments(enrollments);
 
-      emit(EnrollmentsLoaded(
-        enrollments: enrollments,
-        fromCache: false,
-      ));
+      emit(EnrollmentsLoaded(enrollments: enrollments, fromCache: false));
     } catch (e) {
       print('Error loading enrollments: $e');
 
       final cachedEnrollments = await cacheService.getCachedEnrollments();
       if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
-        emit(EnrollmentsLoaded(
-          enrollments: cachedEnrollments,
-          fromCache: true,
-        ));
+        emit(
+          EnrollmentsLoaded(enrollments: cachedEnrollments, fromCache: true),
+        );
       } else {
         emit(EnrollmentError(message: e.toString()));
       }

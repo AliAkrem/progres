@@ -13,8 +13,10 @@ class EnrollmentCacheService {
       final prefs = await SharedPreferences.getInstance();
       final enrollmentsJson = enrollments.map((e) => e.toJson()).toList();
       await prefs.setString(_enrollmentsKey, jsonEncode(enrollmentsJson));
-      await prefs.setString('${_lastUpdatedKeyPrefix}enrollments',
-          DateTime.now().toIso8601String());
+      await prefs.setString(
+        '${_lastUpdatedKeyPrefix}enrollments',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching enrollments: $e');
@@ -68,8 +70,9 @@ class EnrollmentCacheService {
   }
 
   // Check if data is stale (older than specified duration)
-  Future<bool> isDataStale(
-      {Duration staleDuration = const Duration(hours: 12)}) async {
+  Future<bool> isDataStale({
+    Duration staleDuration = const Duration(hours: 12),
+  }) async {
     final lastUpdated = await getLastUpdated();
     if (lastUpdated == null) return true;
 

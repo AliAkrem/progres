@@ -28,22 +28,15 @@ class ResultItem extends StatelessWidget {
           horizontal: compact ? 12 : 16,
         ),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: color.withOpacity(0.3),
-            width: 1,
-          ),
+          border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: color,
-              size: compact ? 22 : 28,
-            ),
+            Icon(icon, color: color, size: compact ? 22 : 28),
             SizedBox(height: compact ? 8 : 12),
             Text(
               label,

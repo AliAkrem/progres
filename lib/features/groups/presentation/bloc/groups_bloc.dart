@@ -61,7 +61,9 @@ class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
   }
 
   Future<void> _onLoadStudentGroups(
-      LoadStudentGroups event, Emitter<StudentGroupsState> emit) async {
+    LoadStudentGroups event,
+    Emitter<StudentGroupsState> emit,
+  ) async {
     emit(StudentGroupsLoading());
     try {
       final cachedGroups = await cacheService.getCachedGroups();
@@ -72,8 +74,9 @@ class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
       }
 
       // If cache is stale or empty, fetch from API
-      final studentGroups =
-          await studentGroupsRepository.getStudentGroups(event.cardId);
+      final studentGroups = await studentGroupsRepository.getStudentGroups(
+        event.cardId,
+      );
 
       // Cache the results
       await cacheService.cacheGroups(studentGroups);
@@ -85,7 +88,9 @@ class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
   }
 
   Future<void> _onClearCache(
-      ClearGroupsCache event, Emitter<StudentGroupsState> emit) async {
+    ClearGroupsCache event,
+    Emitter<StudentGroupsState> emit,
+  ) async {
     await cacheService.clearCache();
   }
 }

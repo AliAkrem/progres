@@ -5,7 +5,7 @@ class StudentGroupsRepositoryImpl {
   final ApiClient _apiClient;
 
   StudentGroupsRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   Future<List<StudentGroup>> getStudentGroups(int cardId) async {
     try {

@@ -31,17 +31,13 @@ class _LoginPageState extends State<LoginPage>
       duration: const Duration(milliseconds: 800),
     );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeOut,
-      ),
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.1),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
     );
     _animationController.forward();
   }
@@ -61,9 +57,10 @@ class _LoginPageState extends State<LoginPage>
     final isSmallScreen = screenSize.width < 360;
 
     return Scaffold(
-      backgroundColor: theme.brightness == Brightness.dark
-          ? const Color(0xFF2D2B21)
-          : AppTheme.AppBackground,
+      backgroundColor:
+          theme.brightness == Brightness.dark
+              ? const Color(0xFF2D2B21)
+              : AppTheme.AppBackground,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -129,12 +126,15 @@ class _LoginPageState extends State<LoginPage>
                                 width: isSmallScreen ? 72 : 88,
                                 height: isSmallScreen ? 72 : 88,
                                 decoration: BoxDecoration(
-                                  color: AppTheme.AppPrimary.withOpacity(0.15),
+                                  color: AppTheme.AppPrimary.withValues(
+                                    alpha: 0.15,
+                                  ),
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color:
-                                          AppTheme.AppPrimary.withOpacity(0.2),
+                                      color: AppTheme.AppPrimary.withValues(
+                                        alpha: 0.2,
+                                      ),
                                       blurRadius: 12,
                                       spreadRadius: 2,
                                     ),
@@ -163,9 +163,10 @@ class _LoginPageState extends State<LoginPage>
                               'Sign in to your account',
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontSize: isSmallScreen ? 14 : 16,
-                                color: theme.brightness == Brightness.dark
-                                    ? Colors.white70
-                                    : Colors.black54,
+                                color:
+                                    theme.brightness == Brightness.dark
+                                        ? Colors.white70
+                                        : Colors.black54,
                               ),
                             ),
                             SizedBox(height: isSmallScreen ? 36 : 44),
@@ -178,16 +179,19 @@ class _LoginPageState extends State<LoginPage>
                                 hintText: 'Enter your student code',
                                 prefixIcon: Icon(
                                   Icons.person_outline,
-                                  color: theme
-                                      .inputDecorationTheme.prefixIconColor,
+                                  color:
+                                      theme
+                                          .inputDecorationTheme
+                                          .prefixIconColor,
                                   size: isSmallScreen ? 20 : 24,
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(
-                                    color: theme.brightness == Brightness.dark
-                                        ? Colors.white30
-                                        : Colors.black12,
+                                    color:
+                                        theme.brightness == Brightness.dark
+                                            ? Colors.white30
+                                            : Colors.black12,
                                   ),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
@@ -212,8 +216,10 @@ class _LoginPageState extends State<LoginPage>
                                 hintText: 'Enter your password',
                                 prefixIcon: Icon(
                                   Icons.lock_outline,
-                                  color: theme
-                                      .inputDecorationTheme.prefixIconColor,
+                                  color:
+                                      theme
+                                          .inputDecorationTheme
+                                          .prefixIconColor,
                                   size: isSmallScreen ? 20 : 24,
                                 ),
                                 suffixIcon: IconButton(
@@ -221,9 +227,10 @@ class _LoginPageState extends State<LoginPage>
                                     _obscurePassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: theme.brightness == Brightness.dark
-                                        ? Colors.white60
-                                        : Colors.black45,
+                                    color:
+                                        theme.brightness == Brightness.dark
+                                            ? Colors.white60
+                                            : Colors.black45,
                                     size: isSmallScreen ? 20 : 22,
                                   ),
                                   onPressed: () {
@@ -235,9 +242,10 @@ class _LoginPageState extends State<LoginPage>
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(
-                                    color: theme.brightness == Brightness.dark
-                                        ? Colors.white30
-                                        : Colors.black12,
+                                    color:
+                                        theme.brightness == Brightness.dark
+                                            ? Colors.white30
+                                            : Colors.black12,
                                   ),
                                 ),
                                 contentPadding: EdgeInsets.symmetric(
@@ -262,23 +270,24 @@ class _LoginPageState extends State<LoginPage>
                                 return SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
-                                    onPressed: state is AuthLoading
-                                        ? null
-                                        : () {
-                                            if (_formKey.currentState!
-                                                .validate()) {
-                                              context.read<AuthBloc>().add(
-                                                    LoginEvent(
-                                                      username:
-                                                          _usernameController
-                                                              .text,
-                                                      password:
-                                                          _passwordController
-                                                              .text,
-                                                    ),
-                                                  );
-                                            }
-                                          },
+                                    onPressed:
+                                        state is AuthLoading
+                                            ? null
+                                            : () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                context.read<AuthBloc>().add(
+                                                  LoginEvent(
+                                                    username:
+                                                        _usernameController
+                                                            .text,
+                                                    password:
+                                                        _passwordController
+                                                            .text,
+                                                  ),
+                                                );
+                                              }
+                                            },
                                     style: ElevatedButton.styleFrom(
                                       padding: EdgeInsets.symmetric(
                                         vertical: isSmallScreen ? 16 : 20,
@@ -288,23 +297,25 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                       elevation: 2,
                                     ),
-                                    child: state is AuthLoading
-                                        ? const SizedBox(
-                                            height: 24,
-                                            width: 24,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 2.5,
+                                    child:
+                                        state is AuthLoading
+                                            ? const SizedBox(
+                                              height: 24,
+                                              width: 24,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2.5,
+                                              ),
+                                            )
+                                            : Text(
+                                              'Sign In',
+                                              style: TextStyle(
+                                                fontSize:
+                                                    isSmallScreen ? 16 : 18,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.5,
+                                              ),
                                             ),
-                                          )
-                                        : Text(
-                                            'Sign In',
-                                            style: TextStyle(
-                                              fontSize: isSmallScreen ? 16 : 18,
-                                              fontWeight: FontWeight.bold,
-                                              letterSpacing: 0.5,
-                                            ),
-                                          ),
                                   ),
                                 );
                               },

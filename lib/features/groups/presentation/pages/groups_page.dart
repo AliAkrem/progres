@@ -29,11 +29,7 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   void _loadGroups() {
-    context.read<StudentGroupsBloc>().add(
-          LoadStudentGroups(
-            cardId: studentId,
-          ),
-        );
+    context.read<StudentGroupsBloc>().add(LoadStudentGroups(cardId: studentId));
   }
 
   Future<void> _refreshGroups() async {
@@ -41,10 +37,8 @@ class _GroupsPageState extends State<GroupsPage> {
       // Clear cache and reload from API
       context.read<StudentGroupsBloc>().add(ClearGroupsCache());
       context.read<StudentGroupsBloc>().add(
-            LoadStudentGroups(
-              cardId: studentId,
-            ),
-          );
+        LoadStudentGroups(cardId: studentId),
+      );
     }
     // Simulating network delay for better UX
     return Future.delayed(const Duration(milliseconds: 500));
@@ -74,16 +68,11 @@ class _GroupsPageState extends State<GroupsPage> {
               if (state is StudentGroupsLoading) {
                 return _buildLoadingState();
               } else if (state is StudentGroupsError) {
-                return ErrorState(
-                  profileState: profileState,
-                  state: state,
-                );
+                return ErrorState(profileState: profileState, state: state);
               } else if (state is StudentGroupsLoaded) {
                 return RefreshIndicator(
                   onRefresh: _refreshGroups,
-                  child: GroupsContent(
-                    groups: state.studentGroups,
-                  ),
+                  child: GroupsContent(groups: state.studentGroups),
                 );
               } else {
                 return _buildIinitialState();
@@ -131,8 +120,6 @@ class _GroupsPageState extends State<GroupsPage> {
   }
 
   Widget _buildLoadingState() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }

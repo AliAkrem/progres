@@ -8,11 +8,7 @@ Widget buildErrorState(TimelineError state, BuildContext context) {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(
-          Icons.error_outline,
-          size: 48,
-          color: Colors.red,
-        ),
+        const Icon(Icons.error_outline, size: 48, color: Colors.red),
         const SizedBox(height: 16),
         Text('Error: ${state.message}'),
         const SizedBox(height: 16),
@@ -21,11 +17,11 @@ Widget buildErrorState(TimelineError state, BuildContext context) {
             final profileState = context.read<ProfileBloc>().state;
             if (profileState is ProfileLoaded) {
               context.read<TimelineBloc>().add(
-                    LoadWeeklyTimetable(
-                      enrollmentId: profileState.detailedInfo.id,
-                      forceReload: true,
-                    ),
-                  );
+                LoadWeeklyTimetable(
+                  enrollmentId: profileState.detailedInfo.id,
+                  forceReload: true,
+                ),
+              );
             }
           },
           child: const Text('Retry'),

@@ -24,11 +24,7 @@ class GroupsContent extends StatelessWidget {
             PeriodHeader(period: period),
             SizedBox(height: isSmallScreen ? 12 : 16),
             ...groupsByPeriod[period]!
-                .map(
-                  (group) => GroupCard(
-                    group: group,
-                  ),
-                )
+                .map((group) => GroupCard(group: group))
                 .toList(),
             SizedBox(height: isSmallScreen ? 12 : 16),
           ],
@@ -53,9 +49,10 @@ class GroupCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: theme.brightness == Brightness.light
-              ? AppTheme.AppBorder
-              : Colors.grey.shade800,
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : Colors.grey.shade800,
         ),
       ),
       child: Padding(
@@ -69,7 +66,7 @@ class GroupCard extends StatelessWidget {
                   width: isSmallScreen ? 36 : 40,
                   height: isSmallScreen ? 36 : 40,
                   decoration: BoxDecoration(
-                    color: AppTheme.AppPrimary.withOpacity(0.1),
+                    color: AppTheme.AppPrimary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -96,18 +93,20 @@ class GroupCard extends StatelessWidget {
                           Icon(
                             Icons.view_module_outlined,
                             size: isSmallScreen ? 12 : 14,
-                            color: theme.brightness == Brightness.light
-                                ? Colors.grey.shade600
-                                : Colors.grey.shade400,
+                            color:
+                                theme.brightness == Brightness.light
+                                    ? Colors.grey.shade600
+                                    : Colors.grey.shade400,
                           ),
                           SizedBox(width: isSmallScreen ? 3 : 4),
                           Text(
                             'Section: ${group.nomSection}',
                             style: TextStyle(
                               fontSize: isSmallScreen ? 12 : 14,
-                              color: theme.brightness == Brightness.light
-                                  ? Colors.grey.shade600
-                                  : Colors.grey.shade400,
+                              color:
+                                  theme.brightness == Brightness.light
+                                      ? Colors.grey.shade600
+                                      : Colors.grey.shade400,
                             ),
                           ),
                         ],
@@ -137,10 +136,11 @@ class PeriodHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(
-          horizontal: isSmallScreen ? 12 : 16,
-          vertical: isSmallScreen ? 10 : 12),
+        horizontal: isSmallScreen ? 12 : 16,
+        vertical: isSmallScreen ? 10 : 12,
+      ),
       decoration: BoxDecoration(
-        color: AppTheme.AppPrimary.withOpacity(0.1),
+        color: AppTheme.AppPrimary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -195,7 +195,7 @@ class EmptyGroup extends StatelessWidget {
             'You are not assigned to any pedagogical groups yet.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: theme.textTheme.bodyMedium?.color?.withOpacity(0.7),
+              color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
               fontSize: isSmallScreen ? 14 : 16,
             ),
           ),

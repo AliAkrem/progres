@@ -8,13 +8,19 @@ class TimelineCacheService {
 
   // Save timeline events to cache for specific day/week
   Future<bool> cacheTimelineEvents(
-      String periodIdentifier, List<dynamic> events) async {
+    String periodIdentifier,
+    List<dynamic> events,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString(
-          '$_timelineEventsKeyPrefix$periodIdentifier', jsonEncode(events));
-      await prefs.setString('$_lastUpdatedKeyPrefix$periodIdentifier',
-          DateTime.now().toIso8601String());
+        '$_timelineEventsKeyPrefix$periodIdentifier',
+        jsonEncode(events),
+      );
+      await prefs.setString(
+        '$_lastUpdatedKeyPrefix$periodIdentifier',
+        DateTime.now().toIso8601String(),
+      );
       return true;
     } catch (e) {
       print('Error caching timeline events: $e');
@@ -24,11 +30,13 @@ class TimelineCacheService {
 
   // Retrieve timeline events from cache
   Future<List<dynamic>?> getCachedTimelineEvents(
-      String periodIdentifier) async {
+    String periodIdentifier,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final eventsString =
-          prefs.getString('$_timelineEventsKeyPrefix$periodIdentifier');
+      final eventsString = prefs.getString(
+        '$_timelineEventsKeyPrefix$periodIdentifier',
+      );
 
       if (eventsString == null) return null;
 

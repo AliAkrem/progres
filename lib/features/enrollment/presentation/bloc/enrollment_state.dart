@@ -16,10 +16,7 @@ class EnrollmentsLoaded extends EnrollmentState {
   final List<Enrollment> enrollments;
   final bool fromCache;
 
-  const EnrollmentsLoaded({
-    required this.enrollments,
-    this.fromCache = false,
-  });
+  const EnrollmentsLoaded({required this.enrollments, this.fromCache = false});
 
   @override
   List<Object?> get props => [enrollments, fromCache];

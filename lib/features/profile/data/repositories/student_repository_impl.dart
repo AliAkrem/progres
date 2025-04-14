@@ -8,7 +8,7 @@ class StudentRepositoryImpl {
   final ApiClient _apiClient;
 
   StudentRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   Future<StudentBasicInfo> getStudentBasicInfo() async {
     try {
@@ -65,8 +65,9 @@ class StudentRepositoryImpl {
 
   Future<String> getInstitutionLogo(int etablissementId) async {
     try {
-      final response =
-          await _apiClient.get('/infos/logoEtablissement/$etablissementId');
+      final response = await _apiClient.get(
+        '/infos/logoEtablissement/$etablissementId',
+      );
       return response.data as String;
     } catch (e) {
       rethrow;

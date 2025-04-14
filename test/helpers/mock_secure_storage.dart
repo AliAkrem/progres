@@ -103,8 +103,10 @@ class MockSecureStorage implements FlutterSecureStorage {
       throw UnimplementedError();
 
   @override
-  void registerListener(
-      {required String key, required ValueChanged<String?> listener}) {}
+  void registerListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {}
 
   @override
   void unregisterAllListeners() {}
@@ -113,8 +115,10 @@ class MockSecureStorage implements FlutterSecureStorage {
   void unregisterAllListenersForKey({required String key}) {}
 
   @override
-  void unregisterListener(
-      {required String key, required ValueChanged<String?> listener}) {}
+  void unregisterListener({
+    required String key,
+    required ValueChanged<String?> listener,
+  }) {}
 
   @override
   WindowsOptions get wOptions => throw UnimplementedError();

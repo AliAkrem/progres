@@ -18,10 +18,7 @@ class EnrollmentsLoaded extends TranscriptState {
   final List<Enrollment> enrollments;
   final bool fromCache;
 
-  const EnrollmentsLoaded({
-    required this.enrollments,
-    this.fromCache = false,
-  });
+  const EnrollmentsLoaded({required this.enrollments, this.fromCache = false});
 
   @override
   List<Object?> get props => [enrollments, fromCache];
@@ -41,16 +38,18 @@ class TranscriptsLoaded extends TranscriptState {
   });
 
   @override
-  List<Object?> get props =>
-      [transcripts, selectedEnrollment, annualSummary, fromCache];
+  List<Object?> get props => [
+    transcripts,
+    selectedEnrollment,
+    annualSummary,
+    fromCache,
+  ];
 }
 
 class TranscriptError extends TranscriptState {
   final String message;
 
-  const TranscriptError({
-    required this.message,
-  });
+  const TranscriptError({required this.message});
 
   @override
   List<Object?> get props => [message];

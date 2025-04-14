@@ -7,8 +7,11 @@ class ErrorState extends StatelessWidget {
   final StudentGroupsError state;
   final ProfileLoaded profileState;
 
-  const ErrorState(
-      {super.key, required this.state, required this.profileState});
+  const ErrorState({
+    super.key,
+    required this.state,
+    required this.profileState,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,8 @@ class ErrorState extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 context.read<StudentGroupsBloc>().add(
-                      LoadStudentGroups(
-                        cardId: profileState.detailedInfo.id,
-                      ),
-                    );
+                  LoadStudentGroups(cardId: profileState.detailedInfo.id),
+                );
               },
               child: const Text('Retry'),
             ),

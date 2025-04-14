@@ -57,12 +57,12 @@ class _TranscriptPageState extends State<TranscriptPage>
               if (_enrollments.isNotEmpty) {
                 // Force refresh current data
                 context.read<TranscriptBloc>().add(
-                      LoadTranscripts(
-                        enrollmentId: _enrollments[_currentIndex].id,
-                        enrollment: _enrollments[_currentIndex],
-                        forceRefresh: true,
-                      ),
-                    );
+                  LoadTranscripts(
+                    enrollmentId: _enrollments[_currentIndex].id,
+                    enrollment: _enrollments[_currentIndex],
+                    forceRefresh: true,
+                  ),
+                );
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -105,14 +105,19 @@ class _TranscriptPageState extends State<TranscriptPage>
         builder: (context, state) {
           if (state is TranscriptInitial) {
             return const Center(
-                child: CircularProgressIndicator(color: AppTheme.AppPrimary));
+              child: CircularProgressIndicator(color: AppTheme.AppPrimary),
+            );
           } else if (state is TranscriptError) {
             return Center(
-                child: Text('Error: ${state.message}',
-                    style: theme.textTheme.bodyLarge));
+              child: Text(
+                'Error: ${state.message}',
+                style: theme.textTheme.bodyLarge,
+              ),
+            );
           } else if (_enrollments.isEmpty) {
             return const Center(
-                child: CircularProgressIndicator(color: AppTheme.AppPrimary));
+              child: CircularProgressIndicator(color: AppTheme.AppPrimary),
+            );
           } else {
             return _buildContent(state, theme);
           }
@@ -127,11 +132,8 @@ class _TranscriptPageState extends State<TranscriptPage>
 
       // Load both transcripts and annual summary in a single request
       context.read<TranscriptBloc>().add(
-            LoadTranscripts(
-              enrollmentId: enrollment.id,
-              enrollment: enrollment,
-            ),
-          );
+        LoadTranscripts(enrollmentId: enrollment.id, enrollment: enrollment),
+      );
     }
   }
 
@@ -144,29 +146,32 @@ class _TranscriptPageState extends State<TranscriptPage>
             controller: _tabController,
             isScrollable: true,
             indicatorColor: AppTheme.AppSecondary,
-            tabs: _enrollments.map((enrollment) {
-              return Tab(
-                text: enrollment.anneeAcademiqueCode,
-              );
-            }).toList(),
+            tabs:
+                _enrollments.map((enrollment) {
+                  return Tab(text: enrollment.anneeAcademiqueCode);
+                }).toList(),
           ),
 
         // Main content
         Expanded(
-          child: state is TranscriptLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: AppTheme.AppPrimary))
-              : state is TranscriptsLoaded
+          child:
+              state is TranscriptLoading
+                  ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppTheme.AppPrimary,
+                    ),
+                  )
+                  : state is TranscriptsLoaded
                   ? _buildTranscriptsView(state, theme)
                   : Center(
-                      child: Text(
-                        'Select an academic year',
-                        style: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: theme.textTheme.bodyMedium?.color,
-                        ),
+                    child: Text(
+                      'Select an academic year',
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
+                  ),
         ),
       ],
     );
@@ -213,9 +218,10 @@ class _TranscriptPageState extends State<TranscriptPage>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(
-                color: theme.brightness == Brightness.light
-                    ? AppTheme.AppBorder
-                    : const Color(0xFF3F3C34),
+                color:
+                    theme.brightness == Brightness.light
+                        ? AppTheme.AppBorder
+                        : const Color(0xFF3F3C34),
               ),
             ),
             child: Column(
@@ -225,16 +231,13 @@ class _TranscriptPageState extends State<TranscriptPage>
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppTheme.AppPrimary.withOpacity(0.1),
+                      color: AppTheme.AppPrimary.withValues(alpha: 0.1),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(12),
                         topRight: Radius.circular(12),
                       ),
                       border: const Border(
-                        bottom: BorderSide(
-                          color: AppTheme.AppBorder,
-                          width: 1,
-                        ),
+                        bottom: BorderSide(color: AppTheme.AppBorder, width: 1),
                       ),
                     ),
                     child: Padding(
@@ -322,7 +325,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                             Icons.calendar_today,
                             size: 16,
                             color: theme.textTheme.bodyMedium?.color
-                                ?.withOpacity(0.7),
+                                ?.withValues(alpha: 0.7),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -354,9 +357,10 @@ class _TranscriptPageState extends State<TranscriptPage>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: theme.brightness == Brightness.light
-              ? AppTheme.AppBorder
-              : const Color(0xFF3F3C34),
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : const Color(0xFF3F3C34),
         ),
       ),
       child: Padding(
@@ -402,8 +406,9 @@ class _TranscriptPageState extends State<TranscriptPage>
               physics: const NeverScrollableScrollPhysics(),
               itemCount: transcript.bilanUes.length,
               separatorBuilder: (context, index) => const Divider(height: 24),
-              itemBuilder: (context, index) =>
-                  _buildTeachingUnit(transcript.bilanUes[index], theme),
+              itemBuilder:
+                  (context, index) =>
+                      _buildTeachingUnit(transcript.bilanUes[index], theme),
             ),
           ],
         ),
@@ -438,7 +443,7 @@ class _TranscriptPageState extends State<TranscriptPage>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: _getUeColor(unit.ueNatureLcFr).withOpacity(0.1),
+                color: _getUeColor(unit.ueNatureLcFr).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(color: _getUeColor(unit.ueNatureLcFr)),
               ),
@@ -456,8 +461,10 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ),
                   const SizedBox(width: 4),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 1,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -483,8 +490,8 @@ class _TranscriptPageState extends State<TranscriptPage>
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: unit.bilanMcs.length,
-          itemBuilder: (context, index) =>
-              _buildModuleRow(unit.bilanMcs[index], theme),
+          itemBuilder:
+              (context, index) => _buildModuleRow(unit.bilanMcs[index], theme),
         ),
       ],
     );
@@ -497,12 +504,14 @@ class _TranscriptPageState extends State<TranscriptPage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Module name
-          Text(module.mcLibelleFr,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                color: theme.textTheme.titleMedium?.color,
-              )),
+          Text(
+            module.mcLibelleFr,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: theme.textTheme.titleMedium?.color,
+            ),
+          ),
           const SizedBox(height: 16),
 
           // Coef info
@@ -540,16 +549,19 @@ class _TranscriptPageState extends State<TranscriptPage>
                 child: Divider(
                   indent: 8,
                   endIndent: 8,
-                  color: theme.brightness == Brightness.light
-                      ? null
-                      : const Color(0xFF3F3C34),
+                  color:
+                      theme.brightness == Brightness.light
+                          ? null
+                          : const Color(0xFF3F3C34),
                 ),
               ),
 
               // Grade
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: _getGradeColor(module.moyenneGenerale),
                   borderRadius: BorderRadius.circular(12),

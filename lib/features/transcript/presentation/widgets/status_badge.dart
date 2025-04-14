@@ -4,39 +4,30 @@ import 'package:progres/config/theme/app_theme.dart';
 class StatusBadge extends StatelessWidget {
   final String status;
 
-  const StatusBadge({
-    Key? key,
-    required this.status,
-  }) : super(key: key);
+  const StatusBadge({Key? key, required this.status}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final color = _getDecisionColor(status);
     final icon = _getDecisionIcon(status);
-    final formattedStatus = status
-        .replaceAll('Admis(e)', 'Passed')
-        .replaceAll('Ajourné(e)', 'Failed')
-        .replaceAll('(session normale)', '')
-        .trim();
+    final formattedStatus =
+        status
+            .replaceAll('Admis(e)', 'Passed')
+            .replaceAll('Ajourné(e)', 'Failed')
+            .replaceAll('(session normale)', '')
+            .trim();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: color,
-          width: 1.5,
-        ),
+        border: Border.all(color: color, width: 1.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: color,
-            size: 18,
-          ),
+          Icon(icon, color: color, size: 18),
           const SizedBox(width: 8),
           Text(
             formattedStatus,

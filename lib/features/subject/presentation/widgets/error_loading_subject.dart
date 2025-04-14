@@ -32,11 +32,11 @@ class ErrorLoadingSubjectState extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 context.read<SubjectBloc>().add(
-                      LoadSubjectCoefficients(
-                        ouvertureOffreFormationId: ouvertureOffreFormationId,
-                        niveauId: niveauId,
-                      ),
-                    );
+                  LoadSubjectCoefficients(
+                    ouvertureOffreFormationId: ouvertureOffreFormationId,
+                    niveauId: niveauId,
+                  ),
+                );
               },
               child: const Text('Retry'),
             ),

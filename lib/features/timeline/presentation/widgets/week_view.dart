@@ -4,11 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/presentation/widgets/event.dart';
 
-WeekView<Object?> buildWeekView(
-    {required BuildContext context,
-    required Key weekViewKey,
-    EventController<Object?>? eventController,
-    DateTime? currentWeekStart}) {
+WeekView<Object?> buildWeekView({
+  required BuildContext context,
+  required Key weekViewKey,
+  EventController<Object?>? eventController,
+  DateTime? currentWeekStart,
+}) {
   return WeekView(
     key: weekViewKey,
     minuteSlotSize: MinuteSlotSize.minutes60,
@@ -18,8 +19,10 @@ WeekView<Object?> buildWeekView(
     startHour: 7,
     endHour: 20,
     showVerticalLines: true,
-    liveTimeIndicatorSettings:
-        const LiveTimeIndicatorSettings(offset: 60, color: Colors.red),
+    liveTimeIndicatorSettings: const LiveTimeIndicatorSettings(
+      offset: 60,
+      color: Colors.red,
+    ),
     onHeaderTitleTap: null,
     showHalfHours: true,
     heightPerMinute: 1.3,
@@ -27,10 +30,7 @@ WeekView<Object?> buildWeekView(
       String formattedTime = DateFormat('HH:mm').format(date);
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Text(
-          formattedTime,
-          style: const TextStyle(fontSize: 10),
-        ),
+        child: Text(formattedTime, style: const TextStyle(fontSize: 10)),
       );
     },
     showLiveTimeLineInAllDays: true,
@@ -39,13 +39,16 @@ WeekView<Object?> buildWeekView(
       return formattedTime;
     },
     onDateTap: null,
-    halfHourIndicatorSettings:
-        const HourIndicatorSettings(color: Colors.transparent),
+    halfHourIndicatorSettings: const HourIndicatorSettings(
+      color: Colors.transparent,
+    ),
     headerStyle: HeaderStyle(
-        rightIconConfig: null,
-        leftIconConfig: null,
-        decoration:
-            BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor)),
+      rightIconConfig: null,
+      leftIconConfig: null,
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+    ),
     pageViewPhysics: const NeverScrollableScrollPhysics(),
     weekDays: const [
       WeekDays.saturday,
@@ -72,7 +75,7 @@ WeekView<Object?> buildWeekView(
         'Thu',
         'Fri',
         'Sat',
-        'Sun'
+        'Sun',
       ];
       final weekdayName = weekdayNames[date.weekday];
 
@@ -81,12 +84,13 @@ WeekView<Object?> buildWeekView(
 
       return Container(
         decoration: BoxDecoration(
-          color: date.day == DateTime.now().day
-              ? AppTheme.AppPrimary.withOpacity(0.1)
-              : Colors.transparent,
+          color:
+              date.day == DateTime.now().day
+                  ? AppTheme.AppPrimary.withValues(alpha: 0.1)
+                  : Colors.transparent,
           border: Border(
             bottom: BorderSide(
-              color: AppTheme.AppPrimary.withOpacity(0.2),
+              color: AppTheme.AppPrimary.withValues(alpha: 0.2),
               width: 0.5,
             ),
           ),
@@ -128,16 +132,13 @@ WeekView<Object?> buildWeekView(
       return AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(vertical: 4),
-        color: AppTheme.AppPrimary.withOpacity(0.1),
+        color: AppTheme.AppPrimary.withValues(alpha: 0.1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "${_formatDate(startDate)} - ${_formatDate(endDate)}",
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
           ],
         ),

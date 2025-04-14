@@ -29,10 +29,8 @@ class _TimelinePageState extends State<TimelinePage> {
 
     if (profileState is ProfileLoaded) {
       context.read<TimelineBloc>().add(
-            LoadWeeklyTimetable(
-              enrollmentId: profileState.detailedInfo.id,
-            ),
-          );
+        LoadWeeklyTimetable(enrollmentId: profileState.detailedInfo.id),
+      );
     }
   }
 
@@ -46,9 +44,7 @@ class _TimelinePageState extends State<TimelinePage> {
     _eventController = CalendarControllerProvider.of(context).controller;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Weekly Schedule'),
-      ),
+      appBar: AppBar(title: const Text('Weekly Schedule')),
       body: BlocListener<TimelineBloc, TimelineState>(
         listener: (context, state) {
           if (state is TimelineLoaded) {
@@ -71,13 +67,13 @@ class _TimelinePageState extends State<TimelinePage> {
   }
 
   Center _buildLoadingState() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 
-  void _updateCalendarWithSessions(List<CourseSession> sessions,
-      [DateTime? weekStart]) {
+  void _updateCalendarWithSessions(
+    List<CourseSession> sessions, [
+    DateTime? weekStart,
+  ]) {
     _eventController.removeWhere((_) => true);
 
     final currentWeekStart = weekStart ?? _currentWeekStart;

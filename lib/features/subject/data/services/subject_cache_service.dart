@@ -25,8 +25,10 @@ class SubjectCacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final cacheKey = _getCacheKey(ouvertureOffreFormationId, niveauId);
-      final lastUpdatedKey =
-          _getLastUpdatedKey(ouvertureOffreFormationId, niveauId);
+      final lastUpdatedKey = _getLastUpdatedKey(
+        ouvertureOffreFormationId,
+        niveauId,
+      );
 
       final coefficientsJson = coefficients.map((c) => c.toJson()).toList();
       await prefs.setString(cacheKey, jsonEncode(coefficientsJson));
@@ -87,8 +89,10 @@ class SubjectCacheService {
     try {
       final prefs = await SharedPreferences.getInstance();
       final cacheKey = _getCacheKey(ouvertureOffreFormationId, niveauId);
-      final lastUpdatedKey =
-          _getLastUpdatedKey(ouvertureOffreFormationId, niveauId);
+      final lastUpdatedKey = _getLastUpdatedKey(
+        ouvertureOffreFormationId,
+        niveauId,
+      );
 
       await prefs.remove(cacheKey);
       await prefs.remove(lastUpdatedKey);

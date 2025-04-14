@@ -127,8 +127,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
           // Status cards
           Padding(
-            padding: EdgeInsets.fromLTRB(horizontalPadding, 0,
-                horizontalPadding, isSmallScreen ? 16 : 24),
+            padding: EdgeInsets.fromLTRB(
+              horizontalPadding,
+              0,
+              horizontalPadding,
+              isSmallScreen ? 16 : 24,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -158,10 +162,14 @@ class _ProfilePageState extends State<ProfilePage> {
             child: _buildInfoSection(
               title: 'Personal Information',
               children: [
-                _buildInfoRow('Full Name (Latin)',
-                    '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}'),
-                _buildInfoRow('Full Name (Arabic)',
-                    '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}'),
+                _buildInfoRow(
+                  'Full Name (Latin)',
+                  '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
+                ),
+                _buildInfoRow(
+                  'Full Name (Arabic)',
+                  '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
+                ),
                 _buildInfoRow('Birth Date', state.basicInfo.dateNaissance),
                 _buildInfoRow('Birth Place', state.basicInfo.lieuNaissance),
               ],
@@ -177,11 +185,15 @@ class _ProfilePageState extends State<ProfilePage> {
               title: 'Current Academic Status',
               children: [
                 _buildInfoRow(
-                    'Program', state.detailedInfo.niveauLibelleLongLt),
+                  'Program',
+                  state.detailedInfo.niveauLibelleLongLt,
+                ),
                 _buildInfoRow('Level', state.detailedInfo.niveauLibelleLongLt),
                 _buildInfoRow('Cycle', state.detailedInfo.refLibelleCycle),
-                _buildInfoRow('Registration Number',
-                    state.detailedInfo.numeroInscription),
+                _buildInfoRow(
+                  'Registration Number',
+                  state.detailedInfo.numeroInscription,
+                ),
                 _buildInfoRow('Academic Year', state.academicYear.code),
               ],
             ),
@@ -201,10 +213,11 @@ class _ProfilePageState extends State<ProfilePage> {
       width: double.infinity,
       color: theme.colorScheme.surface,
       padding: EdgeInsets.fromLTRB(
-          isSmallScreen ? 16 : 24,
-          isSmallScreen ? 12 : 16,
-          isSmallScreen ? 16 : 24,
-          isSmallScreen ? 20 : 24),
+        isSmallScreen ? 16 : 24,
+        isSmallScreen ? 12 : 16,
+        isSmallScreen ? 16 : 24,
+        isSmallScreen ? 20 : 24,
+      ),
       child: Column(
         children: [
           // Profile image
@@ -216,35 +229,39 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                    color: theme.brightness == Brightness.light
-                        ? Colors.white
-                        : const Color(0xFF3F3C34),
-                    width: 4),
+                  color:
+                      theme.brightness == Brightness.light
+                          ? Colors.white
+                          : const Color(0xFF3F3C34),
+                  width: 4,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              child: state.profileImage != null
-                  ? ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(isSmallScreen ? 50 : 60),
-                      child: Image.memory(
-                        _decodeBase64Image(state.profileImage!),
-                        fit: BoxFit.cover,
+              child:
+                  state.profileImage != null
+                      ? ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          isSmallScreen ? 50 : 60,
+                        ),
+                        child: Image.memory(
+                          _decodeBase64Image(state.profileImage!),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                      : CircleAvatar(
+                        backgroundColor: AppTheme.AppSecondary,
+                        child: Icon(
+                          Icons.person_rounded,
+                          size: isSmallScreen ? 50 : 60,
+                          color: AppTheme.AppPrimary,
+                        ),
                       ),
-                    )
-                  : CircleAvatar(
-                      backgroundColor: AppTheme.AppSecondary,
-                      child: Icon(
-                        Icons.person_rounded,
-                        size: isSmallScreen ? 50 : 60,
-                        color: AppTheme.AppPrimary,
-                      ),
-                    ),
             ),
           ),
           SizedBox(height: isSmallScreen ? 12 : 16),
@@ -268,12 +285,14 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: isSmallScreen ? 10 : 12),
           Container(
             padding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? 14 : 16,
-                vertical: isSmallScreen ? 6 : 8),
+              horizontal: isSmallScreen ? 14 : 16,
+              vertical: isSmallScreen ? 6 : 8,
+            ),
             decoration: BoxDecoration(
-              color: theme.brightness == Brightness.light
-                  ? AppTheme.AppSecondary.withOpacity(0.1)
-                  : AppTheme.AppSecondary.withOpacity(0.3),
+              color:
+                  theme.brightness == Brightness.light
+                      ? AppTheme.AppSecondary.withValues(alpha: 0.1)
+                      : AppTheme.AppSecondary.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -303,12 +322,14 @@ class _ProfilePageState extends State<ProfilePage> {
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-            color: theme.brightness == Brightness.light
-                ? AppTheme.AppBorder
-                : const Color(0xFF3F3C34)),
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : const Color(0xFF3F3C34),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -328,9 +349,10 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
               child: Divider(
-                color: theme.brightness == Brightness.light
-                    ? Colors.black.withOpacity(0.1)
-                    : Colors.white.withOpacity(0.1),
+                color:
+                    theme.brightness == Brightness.light
+                        ? Colors.black.withValues(alpha: 0.1)
+                        : Colors.white.withValues(alpha: 0.1),
                 height: 1,
               ),
             ),
@@ -344,9 +366,10 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
               child: Divider(
-                color: theme.brightness == Brightness.light
-                    ? Colors.black.withOpacity(0.1)
-                    : Colors.white.withOpacity(0.1),
+                color:
+                    theme.brightness == Brightness.light
+                        ? Colors.black.withValues(alpha: 0.1)
+                        : Colors.white.withValues(alpha: 0.1),
                 height: 1,
               ),
             ),
@@ -377,9 +400,10 @@ class _ProfilePageState extends State<ProfilePage> {
         Icon(
           icon,
           size: isSmallScreen ? 18 : 20,
-          color: theme.brightness == Brightness.light
-              ? AppTheme.AppPrimary.withOpacity(0.7)
-              : AppTheme.AppPrimary,
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppPrimary.withValues(alpha: 0.7)
+                  : AppTheme.AppPrimary,
         ),
         SizedBox(width: isSmallScreen ? 12 : 16),
         Column(
@@ -435,12 +459,14 @@ class _ProfilePageState extends State<ProfilePage> {
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-                color: theme.brightness == Brightness.light
-                    ? AppTheme.AppBorder
-                    : const Color(0xFF3F3C34)),
+              color:
+                  theme.brightness == Brightness.light
+                      ? AppTheme.AppBorder
+                      : const Color(0xFF3F3C34),
+            ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.03),
+                color: Colors.black.withValues(alpha: 0.03),
                 blurRadius: 10,
                 offset: const Offset(0, 5),
               ),

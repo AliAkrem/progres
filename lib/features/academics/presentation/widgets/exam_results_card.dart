@@ -5,10 +5,7 @@ import 'package:progres/config/theme/app_theme.dart';
 class ExamResultsCard extends StatelessWidget {
   final List<ExamResult> examResults;
 
-  const ExamResultsCard({
-    super.key,
-    required this.examResults,
-  });
+  const ExamResultsCard({super.key, required this.examResults});
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +41,11 @@ class ExamResultsCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-            color: theme.brightness == Brightness.light
-                ? AppTheme.AppBorder
-                : const Color(0xFF3F3C34)),
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : const Color(0xFF3F3C34),
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -57,8 +56,12 @@ class ExamResultsCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder: (context, index) => const Divider(
-                  thickness: 0, color: Colors.transparent, height: 24),
+              separatorBuilder:
+                  (context, index) => const Divider(
+                    thickness: 0,
+                    color: Colors.transparent,
+                    height: 24,
+                  ),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseResults = groupedByCourse[courseTitle]!;
@@ -85,10 +88,12 @@ class ExamResultsCard extends StatelessWidget {
                         .toList(),
 
                     // Appeal information if available
-                    if (courseResults.any((result) =>
-                        result.autorisationDemandeRecours &&
-                        result.dateDebutDepotRecours != null &&
-                        result.dateLimiteDepotRecours != null))
+                    if (courseResults.any(
+                      (result) =>
+                          result.autorisationDemandeRecours &&
+                          result.dateDebutDepotRecours != null &&
+                          result.dateLimiteDepotRecours != null,
+                    ))
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
@@ -98,9 +103,10 @@ class ExamResultsCard extends StatelessWidget {
                                   ? Icons.check_circle_outline
                                   : Icons.info_outline,
                               size: 14,
-                              color: courseResults.first.recoursDemande == true
-                                  ? Colors.orange
-                                  : Colors.grey,
+                              color:
+                                  courseResults.first.recoursDemande == true
+                                      ? Colors.orange
+                                      : Colors.grey,
                             ),
                             const SizedBox(width: 4),
                             Text(
@@ -138,7 +144,7 @@ class ExamResultsCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(
-              color: AppTheme.accentGreen.withOpacity(0.2),
+              color: AppTheme.accentGreen.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: AppTheme.accentGreen),
             ),
@@ -155,10 +161,12 @@ class ExamResultsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 1,
+                  ),
                   decoration: BoxDecoration(
-                    // color: AppTheme.accentGreen.withOpacity(0.2),
+                    // color: AppTheme.accentGreen.withValues(alpha:0.2),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
@@ -178,39 +186,43 @@ class ExamResultsCard extends StatelessWidget {
           Expanded(
             child: Divider(
               indent: 8,
-              color: theme.brightness == Brightness.light
-                  ? null
-                  : const Color(0xFF3F3C34),
+              color:
+                  theme.brightness == Brightness.light
+                      ? null
+                      : const Color(0xFF3F3C34),
             ),
           ),
 
           // Grade
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: result.noteExamen != null
-                ? Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: _getGradeColor(result.noteExamen!),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      '${result.noteExamen}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 13,
+            child:
+                result.noteExamen != null
+                    ? Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getGradeColor(result.noteExamen!),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        '${result.noteExamen}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 13,
+                        ),
+                      ),
+                    )
+                    : Text(
+                      'N/A',
+                      style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        color: theme.textTheme.bodyMedium?.color,
                       ),
                     ),
-                  )
-                : Text(
-                    'N/A',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: theme.textTheme.bodyMedium?.color,
-                    ),
-                  ),
           ),
         ],
       ),

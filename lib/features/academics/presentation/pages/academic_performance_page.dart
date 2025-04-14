@@ -25,8 +25,11 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: 2, vsync: this, initialIndex: widget.initialTab);
+    _tabController = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.initialTab,
+    );
 
     _loadAcademicData(forceRefresh: false);
   }
@@ -37,11 +40,11 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
 
     if (profileState is ProfileLoaded) {
       context.read<AcademicsBloc>().add(
-            LoadAcademicPerformance(
-              cardId: profileState.detailedInfo.id,
-              forceRefresh: forceRefresh,
-            ),
-          );
+        LoadAcademicPerformance(
+          cardId: profileState.detailedInfo.id,
+          forceRefresh: forceRefresh,
+        ),
+      );
     }
   }
 
@@ -65,9 +68,10 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
               return IconButton(
                 icon: const Icon(Icons.refresh),
                 tooltip: 'Refresh data',
-                onPressed: state is AcademicsLoading
-                    ? null
-                    : () => _loadAcademicData(forceRefresh: true),
+                onPressed:
+                    state is AcademicsLoading
+                        ? null
+                        : () => _loadAcademicData(forceRefresh: true),
               );
             },
           ),
@@ -89,21 +93,21 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
           if (profileState is! ProfileLoaded) {
             return const Center(
               child: Text(
-                  'Profile data not loaded. Please go back and try again.'),
+                'Profile data not loaded. Please go back and try again.',
+              ),
             );
           }
 
           return BlocBuilder<AcademicsBloc, AcademicsState>(
             builder: (context, state) {
               if (state is AcademicsLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Center(child: CircularProgressIndicator());
               } else if (state is AcademicsError) {
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: isSmallScreen ? 16.0 : 24.0),
+                      horizontal: isSmallScreen ? 16.0 : 24.0,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -114,8 +118,8 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () =>
-                              _loadAcademicData(forceRefresh: true),
+                          onPressed:
+                              () => _loadAcademicData(forceRefresh: true),
                           child: const Text('Retry'),
                         ),
                       ],
@@ -180,7 +184,10 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
   }
 
   Widget _buildExamsTab(
-      BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
+    BuildContext context,
+    ProfileLoaded profileState,
+    AcademicsLoaded state,
+  ) {
     // Group exams by period
     final examsByPeriod = _groupExamsByPeriod(state.examResults);
     final theme = Theme.of(context);
@@ -215,8 +222,9 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
               String periodName = 'Period $periodId';
 
               try {
-                final period = profileState.academicPeriods
-                    .firstWhere((p) => p.id == periodId);
+                final period = profileState.academicPeriods.firstWhere(
+                  (p) => p.id == periodId,
+                );
                 periodName = period.libelleLongLt;
               } catch (e) {
                 // Not found, use default name
@@ -228,10 +236,11 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(
-                        horizontal: isSmallScreen ? 12 : 16,
-                        vertical: isSmallScreen ? 10 : 12),
+                      horizontal: isSmallScreen ? 12 : 16,
+                      vertical: isSmallScreen ? 10 : 12,
+                    ),
                     decoration: BoxDecoration(
-                      color: AppTheme.AppPrimary.withOpacity(0.1),
+                      color: AppTheme.AppPrimary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -255,9 +264,13 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
   }
 
   Widget _buildAssessmentsTab(
-      BuildContext context, ProfileLoaded profileState, AcademicsLoaded state) {
-    final assessmentsByPeriod =
-        _groupAssessmentsByPeriod(state.continuousAssessments);
+    BuildContext context,
+    ProfileLoaded profileState,
+    AcademicsLoaded state,
+  ) {
+    final assessmentsByPeriod = _groupAssessmentsByPeriod(
+      state.continuousAssessments,
+    );
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
@@ -292,10 +305,11 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                   Container(
                     width: double.infinity,
                     padding: EdgeInsets.symmetric(
-                        horizontal: isSmallScreen ? 12 : 16,
-                        vertical: isSmallScreen ? 10 : 12),
+                      horizontal: isSmallScreen ? 12 : 16,
+                      vertical: isSmallScreen ? 10 : 12,
+                    ),
                     decoration: BoxDecoration(
-                      color: AppTheme.AppPrimary.withOpacity(0.1),
+                      color: AppTheme.AppPrimary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -334,7 +348,8 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
 
   // Helper method to group assessments by period
   Map<String, List<ContinuousAssessment>> _groupAssessmentsByPeriod(
-      List<ContinuousAssessment> assessments) {
+    List<ContinuousAssessment> assessments,
+  ) {
     final result = <String, List<ContinuousAssessment>>{};
 
     for (final assessment in assessments) {

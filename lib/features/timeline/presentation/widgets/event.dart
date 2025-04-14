@@ -4,7 +4,11 @@ import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/data/models/course_session.dart';
 
 Widget eventBuilder(
-    CalendarEventData event, Rect boundary, DateTime start, DateTime end) {
+  CalendarEventData event,
+  Rect boundary,
+  DateTime start,
+  DateTime end,
+) {
   final courseSession = event.event as CourseSession?;
 
   Color bgColor;
@@ -29,7 +33,7 @@ Widget eventBuilder(
       borderRadius: BorderRadius.circular(6),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.1),
+          color: Colors.black.withValues(alpha: 0.1),
           blurRadius: 3,
           offset: const Offset(0, 1),
         ),
@@ -54,20 +58,14 @@ Widget eventBuilder(
           const SizedBox(height: 2),
           Text(
             courseSession!.sessionType,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 10,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 10),
           ),
         ],
         if (!isShortEvent && courseSession?.instructorName != null) ...[
           const SizedBox(height: 2),
           Text(
             courseSession!.instructorName!,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 9,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 9),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -76,10 +74,7 @@ Widget eventBuilder(
           const SizedBox(height: 2),
           Text(
             courseSession!.refLieuDesignation!,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 9,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 9),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

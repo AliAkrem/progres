@@ -4,9 +4,8 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 class EnrollmentRepositoryImpl {
   final ApiClient _apiClient;
 
-  EnrollmentRepositoryImpl({
-    required ApiClient apiClient,
-  }) : _apiClient = apiClient;
+  EnrollmentRepositoryImpl({required ApiClient apiClient})
+    : _apiClient = apiClient;
 
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {

@@ -111,7 +111,8 @@ class CourseSession {
     if (jourId == 2) {
       // Sunday
       print(
-          'SUNDAY EVENT: jourId $jourId ($jourLibelleFr) mapped to ${_formatDate(result)} (weekday: ${result.weekday})');
+        'SUNDAY EVENT: jourId $jourId ($jourLibelleFr) mapped to ${_formatDate(result)} (weekday: ${result.weekday})',
+      );
     }
 
     return result;

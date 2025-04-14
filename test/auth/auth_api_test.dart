@@ -24,10 +24,14 @@ void main() {
 
   group('Auth API Tests', () {
     test('Login API should return valid AuthResponse', () async {
-      const username = String.fromEnvironment('TEST_USERNAME',
-          defaultValue: 'TEST_username_');
-      const password = String.fromEnvironment('TEST_PASSWORD',
-          defaultValue: 'TEST_password_');
+      const username = String.fromEnvironment(
+        'TEST_USERNAME',
+        defaultValue: 'TEST_username_',
+      );
+      const password = String.fromEnvironment(
+        'TEST_PASSWORD',
+        defaultValue: 'TEST_password_',
+      );
 
       final authResponse = await authRepository.login(username, password);
 
@@ -63,10 +67,14 @@ void main() {
     });
 
     test('Logout API should clear stored data', () async {
-      const username = String.fromEnvironment('TEST_USERNAME',
-          defaultValue: 'TEST_username_');
-      const password = String.fromEnvironment('TEST_PASSWORD',
-          defaultValue: 'TEST_password_');
+      const username = String.fromEnvironment(
+        'TEST_USERNAME',
+        defaultValue: 'TEST_username_',
+      );
+      const password = String.fromEnvironment(
+        'TEST_PASSWORD',
+        defaultValue: 'TEST_password_',
+      );
 
       // First login
       await authRepository.login(username, password);

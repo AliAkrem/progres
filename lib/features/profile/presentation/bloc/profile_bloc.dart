@@ -64,13 +64,13 @@ class ProfileLoaded extends ProfileState {
 
   @override
   List<Object?> get props => [
-        basicInfo,
-        academicYear,
-        detailedInfo,
-        academicPeriods,
-        profileImage,
-        institutionLogo,
-      ];
+    basicInfo,
+    academicYear,
+    detailedInfo,
+    academicPeriods,
+    profileImage,
+    institutionLogo,
+  ];
 }
 
 class ProfileError extends ProfileState {
@@ -87,10 +87,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final StudentRepositoryImpl studentRepository;
   final AuthRepositoryImpl authRepository;
 
-  ProfileBloc({
-    required this.studentRepository,
-    required this.authRepository,
-  }) : super(ProfileInitial()) {
+  ProfileBloc({required this.studentRepository, required this.authRepository})
+    : super(ProfileInitial()) {
     on<LoadProfileEvent>(_onLoadProfile);
     // on<LoadEnrollmentsEvent>(_onLoadEnrollments);
   }
@@ -109,12 +107,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final basicInfo = await studentRepository.getStudentBasicInfo();
 
       // Fetch detailed info
-      final detailedInfo =
-          await studentRepository.getStudentDetailedInfo(academicYear.id);
+      final detailedInfo = await studentRepository.getStudentDetailedInfo(
+        academicYear.id,
+      );
 
       // Fetch academic periods
-      final academicPeriods =
-          await studentRepository.getAcademicPeriods(detailedInfo.niveauId);
+      final academicPeriods = await studentRepository.getAcademicPeriods(
+        detailedInfo.niveauId,
+      );
 
       // Optional data that we'll try to fetch but continue if unavailable
       String? profileImage;
@@ -131,21 +131,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         final etablissementIdStr = await authRepository.getEtablissementId();
         if (etablissementIdStr != null) {
           final etablissementId = int.parse(etablissementIdStr);
-          institutionLogo =
-              await studentRepository.getInstitutionLogo(etablissementId);
+          institutionLogo = await studentRepository.getInstitutionLogo(
+            etablissementId,
+          );
         }
       } catch (e) {
         // Institution logo not available, continue without it
       }
 
-      emit(ProfileLoaded(
-        basicInfo: basicInfo,
-        academicYear: academicYear,
-        detailedInfo: detailedInfo,
-        academicPeriods: academicPeriods,
-        profileImage: profileImage,
-        institutionLogo: institutionLogo,
-      ));
+      emit(
+        ProfileLoaded(
+          basicInfo: basicInfo,
+          academicYear: academicYear,
+          detailedInfo: detailedInfo,
+          academicPeriods: academicPeriods,
+          profileImage: profileImage,
+          institutionLogo: institutionLogo,
+        ),
+      );
     } catch (e) {
       emit(ProfileError(e.toString()));
     }

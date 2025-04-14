@@ -42,7 +42,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   }
 
   Future<void> _onThemeChanged(
-      ThemeChanged event, Emitter<ThemeState> emit) async {
+    ThemeChanged event,
+    Emitter<ThemeState> emit,
+  ) async {
     await ThemeService.saveThemeMode(event.themeMode);
     emit(ThemeState(themeMode: event.themeMode));
   }

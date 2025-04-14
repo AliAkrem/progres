@@ -16,9 +16,7 @@ class SettingsPage extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         children: [
           ListTile(
@@ -165,35 +163,36 @@ class SettingsPage extends StatelessWidget {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(
-                      'Logout',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontSize: isSmallScreen ? 18 : 20,
+                  builder:
+                      (context) => AlertDialog(
+                        title: Text(
+                          'Logout',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            fontSize: isSmallScreen ? 18 : 20,
+                          ),
+                        ),
+                        content: Text(
+                          'Are you sure you want to logout?',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontSize: isSmallScreen ? 14 : 16,
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              context.read<AuthBloc>().add(
+                                LogoutEvent(context: context),
+                              );
+                            },
+                            child: const Text('Logout'),
+                          ),
+                        ],
                       ),
-                    ),
-                    content: Text(
-                      'Are you sure you want to logout?',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontSize: isSmallScreen ? 14 : 16,
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          context
-                              .read<AuthBloc>()
-                              .add(LogoutEvent(context: context));
-                        },
-                        child: const Text('Logout'),
-                      ),
-                    ],
-                  ),
                 );
               },
             ),
@@ -215,43 +214,65 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showThemeSelectionDialog(
-      BuildContext context, ThemeMode currentThemeMode) {
+    BuildContext context,
+    ThemeMode currentThemeMode,
+  ) {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(
-          'Select Theme',
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontSize: isSmallScreen ? 18 : 20,
-          ),
-        ),
-        contentPadding: EdgeInsets.fromLTRB(
-            24, isSmallScreen ? 16 : 20, 24, isSmallScreen ? 16 : 20),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildThemeOption(context, ThemeMode.light, currentThemeMode,
-                'Light', Icons.light_mode),
-            _buildThemeOption(context, ThemeMode.dark, currentThemeMode, 'Dark',
-                Icons.dark_mode),
-            _buildThemeOption(context, ThemeMode.system, currentThemeMode,
-                'System default', Icons.settings_suggest),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'Cancel',
-              style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+      builder:
+          (context) => AlertDialog(
+            title: Text(
+              'Select Theme',
+              style: theme.textTheme.titleLarge?.copyWith(
+                fontSize: isSmallScreen ? 18 : 20,
+              ),
             ),
+            contentPadding: EdgeInsets.fromLTRB(
+              24,
+              isSmallScreen ? 16 : 20,
+              24,
+              isSmallScreen ? 16 : 20,
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildThemeOption(
+                  context,
+                  ThemeMode.light,
+                  currentThemeMode,
+                  'Light',
+                  Icons.light_mode,
+                ),
+                _buildThemeOption(
+                  context,
+                  ThemeMode.dark,
+                  currentThemeMode,
+                  'Dark',
+                  Icons.dark_mode,
+                ),
+                _buildThemeOption(
+                  context,
+                  ThemeMode.system,
+                  currentThemeMode,
+                  'System default',
+                  Icons.settings_suggest,
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -268,39 +289,39 @@ class SettingsPage extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
 
     // Use a more neutral color for icons in dark mode that contrasts well
-    final iconColor = isSelected
-        ? (theme.brightness == Brightness.dark
-            ? Colors.white
-            : AppTheme.AppPrimary)
-        : theme.iconTheme.color;
+    final iconColor =
+        isSelected
+            ? (theme.brightness == Brightness.dark
+                ? Colors.white
+                : AppTheme.AppPrimary)
+            : theme.iconTheme.color;
 
     return ListTile(
-      leading: Icon(
-        icon,
-        color: iconColor,
-        size: isSmallScreen ? 22 : 24,
-      ),
+      leading: Icon(icon, color: iconColor, size: isSmallScreen ? 22 : 24),
       title: Text(
         title,
         style: TextStyle(
-          color: isSelected
-              ? (theme.brightness == Brightness.dark
-                  ? Colors.white
-                  : AppTheme.AppPrimary)
-              : theme.textTheme.titleMedium?.color,
+          color:
+              isSelected
+                  ? (theme.brightness == Brightness.dark
+                      ? Colors.white
+                      : AppTheme.AppPrimary)
+                  : theme.textTheme.titleMedium?.color,
           fontWeight: isSelected ? FontWeight.bold : null,
           fontSize: isSmallScreen ? 14 : 16,
         ),
       ),
-      trailing: isSelected
-          ? Icon(
-              Icons.check,
-              color: theme.brightness == Brightness.dark
-                  ? Colors.white
-                  : AppTheme.AppPrimary,
-              size: isSmallScreen ? 20 : 22,
-            )
-          : null,
+      trailing:
+          isSelected
+              ? Icon(
+                Icons.check,
+                color:
+                    theme.brightness == Brightness.dark
+                        ? Colors.white
+                        : AppTheme.AppPrimary,
+                size: isSmallScreen ? 20 : 22,
+              )
+              : null,
       contentPadding: EdgeInsets.symmetric(
         horizontal: isSmallScreen ? 12 : 16,
         vertical: isSmallScreen ? 6 : 8,

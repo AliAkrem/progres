@@ -26,22 +26,24 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
               CircleAvatar(
                 radius: isSmallScreen ? 26 : 30,
                 backgroundColor: AppTheme.AppSecondary,
-                child: state.profileImage != null
-                    ? ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(isSmallScreen ? 26 : 30),
-                        child: Image.memory(
-                          _decodeBase64Image(state.profileImage!),
-                          width: isSmallScreen ? 52 : 60,
-                          height: isSmallScreen ? 52 : 60,
-                          fit: BoxFit.cover,
+                child:
+                    state.profileImage != null
+                        ? ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            isSmallScreen ? 26 : 30,
+                          ),
+                          child: Image.memory(
+                            _decodeBase64Image(state.profileImage!),
+                            width: isSmallScreen ? 52 : 60,
+                            height: isSmallScreen ? 52 : 60,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                        : Icon(
+                          Icons.person,
+                          size: isSmallScreen ? 26 : 30,
+                          color: AppTheme.AppPrimary,
                         ),
-                      )
-                    : Icon(
-                        Icons.person,
-                        size: isSmallScreen ? 26 : 30,
-                        color: AppTheme.AppPrimary,
-                      ),
               ),
               SizedBox(width: isSmallScreen ? 12 : 16),
               Expanded(

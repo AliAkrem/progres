@@ -15,10 +15,7 @@ class LoadAcademicPerformance extends AcademicsEvent {
   final int cardId;
   final bool forceRefresh;
 
-  LoadAcademicPerformance({
-    required this.cardId,
-    this.forceRefresh = false,
-  });
+  LoadAcademicPerformance({required this.cardId, this.forceRefresh = false});
 
   @override
   List<Object?> get props => [cardId, forceRefresh];
@@ -99,7 +96,7 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
   final AcademicsCacheService cacheService = AcademicsCacheService();
 
   AcademicsBloc({required this.academicPerformanceRepository})
-      : super(AcademicsInitial()) {
+    : super(AcademicsInitial()) {
     on<LoadAcademicPerformance>(_onLoadAcademicPerformance);
   }
 
@@ -117,36 +114,43 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
       if (!event.forceRefresh) {
         // Try to get cached data first
         final bool isExamsStale = await cacheService.isDataStale(cacheKeyExams);
-        final bool isAssessmentsStale =
-            await cacheService.isDataStale(cacheKeyAssessments);
+        final bool isAssessmentsStale = await cacheService.isDataStale(
+          cacheKeyAssessments,
+        );
 
         if (!isExamsStale && !isAssessmentsStale) {
-          final cachedExams =
-              await cacheService.getCachedAcademicsData(cacheKeyExams);
-          final cachedAssessments =
-              await cacheService.getCachedAcademicsData(cacheKeyAssessments);
+          final cachedExams = await cacheService.getCachedAcademicsData(
+            cacheKeyExams,
+          );
+          final cachedAssessments = await cacheService.getCachedAcademicsData(
+            cacheKeyAssessments,
+          );
 
           if (cachedExams != null && cachedAssessments != null) {
             final examResults =
                 (cachedExams).map((e) => ExamResult.fromJson(e)).toList();
 
-            final continuousAssessments = (cachedAssessments)
-                .map((e) => ContinuousAssessment.fromJson(e))
-                .toList();
+            final continuousAssessments =
+                (cachedAssessments)
+                    .map((e) => ContinuousAssessment.fromJson(e))
+                    .toList();
 
-            emit(AcademicsLoaded(
-              examResults: examResults,
-              continuousAssessments: continuousAssessments,
-              fromCache: true,
-            ));
+            emit(
+              AcademicsLoaded(
+                examResults: examResults,
+                continuousAssessments: continuousAssessments,
+                fromCache: true,
+              ),
+            );
             return;
           }
         }
       }
 
       // Fetch exam results and continuous assessments in parallel
-      final examResults =
-          await academicPerformanceRepository.getExamResults(event.cardId);
+      final examResults = await academicPerformanceRepository.getExamResults(
+        event.cardId,
+      );
       final continuousAssessments = await academicPerformanceRepository
           .getContinuousAssessments(event.cardId);
 
@@ -161,11 +165,13 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
         continuousAssessments.map((e) => e.toJson()).toList(),
       );
 
-      emit(AcademicsLoaded(
-        examResults: examResults,
-        continuousAssessments: continuousAssessments,
-        fromCache: false,
-      ));
+      emit(
+        AcademicsLoaded(
+          examResults: examResults,
+          continuousAssessments: continuousAssessments,
+          fromCache: false,
+        ),
+      );
     } catch (e) {
       emit(AcademicsError(e.toString()));
     }

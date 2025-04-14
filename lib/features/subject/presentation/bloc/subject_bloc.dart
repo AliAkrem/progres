@@ -26,10 +26,7 @@ class ClearSubjectCache extends SubjectEvent {
   final int? ouvertureOffreFormationId;
   final int? niveauId;
 
-  ClearSubjectCache({
-    this.ouvertureOffreFormationId,
-    this.niveauId,
-  });
+  ClearSubjectCache({this.ouvertureOffreFormationId, this.niveauId});
 
   @override
   List<Object?> get props => [ouvertureOffreFormationId, niveauId];
@@ -66,10 +63,8 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
   final SubjectRepositoryImpl subjectRepository;
   final SubjectCacheService cacheService;
 
-  SubjectBloc({
-    required this.subjectRepository,
-    required this.cacheService,
-  }) : super(SubjectInitial()) {
+  SubjectBloc({required this.subjectRepository, required this.cacheService})
+    : super(SubjectInitial()) {
     on<LoadSubjectCoefficients>(_onLoadSubjectCoefficients);
     on<ClearSubjectCache>(_onClearSubjectCache);
   }
@@ -80,11 +75,11 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
   ) async {
     try {
       emit(SubjectLoading());
-      final cachedCoefficients =
-          await cacheService.getCachedSubjectCoefficients(
-        event.ouvertureOffreFormationId,
-        event.niveauId,
-      );
+      final cachedCoefficients = await cacheService
+          .getCachedSubjectCoefficients(
+            event.ouvertureOffreFormationId,
+            event.niveauId,
+          );
 
       if (cachedCoefficients != null) {
         emit(SubjectLoaded(courseCoefficients: cachedCoefficients));

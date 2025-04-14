@@ -6,10 +6,7 @@ import 'package:progres/config/theme/app_theme.dart';
 class MainShell extends StatelessWidget {
   final Widget child;
 
-  const MainShell({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const MainShell({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +14,26 @@ class MainShell extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: SafeArea(
-        child: child,
-      ),
+      body: SafeArea(child: child),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          boxShadow: theme.brightness == Brightness.dark
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  )
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  )
-                ],
+          boxShadow:
+              theme.brightness == Brightness.dark
+                  ? [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.2),
+                      blurRadius: 10,
+                      offset: const Offset(0, -5),
+                    ),
+                  ]
+                  : [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, -5),
+                    ),
+                  ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
@@ -46,7 +42,7 @@ class MainShell extends StatelessWidget {
             elevation: 0,
             backgroundColor: theme.colorScheme.surface,
             height: 70,
-            indicatorColor: AppTheme.AppPrimary.withOpacity(0.15),
+            indicatorColor: AppTheme.AppPrimary.withValues(alpha: 0.15),
             destinations: [
               _buildNavDestination(
                 context,
@@ -81,14 +77,12 @@ class MainShell extends StatelessWidget {
     return NavigationDestination(
       icon: Icon(
         icon,
-        color: theme.brightness == Brightness.dark
-            ? Colors.grey[400]
-            : Colors.grey[600],
+        color:
+            theme.brightness == Brightness.dark
+                ? Colors.grey[400]
+                : Colors.grey[600],
       ),
-      selectedIcon: Icon(
-        selectedIcon,
-        color: AppTheme.AppPrimary,
-      ),
+      selectedIcon: Icon(selectedIcon, color: AppTheme.AppPrimary),
       label: label,
     );
   }

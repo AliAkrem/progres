@@ -33,8 +33,8 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             tooltip: 'Refresh Data',
             onPressed: () {
               context.read<EnrollmentBloc>().add(
-                    const LoadEnrollmentsEvent(forceRefresh: true),
-                  );
+                const LoadEnrollmentsEvent(forceRefresh: true),
+              );
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Refreshing data...'),
@@ -48,9 +48,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       body: BlocBuilder<EnrollmentBloc, EnrollmentState>(
         builder: (context, state) {
           if (state is EnrollmentLoading || state is EnrollmentInitial) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else if (state is EnrollmentError) {
             return Center(
               child: Column(
@@ -60,9 +58,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      context
-                          .read<EnrollmentBloc>()
-                          .add(const LoadEnrollmentsEvent());
+                      context.read<EnrollmentBloc>().add(
+                        const LoadEnrollmentsEvent(),
+                      );
                     },
                     child: const Text('Retry'),
                   ),
@@ -78,9 +76,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
 
             return _buildEnrollmentsList(context, state.enrollments);
           } else {
-            return const Center(
-              child: Text('Something went wrong'),
-            );
+            return const Center(child: Text('Something went wrong'));
           }
         },
       ),
@@ -88,7 +84,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   }
 
   Widget _buildEnrollmentsList(
-      BuildContext context, List<Enrollment> enrollments) {
+    BuildContext context,
+    List<Enrollment> enrollments,
+  ) {
     // Sort enrollments by academic year (newest first)
     final sortedEnrollments = List<Enrollment>.from(enrollments)
       ..sort((a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId));
@@ -117,9 +115,10 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: theme.brightness == Brightness.light
-              ? AppTheme.AppBorder
-              : Colors.grey.shade800,
+          color:
+              theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : Colors.grey.shade800,
         ),
       ),
       child: Padding(
@@ -153,9 +152,10 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.school_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light
-                        ? Colors.grey.shade700
-                        : Colors.grey.shade300,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -186,9 +186,10 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.book_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light
-                        ? Colors.grey.shade700
-                        : Colors.grey.shade300,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
@@ -220,7 +221,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                             style: TextStyle(
                               fontSize: 14,
                               color: theme.textTheme.bodyMedium?.color
-                                  ?.withOpacity(0.8),
+                                  ?.withValues(alpha: 0.8),
                             ),
                           ),
                         if (enrollment.ofLlFiliere != null &&
@@ -230,7 +231,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                             style: TextStyle(
                               fontSize: 14,
                               color: theme.textTheme.bodyMedium?.color
-                                  ?.withOpacity(0.8),
+                                  ?.withValues(alpha: 0.8),
                             ),
                           )
                         else if (enrollment.ofLlFiliere != null)
@@ -239,7 +240,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                             style: TextStyle(
                               fontSize: 14,
                               color: theme.textTheme.bodyMedium?.color
-                                  ?.withOpacity(0.8),
+                                  ?.withValues(alpha: 0.8),
                             ),
                           ),
                       ],
@@ -262,9 +263,10 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.credit_card_outlined,
                     size: 18,
-                    color: theme.brightness == Brightness.light
-                        ? Colors.grey.shade700
-                        : Colors.grey.shade300,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

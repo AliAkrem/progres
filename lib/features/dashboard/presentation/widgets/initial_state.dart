@@ -27,8 +27,8 @@ Widget buildInitialState(BuildContext context) {
         Text(
           'Welcome!',
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                fontSize: isSmallScreen ? 26 : 32,
-              ),
+            fontSize: isSmallScreen ? 26 : 32,
+          ),
         ),
         const SizedBox(height: 8),
         Text(

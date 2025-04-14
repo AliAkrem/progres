@@ -6,12 +6,13 @@ class AcademicPerformencetRepositoryImpl {
   final ApiClient _apiClient;
 
   AcademicPerformencetRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   Future<List<ExamResult>> getExamResults(int cardId) async {
     try {
-      final response = await _apiClient
-          .get('/infos/planningSession/dia/$cardId/noteExamens');
+      final response = await _apiClient.get(
+        '/infos/planningSession/dia/$cardId/noteExamens',
+      );
 
       final List<dynamic> resultsJson = response.data;
       return resultsJson
@@ -23,15 +24,18 @@ class AcademicPerformencetRepositoryImpl {
   }
 
   Future<List<ContinuousAssessment>> getContinuousAssessments(
-      int cardId) async {
+    int cardId,
+  ) async {
     try {
-      final response =
-          await _apiClient.get('/infos/controleContinue/dia/$cardId/notesCC');
+      final response = await _apiClient.get(
+        '/infos/controleContinue/dia/$cardId/notesCC',
+      );
 
       final List<dynamic> assessmentsJson = response.data;
       return assessmentsJson
           .map(
-              (assessmentJson) => ContinuousAssessment.fromJson(assessmentJson))
+            (assessmentJson) => ContinuousAssessment.fromJson(assessmentJson),
+          )
           .toList();
     } catch (e) {
       rethrow;

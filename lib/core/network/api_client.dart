@@ -7,15 +7,13 @@ class ApiClient {
   final FlutterSecureStorage _secureStorage;
 
   ApiClient({FlutterSecureStorage? secureStorage})
-      : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
+    : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
     _dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: {'Content-Type': 'application/json'},
       ),
     );
     _dio.interceptors.add(
@@ -66,8 +64,10 @@ class ApiClient {
     await _secureStorage.delete(key: 'etablissement_id');
   }
 
-  Future<Response> get(String path,
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       final response = await _dio.get(path, queryParameters: queryParameters);
       return response;
@@ -91,8 +91,10 @@ class WebApiClient extends ApiClient {
       'https://buvfbqwsfcjiqdrqczma.supabase.co/functions/v1/proxy-progres';
 
   @override
-  Future<Response> get(String path,
-      {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
       final Map<String, dynamic> proxyQueryParams = {
         'endpoint': "api" + path,
@@ -114,9 +116,7 @@ class WebApiClient extends ApiClient {
     try {
       final response = await _dio.post(
         proxyBaseUrl,
-        queryParameters: {
-          'endpoint': 'api' + path,
-        },
+        queryParameters: {'endpoint': 'api' + path},
         data: data,
       );
       return response;

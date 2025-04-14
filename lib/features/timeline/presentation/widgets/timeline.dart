@@ -56,10 +56,7 @@ Widget _buildLegendItem(String label, Color color) {
         ),
       ),
       const SizedBox(width: 2),
-      Text(
-        label,
-        style: const TextStyle(fontSize: 11),
-      ),
+      Text(label, style: const TextStyle(fontSize: 11)),
     ],
   );
 }

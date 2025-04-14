@@ -13,10 +13,7 @@ class LoadWeeklyTimetable extends TimelineEvent {
   final int enrollmentId;
   final bool forceReload;
 
-  LoadWeeklyTimetable({
-    required this.enrollmentId,
-    this.forceReload = false,
-  });
+  LoadWeeklyTimetable({required this.enrollmentId, this.forceReload = false});
 
   @override
   List<Object?> get props => [enrollmentId, forceReload];
@@ -42,10 +39,8 @@ class TimelineLoaded extends TimelineState {
   final List<CourseSession> sessions;
   final DateTime loadedAt;
 
-  TimelineLoaded({
-    required this.sessions,
-    DateTime? loadedAt,
-  }) : loadedAt = loadedAt ?? DateTime.now();
+  TimelineLoaded({required this.sessions, DateTime? loadedAt})
+    : loadedAt = loadedAt ?? DateTime.now();
 
   @override
   List<Object?> get props => [sessions, loadedAt];
@@ -81,19 +76,22 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       final String cacheKey = 'weekly_${event.enrollmentId}';
 
       if (!event.forceReload) {
-        final cachedEvents =
-            await timelineCacheService.getCachedTimelineEvents(cacheKey);
+        final cachedEvents = await timelineCacheService.getCachedTimelineEvents(
+          cacheKey,
+        );
         if (cachedEvents != null && cachedEvents.isNotEmpty) {
           // Convert cached data back to CourseSession objects
           final List<CourseSession> sessions =
-              List<Map<String, dynamic>>.from(cachedEvents)
-                  .map((json) => CourseSession.fromJson(json))
-                  .toList();
+              List<Map<String, dynamic>>.from(
+                cachedEvents,
+              ).map((json) => CourseSession.fromJson(json)).toList();
 
-          emit(TimelineLoaded(
-            sessions: sessions,
-            loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
-          ));
+          emit(
+            TimelineLoaded(
+              sessions: sessions,
+              loadedAt: await timelineCacheService.getLastUpdated(cacheKey),
+            ),
+          );
           return;
         }
       }
@@ -101,8 +99,9 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       emit(TimelineLoading());
 
       // Load from network
-      final sessions =
-          await timeLineRepositoryImpl.getWeeklyTimetable(event.enrollmentId);
+      final sessions = await timeLineRepositoryImpl.getWeeklyTimetable(
+        event.enrollmentId,
+      );
 
       // Cache the results - convert CourseSession objects to JSON for caching
       final List<Map<String, dynamic>> sessionsJson =

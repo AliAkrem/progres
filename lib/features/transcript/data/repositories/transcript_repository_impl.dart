@@ -7,7 +7,7 @@ class TranscriptRepositoryImpl {
   final ApiClient _apiClient;
 
   TranscriptRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   Future<List<Enrollment>> getStudentEnrollments() async {
     try {
@@ -28,15 +28,17 @@ class TranscriptRepositoryImpl {
   }
 
   Future<List<AcademicTranscript>> getAcademicTranscripts(
-      int enrollmentId) async {
+    int enrollmentId,
+  ) async {
     try {
       final uuid = await _apiClient.getUuid();
       if (uuid == null) {
         throw Exception('UUID not found, please login again');
       }
 
-      final response = await _apiClient
-          .get('/infos/bac/$uuid/dias/$enrollmentId/periode/bilans');
+      final response = await _apiClient.get(
+        '/infos/bac/$uuid/dias/$enrollmentId/periode/bilans',
+      );
 
       final List<dynamic> transcriptsJson = response.data;
       return transcriptsJson
@@ -48,15 +50,17 @@ class TranscriptRepositoryImpl {
   }
 
   Future<AnnualTranscriptSummary> getAnnualTranscriptSummary(
-      int enrollmentId) async {
+    int enrollmentId,
+  ) async {
     try {
       final uuid = await _apiClient.getUuid();
       if (uuid == null) {
         throw Exception('UUID not found, please login again');
       }
 
-      final response = await _apiClient
-          .get('/infos/bac/$uuid/dia/$enrollmentId/annuel/bilan');
+      final response = await _apiClient.get(
+        '/infos/bac/$uuid/dia/$enrollmentId/annuel/bilan',
+      );
 
       // The API returns an array with a single item
       final List<dynamic> summaryJson = response.data;

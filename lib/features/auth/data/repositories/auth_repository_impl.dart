@@ -5,16 +5,13 @@ class AuthRepositoryImpl {
   final ApiClient _apiClient;
 
   AuthRepositoryImpl({ApiClient? apiClient})
-      : _apiClient = apiClient ?? ApiClient();
+    : _apiClient = apiClient ?? ApiClient();
 
   Future<AuthResponse> login(String username, String password) async {
     try {
       final response = await _apiClient.post(
         '/authentication/v1/',
-        data: {
-          'username': username,
-          'password': password,
-        },
+        data: {'username': username, 'password': password},
       );
 
       final authResponse = AuthResponse.fromJson(response.data);
@@ -22,8 +19,9 @@ class AuthRepositoryImpl {
       // Save token and UUID for future API calls
       await _apiClient.saveToken(authResponse.token);
       await _apiClient.saveUuid(authResponse.uuid);
-      await _apiClient
-          .saveEtablissementId(authResponse.etablissementId.toString());
+      await _apiClient.saveEtablissementId(
+        authResponse.etablissementId.toString(),
+      );
 
       return authResponse;
     } catch (e) {

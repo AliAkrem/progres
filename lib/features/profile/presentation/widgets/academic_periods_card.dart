@@ -4,10 +4,7 @@ import 'package:progres/features/profile/data/models/academic_period.dart';
 class AcademicPeriodsCard extends StatelessWidget {
   final List<AcademicPeriod> periods;
 
-  const AcademicPeriodsCard({
-    super.key,
-    required this.periods,
-  });
+  const AcademicPeriodsCard({super.key, required this.periods});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +16,7 @@ class AcademicPeriodsCard extends StatelessWidget {
           children: [
             const Text(
               'Academic Periods',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             ListView.separated(
@@ -36,25 +30,18 @@ class AcademicPeriodsCard extends StatelessWidget {
                   contentPadding: EdgeInsets.zero,
                   title: Text(
                     '${period.code} - ${period.libelleLongLt}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text(
                     period.libelleLongFrNiveau,
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
+                    style: const TextStyle(fontSize: 12),
                   ),
                   trailing: CircleAvatar(
                     radius: 14,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     child: Text(
                       '${period.rang}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),
                 );

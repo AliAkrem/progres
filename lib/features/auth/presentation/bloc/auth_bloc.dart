@@ -59,10 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckAuthStatusEvent>(_onCheckAuthStatus);
   }
 
-  Future<void> _onLogin(
-    LoginEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _onLogin(LoginEvent event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoading());
       final response = await authRepository.login(
@@ -75,10 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _onLogout(
-    LogoutEvent event,
-    Emitter<AuthState> emit,
-  ) async {
+  Future<void> _onLogout(LogoutEvent event, Emitter<AuthState> emit) async {
     try {
       emit(AuthLoading());
       await authRepository.logout();
@@ -128,15 +122,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (isLoggedIn) {
         // We don't have the actual auth response here, but we can use a placeholder
         // The app will get actual data from the profile bloc
-        emit(AuthSuccess(AuthResponse(
-          expirationDate: '',
-          token: '',
-          userId: 0,
-          uuid: '',
-          idIndividu: 0,
-          etablissementId: 0,
-          userName: '',
-        )));
+        emit(
+          AuthSuccess(
+            AuthResponse(
+              expirationDate: '',
+              token: '',
+              userId: 0,
+              uuid: '',
+              idIndividu: 0,
+              etablissementId: 0,
+              userName: '',
+            ),
+          ),
+        );
       } else {
         emit(AuthLoggedOut());
       }
