@@ -1,6 +1,6 @@
-# Progres <a href='https://progres.en.uptodown.com/android' title='Download progres' >
-  <img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' alt='Download progres'>
-</a>
+# Progres
+
+[<img src='https://stc.utdstc.com/img/mediakit/download-gio-big.png' alt='Download progres'>](https://progres.en.uptodown.com/android)
 
 Progres is an independently developed remake of Progres/Webetu with a focus on enhanced user experience.
 
