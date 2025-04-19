@@ -1,2 +1,0 @@
-/home/akrem/flutter-projects/progres/android/app/.cxx/Debug/3k6y3ogb/x86_64/CMakeFiles/edit_cache.dir
-/home/akrem/flutter-projects/progres/android/app/.cxx/Debug/3k6y3ogb/x86_64/CMakeFiles/rebuild_cache.dir
