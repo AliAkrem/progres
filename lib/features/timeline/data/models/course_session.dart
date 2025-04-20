@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+
 class CourseSession {
   final String ap;
   final String groupe;
@@ -147,14 +150,14 @@ class CourseSession {
   }
 
   // Get the type of class session
-  String get sessionType {
+  String sessionType(BuildContext context) {
     switch (ap) {
       case 'CM':
-        return 'Lecture';
+        return GalleryLocalizations.of(context)!.lecture;
       case 'TD':
-        return 'Tutorial';
+        return GalleryLocalizations.of(context)!.tutorial;
       case 'TP':
-        return 'Practical';
+        return GalleryLocalizations.of(context)!.practical;
       default:
         return ap;
     }

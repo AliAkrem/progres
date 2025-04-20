@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calendar_view/calendar_view.dart';
-
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/timeline/data/models/course_session.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
@@ -44,7 +44,9 @@ class _TimelinePageState extends State<TimelinePage> {
     _eventController = CalendarControllerProvider.of(context).controller;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Weekly Schedule')),
+      appBar: AppBar(
+        title: Text(GalleryLocalizations.of(context)!.weeklySchedule),
+      ),
       body: BlocListener<TimelineBloc, TimelineState>(
         listener: (context, state) {
           if (state is TimelineLoaded) {
@@ -128,8 +130,8 @@ class _TimelinePageState extends State<TimelinePage> {
     if (eventsAddedThisWeek == 0 && mounted) {
       if (weekStart != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('No classes scheduled for this week'),
+          SnackBar(
+            content: Text(GalleryLocalizations.of(context)!.noClassesThisWeek),
             duration: Duration(seconds: 3),
             behavior: SnackBarBehavior.floating,
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class ErrorLoadingSubjectState extends StatelessWidget {
   final String message;
@@ -38,7 +39,7 @@ class ErrorLoadingSubjectState extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text('Retry'),
+              child: Text(GalleryLocalizations.of(context)!.retry),
             ),
           ],
         ),

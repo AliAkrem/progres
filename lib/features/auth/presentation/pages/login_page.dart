@@ -5,6 +5,7 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -70,16 +71,16 @@ class _LoginPageState extends State<LoginPage>
           } else if (state is AuthError) {
             // Display a user-friendly error message
             String userFriendlyMessage =
-                'Unable to sign in. Please check your student code and password.';
+                GalleryLocalizations.of(context)!.unableToSignIn;
 
             // Handle specific errors if we can identify them
             if (state.message.contains('403')) {
               userFriendlyMessage =
-                  'Incorrect student code or password. Please try again.';
+                  GalleryLocalizations.of(context)!.incorrectCredentials;
             } else if (state.message.contains('timeout') ||
                 state.message.contains('connect')) {
               userFriendlyMessage =
-                  'Network connection error. Please check your internet connection and try again.';
+                  GalleryLocalizations.of(context)!.networkError;
             }
 
             ScaffoldMessenger.of(context).showSnackBar(
@@ -151,7 +152,7 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             SizedBox(height: isSmallScreen ? 28 : 32),
                             Text(
-                              'Student Portal',
+                              GalleryLocalizations.of(context)!.studentPortal,
                               style: theme.textTheme.displayMedium?.copyWith(
                                 fontSize: isSmallScreen ? 28 : 34,
                                 fontWeight: FontWeight.bold,
@@ -160,7 +161,7 @@ class _LoginPageState extends State<LoginPage>
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Sign in to your account',
+                              GalleryLocalizations.of(context)!.signInToAccount,
                               style: theme.textTheme.bodyMedium?.copyWith(
                                 fontSize: isSmallScreen ? 14 : 16,
                                 color:
@@ -175,8 +176,14 @@ class _LoginPageState extends State<LoginPage>
                             TextFormField(
                               controller: _usernameController,
                               decoration: InputDecoration(
-                                labelText: 'Student Code',
-                                hintText: 'Enter your student code',
+                                labelText:
+                                    GalleryLocalizations.of(
+                                      context,
+                                    )!.studentCode,
+                                hintText:
+                                    GalleryLocalizations.of(
+                                      context,
+                                    )!.enterStudentCode,
                                 prefixIcon: Icon(
                                   Icons.person_outline,
                                   color:
@@ -201,7 +208,9 @@ class _LoginPageState extends State<LoginPage>
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your student code';
+                                  return GalleryLocalizations.of(
+                                    context,
+                                  )!.pleaseEnterStudentCode;
                                 }
                                 return null;
                               },
@@ -212,8 +221,12 @@ class _LoginPageState extends State<LoginPage>
                             TextFormField(
                               controller: _passwordController,
                               decoration: InputDecoration(
-                                labelText: 'Password',
-                                hintText: 'Enter your password',
+                                labelText:
+                                    GalleryLocalizations.of(context)!.password,
+                                hintText:
+                                    GalleryLocalizations.of(
+                                      context,
+                                    )!.enterPassword,
                                 prefixIcon: Icon(
                                   Icons.lock_outline,
                                   color:
@@ -256,7 +269,9 @@ class _LoginPageState extends State<LoginPage>
                               obscureText: _obscurePassword,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
+                                  return GalleryLocalizations.of(
+                                    context,
+                                  )!.pleaseEnterPassword;
                                 }
                                 return null;
                               },
@@ -308,7 +323,9 @@ class _LoginPageState extends State<LoginPage>
                                               ),
                                             )
                                             : Text(
-                                              'Sign In',
+                                              GalleryLocalizations.of(
+                                                context,
+                                              )!.signIn,
                                               style: TextStyle(
                                                 fontSize:
                                                     isSmallScreen ? 16 : 18,

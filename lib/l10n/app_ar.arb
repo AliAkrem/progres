@@ -1,0 +1,471 @@
+{
+  "settings": "الإعدادات",
+  "@settings": {
+    "description": "عنوان صفحة الإعدادات والعناصر المتعلقة بالإعدادات"
+  },
+  "language": "اللغة",
+  "@language": {
+    "description": "تسمية تحديد اللغة"
+  },
+  "english": "الإنجليزية",
+  "@english": {
+    "description": "خيار اللغة الإنجليزية"
+  },
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "خيار اللغة العربية"
+  },
+  "theme": "المظهر",
+  "@theme": {
+    "description": "تسمية تحديد المظهر"
+  },
+  "selectTheme": "اختر المظهر",
+  "@selectTheme": {
+    "description": "عنوان مربع حوار اختيار المظهر"
+  },
+  "light": "فاتح",
+  "@light": {
+    "description": "خيار المظهر الفاتح"
+  },
+  "dark": "داكن",
+  "@dark": {
+    "description": "خيار المظهر الداكن"
+  },
+  "systemDefault": "افتراضي النظام",
+  "@systemDefault": {
+    "description": "خيار مظهر افتراضي النظام"
+  },
+  "confirm": "تأكيد",
+  "@confirm": {
+    "description": "نص زر التأكيد"
+  },
+  "cancel": "إلغاء",
+  "@cancel": {
+    "description": "نص زر الإلغاء"
+  },
+  "notifications": "الإشعارات",
+  "@notifications": {
+    "description": "تسمية إعدادات الإشعارات"
+  },
+  "about": "حول",
+  "@about": {
+    "description": "تسمية قسم حول"
+  },
+  "logout": "تسجيل الخروج",
+  "@logout": {
+    "description": "نص زر تسجيل الخروج"
+  },
+  "logoutConfirmation": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "@logoutConfirmation": {
+    "description": "رسالة تأكيد لتسجيل الخروج"
+  },
+  "tabTitleProfile": "الملف الشخصي",
+  "@tabTitleProfile": {
+    "description": ""
+  },
+  "tabTitleDashboard": "لوحة المعلومات",
+  "@tabTitleDashboard": {
+    "description": ""
+  },
+  "currentStatus": "الوضع الحالي",
+  "@currentStatus": {
+    "description": "عنوان قسم الوضع الحالي"
+  },
+  "level": "المستوى",
+  "@level": {
+    "description": "المستوى الأكاديمي للطالب"
+  },
+  "transport": "النقل",
+  "@transport": {
+    "description": "حالة النقل"
+  },
+  "paid": "مدفوع",
+  "@paid": {
+    "description": "الحالة عند دفع شيء ما"
+  },
+  "unpaid": "غير مدفوع",
+  "@unpaid": {
+    "description": "الحالة عندما لا يتم دفع شيء ما"
+  },
+  "personalInformation": "المعلومات الشخصية",
+  "@personalInformation": {
+    "description": "عنوان قسم المعلومات الشخصية"
+  },
+  "fullNameLatin": "الاسم الكامل (باللاتينية)",
+  "@fullNameLatin": {
+    "description": "تسمية الاسم بالخط اللاتيني"
+  },
+  "fullNameArabic": "الاسم الكامل (بالعربية)",
+  "@fullNameArabic": {
+    "description": "تسمية الاسم بالخط العربي"
+  },
+  "birthDate": "تاريخ الميلاد",
+  "@birthDate": {
+    "description": "تسمية تاريخ الميلاد"
+  },
+  "birthPlace": "مكان الميلاد",
+  "@birthPlace": {
+    "description": "تسمية مكان الميلاد"
+  },
+  "currentAcademicStatus": "الحالة الأكاديمية",
+  "@currentAcademicStatus": {
+    "description": "عنوان قسم الحالة الأكاديمية"
+  },
+  "program": "البرنامج",
+  "@program": {
+    "description": "تسمية البرنامج الأكاديمي"
+  },
+  "cycle": "الدورة",
+  "@cycle": {
+    "description": "تسمية الدورة الأكاديمية"
+  },
+  "registrationNumber": "رقم التسجيل",
+  "@registrationNumber": {
+    "description": "تسمية رقم تسجيل الطالب"
+  },
+  "academicPerformancePageTitle": "الأداء الأكاديمي",
+  "@academicPerformancePageTitle": {
+    "description": ""
+  },
+  "assessment": "التقييم",
+  "@assessment": {
+    "description": "تسمية أقسام وعلامات تبويب التقييم"
+  },
+  "refreshData": "تحديث البيانات",
+  "@refreshData": {
+    "description": "تلميح لزر التحديث"
+  },
+  "errorLoadingProfile": "لم يتم تحميل بيانات الملف الشخصي. يرجى الرجوع والمحاولة مرة أخرى.",
+  "@errorLoadingProfile": {
+    "description": "رسالة خطأ عند فشل تحميل الملف الشخصي"
+  },
+  "loadingProfileData": "جاري تحميل بيانات الملف الشخصي...",
+  "@loadingProfileData": {
+    "description": "يظهر أثناء تحميل بيانات الملف الشخصي"
+  },
+  "retry": "إعادة المحاولة",
+  "@retry": {
+    "description": "نص زر إعادة محاولة تحميل البيانات"
+  },
+  "examResults": "نتائج الامتحانات",
+  "@examResults": {
+    "description": "عنوان علامة تبويب نتائج الامتحانات"
+  },
+  "cachedData": "بيانات محفوظة مؤقتًا",
+  "@cachedData": {
+    "description": "تسمية توضح أن البيانات مأخوذة من الذاكرة المؤقتة"
+  },
+  "selectPeriodForResults": "اختر فترة أكاديمية لعرض النتائج",
+  "@selectPeriodForResults": {
+    "description": "رسالة تظهر عند عدم تحديد فترة"
+  },
+  "noExamResults": "لا توجد نتائج امتحانات متاحة",
+  "@noExamResults": {
+    "description": "رسالة تظهر عند عدم وجود نتائج امتحانات"
+  },
+  "noContinuousAssessment": "لا توجد نتائج تقييم مستمر متاحة",
+  "@noContinuousAssessment": {
+    "description": "رسالة تظهر عند عدم وجود نتائج تقييم مستمر"
+  },
+  "noAssessmentsYet": "لا توجد تقييمات مستمرة متاحة بعد",
+  "@noAssessmentsYet": {
+    "description": "رسالة تظهر عند عدم وجود تقييمات مستمرة لدورة ما"
+  },
+  "project": "مشروع",
+  "@project": {
+    "description": "تسمية نوع تقييم المشروع"
+  },
+  "tutorialWork": "أعمال توجيهية",
+  "@tutorialWork": {
+    "description": "تسمية نوع تقييم الأعمال التوجيهية"
+  },
+  "practicalWork": "أعمال تطبيقية",
+  "@practicalWork": {
+    "description": "تسمية نوع تقييم الأعمال التطبيقية"
+  },
+  "defaultPeriodName": "الفترة {id}",
+  "@defaultPeriodName": {
+    "description": "اسم الفترة الافتراضي عندما لا يتم العثور على الاسم الفعلي",
+    "placeholders": {
+      "id": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "studentPortal": "بوابة الطالب",
+  "@studentPortal": {
+    "description": "العنوان الرئيسي في صفحة تسجيل الدخول"
+  },
+  "signInToAccount": "تسجيل الدخول إلى حسابك",
+  "@signInToAccount": {
+    "description": "عنوان فرعي في صفحة تسجيل الدخول"
+  },
+  "studentCode": "رمز الطالب",
+  "@studentCode": {
+    "description": "تسمية حقل إدخال رمز الطالب"
+  },
+  "enterStudentCode": "أدخل رمز الطالب الخاص بك",
+  "@enterStudentCode": {
+    "description": "عنصر نائب لحقل إدخال رمز الطالب"
+  },
+  "password": "كلمة المرور",
+  "@password": {
+    "description": "تسمية حقل إدخال كلمة المرور"
+  },
+  "enterPassword": "أدخل كلمة المرور الخاصة بك",
+  "@enterPassword": {
+    "description": "عنصر نائب لحقل إدخال كلمة المرور"
+  },
+  "signIn": "تسجيل الدخول",
+  "@signIn": {
+    "description": "نص زر تسجيل الدخول"
+  },
+  "pleaseEnterStudentCode": "يرجى إدخال رمز الطالب الخاص بك",
+  "@pleaseEnterStudentCode": {
+    "description": "رسالة التحقق من الصحة لرمز الطالب الفارغ"
+  },
+  "pleaseEnterPassword": "يرجى إدخال كلمة المرور الخاصة بك",
+  "@pleaseEnterPassword": {
+    "description": "رسالة التحقق من الصحة لكلمة المرور الفارغة"
+  },
+  "unableToSignIn": "تعذر تسجيل الدخول. يرجى التحقق من رمز الطالب وكلمة المرور.",
+  "@unableToSignIn": {
+    "description": "رسالة خطأ عامة لتسجيل الدخول الفاشل"
+  },
+  "incorrectCredentials": "رمز الطالب أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+  "@incorrectCredentials": {
+    "description": "رسالة خطأ لبيانات الاعتماد غير الصحيحة"
+  },
+  "networkError": "خطأ في اتصال الشبكة. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.",
+  "@networkError": {
+    "description": "رسالة خطأ لمشاكل اتصال الشبكة"
+  },
+  "noExamResultsYet": "لا توجد نتائج امتحانات متاحة بعد",
+  "@noExamResultsYet": {
+    "description": "رسالة تظهر عند عدم وجود نتائج امتحانات لدورة ما"
+  },
+  "exam": "امتحان",
+  "@exam": {
+    "description": "تسمية نوع الامتحان"
+  },
+  "coefficient": "المعامل: {value}",
+  "@coefficient": {
+    "description": "عرض قيمة المعامل",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "2"
+      }
+    }
+  },
+  "notAvailable": "غير متاح",
+  "@notAvailable": {
+    "description": "يظهر عندما تكون الدرجة غير متاحة"
+  },
+  "appealRequested": "تم طلب استئناف",
+  "@appealRequested": {
+    "description": "الحالة عند طلب استئناف"
+  },
+  "appealAvailable": "الاستئناف متاح",
+  "@appealAvailable": {
+    "description": "الحالة عندما يمكن طلب استئناف"
+  },
+  "timeline": "الجدول الزمني",
+  "@timeline": {
+    "description": "تسمية قسم الجدول الزمني"
+  },
+  "home": "الرئيسية",
+  "@home": {
+    "description": "تسمية عنصر التنقل الرئيسي"
+  },
+  "weeklyschedule": "الجدول الأسبوعي",
+  "@weeklyschedule": {
+    "description": "تسمية قسم الجدول"
+  },
+  "transcript": "كشف العلامات",
+  "@transcript": {
+    "description": "تسمية قسم كشف العلامات"
+  },
+  "academicHistory": "السجل الأكاديمي",
+  "@academicHistory": {
+    "description": "تسمية قسم السجل الأكاديمي"
+  },
+  "menu": "القائمة",
+  "@menu": {
+    "description": "تسمية زر القائمة"
+  },
+  "errorGeneric": "حدث خطأ. يرجى المحاولة مرة أخرى.",
+  "@errorGeneric": {
+    "description": "رسالة خطأ عامة"
+  },
+  "error": "خطأ: {message}",
+  "@error": {
+    "description": "رسالة خطأ مع التفاصيل",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "فشل تحميل البيانات"
+      }
+    }
+  },
+  "loading": "جاري التحميل...",
+  "@loading": {
+    "description": "رسالة تحميل عامة"
+  },
+  "appearance": "المظهر",
+  "@appearance": {
+    "description": "عنوان قسم إعدادات المظهر"
+  },
+  "preferences": "التفضيلات",
+  "@preferences": {
+    "description": "عنوان قسم تفضيلات المستخدم"
+  },
+  "myGroups": "مجموعاتي",
+  "@myGroups": {
+    "description": "عنوان صفحة المجموعات والعناصر ذات الصلة"
+  },
+  "refreshGroups": "تحديث المجموعات",
+  "@refreshGroups": {
+    "description": "تلميح لزر تحديث المجموعات"
+  },
+  "loadGroups": "تحميل المجموعات",
+  "@loadGroups": {
+    "description": "نص زر تحميل المجموعات"
+  },
+  "noGroupData": "لا توجد بيانات للمجموعات متاحة",
+  "@noGroupData": {
+    "description": "رسالة تظهر عند عدم توفر بيانات المجموعة"
+  },
+  "weeklySchedule": "الجدول الأسبوعي",
+  "@weeklySchedule": {
+    "description": "عنوان عرض الجدول الأسبوعي"
+  },
+  "noClassesThisWeek": "لا توجد دروس مقررة لهذا الأسبوع",
+  "@noClassesThisWeek": {
+    "description": "رسالة تظهر عند عدم وجود دروس مقررة"
+  },
+  "privacyPolicy": "سياسة الخصوصية",
+  "@privacyPolicy": {
+    "description": "تسمية رابط سياسة الخصوصية"
+  },
+  "termsOfService": "شروط الخدمة",
+  "@termsOfService": {
+    "description": "تسمية رابط شروط الخدمة"
+  },
+  "lecture": "محاضرة",
+  "@lecture": {
+    "description": "تسمية نوع حصة المحاضرة"
+  },
+  "tutorial": "توجيهي",
+  "@tutorial": {
+    "description": "تسمية نوع حصة التوجيه"
+  },
+  "practical": "تطبيقي",
+  "@practical": {
+    "description": "تسمية نوع حصة التطبيق"
+  },
+  "noClassesScheduled": "لا توجد دروس مقررة لهذا الأسبوع",
+  "@noClassesScheduled": {
+    "description": "رسالة تظهر عند عدم وجود دروس في الجدول"
+  },
+  "notAssignedToGroups": "لم يتم تعيينك لأي مجموعات تربوية حتى الآن.",
+  "@notAssignedToGroups": {
+    "description": "وصف يظهر عندما لا يكون لدى المستخدم أي مجموعات تربوية"
+  },
+  "section": "الفوج: {name}",
+  "@section": {
+    "description": "تسمية اسم الفوج",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "أ"
+      }
+    }
+  },
+  "academicTranscripts": "كشوف العلامات الأكاديمية",
+  "@academicTranscripts": {
+    "description": "عنوان صفحة كشوف العلامات الأكاديمية"
+  },
+  "refreshingData": "جاري تحديث البيانات...",
+  "@refreshingData": {
+    "description": "رسالة تظهر عند تحديث البيانات"
+  },
+  "selectAcademicYear": "اختر سنة أكاديمية",
+  "@selectAcademicYear": {
+    "description": "مطالبة بتحديد سنة أكاديمية"
+  },
+  "annualResults": "النتائج السنوية",
+  "@annualResults": {
+    "description": "عنوان قسم النتائج السنوية"
+  },
+  "average": "المعدل",
+  "@average": {
+    "description": "تسمية المعدل"
+  },
+  "credits": "الوحدات",
+  "@credits": {
+    "description": "تسمية الوحدات"
+  },
+  "unknownLevel": "مستوى غير معروف",
+  "@unknownLevel": {
+    "description": "يظهر عندما يكون المستوى غير متاح"
+  },
+  "academicYear": "السنة الأكاديمية",
+  "@academicYear": {
+    "description": "السنة الأكاديمية"
+  },
+  "academicYearWrapper": "السنة الأكاديمية: {year}",
+  "@academicYearWrapper": {
+    "description": "السنة الأكاديمية مع القيمة",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "2023-2024"
+      }
+    }
+  },
+  "averageShort": "المعدل: {value}",
+  "@averageShort": {
+    "description": "صيغة مختصرة للمعدل مع القيمة",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "15.5"
+      }
+    }
+  },
+  "creditsShort": "الوحدات: {value}",
+  "@creditsShort": {
+    "description": "صيغة مختصرة للوحدات مع القيمة",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "30"
+      }
+    }
+  },
+  "hello": "مرحبًا، {value}",
+  "@hello": {
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "عزيزي الطالب"
+      }
+    },
+    "description": "تحية عامة"
+  },
+
+  "subjectsAndCoefficients": "المواد والمعاملات",
+  "@subjectsAndCoefficients": {
+    "description": "عنوان قسم المواد والمعاملات"
+  },
+  "passed": "اجتاز",
+  "@passed": {
+    "description": "حالة تمرير دورة أو سنة"
+  },
+  "failed": "فشل",
+  "@failed": {
+    "description": "حالة فشل دورة أو سنة"
+  }
+}

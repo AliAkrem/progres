@@ -7,6 +7,7 @@ import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart
 import 'package:progres/features/academics/presentation/widgets/continuous_assessment_card.dart';
 import 'package:progres/features/academics/presentation/widgets/exam_results_card.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class AcademicPerformancePage extends StatefulWidget {
   final int initialTab;
@@ -61,13 +62,15 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Academic Performance'),
+        title: Text(
+          GalleryLocalizations.of(context)!.academicPerformancePageTitle,
+        ),
         actions: [
           BlocBuilder<AcademicsBloc, AcademicsState>(
             builder: (context, state) {
               return IconButton(
                 icon: const Icon(Icons.refresh),
-                tooltip: 'Refresh data',
+                tooltip: GalleryLocalizations.of(context)!.refreshData,
                 onPressed:
                     state is AcademicsLoading
                         ? null
@@ -79,8 +82,14 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: 'Exam Results', height: isSmallScreen ? 40 : 46),
-            Tab(text: 'Assessment', height: isSmallScreen ? 40 : 46),
+            Tab(
+              text: GalleryLocalizations.of(context)!.examResults,
+              height: isSmallScreen ? 40 : 46,
+            ),
+            Tab(
+              text: GalleryLocalizations.of(context)!.assessment,
+              height: isSmallScreen ? 40 : 46,
+            ),
           ],
           labelStyle: TextStyle(
             fontSize: isSmallScreen ? 13 : 14,
@@ -91,9 +100,9 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
       body: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, profileState) {
           if (profileState is! ProfileLoaded) {
-            return const Center(
+            return Center(
               child: Text(
-                'Profile data not loaded. Please go back and try again.',
+                GalleryLocalizations.of(context)!.errorLoadingProfile,
               ),
             );
           }
@@ -120,7 +129,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                         ElevatedButton(
                           onPressed:
                               () => _loadAcademicData(forceRefresh: true),
-                          child: const Text('Retry'),
+                          child: Text(GalleryLocalizations.of(context)!.retry),
                         ),
                       ],
                     ),
@@ -146,7 +155,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                               ),
                               const SizedBox(width: 4),
                               Text(
-                                'Cached data',
+                                GalleryLocalizations.of(context)!.cachedData,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: theme.colorScheme.secondary,
@@ -172,8 +181,10 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                   ),
                 );
               } else {
-                return const Center(
-                  child: Text('Select an academic period to view results'),
+                return Center(
+                  child: Text(
+                    GalleryLocalizations.of(context)!.selectPeriodForResults,
+                  ),
                 );
               }
             },
@@ -206,7 +217,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
               child: Padding(
                 padding: EdgeInsets.all(isSmallScreen ? 24.0 : 32.0),
                 child: Text(
-                  'No exam results available',
+                  GalleryLocalizations.of(context)!.noExamResults,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: theme.textTheme.bodyMedium?.color,
@@ -219,7 +230,8 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
             ...examsByPeriod.entries.map((entry) {
               // Find period name from the profile state
               final periodId = entry.key;
-              String periodName = 'Period $periodId';
+              String periodName =
+                  '${GalleryLocalizations.of(context)!.defaultPeriodName} $periodId';
 
               try {
                 final period = profileState.academicPeriods.firstWhere(
@@ -287,7 +299,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
               child: Padding(
                 padding: EdgeInsets.all(isSmallScreen ? 24.0 : 32.0),
                 child: Text(
-                  'No continuous assessment results available',
+                  GalleryLocalizations.of(context)!.noContinuousAssessment,
                   style: TextStyle(
                     fontStyle: FontStyle.italic,
                     color: theme.textTheme.bodyMedium?.color,

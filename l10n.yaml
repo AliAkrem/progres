@@ -1,0 +1,7 @@
+arb-dir: lib/l10n
+output-localization-file: gallery_localizations.dart
+output-class: GalleryLocalizations
+preferred-supported-locales:
+  - en
+  - ar
+use-deferred-loading: true

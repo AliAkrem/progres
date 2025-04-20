@@ -1,18 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:calendar_view/calendar_view.dart';
-import 'package:progres/config/routes/app_router.dart';
-import 'package:progres/config/theme/app_theme.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:progres/app.dart';
 import 'package:progres/core/di/injector.dart';
-import 'package:progres/core/theme/theme_bloc.dart';
-import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
-import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
-import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
-import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
-import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
-import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
+import 'package:progres/config/options.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,38 +14,57 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key, this.isTestMode = false});
+
+  final bool isTestMode;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLocale();
+  }
+
+  Future<void> _loadLocale() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? localeString = prefs.getString(localeKey);
+    if (localeString != null) {
+      setState(() {
+        _locale = Locale(localeString);
+        deviceLocale = _locale;
+      });
+    } else {
+      prefs.setString(localeKey, 'en');
+      setState(() {
+        _locale = const Locale('en');
+        deviceLocale = _locale;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => injector<ThemeBloc>()),
-        BlocProvider(create: (context) => injector<AuthBloc>()),
-        BlocProvider(create: (context) => injector<ProfileBloc>()),
-        BlocProvider(create: (context) => injector<AcademicsBloc>()),
-        BlocProvider(create: (context) => injector<StudentGroupsBloc>()),
-        BlocProvider(create: (context) => injector<TimelineBloc>()),
-        BlocProvider(create: (context) => injector<SubjectBloc>()),
-        BlocProvider(create: (context) => injector<TranscriptBloc>()),
-        BlocProvider(create: (context) => injector<EnrollmentBloc>()),
-      ],
-      child: CalendarControllerProvider(
-        controller: EventController(),
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-          builder: (context, themeState) {
-            final appRouter = AppRouter(context: context);
-            return MaterialApp.router(
-              title: 'Student Portal',
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: themeState.themeMode,
-              routerConfig: appRouter.router,
-            );
-          },
-        ),
+    return ModelBinding(
+      initialModel: AppOptions(
+        themeMode: ThemeMode.system,
+        textScaleFactor: systemTextScaleFactorOption,
+        customTextDirection: CustomTextDirection.localeBased,
+        locale: _locale,
+        timeDilation: timeDilation,
+        platform: defaultTargetPlatform,
+        isTestMode: widget.isTestMode,
+      ),
+      child: Builder(
+        builder: (context) {
+          return const ProgresApp();
+        },
       ),
     );
   }

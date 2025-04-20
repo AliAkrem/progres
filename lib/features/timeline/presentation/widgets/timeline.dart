@@ -2,6 +2,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/presentation/widgets/week_view.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 Widget buildTimeline(BuildContext context) {
   final GlobalKey<WeekViewState> weekViewKey = GlobalKey<WeekViewState>();
@@ -10,7 +11,7 @@ Widget buildTimeline(BuildContext context) {
     children: [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        child: _buildTimelineMap(),
+        child: _buildTimelineMap(context),
       ),
       Expanded(
         child: SingleChildScrollView(
@@ -31,15 +32,24 @@ Widget buildTimeline(BuildContext context) {
   );
 }
 
-Widget _buildTimelineMap() {
+Widget _buildTimelineMap(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      _buildLegendItem('Lecture', AppTheme.accentGreen),
+      _buildLegendItem(
+        GalleryLocalizations.of(context)!.lecture,
+        AppTheme.accentGreen,
+      ),
       const SizedBox(width: 8),
-      _buildLegendItem('Tutorial', AppTheme.AppPrimary),
+      _buildLegendItem(
+        GalleryLocalizations.of(context)!.tutorial,
+        AppTheme.AppPrimary,
+      ),
       const SizedBox(width: 8),
-      _buildLegendItem('Practical', AppTheme.accentBlue),
+      _buildLegendItem(
+        GalleryLocalizations.of(context)!.practical,
+        AppTheme.accentBlue,
+      ),
     ],
   );
 }

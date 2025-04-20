@@ -5,6 +5,7 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class EnrollmentsPage extends StatefulWidget {
   const EnrollmentsPage({super.key});
@@ -26,18 +27,20 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Academic History'),
+        title: Text(GalleryLocalizations.of(context)!.academicHistory),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh Data',
+            tooltip: GalleryLocalizations.of(context)!.refreshData,
             onPressed: () {
               context.read<EnrollmentBloc>().add(
                 const LoadEnrollmentsEvent(forceRefresh: true),
               );
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Refreshing data...'),
+                SnackBar(
+                  content: Text(
+                    GalleryLocalizations.of(context)!.refreshingData,
+                  ),
                   duration: Duration(seconds: 1),
                 ),
               );
@@ -62,7 +65,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                         const LoadEnrollmentsEvent(),
                       );
                     },
-                    child: const Text('Retry'),
+                    child: Text(GalleryLocalizations.of(context)!.retry),
                   ),
                 ],
               ),

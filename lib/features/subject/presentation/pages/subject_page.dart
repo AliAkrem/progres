@@ -6,6 +6,7 @@ import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/presentation/widgets/assessment_type_row.dart';
 import 'package:progres/features/subject/presentation/widgets/error_loading_subject.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
@@ -65,7 +66,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subjects & Coefficients'),
+        title: Text(GalleryLocalizations.of(context)!.subjectsAndCoefficients),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -284,7 +285,7 @@ class ErroLoadProfileData extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
     return Center(
       child: Text(
-        'Profile data not loaded. Please go back and try again.',
+        GalleryLocalizations.of(context)!.errorLoadingProfile,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
       ),

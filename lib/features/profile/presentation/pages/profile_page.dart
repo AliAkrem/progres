@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
@@ -30,7 +31,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const CircularProgressIndicator(color: AppTheme.AppPrimary),
           const SizedBox(height: 24),
           Text(
-            'Loading profile data...',
+            GalleryLocalizations.of(context)!.loadingProfileData,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
         ],
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context.read<ProfileBloc>().add(LoadProfileEvent());
               },
               icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
+              label: Text(GalleryLocalizations.of(context)!.retry),
             ),
           ],
         ),
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Current Status',
+                  GalleryLocalizations.of(context)!.currentStatus,
                   style: TextStyle(
                     fontSize: isSmallScreen ? 16 : 18,
                     fontWeight: FontWeight.bold,
@@ -160,18 +160,24 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
-              title: 'Personal Information',
+              title: GalleryLocalizations.of(context)!.personalInformation,
               children: [
                 _buildInfoRow(
-                  'Full Name (Latin)',
+                  GalleryLocalizations.of(context)!.fullNameLatin,
                   '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
                 ),
                 _buildInfoRow(
-                  'Full Name (Arabic)',
+                  GalleryLocalizations.of(context)!.fullNameArabic,
                   '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
                 ),
-                _buildInfoRow('Birth Date', state.basicInfo.dateNaissance),
-                _buildInfoRow('Birth Place', state.basicInfo.lieuNaissance),
+                _buildInfoRow(
+                  GalleryLocalizations.of(context)!.birthDate,
+                  state.basicInfo.dateNaissance,
+                ),
+                _buildInfoRow(
+                  GalleryLocalizations.of(context)!.birthPlace,
+                  state.basicInfo.lieuNaissance,
+                ),
               ],
             ),
           ),
@@ -182,19 +188,28 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
             child: _buildInfoSection(
-              title: 'Current Academic Status',
+              title: GalleryLocalizations.of(context)!.currentAcademicStatus,
               children: [
                 _buildInfoRow(
-                  'Program',
+                  GalleryLocalizations.of(context)!.program,
                   state.detailedInfo.niveauLibelleLongLt,
                 ),
-                _buildInfoRow('Level', state.detailedInfo.niveauLibelleLongLt),
-                _buildInfoRow('Cycle', state.detailedInfo.refLibelleCycle),
                 _buildInfoRow(
-                  'Registration Number',
+                  GalleryLocalizations.of(context)!.level,
+                  state.detailedInfo.niveauLibelleLongLt,
+                ),
+                _buildInfoRow(
+                  GalleryLocalizations.of(context)!.cycle,
+                  state.detailedInfo.refLibelleCycle,
+                ),
+                _buildInfoRow(
+                  GalleryLocalizations.of(context)!.registrationNumber,
                   state.detailedInfo.numeroInscription,
                 ),
-                _buildInfoRow('Academic Year', state.academicYear.code),
+                _buildInfoRow(
+                  GalleryLocalizations.of(context)!.academicYear,
+                  state.academicYear.code,
+                ),
               ],
             ),
           ),
@@ -343,7 +358,7 @@ class _ProfilePageState extends State<ProfilePage> {
               theme: theme,
               isSmallScreen: isSmallScreen,
               icon: Icons.school_rounded,
-              title: 'Level',
+              title: GalleryLocalizations.of(context)!.level,
               value: levelValue,
             ),
             Padding(
@@ -360,7 +375,7 @@ class _ProfilePageState extends State<ProfilePage> {
               theme: theme,
               isSmallScreen: isSmallScreen,
               icon: Icons.calendar_today_rounded,
-              title: 'Academic Year',
+              title: GalleryLocalizations.of(context)!.academicYear,
               value: academicYearValue,
             ),
             Padding(
@@ -377,8 +392,11 @@ class _ProfilePageState extends State<ProfilePage> {
               theme: theme,
               isSmallScreen: isSmallScreen,
               icon: Icons.directions_bus_rounded,
-              title: 'Transport',
-              value: transportPaid ? 'Paid' : 'Unpaid',
+              title: GalleryLocalizations.of(context)!.transport,
+              value:
+                  transportPaid
+                      ? GalleryLocalizations.of(context)!.paid
+                      : GalleryLocalizations.of(context)!.unpaid,
               valueColor: transportPaid ? Colors.green : Colors.red,
             ),
           ],

@@ -126,7 +126,7 @@ WeekView<Object?> buildWeekView({
         return const SizedBox();
       }
 
-      return eventBuilder(events.first, boundary, start, end);
+      return eventBuilder(events.first, boundary, start, end, context);
     },
     weekPageHeaderBuilder: (startDate, endDate) {
       return AnimatedContainer(
