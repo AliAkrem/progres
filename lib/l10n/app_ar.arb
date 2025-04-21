@@ -15,6 +15,17 @@
   "@arabic": {
     "description": "خيار اللغة العربية"
   },
+  "switchLanguage": "تبديل اللغة",
+  "@switchLanguage": {
+    "description": "نص زر تبديل اللغة"
+  },
+
+
+  "selectedLanguage": "العربية",
+  "@selectedLanguage": {
+    "description": "تسمية اللغة المحددة"
+  },
+
   "theme": "المظهر",
   "@theme": {
     "description": "تسمية تحديد المظهر"
@@ -455,7 +466,6 @@
     },
     "description": "تحية عامة"
   },
-
   "subjectsAndCoefficients": "المواد والمعاملات",
   "@subjectsAndCoefficients": {
     "description": "عنوان قسم المواد والمعاملات"

@@ -221,6 +221,20 @@
   "@signIn": {
     "description": "Text for sign in button"
   },
+
+  "switchLanguage": "Switch Language",
+  "@switchLanguage": {
+    "description": "Text for switch language button"
+  },
+
+  
+  "selectedLanguage": "English",
+  "@selectedLanguage": {
+    "description": "Label for selected language"
+  },
+
+  
+
   "pleaseEnterStudentCode": "Please enter your student code",
   "@pleaseEnterStudentCode": {
     "description": "Validation message for empty student code"

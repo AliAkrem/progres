@@ -34,7 +34,7 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              GalleryLocalizations.of(context)!.english,
+              GalleryLocalizations.of(context)!.selectedLanguage,
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontSize: isSmallScreen ? 12 : 14,
               ),
@@ -51,7 +51,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               showSwitchLangModal(
                 context,
-                title: "switch langauga",
+                title: GalleryLocalizations.of(context)!.switchLanguage,
                 description: "",
               );
             },
