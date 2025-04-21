@@ -92,10 +92,10 @@ class Enrollment {
   }
 }
 
-class LocalizeEnrollemnt {
+class LocalizedEnrollment {
   final Enrollment enrollment;
   final Locale deviceLocale;
-  LocalizeEnrollemnt({required this.deviceLocale, required this.enrollment});
+  LocalizedEnrollment({required this.deviceLocale, required this.enrollment});
 
   isAr() {
     return deviceLocale.languageCode == 'ar';

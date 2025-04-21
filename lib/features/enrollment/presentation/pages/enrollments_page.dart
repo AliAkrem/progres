@@ -112,7 +112,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   Widget _buildEnrollmentCard(BuildContext context, Enrollment enrollment) {
     final theme = Theme.of(context);
 
-    final localizeEnrollemnt = LocalizeEnrollemnt(
+    final localizedEnrollment = LocalizedEnrollment(
       enrollment: enrollment,
       deviceLocale: Localizations.localeOf(context),
     );
@@ -167,7 +167,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    localizeEnrollemnt.llEtablissement,
+                    localizedEnrollment.llEtablissement,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -197,7 +197,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${localizeEnrollemnt.refLibelleCycle.toUpperCase()} - ${localizeEnrollemnt.niveauLibelleLong}',
+                        '${localizedEnrollment.refLibelleCycle.toUpperCase()} - ${localizedEnrollment.niveauLibelleLong}',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
@@ -206,7 +206,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                       ),
 
                       Text(
-                        localizeEnrollemnt.ofLlDomaine,
+                        localizedEnrollment.ofLlDomaine,
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textTheme.bodyMedium?.color?.withValues(
@@ -216,7 +216,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                       ),
 
                       Text(
-                        '${localizeEnrollemnt.ofLlFiliere}: ${localizeEnrollemnt.ofLlSpecialite}',
+                        '${localizedEnrollment.ofLlFiliere}: ${localizedEnrollment.ofLlSpecialite}',
                         style: TextStyle(
                           fontSize: 14,
                           color: theme.textTheme.bodyMedium?.color?.withValues(
