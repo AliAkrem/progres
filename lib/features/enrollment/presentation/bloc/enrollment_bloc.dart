@@ -27,7 +27,6 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
       if (!event.forceRefresh) {
         final cachedEnrollments = await cacheService.getCachedEnrollments();
         if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
-          print('Using cached enrollments');
           emit(
             EnrollmentsLoaded(enrollments: cachedEnrollments, fromCache: true),
           );

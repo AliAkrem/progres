@@ -112,6 +112,11 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   Widget _buildEnrollmentCard(BuildContext context, Enrollment enrollment) {
     final theme = Theme.of(context);
 
+    final localizeEnrollemnt = LocalizeEnrollemnt(
+      enrollment: enrollment,
+      deviceLocale: Localizations.localeOf(context),
+    );
+
     return Card(
       elevation: 0,
       margin: EdgeInsets.zero,
@@ -149,115 +154,83 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             const SizedBox(height: 16),
 
             // Institution
-            if (enrollment.llEtablissementLatin != null)
-              Row(
-                children: [
-                  Icon(
-                    Icons.school_outlined,
-                    size: 18,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+            Row(
+              children: [
+                Icon(
+                  Icons.school_outlined,
+                  size: 18,
+                  color:
+                      theme.brightness == Brightness.light
+                          ? Colors.grey.shade700
+                          : Colors.grey.shade300,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    localizeEnrollemnt.llEtablissement,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: theme.textTheme.titleMedium?.color,
+                    ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      enrollment.llEtablissementLatin!,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: theme.textTheme.titleMedium?.color,
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 12),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.book_outlined,
+                  size: 18,
+                  color:
+                      theme.brightness == Brightness.light
+                          ? Colors.grey.shade700
+                          : Colors.grey.shade300,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${localizeEnrollemnt.refLibelleCycle.toUpperCase()} - ${localizeEnrollemnt.niveauLibelleLong}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: theme.textTheme.titleMedium?.color,
+                        ),
                       ),
-                    ),
-                  ),
-                ],
-              ),
 
-            if (enrollment.llEtablissementLatin != null)
-              const SizedBox(height: 12),
+                      Text(
+                        localizeEnrollemnt.ofLlDomaine,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textTheme.bodyMedium?.color?.withValues(
+                            alpha: 0.8,
+                          ),
+                        ),
+                      ),
 
-            // Program of study
-            if (enrollment.niveauLibelleLongLt != null ||
-                enrollment.refLibelleCycle != null ||
-                enrollment.ofLlDomaine != null ||
-                enrollment.ofLlFiliere != null ||
-                enrollment.ofLlSpecialite != null)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.book_outlined,
-                    size: 18,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+                      Text(
+                        '${localizeEnrollemnt.ofLlFiliere}: ${localizeEnrollemnt.ofLlSpecialite}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.textTheme.bodyMedium?.color?.withValues(
+                            alpha: 0.8,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (enrollment.refLibelleCycle != null &&
-                            enrollment.niveauLibelleLongLt != null)
-                          Text(
-                            '${enrollment.refLibelleCycle!.toUpperCase()} - ${enrollment.niveauLibelleLongLt}',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: theme.textTheme.titleMedium?.color,
-                            ),
-                          )
-                        else if (enrollment.niveauLibelleLongLt != null)
-                          Text(
-                            enrollment.niveauLibelleLongLt!,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: theme.textTheme.titleMedium?.color,
-                            ),
-                          ),
-                        if (enrollment.ofLlDomaine != null)
-                          Text(
-                            enrollment.ofLlDomaine!,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color
-                                  ?.withValues(alpha: 0.8),
-                            ),
-                          ),
-                        if (enrollment.ofLlFiliere != null &&
-                            enrollment.ofLlSpecialite != null)
-                          Text(
-                            '${enrollment.ofLlFiliere}: ${enrollment.ofLlSpecialite}',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color
-                                  ?.withValues(alpha: 0.8),
-                            ),
-                          )
-                        else if (enrollment.ofLlFiliere != null)
-                          Text(
-                            enrollment.ofLlFiliere!,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: theme.textTheme.bodyMedium?.color
-                                  ?.withValues(alpha: 0.8),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-            if (enrollment.niveauLibelleLongLt != null ||
-                enrollment.refLibelleCycle != null ||
-                enrollment.ofLlDomaine != null ||
-                enrollment.ofLlFiliere != null ||
-                enrollment.ofLlSpecialite != null)
-              const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
             // Registration number
             if (enrollment.numeroInscription != null)
@@ -277,7 +250,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Registration',
+                          GalleryLocalizations.of(context)!.registrationNumber,
                           style: TextStyle(
                             fontSize: 12,
                             color: theme.textTheme.bodySmall?.color,
