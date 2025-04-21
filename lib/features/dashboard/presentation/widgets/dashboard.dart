@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:progres/config/options.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/dashboard/presentation/widgets/card.dart';
@@ -14,7 +15,7 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
   final isSmallScreen = screenSize.width < 360;
   final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
   final studentName =
-      Localizations.localeOf(context).languageCode == 'ar'
+      deviceLocale!.languageCode == 'ar'
           ? state.basicInfo.prenomArabe
           : state.basicInfo.prenomLatin;
 
