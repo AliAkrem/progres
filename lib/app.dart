@@ -48,7 +48,11 @@ class ProgresApp extends StatelessWidget {
                   GalleryLocalizations.localizationsDelegates,
               supportedLocales: GalleryLocalizations.supportedLocales,
               localeResolutionCallback: (locale, supportedLocales) {
-                return deviceLocale;
+                // Return the locale parameter which represents the device locale
+                // or the first supported locale if device locale is not supported
+                return locale != null && supportedLocales.contains(locale) 
+                    ? locale 
+                    : supportedLocales.first;
               },
               locale: AppOptions.of(context).locale,
               routerConfig: appRouter.router,
