@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:progres/app.dart';
 import 'package:progres/core/di/injector.dart';
 import 'package:progres/config/options.dart';
@@ -15,9 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key, this.isTestMode = false});
-
-  final bool isTestMode;
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -53,13 +50,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ModelBinding(
       initialModel: AppOptions(
-        themeMode: ThemeMode.system,
-        textScaleFactor: systemTextScaleFactorOption,
         customTextDirection: CustomTextDirection.localeBased,
         locale: _locale,
-        timeDilation: timeDilation,
         platform: defaultTargetPlatform,
-        isTestMode: widget.isTestMode,
       ),
       child: Builder(
         builder: (context) {
