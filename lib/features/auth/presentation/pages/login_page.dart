@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:progres/features/auth/presentation/pages/settings_page.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
@@ -58,6 +59,18 @@ class _LoginPageState extends State<LoginPage>
     final isSmallScreen = screenSize.width < 360;
 
     return Scaffold(
+      appBar: AppBar(
+        elevation:  0,
+        backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) => const AuthSettingsPage(),
+            )),
+          ),
+        ],
+      ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
