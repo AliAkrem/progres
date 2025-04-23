@@ -1,12 +1,12 @@
 name: progres
 description: A student portal application for university students.
-publish_to: 'none' 
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
   sdk: ^3.7.2
-  flutter: "3.22.3"  # Updated to latest stable version
+  flutter: "3.22.3" # Updated to latest stable version
 
 dependencies:
   flutter:
@@ -31,16 +31,37 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
   flutter_lints: ^5.0.0
 
   flutter_dotenv: ^5.2.1
 
 flutter:
-
-
   uses-material-design: true
   generate: true
-
-
-
+  fonts:
+    - family: NotoKufiArabic
+      fonts:
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Light.ttf
+          weight: 300
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/notokufi/static/NotoKufiArabic-Black.ttf
+          weight: 900
+    - family: Eczar
+      fonts:
+        - asset: assets/fonts/Eczar/static/Eczar-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Eczar/static/Eczar-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Eczar/static/Eczar-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Eczar/static/Eczar-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Eczar/static/Eczar-ExtraBold.ttf
+          weight: 800
