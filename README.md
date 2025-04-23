@@ -16,7 +16,7 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 ## Key Features
 
 - **Modern UI/UX** - Intuitive interface built with Material Design 3
-- **Bilingual Support** - Full support for both Arabic scripts (will be supported sooner)
+- **Bilingual Support** - Full support for both Arabic scripts
 - **Enhanced Performance** - Optimized for speed and reliability
 
 ## Screenshots
@@ -85,7 +85,7 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 
 ## In The Future  
 
-- [ ] Arabic language support
+- [x] Arabic language support
 - [ ] Push notifications for grade updates
 - [ ] Push notifications for courses start
    
