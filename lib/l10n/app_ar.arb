@@ -19,13 +19,26 @@
   "@switchLanguage": {
     "description": "نص زر تبديل اللغة"
   },
-
-
   "selectedLanguage": "العربية",
   "@selectedLanguage": {
     "description": "تسمية اللغة المحددة"
   },
-
+  "errorNoEnrollments": "لا يوجد سجل تسجيل",
+  "@errorNoEnrollments": {
+    "description": "رسالة التحقق من صحة تاريخ التسجيل الفارغ"
+  },
+  "errorNoSubjects": "بيانات المقاييس غير متوفرة",
+  "@errorNoSubjects": {
+    "description": "لا توجد رسالة خطأ في بيانات المقاييس المتاحة"
+  },
+  "loadSubjects": "تحميل المقاييس",
+  "@loadSubjects": {
+    "description": "نص زر تحميل المقاييس"
+  },
+  "somthingWentWrong": "حدث خطأ ما",
+  "@somthingWentWrong": {
+    "description": "حدث خطأ ما"
+  },
   "theme": "المظهر",
   "@theme": {
     "description": "تسمية تحديد المظهر"
@@ -34,11 +47,11 @@
   "@selectTheme": {
     "description": "عنوان مربع حوار اختيار المظهر"
   },
-  "light": "فاتح",
+  "light": "الوضع الفاتح",
   "@light": {
     "description": "خيار المظهر الفاتح"
   },
-  "dark": "داكن",
+  "dark": "الوضع الداكن",
   "@dark": {
     "description": "خيار المظهر الداكن"
   },

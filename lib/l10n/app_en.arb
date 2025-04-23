@@ -221,23 +221,33 @@
   "@signIn": {
     "description": "Text for sign in button"
   },
-
   "switchLanguage": "Switch Language",
   "@switchLanguage": {
     "description": "Text for switch language button"
   },
-
-  
   "selectedLanguage": "English",
   "@selectedLanguage": {
     "description": "Label for selected language"
   },
-
-  
-
   "pleaseEnterStudentCode": "Please enter your student code",
   "@pleaseEnterStudentCode": {
     "description": "Validation message for empty student code"
+  },
+  "errorNoEnrollments": "No enrollment history available",
+  "@errorNoEnrollments": {
+    "description": "Validation message for empty enrollment history"
+  },
+  "errorNoSubjects": "No subject data available",
+  "@errorNoSubjects": {
+    "description": "No subject data available error message"
+  },
+  "loadSubjects": "Load Subjects",
+  "@loadSubjects": {
+    "description": "Load Subjects button text"
+  },
+  "somthingWentWrong": "Something went wrong",
+  "@somthingWentWrong": {
+    "description": "Something went wrong"
   },
   "pleaseEnterPassword": "Please enter your password",
   "@pleaseEnterPassword": {
@@ -439,9 +449,6 @@
       }
     }
   },
-
-
-
   "passed": "Passed",
   "@passed": {
     "description": "Status for passing a course or year"
@@ -450,14 +457,14 @@
   "@failed": {
     "description": "Status for failing a course or year"
   },
-  
   "hello": "Hello, {value} ",
   "@hello": {
     "description": "greating message",
     "placeholders": {
       "value": {
         "type": "String",
-        "example": "John Doe"
+        "example": "John Doe",
+        "description": "take student name as param"
       }
     }
   },
