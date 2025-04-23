@@ -25,7 +25,7 @@ class ErrorLoadingSubjectState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Error: $message',
+              GalleryLocalizations.of(context)!.errorNoSubjects,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
             ),

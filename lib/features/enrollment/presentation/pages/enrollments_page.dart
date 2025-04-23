@@ -57,7 +57,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Error: ${state.message}'),
+                  Text(GalleryLocalizations.of(context)!.somthingWentWrong),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -72,14 +72,18 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             );
           } else if (state is EnrollmentsLoaded) {
             if (state.enrollments.isEmpty) {
-              return const Center(
-                child: Text('No enrollment history available'),
+              return Center(
+                child: Text(
+                  GalleryLocalizations.of(context)!.errorNoEnrollments,
+                ),
               );
             }
 
             return _buildEnrollmentsList(context, state.enrollments);
           } else {
-            return const Center(child: Text('Something went wrong'));
+            return Center(
+              child: Text(GalleryLocalizations.of(context)!.somthingWentWrong),
+            );
           }
         },
       ),

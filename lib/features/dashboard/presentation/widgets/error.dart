@@ -22,7 +22,7 @@ Widget buildErrorState(ProfileError state, BuildContext context) {
           ),
           const SizedBox(height: 16),
           Text(
-            'Error: ${state.message}',
+            GalleryLocalizations.of(context)!.somthingWentWrong,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color),
             textAlign: TextAlign.center,
             maxLines: 3,

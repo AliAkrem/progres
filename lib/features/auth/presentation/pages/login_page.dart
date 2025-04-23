@@ -58,10 +58,6 @@ class _LoginPageState extends State<LoginPage>
     final isSmallScreen = screenSize.width < 360;
 
     return Scaffold(
-      backgroundColor:
-          theme.brightness == Brightness.dark
-              ? const Color(0xFF2D2B21)
-              : AppTheme.AppBackground,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
@@ -175,6 +171,7 @@ class _LoginPageState extends State<LoginPage>
                             // Student code field
                             TextFormField(
                               controller: _usernameController,
+                              textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
                                 labelText:
                                     GalleryLocalizations.of(
@@ -220,6 +217,7 @@ class _LoginPageState extends State<LoginPage>
                             // Password field
                             TextFormField(
                               controller: _passwordController,
+                              textDirection: TextDirection.ltr,
                               decoration: InputDecoration(
                                 labelText:
                                     GalleryLocalizations.of(context)!.password,

@@ -113,7 +113,7 @@ class _TranscriptPageState extends State<TranscriptPage>
           } else if (state is TranscriptError) {
             return Center(
               child: Text(
-                'Error: ${state.message}',
+                GalleryLocalizations.of(context)!.somthingWentWrong,
                 style: theme.textTheme.bodyLarge,
               ),
             );

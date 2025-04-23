@@ -26,7 +26,7 @@ class ErrorState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Error: ${state.message}',
+              GalleryLocalizations.of(context)!.somthingWentWrong,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
             ),

@@ -11,7 +11,7 @@ Widget buildErrorState(TimelineError state, BuildContext context) {
       children: [
         const Icon(Icons.error_outline, size: 48, color: Colors.red),
         const SizedBox(height: 16),
-        Text('Error: ${state.message}'),
+        Text(GalleryLocalizations.of(context)!.somthingWentWrong),
         const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {

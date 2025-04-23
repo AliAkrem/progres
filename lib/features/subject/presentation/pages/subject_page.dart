@@ -269,13 +269,13 @@ class InitialState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'No subject data available',
+            GalleryLocalizations.of(context)!.errorNoSubjects,
             style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: onReload,
-            child: const Text('Load Subjects'),
+            child: Text(GalleryLocalizations.of(context)!.loadSubjects),
           ),
         ],
       ),
