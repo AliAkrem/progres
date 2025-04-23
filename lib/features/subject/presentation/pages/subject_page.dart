@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:progres/config/options.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/subject/data/models/course_coefficient.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/presentation/widgets/assessment_type_row.dart';
 import 'package:progres/features/subject/presentation/widgets/error_loading_subject.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
@@ -65,7 +67,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subjects & Coefficients'),
+        title: Text(GalleryLocalizations.of(context)!.subjectsAndCoefficients),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -180,13 +182,19 @@ class SubjectsContent extends StatelessWidget {
                       ),
                   itemBuilder: (context, index) {
                     final coefficient = coursesByPeriod[period]![index];
+                    final localizedCourseCoefficient =
+                        LocalizedCourseCoefficient(
+                          courseCoefficient: coursesByPeriod[period]![index],
+                          deviceLocal: deviceLocale!,
+                        );
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            coefficient.mcLibelleFr,
+                            localizedCourseCoefficient.mcLibelle,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -229,10 +237,19 @@ class SubjectsContent extends StatelessWidget {
     final Map<String, List<CourseCoefficient>> coursesByPeriod = {};
 
     for (var coefficient in coefficients) {
-      if (!coursesByPeriod.containsKey(coefficient.periodeLibelleFr)) {
-        coursesByPeriod[coefficient.periodeLibelleFr] = [];
+      final localizedCourseCoefficient = LocalizedCourseCoefficient(
+        courseCoefficient: coefficient,
+        deviceLocal: deviceLocale!,
+      );
+
+      if (!coursesByPeriod.containsKey(
+        localizedCourseCoefficient.periodeLibelle,
+      )) {
+        coursesByPeriod[localizedCourseCoefficient.periodeLibelle] = [];
       }
-      coursesByPeriod[coefficient.periodeLibelleFr]!.add(coefficient);
+      coursesByPeriod[localizedCourseCoefficient.periodeLibelle]!.add(
+        coefficient,
+      );
     }
     return coursesByPeriod;
   }
@@ -252,13 +269,13 @@ class InitialState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'No subject data available',
+            GalleryLocalizations.of(context)!.errorNoSubjects,
             style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: onReload,
-            child: const Text('Load Subjects'),
+            child: Text(GalleryLocalizations.of(context)!.loadSubjects),
           ),
         ],
       ),
@@ -284,7 +301,7 @@ class ErroLoadProfileData extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
     return Center(
       child: Text(
-        'Profile data not loaded. Please go back and try again.',
+        GalleryLocalizations.of(context)!.errorLoadingProfile,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
       ),

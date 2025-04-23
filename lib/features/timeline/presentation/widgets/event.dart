@@ -8,6 +8,7 @@ Widget eventBuilder(
   Rect boundary,
   DateTime start,
   DateTime end,
+  BuildContext context,
 ) {
   final courseSession = event.event as CourseSession?;
 
@@ -57,7 +58,7 @@ Widget eventBuilder(
         if (!isShortEvent && courseSession?.sessionType != null) ...[
           const SizedBox(height: 2),
           Text(
-            courseSession!.sessionType,
+            courseSession!.sessionType(context),
             style: const TextStyle(color: Colors.white, fontSize: 10),
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/groups/presentation/widgets/error.dart';
 import 'package:progres/features/groups/presentation/widgets/groups.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class GroupsPage extends StatefulWidget {
   const GroupsPage({super.key});
@@ -48,12 +49,12 @@ class _GroupsPageState extends State<GroupsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Groups'),
+        title: Text(GalleryLocalizations.of(context)!.myGroups),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _refreshGroups,
-            tooltip: 'Refresh groups',
+            tooltip: GalleryLocalizations.of(context)!.refreshGroups,
           ),
         ],
       ),
@@ -90,7 +91,7 @@ class _GroupsPageState extends State<GroupsPage> {
 
     return Center(
       child: Text(
-        'Profile data not loaded. Please go back and try again.',
+        GalleryLocalizations.of(context)!.errorLoadingProfile,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
       ),
@@ -106,13 +107,13 @@ class _GroupsPageState extends State<GroupsPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'No group data available',
+            GalleryLocalizations.of(context)!.noGroupData,
             style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loadGroups,
-            child: const Text('Load Groups'),
+            child: Text(GalleryLocalizations.of(context)!.loadGroups),
           ),
         ],
       ),

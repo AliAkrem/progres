@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/config/theme/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class ContinuousAssessmentCard extends StatelessWidget {
   final List<ContinuousAssessment> assessments;
@@ -16,7 +17,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
-            'No continuous assessments available yet',
+            GalleryLocalizations.of(context)!.noAssessmentsYet,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               color: theme.textTheme.bodyMedium?.color,
@@ -79,7 +80,11 @@ class ContinuousAssessmentCard extends StatelessWidget {
                     ),
 
                     // Group by assessment type (TP, TD, PRJ)
-                    ...groupAssessmentsByType(courseAssessments, theme),
+                    ...groupAssessmentsByType(
+                      courseAssessments,
+                      theme,
+                      context,
+                    ),
                   ],
                 );
               },
@@ -94,11 +99,12 @@ class ContinuousAssessmentCard extends StatelessWidget {
   List<Widget> groupAssessmentsByType(
     List<ContinuousAssessment> courseAssessments,
     ThemeData theme,
+    BuildContext context,
   ) {
     // Group by type (TP, TD, PRJ)
     final Map<String, List<ContinuousAssessment>> groupedByType = {};
     for (var assessment in courseAssessments) {
-      final type = assessment.assessmentTypeLabel;
+      final type = assessment.assessmentTypeLabel(context);
       if (!groupedByType.containsKey(type)) {
         groupedByType[type] = [];
       }
@@ -119,15 +125,15 @@ class ContinuousAssessmentCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: _getTypeColor(type).withValues(alpha: 0.2),
+                  color: _getTypeColor(type, context).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(4),
-                  border: Border.all(color: _getTypeColor(type)),
+                  border: Border.all(color: _getTypeColor(type, context)),
                 ),
                 child: Text(
                   type,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: _getTypeColor(type),
+                    color: _getTypeColor(type, context),
                     fontSize: 12,
                   ),
                 ),
@@ -164,7 +170,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
                           ),
                         )
                         : Text(
-                          'N/A',
+                          GalleryLocalizations.of(context)!.notAvailable,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             color: theme.textTheme.bodyMedium?.color,
@@ -187,16 +193,19 @@ class ContinuousAssessmentCard extends StatelessWidget {
   }
 
   // Helper method to get color based on assessment type
-  Color _getTypeColor(String type) {
-    switch (type.toUpperCase()) {
-      case 'PROJECT':
-        return AppTheme.AppPrimary;
-      case 'TUTORIAL WORK':
-        return AppTheme.AppSecondary;
-      case 'PRACTICAL WORK':
-        return AppTheme.accentBlue;
-      default:
-        return AppTheme.AppTextSecondary;
+  Color _getTypeColor(String type, BuildContext context) {
+    var project = GalleryLocalizations.of(context)!.project;
+    var tutorialWork = GalleryLocalizations.of(context)!.tutorialWork;
+    var practicalWork = GalleryLocalizations.of(context)!.practicalWork;
+
+    if (type == project) {
+      return AppTheme.AppPrimary;
+    } else if (type == tutorialWork) {
+      return AppTheme.AppSecondary;
+    } else if (type == practicalWork) {
+      return AppTheme.accentBlue;
+    } else {
+      return AppTheme.AppTextSecondary;
     }
   }
 }

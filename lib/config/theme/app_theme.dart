@@ -16,6 +16,8 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
+      fontFamily: 'Eczar',
+      fontFamilyFallback: ['NotoKufiArabic'],
       useMaterial3: true,
       primaryColor: AppPrimary,
       scaffoldBackgroundColor: AppBackground,
@@ -181,6 +183,8 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Eczar',
+      fontFamilyFallback: ['NotoKufiArabic'],
       primaryColor: AppPrimary,
       scaffoldBackgroundColor: const Color(
         0xFF2D2B21,
@@ -263,11 +267,17 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppPrimary,
           foregroundColor: Colors.white,
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Eczar',
+            fontFamilyFallback: ['NotoKufiArabic'],
+          ),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           minimumSize: const Size(double.infinity, 56),
         ),
@@ -280,14 +290,24 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Eczar',
+            fontFamilyFallback: ['NotoKufiArabic'],
+          ),
           minimumSize: const Size(double.infinity, 56),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppPrimary,
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Eczar',
+            fontFamilyFallback: ['NotoKufiArabic'],
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

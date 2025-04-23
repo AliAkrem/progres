@@ -1,0 +1,475 @@
+{
+  "settings": "Settings",
+  "@settings": {
+    "description": "Title for settings page and settings-related items"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Label for language selection"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "arabic": "Arabic",
+  "@arabic": {
+    "description": "Arabic language option"
+  },
+  "theme": "Theme",
+  "@theme": {
+    "description": "Label for theme selection"
+  },
+  "selectTheme": "Select Theme",
+  "@selectTheme": {
+    "description": "Title for theme selection dialog"
+  },
+  "light": "Light",
+  "@light": {
+    "description": "Light theme option"
+  },
+  "dark": "Dark",
+  "@dark": {
+    "description": "Dark theme option"
+  },
+  "systemDefault": "System Default",
+  "@systemDefault": {
+    "description": "System default theme option"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "confirm": "Confirm",
+  "@confirm": {
+    "description": "Cancel button text"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Label for notification settings"
+  },
+  "about": "About",
+  "@about": {
+    "description": "Label for about section"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  "logoutConfirmation": "Are you sure you want to log out?",
+  "@logoutConfirmation": {
+    "description": "Confirmation message for logout"
+  },
+  "tabTitleProfile": "Profile",
+  "@tabTitleProfile": {
+    "description": ""
+  },
+  "tabTitleDashboard": "Dashboard",
+  "@tabTitleDashboard": {
+    "description": ""
+  },
+  "currentStatus": "Current Status",
+  "@currentStatus": {
+    "description": "Section title for current status"
+  },
+  "level": "Level",
+  "@level": {
+    "description": "Student's academic level"
+  },
+  "transport": "Transport",
+  "@transport": {
+    "description": "Transport status"
+  },
+  "paid": "Paid",
+  "@paid": {
+    "description": "Status when something is paid"
+  },
+  "unpaid": "Unpaid",
+  "@unpaid": {
+    "description": "Status when something is not paid"
+  },
+  "personalInformation": "Personal Information",
+  "@personalInformation": {
+    "description": "Section title for personal information"
+  },
+  "fullNameLatin": "Full Name (Latin)",
+  "@fullNameLatin": {
+    "description": "Label for name in Latin script"
+  },
+  "fullNameArabic": "Full Name (Arabic)",
+  "@fullNameArabic": {
+    "description": "Label for name in Arabic script"
+  },
+  "birthDate": "Birth Date",
+  "@birthDate": {
+    "description": "Label for date of birth"
+  },
+  "birthPlace": "Birth Place",
+  "@birthPlace": {
+    "description": "Label for place of birth"
+  },
+  "currentAcademicStatus": "Current Academic Status",
+  "@currentAcademicStatus": {
+    "description": "Section title for academic status"
+  },
+  "program": "Program",
+  "@program": {
+    "description": "Label for academic program"
+  },
+  "cycle": "Cycle",
+  "@cycle": {
+    "description": "Label for academic cycle"
+  },
+  "registrationNumber": "Registration Number",
+  "@registrationNumber": {
+    "description": "Label for student registration number"
+  },
+  "academicPerformancePageTitle": "Academic Performance",
+  "@academicPerformancePageTitle": {
+    "description": ""
+  },
+  "assessment": "Assessment",
+  "@assessment": {
+    "description": "Label for assessment sections and tabs"
+  },
+  "refreshData": "Refresh data",
+  "@refreshData": {
+    "description": "Tooltip for refresh button"
+  },
+  "errorLoadingProfile": "Profile data not loaded. Please go back and try again.",
+  "@errorLoadingProfile": {
+    "description": "Error message when profile fails to load"
+  },
+  "loadingProfileData": "Loading profile data...",
+  "@loadingProfileData": {
+    "description": "Shown while profile data is being loaded"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button text to retry loading data"
+  },
+  "examResults": "Exam Results",
+  "@examResults": {
+    "description": "Tab title for exam results"
+  },
+  "cachedData": "Cached data",
+  "@cachedData": {
+    "description": "Label showing that data is from cache"
+  },
+  "selectPeriodForResults": "Select an academic period to view results",
+  "@selectPeriodForResults": {
+    "description": "Message shown when no period is selected"
+  },
+  "noExamResults": "No exam results available",
+  "@noExamResults": {
+    "description": "Message shown when there are no exam results"
+  },
+  "noContinuousAssessment": "No continuous assessment results available",
+  "@noContinuousAssessment": {
+    "description": "Message shown when there are no continuous assessment results"
+  },
+  "noAssessmentsYet": "No continuous assessments available yet",
+  "@noAssessmentsYet": {
+    "description": "Message shown when no continuous assessments are available for a course"
+  },
+  "project": "PROJECT",
+  "@project": {
+    "description": "Project assessment type label"
+  },
+  "tutorialWork": "TUTORIAL WORK",
+  "@tutorialWork": {
+    "description": "Tutorial work assessment type label"
+  },
+  "practicalWork": "PRACTICAL WORK",
+  "@practicalWork": {
+    "description": "Practical work assessment type label"
+  },
+  "defaultPeriodName": "Period {id}",
+  "@defaultPeriodName": {
+    "description": "Default period name when actual name is not found",
+    "placeholders": {
+      "id": {
+        "type": "int",
+        "example": "1"
+      }
+    }
+  },
+  "studentPortal": "Student Portal",
+  "@studentPortal": {
+    "description": "Main title on login page"
+  },
+  "signInToAccount": "Sign in to your account",
+  "@signInToAccount": {
+    "description": "Subtitle on login page"
+  },
+  "studentCode": "Student Code",
+  "@studentCode": {
+    "description": "Label for student code input field"
+  },
+  "enterStudentCode": "Enter your student code",
+  "@enterStudentCode": {
+    "description": "Placeholder for student code input"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Label for password input field"
+  },
+  "enterPassword": "Enter your password",
+  "@enterPassword": {
+    "description": "Placeholder for password input"
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Text for sign in button"
+  },
+  "switchLanguage": "Switch Language",
+  "@switchLanguage": {
+    "description": "Text for switch language button"
+  },
+  "selectedLanguage": "English",
+  "@selectedLanguage": {
+    "description": "Label for selected language"
+  },
+  "pleaseEnterStudentCode": "Please enter your student code",
+  "@pleaseEnterStudentCode": {
+    "description": "Validation message for empty student code"
+  },
+  "errorNoEnrollments": "No enrollment history available",
+  "@errorNoEnrollments": {
+    "description": "Validation message for empty enrollment history"
+  },
+  "errorNoSubjects": "No subject data available",
+  "@errorNoSubjects": {
+    "description": "No subject data available error message"
+  },
+  "loadSubjects": "Load Subjects",
+  "@loadSubjects": {
+    "description": "Load Subjects button text"
+  },
+  "somthingWentWrong": "Something went wrong",
+  "@somthingWentWrong": {
+    "description": "Something went wrong"
+  },
+  "pleaseEnterPassword": "Please enter your password",
+  "@pleaseEnterPassword": {
+    "description": "Validation message for empty password"
+  },
+  "unableToSignIn": "Unable to sign in. Please check your student code and password.",
+  "@unableToSignIn": {
+    "description": "Generic error message for failed login"
+  },
+  "incorrectCredentials": "Incorrect student code or password. Please try again.",
+  "@incorrectCredentials": {
+    "description": "Error message for incorrect credentials"
+  },
+  "networkError": "Network connection error. Please check your internet connection and try again.",
+  "@networkError": {
+    "description": "Error message for network connection issues"
+  },
+  "noExamResultsYet": "No exam results available yet",
+  "@noExamResultsYet": {
+    "description": "Message shown when no exam results are available for a course"
+  },
+  "exam": "Exam",
+  "@exam": {
+    "description": "Label for exam type"
+  },
+  "coefficient": "Coef: {value}",
+  "@coefficient": {
+    "description": "Coefficient value display",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "2"
+      }
+    }
+  },
+  "notAvailable": "N/A",
+  "@notAvailable": {
+    "description": "Shown when a grade is not available"
+  },
+  "appealRequested": "Appeal Requested",
+  "@appealRequested": {
+    "description": "Status when an appeal has been requested"
+  },
+  "appealAvailable": "Appeal Available",
+  "@appealAvailable": {
+    "description": "Status when an appeal can be requested"
+  },
+  "timeline": "Timeline",
+  "@timeline": {
+    "description": "Label for timeline section"
+  },
+  "home": "Home",
+  "@home": {
+    "description": "Label for home navigation item"
+  },
+  "weeklyschedule": "Weekly Schedule",
+  "@weeklyschedule": {
+    "description": "Label for schedule section"
+  },
+  "transcript": "Transcript",
+  "@transcript": {
+    "description": "Label for transcript section"
+  },
+  "academicHistory": "Academic History",
+  "@academicHistory": {
+    "description": "Label for academic history section"
+  },
+  "menu": "Menu",
+  "@menu": {
+    "description": "Label for menu button"
+  },
+  "errorGeneric": "An error occurred. Please try again.",
+  "@errorGeneric": {
+    "description": "Generic error message"
+  },
+  "error": "Error: {message}",
+  "@error": {
+    "description": "Error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "Failed to load data"
+      }
+    }
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Generic loading message"
+  },
+  "appearance": "Appearance",
+  "@appearance": {
+    "description": "Section title for appearance settings"
+  },
+  "preferences": "Preferences",
+  "@preferences": {
+    "description": "Section title for user preferences"
+  },
+  "myGroups": "My Groups",
+  "@myGroups": {
+    "description": "Title for groups page and related items"
+  },
+  "refreshGroups": "Refresh groups",
+  "@refreshGroups": {
+    "description": "Tooltip for refresh groups button"
+  },
+  "loadGroups": "Load Groups",
+  "@loadGroups": {
+    "description": "Button text to load groups"
+  },
+  "noGroupData": "No group data available",
+  "@noGroupData": {
+    "description": "Message shown when no group data is available"
+  },
+  "weeklySchedule": "Weekly Schedule",
+  "@weeklySchedule": {
+    "description": "Title for the weekly schedule view"
+  },
+  "noClassesThisWeek": "No classes scheduled for this week",
+  "@noClassesThisWeek": {
+    "description": "Message shown when there are no classes scheduled"
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Label for privacy policy link"
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Label for terms of service link"
+  },
+  "lecture": "Lecture",
+  "@lecture": {
+    "description": "Label for lecture session type"
+  },
+  "tutorial": "Tutorial",
+  "@tutorial": {
+    "description": "Label for tutorial session type"
+  },
+  "practical": "Practical",
+  "@practical": {
+    "description": "Label for practical session type"
+  },
+  "noClassesScheduled": "No classes scheduled for this week",
+  "@noClassesScheduled": {
+    "description": "Message shown when there are no classes in the schedule"
+  },
+  "notAssignedToGroups": "You are not assigned to any pedagogical groups yet.",
+  "@notAssignedToGroups": {
+    "description": "Description shown when user has no pedagogical groups"
+  },
+  "section": "Section: {name}",
+  "@section": {
+    "description": "Label for section name",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "A"
+      }
+    }
+  },
+  "academicTranscripts": "Academic Transcripts",
+  "@academicTranscripts": {
+    "description": "Title for academic transcripts page"
+  },
+  "refreshingData": "Refreshing data...",
+  "@refreshingData": {
+    "description": "Message shown when refreshing data"
+  },
+  "selectAcademicYear": "Select an academic year",
+  "@selectAcademicYear": {
+    "description": "Prompt to select an academic year"
+  },
+  "annualResults": "ANNUAL RESULTS",
+  "@annualResults": {
+    "description": "Title for annual results section"
+  },
+  "average": "Average",
+  "@average": {
+    "description": "Label for average score"
+  },
+  "credits": "Credits",
+  "@credits": {
+    "description": "Label for credits"
+  },
+  "unknownLevel": "Unknown Level",
+  "@unknownLevel": {
+    "description": "Shown when level is not available"
+  },
+  "academicYear": "Academic Year",
+  "@academicYear": {
+    "description": "Academic year with value"
+  },
+  "academicYearWrapper": "Academic Year: {year}",
+  "@academicYearWrapper": {
+    "description": "Academic year with value",
+    "placeholders": {
+      "year": {
+        "type": "String",
+        "example": "2023-2024"
+      }
+    }
+  },
+  "passed": "Passed",
+  "@passed": {
+    "description": "Status for passing a course or year"
+  },
+  "failed": "Failed",
+  "@failed": {
+    "description": "Status for failing a course or year"
+  },
+  "hello": "Hello, {value} ",
+  "@hello": {
+    "description": "greating message",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "John Doe",
+        "description": "take student name as param"
+      }
+    }
+  },
+  "subjectsAndCoefficients": "Subjects & Coefficients",
+  "@subjectsAndCoefficients": {
+    "description": "Title for subjects and coefficients section"
+  }
+}

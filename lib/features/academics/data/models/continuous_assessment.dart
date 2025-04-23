@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+
 class ContinuousAssessment {
   final bool absent;
   final String apCode; // Assessment type code (PRJ, TD, TP)
@@ -66,14 +69,14 @@ class ContinuousAssessment {
   }
 
   // Helper method to get the assessment type label
-  String get assessmentTypeLabel {
+  String assessmentTypeLabel(BuildContext context) {
     switch (apCode) {
       case 'PRJ':
-        return 'Project';
+        return GalleryLocalizations.of(context)!.project;
       case 'TD':
-        return 'Tutorial Work';
+        return GalleryLocalizations.of(context)!.tutorialWork;
       case 'TP':
-        return 'Practical Work';
+        return GalleryLocalizations.of(context)!.practicalWork;
       default:
         return apCode;
     }

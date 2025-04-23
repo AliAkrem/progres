@@ -9,6 +9,7 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/transcript/presentation/widgets/result_item.dart';
 import 'package:progres/features/transcript/presentation/widgets/status_badge.dart';
 import 'package:progres/features/transcript/presentation/widgets/semester_info_chip.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class TranscriptPage extends StatefulWidget {
   const TranscriptPage({super.key});
@@ -47,12 +48,12 @@ class _TranscriptPageState extends State<TranscriptPage>
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: const Text('Academic Transcripts'),
+        title: Text(GalleryLocalizations.of(context)!.academicTranscripts),
         actions: [
           // Refresh button
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh Data',
+            tooltip: GalleryLocalizations.of(context)!.refreshData,
             onPressed: () {
               if (_enrollments.isNotEmpty) {
                 // Force refresh current data
@@ -65,8 +66,10 @@ class _TranscriptPageState extends State<TranscriptPage>
                 );
 
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Refreshing data...'),
+                  SnackBar(
+                    content: Text(
+                      GalleryLocalizations.of(context)!.refreshingData,
+                    ),
                     duration: Duration(seconds: 1),
                   ),
                 );
@@ -110,7 +113,7 @@ class _TranscriptPageState extends State<TranscriptPage>
           } else if (state is TranscriptError) {
             return Center(
               child: Text(
-                'Error: ${state.message}',
+                GalleryLocalizations.of(context)!.somthingWentWrong,
                 style: theme.textTheme.bodyLarge,
               ),
             );
@@ -165,7 +168,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ? _buildTranscriptsView(state, theme)
                   : Center(
                     child: Text(
-                      'Select an academic year',
+                      GalleryLocalizations.of(context)!.selectAcademicYear,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,
@@ -200,7 +203,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Cached data',
+                    GalleryLocalizations.of(context)!.cachedData,
                     style: TextStyle(
                       fontSize: 12,
                       color: theme.colorScheme.secondary,
@@ -245,7 +248,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(
@@ -255,7 +258,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                               ),
                               SizedBox(width: 8),
                               Text(
-                                'ANNUAL RESULTS',
+                                GalleryLocalizations.of(context)!.annualResults,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -269,14 +272,16 @@ class _TranscriptPageState extends State<TranscriptPage>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               ResultItem(
-                                label: 'Average',
+                                label:
+                                    GalleryLocalizations.of(context)!.average,
                                 value: annualSummary.moyenne.toStringAsFixed(2),
                                 color: AppTheme.AppPrimary,
                                 icon: Icons.bar_chart_rounded,
                                 compact: true,
                               ),
                               ResultItem(
-                                label: 'Credits',
+                                label:
+                                    GalleryLocalizations.of(context)!.credits,
                                 value: annualSummary.creditAcquis.toString(),
                                 color: AppTheme.accentBlue,
                                 icon: Icons.school_rounded,
@@ -309,7 +314,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           const SizedBox(width: 8),
                           Text(
                             state.selectedEnrollment.niveauLibelleLongLt ??
-                                'Unknown Level',
+                                GalleryLocalizations.of(context)!.unknownLevel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -329,7 +334,11 @@ class _TranscriptPageState extends State<TranscriptPage>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'Academic Year: ${state.selectedEnrollment.anneeAcademiqueCode}',
+                            GalleryLocalizations.of(
+                              context,
+                            )!.academicYearWrapper(
+                              state.selectedEnrollment.anneeAcademiqueCode,
+                            ),
                             style: theme.textTheme.bodyMedium,
                           ),
                         ],
@@ -527,7 +536,9 @@ class _TranscriptPageState extends State<TranscriptPage>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Coef: ${module.coefficient}',
+                      GalleryLocalizations.of(
+                        context,
+                      )!.coefficient(module.coefficient.toString()),
                       style: TextStyle(
                         fontSize: 11,
                         color: theme.textTheme.bodySmall?.color,

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CourseCoefficient {
   final double coefficientControleContinu;
   final double coefficientControleIntermediaire;
@@ -53,5 +55,31 @@ class CourseCoefficient {
       return value;
     }
     return 0.0; // Default fallback
+  }
+}
+
+class LocalizedCourseCoefficient {
+  final CourseCoefficient courseCoefficient;
+  final Locale deviceLocal;
+
+  LocalizedCourseCoefficient({
+    required this.courseCoefficient,
+    required this.deviceLocal,
+  });
+
+  isAr() {
+    return deviceLocal.languageCode.startsWith('ar');
+  }
+
+  String get mcLibelle {
+    return isAr()
+        ? courseCoefficient.mcLibelleAr
+        : courseCoefficient.mcLibelleFr;
+  }
+
+  String get periodeLibelle {
+    return isAr()
+        ? courseCoefficient.periodeLibelleAr
+        : courseCoefficient.periodeLibelleFr;
   }
 }

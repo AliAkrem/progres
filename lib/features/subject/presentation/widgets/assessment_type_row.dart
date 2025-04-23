@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class AssessmentTypeRow extends StatelessWidget {
   final String type;
@@ -70,7 +71,7 @@ class AssessmentTypeRow extends StatelessWidget {
                       ),
                     )
                     : Text(
-                      'N/A',
+                      GalleryLocalizations.of(context)!.notAvailable,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,

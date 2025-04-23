@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class ErrorState extends StatelessWidget {
   final StudentGroupsError state;
@@ -25,7 +26,7 @@ class ErrorState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Error: ${state.message}',
+              GalleryLocalizations.of(context)!.somthingWentWrong,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
             ),
@@ -36,7 +37,7 @@ class ErrorState extends StatelessWidget {
                   LoadStudentGroups(cardId: profileState.detailedInfo.id),
                 );
               },
-              child: const Text('Retry'),
+              child: Text(GalleryLocalizations.of(context)!.retry),
             ),
           ],
         ),

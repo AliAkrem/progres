@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Enrollment {
   final String anneeAcademiqueCode;
   final int anneeAcademiqueId;
@@ -87,5 +89,51 @@ class Enrollment {
       'refLibelleCycleAr': refLibelleCycleAr,
       'situationId': situationId,
     };
+  }
+}
+
+class LocalizedEnrollment {
+  final Enrollment enrollment;
+  final Locale deviceLocale;
+  LocalizedEnrollment({required this.deviceLocale, required this.enrollment});
+
+  isAr() {
+    return deviceLocale.languageCode == 'ar';
+  }
+
+  String get llEtablissement {
+    return isAr()
+        ? enrollment.llEtablissementArabe ?? ''
+        : enrollment.llEtablissementLatin ?? '';
+  }
+
+  String get niveauLibelleLong {
+    return isAr()
+        ? enrollment.niveauLibelleLongAr ?? ''
+        : enrollment.niveauLibelleLongLt ?? '';
+  }
+
+  String get ofLlDomaine {
+    return isAr()
+        ? enrollment.ofLlDomaineArabe ?? ''
+        : enrollment.ofLlDomaine ?? '';
+  }
+
+  String get ofLlFiliere {
+    return isAr()
+        ? enrollment.ofLlFiliereArabe ?? ''
+        : enrollment.ofLlFiliere ?? '';
+  }
+
+  String get ofLlSpecialite {
+    return isAr()
+        ? enrollment.ofLlSpecialiteArabe ?? ''
+        : enrollment.ofLlSpecialite ?? '';
+  }
+
+  String get refLibelleCycle {
+    return isAr()
+        ? enrollment.refLibelleCycleAr ?? ''
+        : enrollment.refLibelleCycle ?? '';
   }
 }

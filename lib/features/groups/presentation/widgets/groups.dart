@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/groups/data/models/group.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class GroupsContent extends StatelessWidget {
   final List<StudentGroup> groups;
@@ -100,7 +101,9 @@ class GroupCard extends StatelessWidget {
                           ),
                           SizedBox(width: isSmallScreen ? 3 : 4),
                           Text(
-                            'Section: ${group.nomSection}',
+                            GalleryLocalizations.of(
+                              context,
+                            )!.section(group.nomSection),
                             style: TextStyle(
                               fontSize: isSmallScreen ? 12 : 14,
                               color:
@@ -185,14 +188,14 @@ class EmptyGroup extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'No groups assigned',
+            GalleryLocalizations.of(context)!.noGroupData,
             style: theme.textTheme.titleLarge?.copyWith(
               fontSize: isSmallScreen ? 18 : 20,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            'You are not assigned to any pedagogical groups yet.',
+            GalleryLocalizations.of(context)!.notAssignedToGroups,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),

@@ -36,7 +36,6 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
           final cachedEnrollments =
               await enrollmentCacheService.getCachedEnrollments();
           if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
-            print('Using cached enrollments');
             emit(
               EnrollmentsLoaded(
                 enrollments: cachedEnrollments,

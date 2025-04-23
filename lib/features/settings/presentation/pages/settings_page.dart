@@ -5,6 +5,8 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
+import "package:flutter_gen/gen_l10n/gallery_localizations.dart";
+import 'package:progres/features/settings/presentation/pages/switch_lang_modal.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -16,7 +18,7 @@ class SettingsPage extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(GalleryLocalizations.of(context)!.settings)),
       body: ListView(
         children: [
           ListTile(
@@ -26,13 +28,13 @@ class SettingsPage extends StatelessWidget {
               size: isSmallScreen ? 22 : 24,
             ),
             title: Text(
-              'Language',
+              GalleryLocalizations.of(context)!.language,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontSize: isSmallScreen ? 14 : 16,
               ),
             ),
             subtitle: Text(
-              'English',
+              GalleryLocalizations.of(context)!.selectedLanguage,
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontSize: isSmallScreen ? 12 : 14,
               ),
@@ -47,7 +49,11 @@ class SettingsPage extends StatelessWidget {
               vertical: isSmallScreen ? 8 : 12,
             ),
             onTap: () {
-              // Language settings could be implemented here
+              showSwitchLangModal(
+                context,
+                title: GalleryLocalizations.of(context)!.switchLanguage,
+                description: "",
+              );
             },
           ),
           BlocBuilder<ThemeBloc, ThemeState>(
@@ -59,13 +65,13 @@ class SettingsPage extends StatelessWidget {
                   size: isSmallScreen ? 22 : 24,
                 ),
                 title: Text(
-                  'Theme',
+                  GalleryLocalizations.of(context)!.theme,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: isSmallScreen ? 14 : 16,
                   ),
                 ),
                 subtitle: Text(
-                  _getThemeText(state.themeMode),
+                  _getThemeText(state.themeMode, context),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: isSmallScreen ? 12 : 14,
                   ),
@@ -92,7 +98,7 @@ class SettingsPage extends StatelessWidget {
               size: isSmallScreen ? 22 : 24,
             ),
             title: Text(
-              'Notifications',
+              GalleryLocalizations.of(context)!.notifications,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontSize: isSmallScreen ? 14 : 16,
               ),
@@ -118,7 +124,7 @@ class SettingsPage extends StatelessWidget {
               size: isSmallScreen ? 22 : 24,
             ),
             title: Text(
-              'About',
+              GalleryLocalizations.of(context)!.about,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontSize: isSmallScreen ? 14 : 16,
               ),
@@ -150,7 +156,7 @@ class SettingsPage extends StatelessWidget {
                 size: isSmallScreen ? 22 : 24,
               ),
               title: Text(
-                'Logout',
+                GalleryLocalizations.of(context)!.logout,
                 style: TextStyle(
                   color: AppTheme.accentRed,
                   fontSize: isSmallScreen ? 14 : 16,
@@ -166,13 +172,13 @@ class SettingsPage extends StatelessWidget {
                   builder:
                       (context) => AlertDialog(
                         title: Text(
-                          'Logout',
+                          GalleryLocalizations.of(context)!.logout,
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontSize: isSmallScreen ? 18 : 20,
                           ),
                         ),
                         content: Text(
-                          'Are you sure you want to logout?',
+                          GalleryLocalizations.of(context)!.logoutConfirmation,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontSize: isSmallScreen ? 14 : 16,
                           ),
@@ -180,7 +186,9 @@ class SettingsPage extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
+                            child: Text(
+                              GalleryLocalizations.of(context)!.cancel,
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
@@ -189,7 +197,9 @@ class SettingsPage extends StatelessWidget {
                                 LogoutEvent(context: context),
                               );
                             },
-                            child: const Text('Logout'),
+                            child: Text(
+                              GalleryLocalizations.of(context)!.logout,
+                            ),
                           ),
                         ],
                       ),
@@ -202,14 +212,14 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  String _getThemeText(ThemeMode themeMode) {
+  String _getThemeText(ThemeMode themeMode, BuildContext context) {
     switch (themeMode) {
       case ThemeMode.light:
-        return 'Light';
+        return GalleryLocalizations.of(context)!.light;
       case ThemeMode.dark:
-        return 'Dark';
+        return GalleryLocalizations.of(context)!.dark;
       case ThemeMode.system:
-        return 'System default';
+        return GalleryLocalizations.of(context)!.systemDefault;
     }
   }
 
@@ -226,7 +236,7 @@ class SettingsPage extends StatelessWidget {
       builder:
           (context) => AlertDialog(
             title: Text(
-              'Select Theme',
+              GalleryLocalizations.of(context)!.selectTheme,
               style: theme.textTheme.titleLarge?.copyWith(
                 fontSize: isSmallScreen ? 18 : 20,
               ),
@@ -244,21 +254,21 @@ class SettingsPage extends StatelessWidget {
                   context,
                   ThemeMode.light,
                   currentThemeMode,
-                  'Light',
+                  GalleryLocalizations.of(context)!.light,
                   Icons.light_mode,
                 ),
                 _buildThemeOption(
                   context,
                   ThemeMode.dark,
                   currentThemeMode,
-                  'Dark',
+                  GalleryLocalizations.of(context)!.dark,
                   Icons.dark_mode,
                 ),
                 _buildThemeOption(
                   context,
                   ThemeMode.system,
                   currentThemeMode,
-                  'System default',
+                  GalleryLocalizations.of(context)!.systemDefault,
                   Icons.settings_suggest,
                 ),
               ],
@@ -267,7 +277,7 @@ class SettingsPage extends StatelessWidget {
               TextButton(
                 onPressed: () => Navigator.pop(context),
                 child: Text(
-                  'Cancel',
+                  GalleryLocalizations.of(context)!.cancel,
                   style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
                 ),
               ),

@@ -1,18 +1,23 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:progres/config/options.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/dashboard/presentation/widgets/card.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 Widget buildDashboard(ProfileLoaded state, BuildContext context) {
   final theme = Theme.of(context);
   final screenSize = MediaQuery.of(context).size;
   final isSmallScreen = screenSize.width < 360;
   final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
+  final studentName =
+      deviceLocale!.languageCode == 'ar'
+          ? state.basicInfo.prenomArabe
+          : state.basicInfo.prenomLatin;
 
   return SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
@@ -51,7 +56,7 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hello, ${state.basicInfo.prenomLatin}',
+                      GalleryLocalizations.of(context)!.hello(studentName),
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: isSmallScreen ? 20 : 24,
@@ -59,7 +64,9 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      'Academic Year: ${state.academicYear.code}',
+                      GalleryLocalizations.of(
+                        context,
+                      )!.academicYearWrapper(state.academicYear.code),
                       style: theme.textTheme.bodyLarge?.copyWith(
                         fontSize: isSmallScreen ? 13 : 14,
                       ),
@@ -73,7 +80,6 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
 
           SizedBox(height: isSmallScreen ? 24 : 32),
 
-          // Grid of cards
           GridView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -86,42 +92,46 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
             children: [
               buildGridCard(
                 context,
-                title: 'Academic Performance',
+                title:
+                    GalleryLocalizations.of(
+                      context,
+                    )!.academicPerformancePageTitle,
                 icon: Icons.assignment_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.academicPerformancePath),
               ),
               buildGridCard(
                 context,
-                title: 'Subjects & Coefficients',
+                title:
+                    GalleryLocalizations.of(context)!.subjectsAndCoefficients,
                 icon: Icons.school_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.subjects),
               ),
               buildGridCard(
                 context,
-                title: 'My Groups',
+                title: GalleryLocalizations.of(context)!.myGroups,
                 icon: Icons.group_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.groups),
               ),
               buildGridCard(
                 context,
-                title: 'Academic History',
+                title: GalleryLocalizations.of(context)!.academicHistory,
                 icon: Icons.history_edu_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.enrollments),
               ),
               buildGridCard(
                 context,
-                title: 'Weekly Schedule',
+                title: GalleryLocalizations.of(context)!.weeklySchedule,
                 icon: Icons.calendar_today_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.timeline),
               ),
               buildGridCard(
                 context,
-                title: 'Academic Transcripts',
+                title: GalleryLocalizations.of(context)!.academicTranscripts,
                 icon: Icons.menu_book_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.transcripts),

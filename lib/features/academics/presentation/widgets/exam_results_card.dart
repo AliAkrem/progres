@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/config/theme/app_theme.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class ExamResultsCard extends StatelessWidget {
   final List<ExamResult> examResults;
@@ -16,7 +17,7 @@ class ExamResultsCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
-            'No exam results available yet',
+            GalleryLocalizations.of(context)!.noExamResultsYet,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               color: theme.textTheme.bodyMedium?.color,
@@ -84,7 +85,10 @@ class ExamResultsCard extends StatelessWidget {
 
                     // Display exam results for this course
                     ...courseResults
-                        .map((result) => _buildExamResultRow(result, theme))
+                        .map(
+                          (result) =>
+                              _buildExamResultRow(result, theme, context),
+                        )
                         .toList(),
 
                     // Appeal information if available
@@ -111,8 +115,12 @@ class ExamResultsCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               courseResults.first.recoursDemande == true
-                                  ? 'Appeal Requested'
-                                  : 'Appeal Available',
+                                  ? GalleryLocalizations.of(
+                                    context,
+                                  )!.appealRequested
+                                  : GalleryLocalizations.of(
+                                    context,
+                                  )!.appealAvailable,
                               style: TextStyle(
                                 fontSize: 12,
                                 color:
@@ -135,7 +143,11 @@ class ExamResultsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildExamResultRow(ExamResult result, ThemeData theme) {
+  Widget _buildExamResultRow(
+    ExamResult result,
+    ThemeData theme,
+    BuildContext context,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
       child: Row(
@@ -170,7 +182,9 @@ class ExamResultsCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    'Coef: ${result.rattachementMcCoefficient}',
+                    GalleryLocalizations.of(
+                      context,
+                    )!.coefficient(result.rattachementMcCoefficient.toString()),
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: AppTheme.accentGreen,
@@ -217,7 +231,7 @@ class ExamResultsCard extends StatelessWidget {
                       ),
                     )
                     : Text(
-                      'N/A',
+                      GalleryLocalizations.of(context)!.notAvailable,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,

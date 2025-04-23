@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 Widget buildErrorState(ProfileError state, BuildContext context) {
   final theme = Theme.of(context);
@@ -21,7 +22,7 @@ Widget buildErrorState(ProfileError state, BuildContext context) {
           ),
           const SizedBox(height: 16),
           Text(
-            'Error: ${state.message}',
+            GalleryLocalizations.of(context)!.somthingWentWrong,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color),
             textAlign: TextAlign.center,
             maxLines: 3,
@@ -33,7 +34,7 @@ Widget buildErrorState(ProfileError state, BuildContext context) {
               context.read<ProfileBloc>().add(LoadProfileEvent());
             },
             icon: const Icon(Icons.refresh),
-            label: const Text('Retry'),
+            label: Text(GalleryLocalizations.of(context)!.retry),
           ),
         ],
       ),
