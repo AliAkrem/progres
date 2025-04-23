@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:progres/app.dart';
 import 'package:progres/core/di/injector.dart';
@@ -52,7 +51,6 @@ class _MyAppState extends State<MyApp> {
       initialModel: AppOptions(
         customTextDirection: CustomTextDirection.localeBased,
         locale: _locale,
-        platform: defaultTargetPlatform,
       ),
       child: Builder(
         builder: (context) {

@@ -18,25 +18,19 @@ set deviceLocale(Locale? locale) {
 }
 
 class AppOptions {
-  AppOptions({
-    required this.customTextDirection,
-    Locale? locale,
-    required this.platform,
-  }) : _locale = locale;
+  AppOptions({required this.customTextDirection, Locale? locale})
+    : _locale = locale;
 
   final CustomTextDirection customTextDirection;
   final Locale? _locale;
-  final TargetPlatform platform;
 
   AppOptions copyWith({
     CustomTextDirection? customTextDirection,
     Locale? locale,
-    TargetPlatform? platform,
   }) {
     return AppOptions(
       customTextDirection: customTextDirection ?? this.customTextDirection,
       locale: locale ?? this.locale,
-      platform: platform ?? this.platform,
     );
   }
 
@@ -44,11 +38,10 @@ class AppOptions {
   bool operator ==(Object other) =>
       other is AppOptions &&
       customTextDirection == other.customTextDirection &&
-      locale == other.locale &&
-      platform == other.platform;
+      locale == other.locale;
 
   @override
-  int get hashCode => Object.hash(customTextDirection, locale, platform);
+  int get hashCode => Object.hash(customTextDirection, locale);
 
   Locale? get locale => _locale ?? deviceLocale;
 
