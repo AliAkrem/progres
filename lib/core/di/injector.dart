@@ -13,6 +13,7 @@ import 'package:progres/features/groups/data/repository/group_repository_impl.da
 import 'package:progres/features/groups/data/services/groups_cache_service.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
+import 'package:progres/features/profile/data/services/profile_cache_service.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
 import 'package:progres/features/subject/data/services/subject_cache_service.dart';
@@ -63,9 +64,15 @@ Future<void> initDependencies() async {
   injector.registerFactory(
     () => AuthBloc(authRepository: injector())..add(CheckAuthStatusEvent()),
   );
+
+  injector.registerFactory(() => ProfileCacheService());
+
   injector.registerFactory(
-    () =>
-        ProfileBloc(studentRepository: injector(), authRepository: injector()),
+    () => ProfileBloc(
+      studentRepository: injector(),
+      authRepository: injector(),
+      cacheService: injector(),
+    ),
   );
   injector.registerFactory(
     () => AcademicsBloc(academicPerformanceRepository: injector()),

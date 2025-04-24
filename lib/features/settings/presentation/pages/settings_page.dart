@@ -17,6 +17,7 @@ class SettingsPage extends StatelessWidget {
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
+    final authState = context.read<AuthBloc>().state;
 
     return Scaffold(
       appBar: AppBar(title: Text(GalleryLocalizations.of(context)!.settings)),
@@ -146,12 +147,14 @@ class SettingsPage extends StatelessWidget {
             },
           ),
 
-          BlocBuilder<AuthBloc, AuthState>(
-            builder: (context, state) {
-              if (state is! AuthSuccess) {
-                return Container();
-              }
-              return ListTile(
+          if (authState is AuthSuccess)
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthLoggedOut) {
+                  context.goNamed(AppRouter.login);
+                }
+              },
+              child: ListTile(
                 leading: Icon(
                   Icons.exit_to_app,
                   color: AppTheme.accentRed,
@@ -200,7 +203,6 @@ class SettingsPage extends StatelessWidget {
                                 context.read<AuthBloc>().add(
                                   LogoutEvent(context: context),
                                 );
-                                context.goNamed(AppRouter.login);
                               },
                               child: Text(
                                 GalleryLocalizations.of(context)!.logout,
@@ -210,9 +212,8 @@ class SettingsPage extends StatelessWidget {
                         ),
                   );
                 },
-              );
-            },
-          ),
+              ),
+            ),
         ],
       ),
     );
@@ -344,7 +345,6 @@ class SettingsPage extends StatelessWidget {
       ),
       onTap: () {
         context.read<ThemeBloc>().add(ThemeChanged(themeMode));
-        // Navigator.pop(context);
       },
     );
   }

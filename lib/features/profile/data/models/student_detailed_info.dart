@@ -58,4 +58,26 @@ class StudentDetailedInfo {
       transportPaye: json['transportPaye'] as bool,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'anneeAcademiqueCode': anneeAcademiqueCode,
+      'anneeAcademiqueId': anneeAcademiqueId,
+      'id': id,
+      'individuNomArabe': individuNomArabe,
+      'individuNomLatin': individuNomLatin,
+      'individuPrenomArabe': individuPrenomArabe,
+      'individuPrenomLatin': individuPrenomLatin,
+      'niveauId': niveauId,
+      'niveauLibelleLongAr': niveauLibelleLongAr,
+      'niveauLibelleLongLt': niveauLibelleLongLt,
+      'numeroInscription': numeroInscription,
+      'ouvertureOffreFormationId': ouvertureOffreFormationId,
+      'photo': photo,
+      'refLibelleCycle': refLibelleCycle,
+      'refLibelleCycleAr': refLibelleCycleAr,
+      'situationId': situationId,
+      'transportPaye': transportPaye,
+    };
+  }
 }

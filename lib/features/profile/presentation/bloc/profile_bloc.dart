@@ -7,6 +7,7 @@ import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
 import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
+import 'package:progres/features/profile/data/services/profile_cache_service.dart';
 
 // Events
 abstract class ProfileEvent extends Equatable {
@@ -83,12 +84,17 @@ class ProfileError extends ProfileState {
 }
 
 // BLoC
+
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final StudentRepositoryImpl studentRepository;
   final AuthRepositoryImpl authRepository;
+  final ProfileCacheService cacheService;
 
-  ProfileBloc({required this.studentRepository, required this.authRepository})
-    : super(ProfileInitial()) {
+  ProfileBloc({
+    required this.studentRepository,
+    required this.authRepository,
+    required this.cacheService,
+  }) : super(ProfileInitial()) {
     on<LoadProfileEvent>(_onLoadProfile);
     // on<LoadEnrollmentsEvent>(_onLoadEnrollments);
   }
@@ -98,6 +104,41 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     try {
+      // Try to load cached profile first
+      final cachedProfileData = await cacheService.getCachedProfileData();
+      if (cachedProfileData != null) {
+        // Create dummy models from cached data or adapt as needed
+        // Here we do simple null checks and assign cached JSON to minimal model fields for demo
+        // Adjust according to your real model constructors for proper deserialization
+        final basicInfo = StudentBasicInfo.fromJson(
+          cachedProfileData['basicInfo'],
+        );
+        final academicYear = AcademicYear.fromJson(
+          cachedProfileData['academicYear'],
+        );
+        final detailedInfo = StudentDetailedInfo.fromJson(
+          cachedProfileData['detailedInfo'],
+        );
+        final academicPeriodsJson = cachedProfileData['academicPeriods'] ?? [];
+        final academicPeriods =
+            academicPeriodsJson
+                .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
+                .toList();
+        final profileImage = cachedProfileData['profileImage'] as String?;
+        final institutionLogo = cachedProfileData['institutionLogo'] as String?;
+
+        emit(
+          ProfileLoaded(
+            basicInfo: basicInfo,
+            academicYear: academicYear,
+            detailedInfo: detailedInfo,
+            academicPeriods: academicPeriods,
+            profileImage: profileImage,
+            institutionLogo: institutionLogo,
+          ),
+        );
+      }
+
       emit(ProfileLoading());
 
       // Fetch current academic year
@@ -139,6 +180,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         // Institution logo not available, continue without it
       }
 
+      // Cache latest profile data
+      await cacheService.cacheProfileData({
+        'basicInfo': basicInfo.toJson(),
+        'academicYear': academicYear.toJson(),
+        'detailedInfo': detailedInfo.toJson(),
+        'academicPeriods': academicPeriods.map((e) => e.toJson()).toList(),
+        'profileImage': profileImage,
+        'institutionLogo': institutionLogo,
+      });
+
       emit(
         ProfileLoaded(
           basicInfo: basicInfo,
@@ -150,7 +201,39 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       );
     } catch (e) {
-      emit(ProfileError(e.toString()));
+      // On error, fallback to cache one last time
+      final cachedProfileData = await cacheService.getCachedProfileData();
+      if (cachedProfileData != null) {
+        final basicInfo = StudentBasicInfo.fromJson(
+          cachedProfileData['basicInfo'],
+        );
+        final academicYear = AcademicYear.fromJson(
+          cachedProfileData['academicYear'],
+        );
+        final detailedInfo = StudentDetailedInfo.fromJson(
+          cachedProfileData['detailedInfo'],
+        );
+        final academicPeriodsJson = cachedProfileData['academicPeriods'] ?? [];
+        final academicPeriods =
+            academicPeriodsJson
+                .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
+                .toList();
+        final profileImage = cachedProfileData['profileImage'] as String?;
+        final institutionLogo = cachedProfileData['institutionLogo'] as String?;
+
+        emit(
+          ProfileLoaded(
+            basicInfo: basicInfo,
+            academicYear: academicYear,
+            detailedInfo: detailedInfo,
+            academicPeriods: academicPeriods,
+            profileImage: profileImage,
+            institutionLogo: institutionLogo,
+          ),
+        );
+      } else {
+        emit(ProfileError(e.toString()));
+      }
     }
   }
 }

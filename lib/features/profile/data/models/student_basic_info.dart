@@ -34,4 +34,18 @@ class StudentBasicInfo {
       prenomLatin: json['prenomLatin'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'dateNaissance': dateNaissance,
+      'id': id,
+      'lieuNaissance': lieuNaissance,
+      'lieuNaissanceArabe': lieuNaissanceArabe,
+      'nomArabe': nomArabe,
+      'nomLatin': nomLatin,
+      'nss': nss,
+      'prenomArabe': prenomArabe,
+      'prenomLatin': prenomLatin,
+    };
+  }
 }

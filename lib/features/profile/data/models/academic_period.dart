@@ -34,4 +34,18 @@ class AcademicPeriod {
       rang: json['rang'] as int,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'code': code,
+      'id': id,
+      'libelleLongAr': libelleLongAr,
+      'libelleLongArCycle': libelleLongArCycle,
+      'libelleLongArNiveau': libelleLongArNiveau,
+      'libelleLongFrCycle': libelleLongFrCycle,
+      'libelleLongFrNiveau': libelleLongFrNiveau,
+      'libelleLongLt': libelleLongLt,
+      'rang': rang,
+    };
+  }
 }

@@ -7,4 +7,8 @@ class AcademicYear {
   factory AcademicYear.fromJson(Map<String, dynamic> json) {
     return AcademicYear(id: json['id'] as int, code: json['code'] as String);
   }
+
+  Map<String, dynamic> toJson() {
+    return {'id': id, 'code': code};
+  }
 }
