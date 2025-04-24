@@ -471,5 +471,67 @@
   "subjectsAndCoefficients": "Subjects & Coefficients",
   "@subjectsAndCoefficients": {
     "description": "Title for subjects and coefficients section"
+  },
+  "aboutPage": "About Progres",
+  "@aboutPage": {
+    "description": "Title for about page"
+  },
+  "version": "Version {value}",
+  "@version": {
+    "description": "Version number of the app",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description of the app"
+  },
+  "descriptionText": "Progres is a modern, independently developed mobile application that reimagines the Progres/Webetu platform. Designed with a focus on enhanced user experience, it leverages Material Design principles to provide university students with seamless access to their academic information, both online and offline.",
+  "@descriptionText": {
+    "description": "Description text of the app"
+  },
+  "purpose": "Purpose",
+  "@purpose": {
+    "description": "Purpose of the app"
+  },
+  "purposeText": "The primary goal of Progres is to offer a more intuitive and responsive alternative to the traditional Progres/Webetu system. By addressing usability challenges and incorporating offline capabilities, Progres ensures that students can reliably access their academic data anytime, anywhere.",
+  "@purposeText": {
+    "description": "Purpose text of the app"
+  },
+  "license": "License",
+  "@license": {
+    "description": "License information"
+  },
+  "licenseText": "Progres is released under the MIT License, allowing for open collaboration and distribution.",
+  "@licenseText": {
+    "description": "License text of the app"
+  },
+  "projectStatus": "Project Status",
+  "@projectStatus": {
+    "description": "Current status of the project"
+  },
+  "projectStatusText": "The project is actively maintained, with ongoing efforts to enhance functionality, address user feedback, and ensure compatibility with the latest platform updates.",
+  "@projectStatusText": {
+    "description": "Project status text of the app"
+  },
+  "contribution": "Contributions",
+  "@contribution": {
+    "description": "Contributions to the project"
+  },
+  "contributionText": "Contributions are welcome! If you're interested in improving this project, feel free to fork the repository, make your changes, and submit a pull request.",
+  "@contributionText": {
+    "description": "Contribution text of the app"
+  },
+  "viewLicense": "View License",
+  "@viewLicense": {
+    "description": "View License button"
+  },
+  "viewonGitHub": "View on GitHub",
+  "@viewonGitHub": {
+    "description": "link to github"
   }
 }

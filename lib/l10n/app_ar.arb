@@ -490,5 +490,67 @@
   "failed": "فشل",
   "@failed": {
     "description": "حالة فشل دورة أو سنة"
+  },
+  "aboutPage": "حول تطبيق Progres",
+  "@aboutPage": {
+    "description": "عنوان صفحة حول التطبيق"
+  },
+  "version": "الإصدار {value}",
+  "@version": {
+    "description": "رقم إصدار التطبيق",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  },
+  "description": "الوصف",
+  "@description": {
+    "description": "وصف التطبيق"
+  },
+  "descriptionText": "تطبيق Progres هو نسخة مطوّرة وحديثة من منصة Progres/Webetu، تم تطويره بشكل مستقل مع التركيز على تجربة المستخدم. يستخدم مبادئ تصميم Material Design لتوفير تجربة سلسة تتيح للطلاب الجامعيين الوصول إلى معلوماتهم الأكاديمية بسهولة،",
+  "@descriptionText": {
+    "description": "النص الوصفي للتطبيق"
+  },
+  "purpose": "الهدف",
+  "@purpose": {
+    "description": "هدف التطبيق"
+  },
+  "purposeText": "الهدف الأساسي من تطبيق Progres هو تقديم بديل أكثر سلاسة وتفاعلية لنظام Progres/Webetu التقليدي. ومن خلال معالجة التحديات المتعلقة بسهولة الاستخدام وتوفير دعم للوضع غير المتصل، يضمن التطبيق للطلبة إمكانية الوصول إلى بياناتهم الأكاديمية في أي وقت ومن أي مكان.",
+  "@purposeText": {
+    "description": "النص المعبّر عن هدف التطبيق"
+  },
+  "license": "الترخيص",
+  "@license": {
+    "description": "معلومات الترخيص"
+  },
+  "licenseText": "تطبيق Progres متاح بموجب ترخيص MIT، مما يتيح التعاون المفتوح والتوزيع بحرية.",
+  "@licenseText": {
+    "description": "نص الترخيص الخاص بالتطبيق"
+  },
+  "projectStatus": "حالة المشروع",
+  "@projectStatus": {
+    "description": "الحالة الحالية للمشروع"
+  },
+  "projectStatusText": "المشروع في حالة صيانة نشطة، مع جهود مستمرة لتحسين الوظائف، والاستجابة لملاحظات المستخدمين، وضمان التوافق مع آخر تحديثات المنصات.",
+  "@projectStatusText": {
+    "description": "نص حالة المشروع"
+  },
+  "contribution": "المساهمات",
+  "@contribution": {
+    "description": "المساهمات في المشروع"
+  },
+  "contributionText": "نرحب بالمساهمات! إذا كنت مهتمًا بتطوير هذا المشروع، يمكنك عمل fork للمستودع، وإجراء التعديلات اللازمة، ثم إرسال طلب دمج (pull request).",
+  "@contributionText": {
+    "description": "نص حول"
+  },
+  "viewLicense": "عرض الترخيص",
+  "@viewLicense": {
+    "description": "عرض زر الترخيص"
+  },
+  "viewonGitHub": "عرض على github",
+  "@viewonGitHub": {
+    "description": "رابط إلى github"
   }
 }

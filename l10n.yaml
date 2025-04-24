@@ -1,6 +1,7 @@
 arb-dir: lib/l10n
 output-localization-file: gallery_localizations.dart
 output-class: GalleryLocalizations
+untranslated-messages-file: desiredFileName.txt
 preferred-supported-locales:
   - en
   - ar

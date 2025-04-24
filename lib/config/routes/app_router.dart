@@ -27,6 +27,7 @@ class AppRouter {
   static const String enrollments = 'enrollments';
   static const String timeline = 'timeline';
   static const String transcripts = 'transcripts';
+  static const String about = 'about';
 
   // Route paths
   static const String loginPath = '/login';
@@ -40,6 +41,7 @@ class AppRouter {
   static const String enrollmentsPath = 'enrollments';
   static const String timelinePath = 'timeline';
   static const String transcriptsPath = 'transcripts';
+  static const String aboutPath = 'about';
 
   late final GoRouter router;
 
@@ -50,17 +52,14 @@ class AppRouter {
         final authState = context.read<AuthBloc>().state;
         final isLoginRoute = state.matchedLocation == loginPath;
 
-        // If the user is not logged in and is not on the login page, redirect to login
         if (authState is! AuthSuccess && !isLoginRoute) {
           return loginPath;
         }
 
-        // If the user is logged in and is on the login page, redirect to dashboard
         if (authState is AuthSuccess && isLoginRoute) {
           return dashboardPath;
         }
 
-        // Otherwise, no redirection needed
         return null;
       },
       routes: [

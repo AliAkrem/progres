@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
+import 'package:progres/features/about/presentation/pages/about.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
@@ -116,7 +117,6 @@ class SettingsPage extends StatelessWidget {
               // Notification settings could be implemented here
             },
           ),
-          Divider(height: isSmallScreen ? 8 : 16),
           ListTile(
             leading: Icon(
               Icons.info,
@@ -139,73 +139,79 @@ class SettingsPage extends StatelessWidget {
               vertical: isSmallScreen ? 8 : 12,
             ),
             onTap: () {
-              // About page could be implemented here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AboutPage()),
+              );
             },
           ),
-          Divider(height: isSmallScreen ? 8 : 16),
-          BlocListener<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is AuthLoggedOut) {
-                context.goNamed(AppRouter.login);
+
+          BlocBuilder<AuthBloc, AuthState>(
+            builder: (context, state) {
+              if (state is! AuthSuccess) {
+                return Container();
               }
-            },
-            child: ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: AppTheme.accentRed,
-                size: isSmallScreen ? 22 : 24,
-              ),
-              title: Text(
-                GalleryLocalizations.of(context)!.logout,
-                style: TextStyle(
+              return ListTile(
+                leading: Icon(
+                  Icons.exit_to_app,
                   color: AppTheme.accentRed,
-                  fontSize: isSmallScreen ? 14 : 16,
+                  size: isSmallScreen ? 22 : 24,
                 ),
-              ),
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: isSmallScreen ? 16 : 24,
-                vertical: isSmallScreen ? 8 : 12,
-              ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder:
-                      (context) => AlertDialog(
-                        title: Text(
-                          GalleryLocalizations.of(context)!.logout,
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontSize: isSmallScreen ? 18 : 20,
-                          ),
-                        ),
-                        content: Text(
-                          GalleryLocalizations.of(context)!.logoutConfirmation,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontSize: isSmallScreen ? 14 : 16,
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Text(
-                              GalleryLocalizations.of(context)!.cancel,
+                title: Text(
+                  GalleryLocalizations.of(context)!.logout,
+                  style: TextStyle(
+                    color: AppTheme.accentRed,
+                    fontSize: isSmallScreen ? 14 : 16,
+                  ),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: isSmallScreen ? 16 : 24,
+                  vertical: isSmallScreen ? 8 : 12,
+                ),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder:
+                        (context) => AlertDialog(
+                          title: Text(
+                            GalleryLocalizations.of(context)!.logout,
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontSize: isSmallScreen ? 18 : 20,
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              context.read<AuthBloc>().add(
-                                LogoutEvent(context: context),
-                              );
-                            },
-                            child: Text(
-                              GalleryLocalizations.of(context)!.logout,
+                          content: Text(
+                            GalleryLocalizations.of(
+                              context,
+                            )!.logoutConfirmation,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontSize: isSmallScreen ? 14 : 16,
                             ),
                           ),
-                        ],
-                      ),
-                );
-              },
-            ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text(
+                                GalleryLocalizations.of(context)!.cancel,
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                context.read<AuthBloc>().add(
+                                  LogoutEvent(context: context),
+                                );
+                                context.goNamed(AppRouter.login);
+                              },
+                              child: Text(
+                                GalleryLocalizations.of(context)!.logout,
+                              ),
+                            ),
+                          ],
+                        ),
+                  );
+                },
+              );
+            },
           ),
         ],
       ),

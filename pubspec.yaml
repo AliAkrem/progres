@@ -26,6 +26,8 @@ dependencies:
   calendar_view: ^1.4.0
   get_it: ^8.0.3
   restart_app: ^1.2.1
+  url_launcher: ^6.2.5
+  package_info_plus: ^8.3.0
 
 dev_dependencies:
   flutter_test:
