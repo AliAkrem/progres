@@ -1,10 +1,16 @@
+import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:progres/core/network/cache_manager.dart';
 
 class ApiClient {
   static const String baseUrl = 'https://progres.mesrs.dz/api';
   late final Dio _dio;
   final FlutterSecureStorage _secureStorage;
+  late final CacheManager _cacheManager;
+  final Duration _shortTimeout = const Duration(seconds: 5);
+  final Connectivity _connectivity = Connectivity();
 
   ApiClient({FlutterSecureStorage? secureStorage})
     : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
@@ -31,6 +37,12 @@ class ApiClient {
         },
       ),
     );
+    CacheManager.getInstance().then((value) => _cacheManager = value);
+  }
+
+  Future<bool> get isConnected async {
+    final result = await _connectivity.checkConnectivity();
+    return result != ConnectivityResult.none;
   }
 
   Future<void> saveToken(String token) async {
@@ -64,14 +76,61 @@ class ApiClient {
     await _secureStorage.delete(key: 'etablissement_id');
   }
 
+  // Generate a cache key string based on path and query parameters
+  String _cacheKey(String path, Map<String, dynamic>? queryParameters) {
+    final queryStr =
+        queryParameters != null
+            ? Uri(queryParameters: queryParameters).query
+            : '';
+    return '$path?$queryStr';
+  }
+
   Future<Response> get(
     String path, {
     Map<String, dynamic>? queryParameters,
   }) async {
+    final key = _cacheKey(path, queryParameters);
+
+    if (!await isConnected) {
+      // offline - use cached data if available
+      final cachedData = _cacheManager.getCache(key);
+      if (cachedData != null) {
+        return Response(
+          requestOptions: RequestOptions(path: path),
+          data: cachedData,
+          statusCode: 200,
+        );
+      } else {
+        // No cache, throw offline error
+        throw DioException(
+          requestOptions: RequestOptions(path: path),
+          error: 'No internet connection and no cached data',
+        );
+      }
+    }
+
     try {
-      final response = await _dio.get(path, queryParameters: queryParameters);
+      // Try to get fresh data with a short timeout for fast fallback on slow responses
+      final response = await _dio.get(
+        path,
+        queryParameters: queryParameters,
+        options: Options(
+          sendTimeout: _shortTimeout,
+          receiveTimeout: _shortTimeout,
+        ),
+      );
+      await _cacheManager.saveCache(key, response.data);
       return response;
     } catch (e) {
+      // On failure, return cached data if available
+      final cachedData = _cacheManager.getCache(key);
+      if (cachedData != null) {
+        return Response(
+          requestOptions: RequestOptions(path: path),
+          data: cachedData,
+          statusCode: 200,
+        );
+      }
       rethrow;
     }
   }
@@ -95,6 +154,24 @@ class WebApiClient extends ApiClient {
     String path, {
     Map<String, dynamic>? queryParameters,
   }) async {
+    final key = _cacheKey(path, queryParameters);
+
+    if (!await isConnected) {
+      final cachedData = _cacheManager.getCache(key);
+      if (cachedData != null) {
+        return Response(
+          requestOptions: RequestOptions(path: path),
+          data: cachedData,
+          statusCode: 200,
+        );
+      } else {
+        throw DioException(
+          requestOptions: RequestOptions(path: path),
+          error: 'No internet connection and no cached data',
+        );
+      }
+    }
+
     try {
       final Map<String, dynamic> proxyQueryParams = {
         'endpoint': "api" + path,
@@ -104,9 +181,22 @@ class WebApiClient extends ApiClient {
       final response = await _dio.get(
         proxyBaseUrl,
         queryParameters: proxyQueryParams,
+        options: Options(
+          sendTimeout: _shortTimeout,
+          receiveTimeout: _shortTimeout,
+        ),
       );
+      await _cacheManager.saveCache(key, response.data);
       return response;
     } catch (e) {
+      final cachedData = _cacheManager.getCache(key);
+      if (cachedData != null) {
+        return Response(
+          requestOptions: RequestOptions(path: path),
+          data: cachedData,
+          statusCode: 200,
+        );
+      }
       rethrow;
     }
   }
