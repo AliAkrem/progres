@@ -5,6 +5,7 @@ import 'package:progres/features/auth/data/models/auth_response.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
+import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_event.dart';
@@ -104,6 +105,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.context?.read<SubjectBloc>().add(ClearSubjectCache());
       } catch (e) {
         print('Note: Could not clear subject cache. ${e.toString()}');
+      }
+      try {
+        event.context?.read<ProfileBloc>().add(ClearProfileCacheEvent());
+      } catch (e) {
+        print('Note: Could not clear profile cache. ${e.toString()}');
       }
 
       emit(AuthLoggedOut());

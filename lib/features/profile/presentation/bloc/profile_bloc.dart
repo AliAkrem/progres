@@ -17,6 +17,8 @@ abstract class ProfileEvent extends Equatable {
 
 class LoadProfileEvent extends ProfileEvent {}
 
+class ClearProfileCacheEvent extends ProfileEvent {}
+
 // States
 abstract class ProfileState extends Equatable {
   @override
@@ -97,6 +99,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }) : super(ProfileInitial()) {
     on<LoadProfileEvent>(_onLoadProfile);
     // on<LoadEnrollmentsEvent>(_onLoadEnrollments);
+    on<ClearProfileCacheEvent>((event, emit) async {
+      await cacheService.clearCache();
+    });
   }
 
   Future<void> _onLoadProfile(
