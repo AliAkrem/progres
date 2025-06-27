@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
+import 'package:progres/features/discharge/presentation/pages/discharge_page.dart';
 import 'package:progres/features/subject/presentation/pages/subject_page.dart';
 import 'package:progres/features/timeline/presentation/pages/timeline_page.dart';
 import 'package:progres/features/transcript/presentation/pages/transcript_page.dart';
@@ -27,6 +28,7 @@ class AppRouter {
   static const String enrollments = 'enrollments';
   static const String timeline = 'timeline';
   static const String transcripts = 'transcripts';
+  static const String discharge = 'discharge';
   static const String about = 'about';
 
   // Route paths
@@ -41,6 +43,7 @@ class AppRouter {
   static const String enrollmentsPath = 'enrollments';
   static const String timelinePath = 'timeline';
   static const String transcriptsPath = 'transcripts';
+  static const String dischargePath = 'discharge';
   static const String aboutPath = 'about';
 
   late final GoRouter router;
@@ -107,6 +110,11 @@ class AppRouter {
                   path: transcriptsPath,
                   name: transcripts,
                   builder: (context, state) => const TranscriptPage(),
+                ),
+                GoRoute(
+                  path: dischargePath,
+                  name: discharge,
+                  builder: (context, state) => const DischargePage(),
                 ),
               ],
             ),
