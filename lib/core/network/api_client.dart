@@ -37,6 +37,10 @@ class ApiClient {
         },
       ),
     );
+    _initializeCacheManager();
+  }
+
+  void _initializeCacheManager() {
     CacheManager.getInstance().then((value) => _cacheManager = value);
   }
 
