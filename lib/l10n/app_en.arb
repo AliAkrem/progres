@@ -533,5 +533,89 @@
   "viewonGitHub": "View on GitHub",
   "@viewonGitHub": {
     "description": "link to github"
+  },
+  "myDischarge": "My Discharge",
+  "@myDischarge": {
+    "description": "Title for discharge page"
+  },
+  "refreshDischarge": "Refresh discharge",
+  "@refreshDischarge": {
+    "description": "Tooltip for refresh discharge button"
+  },
+  "loadDischarge": "Load Discharge",
+  "@loadDischarge": {
+    "description": "Button text to load discharge"
+  },
+  "noDischargeData": "No discharge data available",
+  "@noDischargeData": {
+    "description": "Message shown when no discharge data is available"
+  },
+  "dischargeNotAvailable": "Discharge information is not available at this time.",
+  "@dischargeNotAvailable": {
+    "description": "Description shown when discharge data is not available"
+  },
+  "dischargeStatus": "Discharge Status",
+  "@dischargeStatus": {
+    "description": "Title for discharge status section"
+  },
+  "dischargeStatusDescription": "Your current discharge status across all university services",
+  "@dischargeStatusDescription": {
+    "description": "Description for discharge status section"
+  },
+  "departmentLevel": "Department Level",
+  "@departmentLevel": {
+    "description": "Title for department level discharge"
+  },
+  "departmentDescription": "Academic department clearance",
+  "@departmentDescription": {
+    "description": "Description for department level discharge"
+  },
+  "facultyLibraryLevel": "Faculty Library Level",
+  "@facultyLibraryLevel": {
+    "description": "Title for faculty library level discharge"
+  },
+  "facultyLibraryDescription": "Faculty library books and materials clearance",
+  "@facultyLibraryDescription": {
+    "description": "Description for faculty library level discharge"
+  },
+  "centralLibraryLevel": "Central Library Level",
+  "@centralLibraryLevel": {
+    "description": "Title for central library level discharge"
+  },
+  "centralLibraryDescription": "Central library books and materials clearance",
+  "@centralLibraryDescription": {
+    "description": "Description for central library level discharge"
+  },
+  "residenceLevel": "Residence Level",
+  "@residenceLevel": {
+    "description": "Title for residence level discharge"
+  },
+  "residenceDescription": "University residence accommodation clearance",
+  "@residenceDescription": {
+    "description": "Description for residence level discharge"
+  },
+  "scholarshipServiceLevel": "Scholarship Service Level",
+  "@scholarshipServiceLevel": {
+    "description": "Title for scholarship service level discharge"
+  },
+  "scholarshipServiceDescription": "Scholarship and financial aid clearance",
+  "@scholarshipServiceDescription": {
+    "description": "Description for scholarship service level discharge"
+  },
+  "cleared": "Cleared",
+  "@cleared": {
+    "description": "Status when discharge is cleared"
+  },
+  "pending": "Pending",
+  "@pending": {
+    "description": "Status when discharge is pending"
+  },
+  "dischargeNotRequiredTitle": "No Discharge Required",
+  "@dischargeNotRequiredTitle": {
+    "description": "Title when discharge is not required for the student"
+  },
+  "dischargeNotRequiredDescription": "You are not required to complete any discharge procedures at this time. Your academic status does not require clearance from university services.",
+  "@dischargeNotRequiredDescription": {
+    "description": "Description when discharge is not required for the student"
   }
 }

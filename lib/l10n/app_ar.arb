@@ -552,5 +552,89 @@
   "viewonGitHub": "عرض على github",
   "@viewonGitHub": {
     "description": "رابط إلى github"
+  },
+  "myDischarge": "براءة الذمة",
+  "@myDischarge": {
+    "description": "عنوان صفحة براءة الذمة"
+  },
+  "refreshDischarge": "تحديث براءة الذمة",
+  "@refreshDischarge": {
+    "description": "تلميح لزر تحديث براءة الذمة"
+  },
+  "loadDischarge": "تحميل براءة الذمة",
+  "@loadDischarge": {
+    "description": "نص زر تحميل براءة الذمة"
+  },
+  "noDischargeData": "لا توجد بيانات براءة ذمة متاحة",
+  "@noDischargeData": {
+    "description": "رسالة تظهر عندما لا تتوفر بيانات براءة الذمة"
+  },
+  "dischargeNotAvailable": "معلومات براءة الذمة غير متاحة في الوقت الحالي.",
+  "@dischargeNotAvailable": {
+    "description": "وصف يظهر عندما لا تتوفر بيانات براءة الذمة"
+  },
+  "dischargeStatus": "حالة براءة الذمة",
+  "@dischargeStatus": {
+    "description": "عنوان قسم حالة براءة الذمة"
+  },
+  "dischargeStatusDescription": "حالة براءة الذمة الحالية عبر جميع خدمات الجامعة",
+  "@dischargeStatusDescription": {
+    "description": "وصف قسم حالة براءة الذمة"
+  },
+  "departmentLevel": "مستوى القسم",
+  "@departmentLevel": {
+    "description": "عنوان براءة الذمة على مستوى القسم"
+  },
+  "departmentDescription": "تسوية القسم الأكاديمي",
+  "@departmentDescription": {
+    "description": "وصف براءة الذمة على مستوى القسم"
+  },
+  "facultyLibraryLevel": "مستوى مكتبة الكلية",
+  "@facultyLibraryLevel": {
+    "description": "عنوان براءة الذمة على مستوى مكتبة الكلية"
+  },
+  "facultyLibraryDescription": "تسوية كتب ومواد مكتبة الكلية",
+  "@facultyLibraryDescription": {
+    "description": "وصف براءة الذمة على مستوى مكتبة الكلية"
+  },
+  "centralLibraryLevel": "مستوى المكتبة المركزية",
+  "@centralLibraryLevel": {
+    "description": "عنوان براءة الذمة على مستوى المكتبة المركزية"
+  },
+  "centralLibraryDescription": "تسوية كتب ومواد المكتبة المركزية",
+  "@centralLibraryDescription": {
+    "description": "وصف براءة الذمة على مستوى المكتبة المركزية"
+  },
+  "residenceLevel": "مستوى الإقامة",
+  "@residenceLevel": {
+    "description": "عنوان براءة الذمة على مستوى الإقامة"
+  },
+  "residenceDescription": "تسوية سكن الإقامة الجامعية",
+  "@residenceDescription": {
+    "description": "وصف براءة الذمة على مستوى الإقامة"
+  },
+  "scholarshipServiceLevel": "مستوى خدمة المنح الدراسية",
+  "@scholarshipServiceLevel": {
+    "description": "عنوان براءة الذمة على مستوى خدمة المنح الدراسية"
+  },
+  "scholarshipServiceDescription": "تسوية المنح الدراسية والمساعدات المالية",
+  "@scholarshipServiceDescription": {
+    "description": "وصف براءة الذمة على مستوى خدمة المنح الدراسية"
+  },
+  "cleared": "مسوى",
+  "@cleared": {
+    "description": "حالة عندما تكون براءة الذمة مسواة"
+  },
+  "pending": "في الانتظار",
+  "@pending": {
+    "description": "حالة عندما تكون براءة الذمة في الانتظار"
+  },
+  "dischargeNotRequiredTitle": "لا تحتاج براءة ذمة",
+  "@dischargeNotRequiredTitle": {
+    "description": "عنوان عندما لا تكون براءة الذمة مطلوبة للطالب"
+  },
+  "dischargeNotRequiredDescription": "لست مطالباً بإكمال أي إجراءات براءة ذمة في الوقت الحالي. وضعك الأكاديمي لا يتطلب تسوية من خدمات الجامعة.",
+  "@dischargeNotRequiredDescription": {
+    "description": "وصف عندما لا تكون براءة الذمة مطلوبة للطالب"
   }
 }

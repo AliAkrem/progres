@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AcademicsCacheService {
@@ -20,7 +21,7 @@ class AcademicsCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching academics data: $e');
+      debugPrint('Error caching academics data: $e');
       return false;
     }
   }
@@ -35,7 +36,7 @@ class AcademicsCacheService {
 
       return jsonDecode(dataString) as List<dynamic>;
     } catch (e) {
-      print('Error retrieving cached academics data: $e');
+      debugPrint('Error retrieving cached academics data: $e');
       return null;
     }
   }
@@ -51,7 +52,7 @@ class AcademicsCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -70,7 +71,7 @@ class AcademicsCacheService {
       }
       return true;
     } catch (e) {
-      print('Error clearing academics cache: $e');
+      debugPrint('Error clearing academics cache: $e');
       return false;
     }
   }

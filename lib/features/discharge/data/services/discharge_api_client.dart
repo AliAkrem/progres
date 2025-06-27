@@ -4,15 +4,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:progres/core/network/cache_manager.dart';
 
-class ApiClient {
-  static const String baseUrl = 'https://progres.mesrs.dz/api';
+class DischargeApiClient {
+  static const String baseUrl = 'https://quittance.mesrs.dz/api';
+
   late final Dio _dio;
   final FlutterSecureStorage _secureStorage;
   late final CacheManager _cacheManager;
   final Duration _shortTimeout = const Duration(seconds: 5);
   final Connectivity _connectivity = Connectivity();
 
-  ApiClient({FlutterSecureStorage? secureStorage})
+  DischargeApiClient({FlutterSecureStorage? secureStorage})
     : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
     _dio = Dio(
       BaseOptions(
@@ -37,10 +38,6 @@ class ApiClient {
         },
       ),
     );
-    _initializeCacheManager();
-  }
-
-  void _initializeCacheManager() {
     CacheManager.getInstance().then((value) => _cacheManager = value);
   }
 
@@ -72,12 +69,6 @@ class ApiClient {
   Future<bool> isLoggedIn() async {
     final token = await _secureStorage.read(key: 'auth_token');
     return token != null;
-  }
-
-  Future<void> logout() async {
-    await _secureStorage.delete(key: 'auth_token');
-    await _secureStorage.delete(key: 'uuid');
-    await _secureStorage.delete(key: 'etablissement_id');
   }
 
   // Generate a cache key string based on path and query parameters
@@ -142,77 +133,6 @@ class ApiClient {
   Future<Response> post(String path, {dynamic data}) async {
     try {
       final response = await _dio.post(path, data: data);
-      return response;
-    } catch (e) {
-      rethrow;
-    }
-  }
-}
-
-class WebApiClient extends ApiClient {
-  static const String proxyBaseUrl =
-      'https://buvfbqwsfcjiqdrqczma.supabase.co/functions/v1/proxy-progres';
-
-  @override
-  Future<Response> get(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    final key = _cacheKey(path, queryParameters);
-
-    if (!await isConnected) {
-      final cachedData = _cacheManager.getCache(key);
-      if (cachedData != null) {
-        return Response(
-          requestOptions: RequestOptions(path: path),
-          data: cachedData,
-          statusCode: 200,
-        );
-      } else {
-        throw DioException(
-          requestOptions: RequestOptions(path: path),
-          error: 'No internet connection and no cached data',
-        );
-      }
-    }
-
-    try {
-      final Map<String, dynamic> proxyQueryParams = {
-        'endpoint': "api" + path,
-        ...?queryParameters,
-      };
-
-      final response = await _dio.get(
-        proxyBaseUrl,
-        queryParameters: proxyQueryParams,
-        options: Options(
-          sendTimeout: _shortTimeout,
-          receiveTimeout: _shortTimeout,
-        ),
-      );
-      await _cacheManager.saveCache(key, response.data);
-      return response;
-    } catch (e) {
-      final cachedData = _cacheManager.getCache(key);
-      if (cachedData != null) {
-        return Response(
-          requestOptions: RequestOptions(path: path),
-          data: cachedData,
-          statusCode: 200,
-        );
-      }
-      rethrow;
-    }
-  }
-
-  @override
-  Future<Response> post(String path, {dynamic data}) async {
-    try {
-      final response = await _dio.post(
-        proxyBaseUrl,
-        queryParameters: {'endpoint': 'api' + path},
-        data: data,
-      );
       return response;
     } catch (e) {
       rethrow;
