@@ -32,6 +32,7 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
   <img src="screenshot/assessment.jpg" width="200" alt="Assessment Screen" />
   <img src="screenshot/exams.jpg" width="200" alt="Exams Screen" />
   <img src="screenshot/timeline.jpg" width="200" alt="Timeline Screen" />
+  <img src="screenshot/discharge.jpg" width="200" alt="Discharge Screen" />
 </p>
 
 ## App Modules
@@ -42,6 +43,8 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
  - **Performance Tracking**
  - **Academic history**
  - **Weekly Timeline**
+ - **Student Discharge**
+ 
 
 
 ## Technical Details
