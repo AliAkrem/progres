@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TimelineCacheService {
@@ -23,7 +24,7 @@ class TimelineCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching timeline events: $e');
+      debugPrint('Error caching timeline events: $e');
       return false;
     }
   }
@@ -42,7 +43,7 @@ class TimelineCacheService {
 
       return jsonDecode(eventsString) as List<dynamic>;
     } catch (e) {
-      print('Error retrieving cached timeline events: $e');
+      debugPrint('Error retrieving cached timeline events: $e');
       return null;
     }
   }
@@ -58,7 +59,7 @@ class TimelineCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -77,7 +78,7 @@ class TimelineCacheService {
       }
       return true;
     } catch (e) {
-      print('Error clearing timeline cache: $e');
+      debugPrint('Error clearing timeline cache: $e');
       return false;
     }
   }

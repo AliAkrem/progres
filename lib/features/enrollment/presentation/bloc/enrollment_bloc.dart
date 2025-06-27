@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/enrollment/data/repositories/enrollment_repository_impl.dart';
 import 'package:progres/features/enrollment/data/services/enrollment_cache_service.dart';
@@ -41,7 +42,7 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
 
       emit(EnrollmentsLoaded(enrollments: enrollments, fromCache: false));
     } catch (e) {
-      print('Error loading enrollments: $e');
+      debugPrint('Error loading enrollments: $e');
 
       final cachedEnrollments = await cacheService.getCachedEnrollments();
       if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {

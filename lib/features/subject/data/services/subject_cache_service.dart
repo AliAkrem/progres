@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progres/features/subject/data/models/course_coefficient.dart';
 
@@ -35,7 +36,7 @@ class SubjectCacheService {
       await prefs.setString(lastUpdatedKey, DateTime.now().toIso8601String());
       return true;
     } catch (e) {
-      print('Error caching subject coefficients: $e');
+      debugPrint('Error caching subject coefficients: $e');
       return false;
     }
   }
@@ -57,7 +58,7 @@ class SubjectCacheService {
           .map((json) => CourseCoefficient.fromJson(json))
           .toList();
     } catch (e) {
-      print('Error retrieving cached subject coefficients: $e');
+      debugPrint('Error retrieving cached subject coefficients: $e');
       return null;
     }
   }
@@ -76,7 +77,7 @@ class SubjectCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -98,7 +99,7 @@ class SubjectCacheService {
       await prefs.remove(lastUpdatedKey);
       return true;
     } catch (e) {
-      print('Error clearing specific subject cache: $e');
+      debugPrint('Error clearing specific subject cache: $e');
       return false;
     }
   }
@@ -117,7 +118,7 @@ class SubjectCacheService {
       }
       return true;
     } catch (e) {
-      print('Error clearing all subject caches: $e');
+      debugPrint('Error clearing all subject caches: $e');
       return false;
     }
   }
