@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:progres/features/discharge/data/models/dischage.dart';
+import 'package:progres/features/discharge/data/models/discharge.dart';
 import 'package:progres/features/discharge/data/repository/discharge_repository_impl.dart';
-import 'package:progres/features/discharge/data/services/discharge_cache_service.dart';
 
 class StudentDischargeEvent extends Equatable {
   @override
@@ -11,8 +10,6 @@ class StudentDischargeEvent extends Equatable {
 }
 
 class LoadStudentDischarge extends StudentDischargeEvent {}
-
-class ClearDischargeCache extends StudentDischargeEvent {}
 
 class StudentDischargeState extends Equatable {
   @override
@@ -46,14 +43,10 @@ class StudentDischargeError extends StudentDischargeState {
 class StudentDischargeBloc
     extends Bloc<StudentDischargeEvent, StudentDischargeState> {
   final StudentDischargeRepositoryImpl studentDischargeRepository;
-  final DischargeCacheService cacheService;
 
-  StudentDischargeBloc({
-    required this.studentDischargeRepository,
-    required this.cacheService,
-  }) : super(StudentDischargeInitial()) {
+  StudentDischargeBloc({required this.studentDischargeRepository})
+    : super(StudentDischargeInitial()) {
     on<LoadStudentDischarge>(_onLoadStudentDischarge);
-    on<ClearDischargeCache>(_onClearCache);
   }
 
   Future<void> _onLoadStudentDischarge(
@@ -62,19 +55,9 @@ class StudentDischargeBloc
   ) async {
     emit(StudentDischargeLoading());
     try {
-      final cachedDischarge = await cacheService.getCachedDischarge();
-
-      if (cachedDischarge != null) {
-        emit(StudentDischargeLoaded(studentDischarge: cachedDischarge));
-        return;
-      }
-
-      // If cache is stale or empty, fetch from API
+      // Always fetch fresh data from API
       final studentDischarge =
           await studentDischargeRepository.getStudentDischarge();
-
-      // Cache the results
-      await cacheService.cacheDischarge(studentDischarge);
 
       emit(StudentDischargeLoaded(studentDischarge: studentDischarge));
     } on DischargeNotRequiredException {
@@ -82,12 +65,5 @@ class StudentDischargeBloc
     } catch (e) {
       emit(StudentDischargeError(e.toString()));
     }
-  }
-
-  Future<void> _onClearCache(
-    ClearDischargeCache event,
-    Emitter<StudentDischargeState> emit,
-  ) async {
-    await cacheService.clearCache();
   }
 }

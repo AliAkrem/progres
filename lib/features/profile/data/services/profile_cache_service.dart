@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCacheService {
@@ -14,7 +15,7 @@ class ProfileCacheService {
       await prefs.setString(_lastUpdatedKey, DateTime.now().toIso8601String());
       return true;
     } catch (e) {
-      print('Error caching profile data: $e');
+      debugPrint('Error caching profile data: $e');
       return false;
     }
   }
@@ -29,7 +30,7 @@ class ProfileCacheService {
 
       return jsonDecode(profileDataString) as Map<String, dynamic>;
     } catch (e) {
-      print('Error retrieving cached profile data: $e');
+      debugPrint('Error retrieving cached profile data: $e');
       return null;
     }
   }
@@ -43,7 +44,7 @@ class ProfileCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -56,7 +57,7 @@ class ProfileCacheService {
       await prefs.remove(_lastUpdatedKey);
       return true;
     } catch (e) {
-      print('Error clearing profile cache: $e');
+      debugPrint('Error clearing profile cache: $e');
       return false;
     }
   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progres/features/enrollment/data/models/enrollment.dart';
 
@@ -19,7 +20,7 @@ class EnrollmentCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching enrollments: $e');
+      debugPrint('Error caching enrollments: $e');
       return false;
     }
   }
@@ -35,7 +36,7 @@ class EnrollmentCacheService {
       final List<dynamic> decodedJson = jsonDecode(enrollmentsString);
       return decodedJson.map((json) => Enrollment.fromJson(json)).toList();
     } catch (e) {
-      print('Error retrieving cached enrollments: $e');
+      debugPrint('Error retrieving cached enrollments: $e');
       return null;
     }
   }
@@ -51,7 +52,7 @@ class EnrollmentCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -64,7 +65,7 @@ class EnrollmentCacheService {
       await prefs.remove('${_lastUpdatedKeyPrefix}enrollments');
       return true;
     } catch (e) {
-      print('Error clearing enrollment cache: $e');
+      debugPrint('Error clearing enrollment cache: $e');
       return false;
     }
   }

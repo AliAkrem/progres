@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
@@ -121,7 +122,7 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
         await cacheService.clearAllCache();
       }
     } catch (e) {
-      print('Error clearing subject cache: $e');
+      debugPrint('Error clearing subject cache: $e');
     }
   }
 }

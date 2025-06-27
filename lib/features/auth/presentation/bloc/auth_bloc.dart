@@ -81,35 +81,35 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         event.context?.read<TranscriptBloc>().add(const ClearTranscriptCache());
       } catch (e) {
-        print('Note: Could not clear transcript cache. ${e.toString()}');
+        debugPrint('Note: Could not clear transcript cache. ${e.toString()}');
       }
       try {
         event.context?.read<TimelineBloc>().add(ClearTimelineCache());
       } catch (e) {
-        print('Note: Could not clear timeline cache. ${e.toString()}');
+        debugPrint('Note: Could not clear timeline cache. ${e.toString()}');
       }
 
       try {
         event.context?.read<EnrollmentBloc>().add(ClearEnrollmentsCache());
       } catch (e) {
-        print('Note: Could not clear enrollment cache. ${e.toString()}');
+        debugPrint('Note: Could not clear enrollment cache. ${e.toString()}');
       }
 
       try {
         event.context?.read<StudentGroupsBloc>().add(ClearGroupsCache());
       } catch (e) {
-        print('Note: Could not clear groups cache. ${e.toString()}');
+        debugPrint('Note: Could not clear groups cache. ${e.toString()}');
       }
 
       try {
         event.context?.read<SubjectBloc>().add(ClearSubjectCache());
       } catch (e) {
-        print('Note: Could not clear subject cache. ${e.toString()}');
+        debugPrint('Note: Could not clear subject cache. ${e.toString()}');
       }
       try {
         event.context?.read<ProfileBloc>().add(ClearProfileCacheEvent());
       } catch (e) {
-        print('Note: Could not clear profile cache. ${e.toString()}');
+        debugPrint('Note: Could not clear profile cache. ${e.toString()}');
       }
 
       emit(AuthLoggedOut());

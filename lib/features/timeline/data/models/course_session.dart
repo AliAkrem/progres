@@ -113,7 +113,7 @@ class CourseSession {
     // Print debug info for Sunday specifically
     if (jourId == 2) {
       // Sunday
-      print(
+      debugPrint(
         'SUNDAY EVENT: jourId $jourId ($jourLibelleFr) mapped to ${_formatDate(result)} (weekday: ${result.weekday})',
       );
     }

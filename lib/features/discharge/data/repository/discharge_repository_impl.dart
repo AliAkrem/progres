@@ -1,4 +1,4 @@
-import 'package:progres/features/discharge/data/models/dischage.dart';
+import 'package:progres/features/discharge/data/models/discharge.dart';
 import 'package:progres/features/discharge/data/services/discharge_api_client.dart';
 
 class StudentDischargeRepositoryImpl {

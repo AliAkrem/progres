@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
 import 'package:progres/features/transcript/data/repositories/transcript_repository_impl.dart';
@@ -54,7 +55,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
 
       emit(EnrollmentsLoaded(enrollments: enrollments, fromCache: false));
     } catch (e) {
-      print('Error loading enrollments: $e');
+      debugPrint('Error loading enrollments: $e');
 
       final cachedEnrollments =
           await enrollmentCacheService.getCachedEnrollments();
@@ -91,7 +92,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
               .getCachedAnnualSummary(event.enrollmentId);
 
           if (cachedTranscripts != null && cachedTranscripts.isNotEmpty) {
-            print(
+            debugPrint(
               'Using cached transcripts and summary for enrollment ID: ${event.enrollmentId}',
             );
             emit(
@@ -132,7 +133,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
           annualSummary,
         );
       } catch (e) {
-        print('Error loading annual summary: $e');
+        debugPrint('Error loading annual summary: $e');
         // Try to get from cache if network request fails
         annualSummary = await transcriptCacheService.getCachedAnnualSummary(
           event.enrollmentId,
@@ -148,7 +149,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
         ),
       );
     } catch (e) {
-      print('Error loading transcripts: $e');
+      debugPrint('Error loading transcripts: $e');
 
       // Try to load from cache if network request fails
       final cachedTranscripts = await transcriptCacheService
@@ -222,7 +223,7 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
         );
       }
     } catch (e) {
-      print('Error loading annual summary: $e');
+      debugPrint('Error loading annual summary: $e');
       // Don't change state on error, just log
     }
   }

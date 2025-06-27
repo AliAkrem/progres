@@ -25,7 +25,6 @@ import 'package:progres/features/transcript/data/repositories/transcript_reposit
 import 'package:progres/features/transcript/data/services/transcript_cache_service.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/discharge/data/repository/discharge_repository_impl.dart';
-import 'package:progres/features/discharge/data/services/discharge_cache_service.dart';
 import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart';
 
 final injector = GetIt.instance;
@@ -62,7 +61,6 @@ Future<void> initDependencies() async {
   injector.registerLazySingleton(() => TranscriptCacheService());
   injector.registerLazySingleton(() => GroupsCacheService());
   injector.registerLazySingleton(() => SubjectCacheService());
-  injector.registerLazySingleton(() => DischargeCacheService());
 
   // Register BLoCs
   injector.registerFactory(() => ThemeBloc()..add(LoadTheme()));
@@ -111,9 +109,6 @@ Future<void> initDependencies() async {
     ),
   );
   injector.registerFactory(
-    () => StudentDischargeBloc(
-      studentDischargeRepository: injector(),
-      cacheService: injector(),
-    ),
+    () => StudentDischargeBloc(studentDischargeRepository: injector()),
   );
 }

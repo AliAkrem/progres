@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/features/discharge/data/models/dischage.dart';
+import 'package:progres/features/discharge/data/models/discharge.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
 class DischargeContent extends StatelessWidget {
@@ -126,7 +126,7 @@ class DischargeContent extends StatelessWidget {
           title: GalleryLocalizations.of(context)!.scholarshipServiceLevel,
           description:
               GalleryLocalizations.of(context)!.scholarshipServiceDescription,
-          isCleared: discharge.sitBr,
+          isCleared: discharge.sitBrs,
           icon: Icons.school_outlined,
           isSmallScreen: isSmallScreen,
         ),

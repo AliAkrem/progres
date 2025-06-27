@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progres/features/transcript/data/models/academic_transcript.dart';
 import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
@@ -27,7 +28,7 @@ class TranscriptCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching transcripts: $e');
+      debugPrint('Error caching transcripts: $e');
       return false;
     }
   }
@@ -49,7 +50,7 @@ class TranscriptCacheService {
           .map((json) => AcademicTranscript.fromJson(json))
           .toList();
     } catch (e) {
-      print('Error retrieving cached transcripts: $e');
+      debugPrint('Error retrieving cached transcripts: $e');
       return null;
     }
   }
@@ -71,7 +72,7 @@ class TranscriptCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching annual summary: $e');
+      debugPrint('Error caching annual summary: $e');
       return false;
     }
   }
@@ -91,7 +92,7 @@ class TranscriptCacheService {
       final decodedJson = jsonDecode(summaryString);
       return AnnualTranscriptSummary.fromJson(decodedJson);
     } catch (e) {
-      print('Error retrieving cached annual summary: $e');
+      debugPrint('Error retrieving cached annual summary: $e');
       return null;
     }
   }
@@ -107,7 +108,7 @@ class TranscriptCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -128,7 +129,7 @@ class TranscriptCacheService {
       }
       return true;
     } catch (e) {
-      print('Error clearing cache: $e');
+      debugPrint('Error clearing cache: $e');
       return false;
     }
   }

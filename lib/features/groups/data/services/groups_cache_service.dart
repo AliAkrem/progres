@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:progres/features/groups/data/models/group.dart';
 
@@ -19,7 +20,7 @@ class GroupsCacheService {
       );
       return true;
     } catch (e) {
-      print('Error caching groups: $e');
+      debugPrint('Error caching groups: $e');
       return false;
     }
   }
@@ -35,7 +36,7 @@ class GroupsCacheService {
       final List<dynamic> decodedJson = jsonDecode(groupsString);
       return decodedJson.map((json) => StudentGroup.fromJson(json)).toList();
     } catch (e) {
-      print('Error retrieving cached groups: $e');
+      debugPrint('Error retrieving cached groups: $e');
       return null;
     }
   }
@@ -51,7 +52,7 @@ class GroupsCacheService {
 
       return DateTime.parse(timestamp);
     } catch (e) {
-      print('Error getting last updated time: $e');
+      debugPrint('Error getting last updated time: $e');
       return null;
     }
   }
@@ -64,7 +65,7 @@ class GroupsCacheService {
       await prefs.remove('${_lastUpdatedKeyPrefix}groups');
       return true;
     } catch (e) {
-      print('Error clearing groups cache: $e');
+      debugPrint('Error clearing groups cache: $e');
       return false;
     }
   }

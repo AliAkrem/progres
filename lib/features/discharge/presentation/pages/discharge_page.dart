@@ -24,8 +24,7 @@ class _DischargePageState extends State<DischargePage> {
   }
 
   Future<void> _refreshDischarge() async {
-    // Clear cache and reload from API
-    context.read<StudentDischargeBloc>().add(ClearDischargeCache());
+    // Reload fresh data from API
     context.read<StudentDischargeBloc>().add(LoadStudentDischarge());
     // Simulating network delay for better UX
     return Future.delayed(const Duration(milliseconds: 500));
