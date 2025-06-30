@@ -36,8 +36,6 @@ dev_dependencies:
 
   flutter_lints: ^5.0.0
 
-  flutter_dotenv: ^5.2.1
-
 flutter:
   uses-material-design: true
   generate: true
