@@ -650,5 +650,15 @@
   "next": "Next",
   "@next": {
     "description": "Next button text for multi-step dialogs"
+  },
+  "institution" : "Institution",
+  "@institution" :{
+    "description": "Institution"
+  },
+  "specialization":"Specialization",
+  "@specialization":{
+    "description": "Specialization"
   }
+
+
 }

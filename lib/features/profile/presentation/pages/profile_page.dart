@@ -5,6 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:progres/features/enrollment/data/models/enrollment.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
+import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -25,6 +29,9 @@ class _ProfilePageState extends State<ProfilePage> {
     if (profileState is! ProfileLoaded) {
       context.read<ProfileBloc>().add(LoadProfileEvent());
     }
+
+    // Load enrollment data for latest enrollment
+    context.read<EnrollmentBloc>().add(const LoadEnrollmentsEvent());
   }
 
   @override
@@ -39,16 +46,33 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: BlocBuilder<ProfileBloc, ProfileState>(
-        builder: (context, state) {
-          if (state is ProfileLoading) {
-            return _buildLoadingState();
-          } else if (state is ProfileError) {
-            return _buildErrorState(state);
-          } else if (state is ProfileLoaded) {
-            return _buildProfileContent(state);
-          } else {
-            return _buildLoadingState();
-          }
+        builder: (context, profileState) {
+          return BlocBuilder<EnrollmentBloc, EnrollmentState>(
+            builder: (context, enrollmentState) {
+              // Get latest enrollment if available
+              Enrollment? latestEnrollment;
+              if (enrollmentState is EnrollmentsLoaded &&
+                  enrollmentState.enrollments.isNotEmpty) {
+                // Sort enrollments by academic year (newest first)
+                final sortedEnrollments = List<Enrollment>.from(
+                  enrollmentState.enrollments,
+                )..sort(
+                  (a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId),
+                );
+                latestEnrollment = sortedEnrollments.first;
+              }
+
+              if (profileState is ProfileLoading) {
+                return _buildLoadingState();
+              } else if (profileState is ProfileError) {
+                return _buildErrorState(profileState);
+              } else if (profileState is ProfileLoaded) {
+                return _buildProfileContent(profileState, latestEnrollment);
+              } else {
+                return _buildLoadingState();
+              }
+            },
+          );
         },
       ),
     );
@@ -110,11 +134,16 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildProfileContent(ProfileLoaded state) {
+  Widget _buildProfileContent(
+    ProfileLoaded state,
+    Enrollment? latestEnrollment,
+  ) {
+    // Make sure we have the required imports and parameters
     final theme = Theme.of(context);
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
     final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
+    final deviceLocale = Localizations.localeOf(context);
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
@@ -125,96 +154,78 @@ class _ProfilePageState extends State<ProfilePage> {
           _buildProfileHeader(state, theme),
           SizedBox(height: isSmallScreen ? 16 : 24),
 
-          // Status cards
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-              horizontalPadding,
-              0,
-              horizontalPadding,
-              isSmallScreen ? 16 : 24,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  GalleryLocalizations.of(context)!.currentStatus,
-                  style: TextStyle(
-                    fontSize: isSmallScreen ? 16 : 18,
-                    fontWeight: FontWeight.bold,
-                    color: theme.textTheme.titleLarge?.color,
-                  ),
-                ),
-                SizedBox(height: isSmallScreen ? 12 : 16),
-                _buildUnifiedStatusCard(
-                  theme: theme,
-                  isSmallScreen: isSmallScreen,
-                  levelValue: state.detailedInfo.niveauLibelleLongLt,
-                  academicYearValue: state.academicYear.code,
-                  transportPaid: state.detailedInfo.transportPaye,
-                ),
-              ],
-            ),
-          ),
-
-          // Personal Information
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: _buildInfoSection(
-              title: GalleryLocalizations.of(context)!.personalInformation,
-              children: [
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.fullNameLatin,
-                  '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.fullNameArabic,
-                  '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.birthDate,
-                  state.basicInfo.dateNaissance,
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.birthPlace,
-                  state.basicInfo.lieuNaissance,
-                ),
-              ],
-            ),
-          ),
-
-          SizedBox(height: isSmallScreen ? 16 : 24),
-
           // Academic Information
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-            child: _buildInfoSection(
-              title: GalleryLocalizations.of(context)!.currentAcademicStatus,
-              children: [
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.program,
-                  state.detailedInfo.niveauLibelleLongLt,
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.level,
-                  state.detailedInfo.niveauLibelleLongLt,
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.cycle,
-                  state.detailedInfo.refLibelleCycle,
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.registrationNumber,
-                  state.detailedInfo.numeroInscription,
-                ),
-                _buildInfoRow(
-                  GalleryLocalizations.of(context)!.academicYear,
-                  state.academicYear.code,
-                ),
-              ],
+          if (latestEnrollment != null) ...[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: _buildInfoSection(
+                title: GalleryLocalizations.of(context)!.currentAcademicStatus,
+                children: [
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.academicYear,
+                    latestEnrollment.anneeAcademiqueCode,
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.institution,
+                    deviceLocale.languageCode == 'ar'
+                        ? latestEnrollment.llEtablissementArabe ?? ''
+                        : latestEnrollment.llEtablissementLatin ?? '',
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.level,
+                    deviceLocale.languageCode == 'ar'
+                        ? latestEnrollment.niveauLibelleLongAr ?? ''
+                        : latestEnrollment.niveauLibelleLongLt ?? '',
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.program,
+                    deviceLocale.languageCode == 'ar'
+                        ? latestEnrollment.ofLlDomaineArabe ?? ''
+                        : latestEnrollment.ofLlDomaine ?? '',
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.specialization,
+                    deviceLocale.languageCode == 'ar'
+                        ? latestEnrollment.ofLlSpecialiteArabe ?? ''
+                        : latestEnrollment.ofLlSpecialite ?? '',
+                  ),
+                  if (latestEnrollment.numeroInscription != null)
+                    _buildInfoRow(
+                      GalleryLocalizations.of(context)!.registrationNumber,
+                      latestEnrollment.numeroInscription!,
+                    ),
+                ],
+              ),
             ),
-          ),
-
-          SizedBox(height: isSmallScreen ? 16 : 24),
+            SizedBox(height: isSmallScreen ? 16 : 24),
+          ] else ...[
+            // Fallback to existing profile data if enrollment not available
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+              child: _buildInfoSection(
+                title: GalleryLocalizations.of(context)!.currentAcademicStatus,
+                children: [
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.academicYear,
+                    state.academicYear.code,
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.level,
+                    state.detailedInfo.niveauLibelleLongLt,
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.cycle,
+                    state.detailedInfo.refLibelleCycle,
+                  ),
+                  _buildInfoRow(
+                    GalleryLocalizations.of(context)!.registrationNumber,
+                    state.detailedInfo.numeroInscription,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: isSmallScreen ? 16 : 24),
+          ],
         ],
       ),
     );
@@ -223,6 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget _buildProfileHeader(ProfileLoaded state, ThemeData theme) {
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 360;
+    final deviceLocale = Localizations.localeOf(context);
 
     return Container(
       width: double.infinity,
@@ -280,7 +292,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           SizedBox(height: isSmallScreen ? 12 : 16),
-          // Student name
+          // Student name in Latin
           Text(
             '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
             style: theme.textTheme.headlineSmall?.copyWith(
@@ -290,164 +302,108 @@ class _ProfilePageState extends State<ProfilePage> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
+          // Student name in Arabic
           Text(
             '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
             style: theme.textTheme.bodyLarge?.copyWith(
-              fontSize: isSmallScreen ? 14 : 16,
+              fontSize: isSmallScreen ? 16 : 18,
+              fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: isSmallScreen ? 10 : 12),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: isSmallScreen ? 14 : 16,
-              vertical: isSmallScreen ? 6 : 8,
-            ),
-            decoration: BoxDecoration(
-              color:
-                  theme.brightness == Brightness.light
-                      ? AppTheme.AppSecondary.withValues(alpha: 0.1)
-                      : AppTheme.AppSecondary.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              'ID: ${state.detailedInfo.numeroInscription}',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: isSmallScreen ? 13 : 14,
-                color: theme.textTheme.titleMedium?.color,
+          SizedBox(height: isSmallScreen ? 12 : 16),
+          // Birth info
+          Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 8,
+            runSpacing: 12,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.calendar_today_rounded,
+                    size: 16,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    state.basicInfo.dateNaissance,
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 13 : 14,
+                      color: theme.textTheme.bodyMedium?.color?.withValues(
+                        alpha: 0.8,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.location_on_outlined,
+                    size: 16,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    deviceLocale.languageCode == 'ar'
+                        ? state.basicInfo.lieuNaissanceArabe
+                        : state.basicInfo.lieuNaissance,
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 13 : 14,
+                      color: theme.textTheme.bodyMedium?.color?.withValues(
+                        alpha: 0.8,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.directions_bus_rounded,
+                    size: 16,
+                    color:
+                        theme.brightness == Brightness.light
+                            ? Colors.grey.shade700
+                            : Colors.grey.shade300,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    GalleryLocalizations.of(context)!.transport + ": ",
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 13 : 14,
+                      color: theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                  Text(
+                    state.detailedInfo.transportPaye
+                        ? GalleryLocalizations.of(context)!.paid
+                        : GalleryLocalizations.of(context)!.unpaid,
+                    style: TextStyle(
+                      fontSize: isSmallScreen ? 14 : 16,
+                      fontWeight: FontWeight.bold,
+                      color:
+                          state.detailedInfo.transportPaye
+                              ? Colors.green
+                              : Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildUnifiedStatusCard({
-    required ThemeData theme,
-    required bool isSmallScreen,
-    required String levelValue,
-    required String academicYearValue,
-    required bool transportPaid,
-  }) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : const Color(0xFF3F3C34),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(isSmallScreen ? 16 : 20),
-        child: Column(
-          children: [
-            _buildStatusRow(
-              theme: theme,
-              isSmallScreen: isSmallScreen,
-              icon: Icons.school_rounded,
-              title: GalleryLocalizations.of(context)!.level,
-              value: levelValue,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
-              child: Divider(
-                color:
-                    theme.brightness == Brightness.light
-                        ? Colors.black.withValues(alpha: 0.1)
-                        : Colors.white.withValues(alpha: 0.1),
-                height: 1,
-              ),
-            ),
-            _buildStatusRow(
-              theme: theme,
-              isSmallScreen: isSmallScreen,
-              icon: Icons.calendar_today_rounded,
-              title: GalleryLocalizations.of(context)!.academicYear,
-              value: academicYearValue,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 12 : 16),
-              child: Divider(
-                color:
-                    theme.brightness == Brightness.light
-                        ? Colors.black.withValues(alpha: 0.1)
-                        : Colors.white.withValues(alpha: 0.1),
-                height: 1,
-              ),
-            ),
-            _buildStatusRow(
-              theme: theme,
-              isSmallScreen: isSmallScreen,
-              icon: Icons.directions_bus_rounded,
-              title: GalleryLocalizations.of(context)!.transport,
-              value:
-                  transportPaid
-                      ? GalleryLocalizations.of(context)!.paid
-                      : GalleryLocalizations.of(context)!.unpaid,
-              valueColor: transportPaid ? Colors.green : Colors.red,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusRow({
-    required ThemeData theme,
-    required bool isSmallScreen,
-    required IconData icon,
-    required String title,
-    required String value,
-    Color? valueColor,
-  }) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: isSmallScreen ? 18 : 20,
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppPrimary.withValues(alpha: 0.7)
-                  : AppTheme.AppPrimary,
-        ),
-        SizedBox(width: isSmallScreen ? 12 : 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: isSmallScreen ? 13 : 14,
-                color: theme.textTheme.bodyMedium?.color,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: isSmallScreen ? 14 : 16,
-                fontWeight: FontWeight.bold,
-                color: valueColor ?? theme.textTheme.titleMedium?.color,
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-      ],
     );
   }
 

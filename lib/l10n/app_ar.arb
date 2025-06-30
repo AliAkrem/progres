@@ -668,5 +668,13 @@
   "next": "التالي",
   "@next": {
     "description": "نص زر التالي للحوارات متعددة الخطوات"
+  },
+  "institution" : "الجامعة",
+  "@institution" :{
+    "description": "الجامعة"
+  },
+  "specialization":"التخصص",
+  "@specialization":{
+    "description": "التخصص"
   }
 }
