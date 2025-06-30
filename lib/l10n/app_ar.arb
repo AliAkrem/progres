@@ -397,6 +397,34 @@
   "@noClassesScheduled": {
     "description": "رسالة تظهر عند عدم وجود دروس في الجدول"
   },
+  "helpIcon": "مساعدة",
+  "@helpIcon": {
+    "description": "تلميح لزر أيقونة المساعدة"
+  },
+  "codeInformationTitle": "معلومات رمز الطالب",
+  "@codeInformationTitle": {
+    "description": "عنوان مربع حوار معلومات رمز الطالب"
+  },
+  "codeInformationText": "يمكن العثور على رمز الطالب الخاص بك في كشف النقاط كما هو موضح في الصورة أعلاه. يجب عليك إضافة سنة نجاحك في شهادة البكالوريا مع رمز الطالب الخاص بك عند تسجيل الدخول. على سبيل المثال، إذا كانت سنة البكالوريا هي 2023 ورمزك هو 12345، أدخل: 202312345",
+  "@codeInformationText": {
+    "description": "نص يشرح أين يمكن العثور على رمز الطالب"
+  },
+  "passwordInformationTitle": "معلومات كلمة المرور",
+  "@passwordInformationTitle": {
+    "description": "عنوان مربع حوار معلومات كلمة المرور"
+  },
+  "passwordInformationText": "يمكن العثور على كلمة المرور الخاصة بك في كشف النقاط كما هو موضح في الصورة أعلاه.",
+  "@passwordInformationText": {
+    "description": "نص يشرح أين يمكن العثور على كلمة المرور"
+  },
+  "close": "إغلاق",
+  "@close": {
+    "description": "نص زر الإغلاق للحوارات"
+  },
+  "next": "التالي",
+  "@next": {
+    "description": "نص زر التالي للحوارات متعددة الخطوات"
+  },
   "notAssignedToGroups": "لم يتم تعيينك لأي مجموعات تربوية حتى الآن.",
   "@notAssignedToGroups": {
     "description": "وصف يظهر عندما لا يكون لدى المستخدم أي مجموعات تربوية"
@@ -640,5 +668,25 @@
   "dischargeNotRequiredDescription": "لست مطالباً بإكمال أي إجراءات براءة ذمة في الوقت الحالي. وضعك الأكاديمي لا يتطلب تسوية من خدمات الجامعة.",
   "@dischargeNotRequiredDescription": {
     "description": "وصف عندما لا تكون براءة الذمة مطلوبة للطالب"
+  },
+  "helpIcon": "مساعدة",
+  "@helpIcon": {
+    "description": "تلميح لزر أيقونة المساعدة"
+  },
+  "codeInformationTitle": "معلومات رمز الطالب",
+  "@codeInformationTitle": {
+    "description": "عنوان مربع حوار معلومات رمز الطالب"
+  },
+  "passwordInformationTitle": "معلومات كلمة المرور",
+  "@passwordInformationTitle": {
+    "description": "عنوان مربع حوار معلومات كلمة المرور"
+  },
+  "close": "إغلاق",
+  "@close": {
+    "description": "نص زر الإغلاق للحوارات"
+  },
+  "next": "التالي",
+  "@next": {
+    "description": "نص زر التالي للحوارات متعددة الخطوات"
   }
 }

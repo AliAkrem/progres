@@ -24,6 +24,95 @@ class _LoginPageState extends State<LoginPage>
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   bool _obscurePassword = true;
+  bool _showingCodeHelp = true;
+  void _showHelpDialog(BuildContext context) {
+    _showingCodeHelp = true;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      _showingCodeHelp
+                          ? GalleryLocalizations.of(
+                            context,
+                          )!.codeInformationTitle
+                          : GalleryLocalizations.of(
+                            context,
+                          )!.passwordInformationTitle,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16.0),
+                    InteractiveViewer(
+                      boundaryMargin: const EdgeInsets.all(20.0),
+                      minScale: 0.5,
+                      maxScale: 3.0,
+                      child: Image.asset(
+                        _showingCodeHelp
+                            ? 'assets/images/help/student-code.png'
+                            : 'assets/images/help/student-password.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                    Text(
+                      _showingCodeHelp
+                          ? GalleryLocalizations.of(
+                            context,
+                          )!.codeInformationText
+                          : GalleryLocalizations.of(
+                            context,
+                          )!.passwordInformationText,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (_showingCodeHelp)
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _showingCodeHelp = false;
+                                });
+                              },
+                              child: Text(
+                                GalleryLocalizations.of(context)!.next,
+                              ),
+                            ),
+                          )
+                        else
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text(
+                                GalleryLocalizations.of(context)!.close,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -189,49 +278,68 @@ class _LoginPageState extends State<LoginPage>
                               ),
                               SizedBox(height: isSmallScreen ? 36 : 44),
 
-                              // Student code field
-                              TextFormField(
-                                controller: _usernameController,
-                                textDirection: TextDirection.ltr,
-                                decoration: InputDecoration(
-                                  labelText:
-                                      GalleryLocalizations.of(
-                                        context,
-                                      )!.studentCode,
-                                  hintText:
-                                      GalleryLocalizations.of(
-                                        context,
-                                      )!.enterStudentCode,
-                                  prefixIcon: Icon(
-                                    Icons.person_outline,
-                                    color:
-                                        theme
-                                            .inputDecorationTheme
-                                            .prefixIconColor,
-                                    size: isSmallScreen ? 20 : 24,
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(
-                                      color:
-                                          theme.brightness == Brightness.dark
-                                              ? Colors.white30
-                                              : Colors.black12,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: _usernameController,
+                                      textDirection: TextDirection.ltr,
+                                      decoration: InputDecoration(
+                                        labelText:
+                                            GalleryLocalizations.of(
+                                              context,
+                                            )!.studentCode,
+                                        hintText:
+                                            GalleryLocalizations.of(
+                                              context,
+                                            )!.enterStudentCode,
+                                        prefixIcon: Icon(
+                                          Icons.person_outline,
+                                          color:
+                                              theme
+                                                  .inputDecorationTheme
+                                                  .prefixIconColor,
+                                          size: isSmallScreen ? 20 : 24,
+                                        ),
+                                        suffixIcon: IconButton(
+                                          icon: const Icon(Icons.info_outline),
+                                          tooltip:
+                                              GalleryLocalizations.of(
+                                                context,
+                                              )!.helpIcon,
+                                          onPressed:
+                                              () => _showHelpDialog(context),
+                                        ),
+
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          borderSide: BorderSide(
+                                            color:
+                                                theme.brightness ==
+                                                        Brightness.dark
+                                                    ? Colors.white30
+                                                    : Colors.black12,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: isSmallScreen ? 16 : 20,
+                                          horizontal: isSmallScreen ? 16 : 20,
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return GalleryLocalizations.of(
+                                            context,
+                                          )!.pleaseEnterStudentCode;
+                                        }
+                                        return null;
+                                      },
                                     ),
                                   ),
-                                  contentPadding: EdgeInsets.symmetric(
-                                    vertical: isSmallScreen ? 16 : 20,
-                                    horizontal: isSmallScreen ? 16 : 20,
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return GalleryLocalizations.of(
-                                      context,
-                                    )!.pleaseEnterStudentCode;
-                                  }
-                                  return null;
-                                },
+                                ],
                               ),
                               SizedBox(height: isSmallScreen ? 20 : 24),
 
