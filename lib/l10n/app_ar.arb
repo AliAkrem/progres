@@ -1,4 +1,8 @@
 {
+  "welcomeBack": "مرحبًا بعودتك",
+  "@welcomeBack": {
+    "description": "رسالة الترحيب"
+  },
   "settings": "الإعدادات",
   "@settings": {
     "description": "عنوان صفحة الإعدادات والعناصر المتعلقة بالإعدادات"

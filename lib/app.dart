@@ -25,7 +25,7 @@ class ProgresApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => injector<ThemeBloc>()),
-        BlocProvider(create: (context) => injector<AuthBloc>()),
+        BlocProvider(create: (context) => injector<AuthBloc>(), lazy: false),
         BlocProvider(create: (context) => injector<ProfileBloc>()),
         BlocProvider(create: (context) => injector<AcademicsBloc>()),
         BlocProvider(create: (context) => injector<StudentGroupsBloc>()),

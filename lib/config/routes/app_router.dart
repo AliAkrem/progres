@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:progres/core/splash_screen/splash_screen.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
 import 'package:progres/features/discharge/presentation/pages/discharge_page.dart';
@@ -17,6 +18,7 @@ import 'package:progres/layouts/main_shell.dart';
 
 class AppRouter {
   // Route names as static constants
+  static const String splash = 'splash';
   static const String login = 'login';
   static const String dashboard = 'dashboard';
   static const String profile = 'profile';
@@ -32,6 +34,7 @@ class AppRouter {
   static const String about = 'about';
 
   // Route paths
+  static const String splashPath = '/';
   static const String loginPath = '/login';
   static const String dashboardPath = '/dashboard';
   static const String profilePath = '/profile';
@@ -50,8 +53,13 @@ class AppRouter {
 
   AppRouter({required BuildContext context}) {
     router = GoRouter(
-      initialLocation: loginPath,
+      initialLocation: splashPath,
       redirect: (context, state) {
+        // Skip redirection logic for splash screen
+        if (state.matchedLocation == splashPath) {
+          return null;
+        }
+
         final authState = context.read<AuthBloc>().state;
         final isLoginRoute = state.matchedLocation == loginPath;
 
@@ -66,6 +74,11 @@ class AppRouter {
         return null;
       },
       routes: [
+        GoRoute(
+          path: splashPath,
+          name: splash,
+          builder: (context, state) => const SplashScreen(),
+        ),
         GoRoute(
           path: loginPath,
           name: login,

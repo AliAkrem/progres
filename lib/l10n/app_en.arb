@@ -1,4 +1,8 @@
 {
+  "welcomeBack": "Welcome Back",
+  "@welcomeBack": {
+    "description": "Welcome back message"
+  },
   "settings": "Settings",
   "@settings": {
     "description": "Title for settings page and settings-related items"
