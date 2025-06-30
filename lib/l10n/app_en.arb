@@ -631,7 +631,7 @@
   "@codeInformationTitle": {
     "description": "Title for student code information dialog"
   },
-  "codeInformationText": "Your student code can be found on your registration document, as shown in the image above. You must add the year you passed your baccalaureate exam along with your student code when logging in. For example, if your BAC year is 2023 and your code is 12345, enter: 202312345",
+  "codeInformationText": "Your student code can be found on your transcript, as shown in the image above. You must add the year you passed your baccalaureate exam along with your student code when logging in. For example, if your baccalaureate year is 2023 and your code is 12345, enter: 202312345.",
   "@codeInformationText": {
     "description": "Text explaining where to find student code"
   },
@@ -639,7 +639,7 @@
   "@passwordInformationTitle": {
     "description": "Title for password information dialog"
   },
-  "passwordInformationText": "Your password can be found on your 'Relevé de notes' document as shown in the image above.",
+  "passwordInformationText": "Your password can be found on your transcript as shown in the image above.",
   "@passwordInformationText": {
     "description": "Text explaining where to find password"
   },

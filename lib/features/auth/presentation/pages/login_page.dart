@@ -369,10 +369,6 @@ class _LoginPageState extends State<LoginPage>
                                       _obscurePassword
                                           ? Icons.visibility_off
                                           : Icons.visibility,
-                                      color:
-                                          theme.brightness == Brightness.dark
-                                              ? Colors.white60
-                                              : Colors.black45,
                                       size: isSmallScreen ? 20 : 22,
                                     ),
                                     onPressed: () {
