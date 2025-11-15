@@ -47,7 +47,7 @@ jobs:
         continue-on-error: false
 
       - name: Check formatting
-        run: fvm flutter format --set-exit-if-changed .
+        run: fvm dart format --set-exit-if-changed .
         continue-on-error: false
 
       - name: Build Android APK
