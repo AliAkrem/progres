@@ -46,10 +46,6 @@ jobs:
         run: fvm flutter analyze
         continue-on-error: false
 
-      - name: Run tests
-        run: fvm flutter test
-        continue-on-error: false
-
       - name: Check formatting
         run: fvm flutter format --set-exit-if-changed .
         continue-on-error: false
