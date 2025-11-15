@@ -6,8 +6,6 @@
 
 Progres is an independently developed remake of Progres/Webetu with a focus on enhanced user experience.
 
-
-
 ![image1](https://github.com/user-attachments/assets/b33a0fda-5827-45b1-a526-204b2f408c79)
 
 I built this app because the original student portal (Progres/Webetu) is... well, not the best. It’s slow, outdated, and not very user-friendly. I wanted something faster, cleaner, and more reliable
@@ -39,30 +37,31 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 
 ## App Modules
 
- - **Authentication**
- - **Student Profile**
- - **Academic Records**
- - **Performance Tracking**
- - **Academic history**
- - **Weekly Timeline**
- - **Student Discharge**
- 
-
+- **Authentication**
+- **Student Profile**
+- **Academic Records**
+- **Performance Tracking**
+- **Academic history**
+- **Weekly Timeline**
+- **Student Discharge**
 
 ## Technical Details
 
 ### Built With
+
 - Flutter for cross-platform compatibility
 - BLoC pattern for state management
 - local storage for offline capabilities
 
 ### Architecture
+
 - Clean architecture with separation of concerns
 - Repository pattern for data management
 
 ## Getting Started
 
 ### Prerequisites
+
 - Flutter SDK (version 3.38.1)
 - Dart SDK (version 3.10.0)
 - [FVM (Flutter Version Management)](https://fvm.app/) - Recommended for managing Flutter versions
@@ -70,21 +69,27 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 ### Run Locally
 
 1. Clone the repository
+
    ```bash
    git clone https://github.com/aliakrem/progres.git
    ```
 
 2. Navigate to project directory
+
    ```bash
    cd progres
    ```
 
+   > **Note:** If you prefer not to use FVM, you can run standard Flutter commands directly, but ensure you're using Flutter 3.38.1 and Dart 3.10.0.
+
 3. Install FVM (if not already installed)
+
    ```bash
    dart pub global activate fvm
    ```
 
 4. Install the Flutter version specified in `.fvmrc`
+
    ```bash
    fvm install
    ```
@@ -93,8 +98,8 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
    ```bash
    fvm use stable
    ```
-   
 6. Install dependencies
+
    ```bash
    fvm flutter pub get
    ```
@@ -104,14 +109,12 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
    fvm flutter run
    ```
 
-   > **Note:** If you prefer not to use FVM, you can run standard Flutter commands directly, but ensure you're using Flutter 3.38.1 and Dart 3.10.0.
-
-## In The Future  
+## In The Future
 
 - [x] Arabic language support
 - [ ] Push notifications for grade updates
 - [ ] Push notifications for courses start
-   
+
 ## Contributing
 
 [View contributing guidelines](https://github.com/AliAkrem/progres/blob/master/CONTRIBUTING.md)
@@ -119,7 +122,6 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 
 ---
 
