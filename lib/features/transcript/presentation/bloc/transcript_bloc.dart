@@ -34,8 +34,8 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
       if (!event.forceRefresh) {
         final isStale = await enrollmentCacheService.isDataStale();
         if (!isStale) {
-          final cachedEnrollments =
-              await enrollmentCacheService.getCachedEnrollments();
+          final cachedEnrollments = await enrollmentCacheService
+              .getCachedEnrollments();
           if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
             emit(
               EnrollmentsLoaded(
@@ -57,8 +57,8 @@ class TranscriptBloc extends Bloc<TranscriptEvent, TranscriptState> {
     } catch (e) {
       debugPrint('Error loading enrollments: $e');
 
-      final cachedEnrollments =
-          await enrollmentCacheService.getCachedEnrollments();
+      final cachedEnrollments = await enrollmentCacheService
+          .getCachedEnrollments();
       if (cachedEnrollments != null && cachedEnrollments.isNotEmpty) {
         emit(
           EnrollmentsLoaded(enrollments: cachedEnrollments, fromCache: true),

@@ -56,8 +56,8 @@ class StudentDischargeBloc
     emit(StudentDischargeLoading());
     try {
       // Always fetch fresh data from API
-      final studentDischarge =
-          await studentDischargeRepository.getStudentDischarge();
+      final studentDischarge = await studentDischargeRepository
+          .getStudentDischarge();
 
       emit(StudentDischargeLoaded(studentDischarge: studentDischarge));
     } on DischargeNotRequiredException {

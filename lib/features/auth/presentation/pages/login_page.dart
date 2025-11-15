@@ -44,12 +44,10 @@ class _LoginPageState extends State<LoginPage>
                   children: [
                     Text(
                       _showingCodeHelp
-                          ? AppLocalizations.of(
-                            context,
-                          )!.codeInformationTitle
+                          ? AppLocalizations.of(context)!.codeInformationTitle
                           : AppLocalizations.of(
-                            context,
-                          )!.passwordInformationTitle,
+                              context,
+                            )!.passwordInformationTitle,
                       style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -68,12 +66,10 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(height: 16.0),
                     Text(
                       _showingCodeHelp
-                          ? AppLocalizations.of(
-                            context,
-                          )!.codeInformationText
+                          ? AppLocalizations.of(context)!.codeInformationText
                           : AppLocalizations.of(
-                            context,
-                          )!.passwordInformationText,
+                              context,
+                            )!.passwordInformationText,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 16.0),
@@ -88,18 +84,14 @@ class _LoginPageState extends State<LoginPage>
                                   _showingCodeHelp = false;
                                 });
                               },
-                              child: Text(
-                                AppLocalizations.of(context)!.next,
-                              ),
+                              child: Text(AppLocalizations.of(context)!.next),
                             ),
                           )
                         else
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () => Navigator.of(context).pop(),
-                              child: Text(
-                                AppLocalizations.of(context)!.close,
-                              ),
+                              child: Text(AppLocalizations.of(context)!.close),
                             ),
                           ),
                       ],
@@ -124,12 +116,10 @@ class _LoginPageState extends State<LoginPage>
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.1),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
-    );
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero).animate(
+          CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+        );
     _animationController.forward();
   }
 
@@ -156,13 +146,10 @@ class _LoginPageState extends State<LoginPage>
           actions: [
             IconButton(
               icon: const Icon(Icons.settings),
-              onPressed:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SettingsPage(),
-                    ),
-                  ),
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SettingsPage()),
+              ),
             ),
           ],
         ),
@@ -174,17 +161,20 @@ class _LoginPageState extends State<LoginPage>
               context.goNamed(AppRouter.dashboard);
             } else if (state is AuthError) {
               // Display a user-friendly error message
-              String userFriendlyMessage =
-                  AppLocalizations.of(context)!.unableToSignIn;
+              String userFriendlyMessage = AppLocalizations.of(
+                context,
+              )!.unableToSignIn;
 
               // Handle specific errors if we can identify them
               if (state.message.contains('403')) {
-                userFriendlyMessage =
-                    AppLocalizations.of(context)!.incorrectCredentials;
+                userFriendlyMessage = AppLocalizations.of(
+                  context,
+                )!.incorrectCredentials;
               } else if (state.message.contains('timeout') ||
                   state.message.contains('connect')) {
-                userFriendlyMessage =
-                    AppLocalizations.of(context)!.networkError;
+                userFriendlyMessage = AppLocalizations.of(
+                  context,
+                )!.networkError;
               }
 
               ScaffoldMessenger.of(context).showSnackBar(
@@ -265,15 +255,12 @@ class _LoginPageState extends State<LoginPage>
                               ),
                               const SizedBox(height: 12),
                               Text(
-                                AppLocalizations.of(
-                                  context,
-                                )!.signInToAccount,
+                                AppLocalizations.of(context)!.signInToAccount,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   fontSize: isSmallScreen ? 14 : 16,
-                                  color:
-                                      theme.brightness == Brightness.dark
-                                          ? Colors.white70
-                                          : Colors.black54,
+                                  color: theme.brightness == Brightness.dark
+                                      ? Colors.white70
+                                      : Colors.black54,
                                 ),
                               ),
                               SizedBox(height: isSmallScreen ? 36 : 44),
@@ -286,30 +273,26 @@ class _LoginPageState extends State<LoginPage>
                                       controller: _usernameController,
                                       textDirection: TextDirection.ltr,
                                       decoration: InputDecoration(
-                                        labelText:
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.studentCode,
-                                        hintText:
-                                            AppLocalizations.of(
-                                              context,
-                                            )!.enterStudentCode,
+                                        labelText: AppLocalizations.of(
+                                          context,
+                                        )!.studentCode,
+                                        hintText: AppLocalizations.of(
+                                          context,
+                                        )!.enterStudentCode,
                                         prefixIcon: Icon(
                                           Icons.person_outline,
-                                          color:
-                                              theme
-                                                  .inputDecorationTheme
-                                                  .prefixIconColor,
+                                          color: theme
+                                              .inputDecorationTheme
+                                              .prefixIconColor,
                                           size: isSmallScreen ? 20 : 24,
                                         ),
                                         suffixIcon: IconButton(
                                           icon: const Icon(Icons.info_outline),
-                                          tooltip:
-                                              AppLocalizations.of(
-                                                context,
-                                              )!.helpIcon,
-                                          onPressed:
-                                              () => _showHelpDialog(context),
+                                          tooltip: AppLocalizations.of(
+                                            context,
+                                          )!.helpIcon,
+                                          onPressed: () =>
+                                              _showHelpDialog(context),
                                         ),
 
                                         border: OutlineInputBorder(
@@ -319,9 +302,9 @@ class _LoginPageState extends State<LoginPage>
                                           borderSide: BorderSide(
                                             color:
                                                 theme.brightness ==
-                                                        Brightness.dark
-                                                    ? Colors.white30
-                                                    : Colors.black12,
+                                                    Brightness.dark
+                                                ? Colors.white30
+                                                : Colors.black12,
                                           ),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
@@ -348,20 +331,17 @@ class _LoginPageState extends State<LoginPage>
                                 controller: _passwordController,
                                 textDirection: TextDirection.ltr,
                                 decoration: InputDecoration(
-                                  labelText:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.password,
-                                  hintText:
-                                      AppLocalizations.of(
-                                        context,
-                                      )!.enterPassword,
+                                  labelText: AppLocalizations.of(
+                                    context,
+                                  )!.password,
+                                  hintText: AppLocalizations.of(
+                                    context,
+                                  )!.enterPassword,
                                   prefixIcon: Icon(
                                     Icons.lock_outline,
-                                    color:
-                                        theme
-                                            .inputDecorationTheme
-                                            .prefixIconColor,
+                                    color: theme
+                                        .inputDecorationTheme
+                                        .prefixIconColor,
                                     size: isSmallScreen ? 20 : 24,
                                   ),
                                   suffixIcon: IconButton(
@@ -380,10 +360,9 @@ class _LoginPageState extends State<LoginPage>
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
                                     borderSide: BorderSide(
-                                      color:
-                                          theme.brightness == Brightness.dark
-                                              ? Colors.white30
-                                              : Colors.black12,
+                                      color: theme.brightness == Brightness.dark
+                                          ? Colors.white30
+                                          : Colors.black12,
                                     ),
                                   ),
                                   contentPadding: EdgeInsets.symmetric(
@@ -410,24 +389,23 @@ class _LoginPageState extends State<LoginPage>
                                   return SizedBox(
                                     width: double.infinity,
                                     child: ElevatedButton(
-                                      onPressed:
-                                          state is AuthLoading
-                                              ? null
-                                              : () {
-                                                if (_formKey.currentState!
-                                                    .validate()) {
-                                                  context.read<AuthBloc>().add(
-                                                    LoginEvent(
-                                                      username:
-                                                          _usernameController
-                                                              .text,
-                                                      password:
-                                                          _passwordController
-                                                              .text,
-                                                    ),
-                                                  );
-                                                }
-                                              },
+                                      onPressed: state is AuthLoading
+                                          ? null
+                                          : () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                context.read<AuthBloc>().add(
+                                                  LoginEvent(
+                                                    username:
+                                                        _usernameController
+                                                            .text,
+                                                    password:
+                                                        _passwordController
+                                                            .text,
+                                                  ),
+                                                );
+                                              }
+                                            },
                                       style: ElevatedButton.styleFrom(
                                         padding: EdgeInsets.symmetric(
                                           vertical: isSmallScreen ? 16 : 20,
@@ -439,28 +417,27 @@ class _LoginPageState extends State<LoginPage>
                                         ),
                                         elevation: 2,
                                       ),
-                                      child:
-                                          state is AuthLoading
-                                              ? const SizedBox(
-                                                height: 24,
-                                                width: 24,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                      color: Colors.white,
-                                                      strokeWidth: 2.5,
-                                                    ),
-                                              )
-                                              : Text(
-                                                AppLocalizations.of(
-                                                  context,
-                                                )!.signIn,
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      isSmallScreen ? 16 : 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  letterSpacing: 0.5,
-                                                ),
+                                      child: state is AuthLoading
+                                          ? const SizedBox(
+                                              height: 24,
+                                              width: 24,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 2.5,
                                               ),
+                                            )
+                                          : Text(
+                                              AppLocalizations.of(
+                                                context,
+                                              )!.signIn,
+                                              style: TextStyle(
+                                                fontSize: isSmallScreen
+                                                    ? 16
+                                                    : 18,
+                                                fontWeight: FontWeight.bold,
+                                                letterSpacing: 0.5,
+                                              ),
+                                            ),
                                     ),
                                   );
                                 },

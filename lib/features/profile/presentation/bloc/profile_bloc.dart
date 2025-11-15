@@ -125,10 +125,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           cachedProfileData['detailedInfo'],
         );
         final academicPeriodsJson = cachedProfileData['academicPeriods'] ?? [];
-        final academicPeriods =
-            academicPeriodsJson
-                .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
-                .toList();
+        final academicPeriods = academicPeriodsJson
+            .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
+            .toList();
         final profileImage = cachedProfileData['profileImage'] as String?;
         final institutionLogo = cachedProfileData['institutionLogo'] as String?;
 
@@ -219,10 +218,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           cachedProfileData['detailedInfo'],
         );
         final academicPeriodsJson = cachedProfileData['academicPeriods'] ?? [];
-        final academicPeriods =
-            academicPeriodsJson
-                .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
-                .toList();
+        final academicPeriods = academicPeriodsJson
+            .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
+            .toList();
         final profileImage = cachedProfileData['profileImage'] as String?;
         final institutionLogo = cachedProfileData['institutionLogo'] as String?;
 

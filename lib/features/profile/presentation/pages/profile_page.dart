@@ -54,11 +54,11 @@ class _ProfilePageState extends State<ProfilePage> {
               if (enrollmentState is EnrollmentsLoaded &&
                   enrollmentState.enrollments.isNotEmpty) {
                 // Sort enrollments by academic year (newest first)
-                final sortedEnrollments = List<Enrollment>.from(
-                  enrollmentState.enrollments,
-                )..sort(
-                  (a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId),
-                );
+                final sortedEnrollments =
+                    List<Enrollment>.from(enrollmentState.enrollments)..sort(
+                      (a, b) =>
+                          b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId),
+                    );
                 latestEnrollment = sortedEnrollments.first;
               }
 
@@ -256,10 +256,9 @@ class _ProfilePageState extends State<ProfilePage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color:
-                      theme.brightness == Brightness.light
-                          ? Colors.white
-                          : const Color(0xFF3F3C34),
+                  color: theme.brightness == Brightness.light
+                      ? Colors.white
+                      : const Color(0xFF3F3C34),
                   width: 4,
                 ),
                 boxShadow: [
@@ -270,25 +269,24 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
-              child:
-                  state.profileImage != null
-                      ? ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          isSmallScreen ? 50 : 60,
-                        ),
-                        child: Image.memory(
-                          _decodeBase64Image(state.profileImage!),
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                      : CircleAvatar(
-                        backgroundColor: AppTheme.AppSecondary,
-                        child: Icon(
-                          Icons.person_rounded,
-                          size: isSmallScreen ? 50 : 60,
-                          color: AppTheme.AppPrimary,
-                        ),
+              child: state.profileImage != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        isSmallScreen ? 50 : 60,
                       ),
+                      child: Image.memory(
+                        _decodeBase64Image(state.profileImage!),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : CircleAvatar(
+                      backgroundColor: AppTheme.AppSecondary,
+                      child: Icon(
+                        Icons.person_rounded,
+                        size: isSmallScreen ? 50 : 60,
+                        color: AppTheme.AppPrimary,
+                      ),
+                    ),
             ),
           ),
           SizedBox(height: isSmallScreen ? 12 : 16),
@@ -324,10 +322,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   Icon(
                     Icons.calendar_today_rounded,
                     size: 16,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+                    color: theme.brightness == Brightness.light
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -347,10 +344,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   Icon(
                     Icons.location_on_outlined,
                     size: 16,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+                    color: theme.brightness == Brightness.light
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -372,10 +368,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   Icon(
                     Icons.directions_bus_rounded,
                     size: 16,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+                    color: theme.brightness == Brightness.light
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 6),
                   Text(
@@ -392,10 +387,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(
                       fontSize: isSmallScreen ? 14 : 16,
                       fontWeight: FontWeight.bold,
-                      color:
-                          state.detailedInfo.transportPaye
-                              ? Colors.green
-                              : Colors.red,
+                      color: state.detailedInfo.transportPaye
+                          ? Colors.green
+                          : Colors.red,
                     ),
                   ),
                 ],
@@ -433,10 +427,9 @@ class _ProfilePageState extends State<ProfilePage> {
             color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color:
-                  theme.brightness == Brightness.light
-                      ? AppTheme.AppBorder
-                      : const Color(0xFF3F3C34),
+              color: theme.brightness == Brightness.light
+                  ? AppTheme.AppBorder
+                  : const Color(0xFF3F3C34),
             ),
             boxShadow: [
               BoxShadow(

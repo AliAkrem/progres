@@ -44,9 +44,7 @@ class _TimelinePageState extends State<TimelinePage> {
     _eventController = CalendarControllerProvider.of(context).controller;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.weeklySchedule),
-      ),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.weeklySchedule)),
       body: BlocListener<TimelineBloc, TimelineState>(
         listener: (context, state) {
           if (state is TimelineLoaded) {

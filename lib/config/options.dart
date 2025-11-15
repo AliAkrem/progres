@@ -64,14 +64,14 @@ class AppOptions {
   }
 
   static AppOptions of(BuildContext context) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<_ModelBindingScope>();
+    final scope = context
+        .dependOnInheritedWidgetOfExactType<_ModelBindingScope>();
     return scope!.modelBindingState.currentModel;
   }
 
   static void update(BuildContext context, AppOptions newModel) {
-    final scope =
-        context.dependOnInheritedWidgetOfExactType<_ModelBindingScope>();
+    final scope = context
+        .dependOnInheritedWidgetOfExactType<_ModelBindingScope>();
     scope!.modelBindingState.updateModel(newModel);
   }
 }

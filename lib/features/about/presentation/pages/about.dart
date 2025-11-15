@@ -124,10 +124,9 @@ class _AboutPageState extends State<AboutPage> {
                   child: Text(AppLocalizations.of(context)!.licenseText),
                 ),
                 TextButton(
-                  onPressed:
-                      () => _launchUrl(
-                        'https://github.com/AliAkrem/progres/blob/master/LICENSE',
-                      ),
+                  onPressed: () => _launchUrl(
+                    'https://github.com/AliAkrem/progres/blob/master/LICENSE',
+                  ),
                   child: Text(AppLocalizations.of(context)!.viewLicense),
                 ),
               ],
@@ -147,8 +146,8 @@ class _AboutPageState extends State<AboutPage> {
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.code),
                 label: Text(AppLocalizations.of(context)!.viewonGitHub),
-                onPressed:
-                    () => _launchUrl('https://github.com/AliAkrem/progres'),
+                onPressed: () =>
+                    _launchUrl('https://github.com/AliAkrem/progres'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,

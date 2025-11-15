@@ -46,8 +46,7 @@ class ProgresApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,
               themeMode: themeState.themeMode,
-              localizationsDelegates:
-                  AppLocalizations.localizationsDelegates,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               localeResolutionCallback: (locale, supportedLocales) {
                 return locale != null && supportedLocales.contains(locale)

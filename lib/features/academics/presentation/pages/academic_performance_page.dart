@@ -62,19 +62,16 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.academicPerformancePageTitle,
-        ),
+        title: Text(AppLocalizations.of(context)!.academicPerformancePageTitle),
         actions: [
           BlocBuilder<AcademicsBloc, AcademicsState>(
             builder: (context, state) {
               return IconButton(
                 icon: const Icon(Icons.refresh),
                 tooltip: AppLocalizations.of(context)!.refreshData,
-                onPressed:
-                    state is AcademicsLoading
-                        ? null
-                        : () => _loadAcademicData(forceRefresh: true),
+                onPressed: state is AcademicsLoading
+                    ? null
+                    : () => _loadAcademicData(forceRefresh: true),
               );
             },
           ),
@@ -101,9 +98,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
         builder: (context, profileState) {
           if (profileState is! ProfileLoaded) {
             return Center(
-              child: Text(
-                AppLocalizations.of(context)!.errorLoadingProfile,
-              ),
+              child: Text(AppLocalizations.of(context)!.errorLoadingProfile),
             );
           }
 
@@ -127,8 +122,8 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed:
-                              () => _loadAcademicData(forceRefresh: true),
+                          onPressed: () =>
+                              _loadAcademicData(forceRefresh: true),
                           child: Text(AppLocalizations.of(context)!.retry),
                         ),
                       ],

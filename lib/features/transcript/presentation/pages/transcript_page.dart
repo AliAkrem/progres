@@ -67,9 +67,7 @@ class _TranscriptPageState extends State<TranscriptPage>
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                      AppLocalizations.of(context)!.refreshingData,
-                    ),
+                    content: Text(AppLocalizations.of(context)!.refreshingData),
                     duration: Duration(seconds: 1),
                   ),
                 );
@@ -149,32 +147,28 @@ class _TranscriptPageState extends State<TranscriptPage>
             controller: _tabController,
             isScrollable: true,
             indicatorColor: AppTheme.AppSecondary,
-            tabs:
-                _enrollments.map((enrollment) {
-                  return Tab(text: enrollment.anneeAcademiqueCode);
-                }).toList(),
+            tabs: _enrollments.map((enrollment) {
+              return Tab(text: enrollment.anneeAcademiqueCode);
+            }).toList(),
           ),
 
         // Main content
         Expanded(
-          child:
-              state is TranscriptLoading
-                  ? const Center(
-                    child: CircularProgressIndicator(
-                      color: AppTheme.AppPrimary,
-                    ),
-                  )
-                  : state is TranscriptsLoaded
-                  ? _buildTranscriptsView(state, theme)
-                  : Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.selectAcademicYear,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: theme.textTheme.bodyMedium?.color,
-                      ),
+          child: state is TranscriptLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: AppTheme.AppPrimary),
+                )
+              : state is TranscriptsLoaded
+              ? _buildTranscriptsView(state, theme)
+              : Center(
+                  child: Text(
+                    AppLocalizations.of(context)!.selectAcademicYear,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: theme.textTheme.bodyMedium?.color,
                     ),
                   ),
+                ),
         ),
       ],
     );
@@ -221,10 +215,9 @@ class _TranscriptPageState extends State<TranscriptPage>
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(
-                color:
-                    theme.brightness == Brightness.light
-                        ? AppTheme.AppBorder
-                        : const Color(0xFF3F3C34),
+                color: theme.brightness == Brightness.light
+                    ? AppTheme.AppBorder
+                    : const Color(0xFF3F3C34),
               ),
             ),
             child: Column(
@@ -272,16 +265,14 @@ class _TranscriptPageState extends State<TranscriptPage>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               ResultItem(
-                                label:
-                                    AppLocalizations.of(context)!.average,
+                                label: AppLocalizations.of(context)!.average,
                                 value: annualSummary.moyenne.toStringAsFixed(2),
                                 color: AppTheme.AppPrimary,
                                 icon: Icons.bar_chart_rounded,
                                 compact: true,
                               ),
                               ResultItem(
-                                label:
-                                    AppLocalizations.of(context)!.credits,
+                                label: AppLocalizations.of(context)!.credits,
                                 value: annualSummary.creditAcquis.toString(),
                                 color: AppTheme.accentBlue,
                                 icon: Icons.school_rounded,
@@ -334,9 +325,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.academicYearWrapper(
+                            AppLocalizations.of(context)!.academicYearWrapper(
                               state.selectedEnrollment.anneeAcademiqueCode,
                             ),
                             style: theme.textTheme.bodyMedium,
@@ -366,10 +355,9 @@ class _TranscriptPageState extends State<TranscriptPage>
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : const Color(0xFF3F3C34),
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : const Color(0xFF3F3C34),
         ),
       ),
       child: Padding(
@@ -415,9 +403,8 @@ class _TranscriptPageState extends State<TranscriptPage>
               physics: const NeverScrollableScrollPhysics(),
               itemCount: transcript.bilanUes.length,
               separatorBuilder: (context, index) => const Divider(height: 24),
-              itemBuilder:
-                  (context, index) =>
-                      _buildTeachingUnit(transcript.bilanUes[index], theme),
+              itemBuilder: (context, index) =>
+                  _buildTeachingUnit(transcript.bilanUes[index], theme),
             ),
           ],
         ),
@@ -499,8 +486,8 @@ class _TranscriptPageState extends State<TranscriptPage>
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: unit.bilanMcs.length,
-          itemBuilder:
-              (context, index) => _buildModuleRow(unit.bilanMcs[index], theme),
+          itemBuilder: (context, index) =>
+              _buildModuleRow(unit.bilanMcs[index], theme),
         ),
       ],
     );
@@ -560,10 +547,9 @@ class _TranscriptPageState extends State<TranscriptPage>
                 child: Divider(
                   indent: 8,
                   endIndent: 8,
-                  color:
-                      theme.brightness == Brightness.light
-                          ? null
-                          : const Color(0xFF3F3C34),
+                  color: theme.brightness == Brightness.light
+                      ? null
+                      : const Color(0xFF3F3C34),
                 ),
               ),
 

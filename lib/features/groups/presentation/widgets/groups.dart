@@ -50,10 +50,9 @@ class GroupCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : Colors.grey.shade800,
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : Colors.grey.shade800,
         ),
       ),
       child: Padding(
@@ -94,10 +93,9 @@ class GroupCard extends StatelessWidget {
                           Icon(
                             Icons.view_module_outlined,
                             size: isSmallScreen ? 12 : 14,
-                            color:
-                                theme.brightness == Brightness.light
-                                    ? Colors.grey.shade600
-                                    : Colors.grey.shade400,
+                            color: theme.brightness == Brightness.light
+                                ? Colors.grey.shade600
+                                : Colors.grey.shade400,
                           ),
                           SizedBox(width: isSmallScreen ? 3 : 4),
                           Text(
@@ -106,10 +104,9 @@ class GroupCard extends StatelessWidget {
                             )!.section(group.nomSection),
                             style: TextStyle(
                               fontSize: isSmallScreen ? 12 : 14,
-                              color:
-                                  theme.brightness == Brightness.light
-                                      ? Colors.grey.shade600
-                                      : Colors.grey.shade400,
+                              color: theme.brightness == Brightness.light
+                                  ? Colors.grey.shade600
+                                  : Colors.grey.shade400,
                             ),
                           ),
                         ],

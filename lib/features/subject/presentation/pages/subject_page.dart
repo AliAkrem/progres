@@ -162,10 +162,9 @@ class SubjectsContent extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
                 side: BorderSide(
-                  color:
-                      theme.brightness == Brightness.light
-                          ? AppTheme.AppBorder
-                          : const Color(0xFF3F3C34),
+                  color: theme.brightness == Brightness.light
+                      ? AppTheme.AppBorder
+                      : const Color(0xFF3F3C34),
                 ),
               ),
               child: Padding(
@@ -174,12 +173,11 @@ class SubjectsContent extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: coursesByPeriod[period]!.length,
-                  separatorBuilder:
-                      (context, index) => const Divider(
-                        thickness: 0,
-                        color: Colors.transparent,
-                        height: 24,
-                      ),
+                  separatorBuilder: (context, index) => const Divider(
+                    thickness: 0,
+                    color: Colors.transparent,
+                    height: 24,
+                  ),
                   itemBuilder: (context, index) {
                     final coefficient = coursesByPeriod[period]![index];
                     final localizedCourseCoefficient =

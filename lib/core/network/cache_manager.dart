@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheManager {
-  static const Duration cacheExpiry = Duration(hours: 24); // Cache valid for 24h
+  static const Duration cacheExpiry = Duration(
+    hours: 24,
+  ); // Cache valid for 24h
 
   final SharedPreferences _prefs;
 

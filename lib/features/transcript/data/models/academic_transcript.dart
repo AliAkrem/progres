@@ -34,10 +34,9 @@ class AcademicTranscript {
       niveauLibelleLongLt: json['niveauLibelleLongLt'] as String,
       periodeLibelleAr: json['periodeLibelleAr'] as String,
       periodeLibelleFr: json['periodeLibelleFr'] as String,
-      bilanUes:
-          (json['bilanUes'] as List<dynamic>)
-              .map((e) => TranscriptUnit.fromJson(e as Map<String, dynamic>))
-              .toList(),
+      bilanUes: (json['bilanUes'] as List<dynamic>)
+          .map((e) => TranscriptUnit.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
@@ -90,14 +89,12 @@ class TranscriptUnit {
       ueLibelleFr: json['ueLibelleFr'] as String,
       ueNatureLcAr: json['ueNatureLcAr'] as String,
       ueNatureLcFr: json['ueNatureLcFr'] as String,
-      bilanMcs:
-          (json['bilanMcs'] as List<dynamic>)
-              .map(
-                (e) => TranscriptModuleComponent.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              )
-              .toList(),
+      bilanMcs: (json['bilanMcs'] as List<dynamic>)
+          .map(
+            (e) =>
+                TranscriptModuleComponent.fromJson(e as Map<String, dynamic>),
+          )
+          .toList(),
     );
   }
 

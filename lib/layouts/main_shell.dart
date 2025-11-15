@@ -19,22 +19,21 @@ class MainShell extends StatelessWidget {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: theme.colorScheme.surface,
-          boxShadow:
-              theme.brightness == Brightness.dark
-                  ? [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.2),
-                      blurRadius: 10,
-                      offset: const Offset(0, -5),
-                    ),
-                  ]
-                  : [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, -5),
-                    ),
-                  ],
+          boxShadow: theme.brightness == Brightness.dark
+              ? [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ]
+              : [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -5),
+                  ),
+                ],
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(24),
@@ -78,10 +77,9 @@ class MainShell extends StatelessWidget {
     return NavigationDestination(
       icon: Icon(
         icon,
-        color:
-            theme.brightness == Brightness.dark
-                ? Colors.grey[400]
-                : Colors.grey[600],
+        color: theme.brightness == Brightness.dark
+            ? Colors.grey[400]
+            : Colors.grey[600],
       ),
       selectedIcon: Icon(selectedIcon, color: AppTheme.AppPrimary),
       label: label,

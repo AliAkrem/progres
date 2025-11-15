@@ -174,42 +174,35 @@ class SettingsPage extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder:
-                        (context) => AlertDialog(
-                          title: Text(
-                            AppLocalizations.of(context)!.logout,
-                            style: theme.textTheme.titleLarge?.copyWith(
-                              fontSize: isSmallScreen ? 18 : 20,
-                            ),
-                          ),
-                          content: Text(
-                            AppLocalizations.of(
-                              context,
-                            )!.logoutConfirmation,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              fontSize: isSmallScreen ? 14 : 16,
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text(
-                                AppLocalizations.of(context)!.cancel,
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                context.read<AuthBloc>().add(
-                                  LogoutEvent(context: context),
-                                );
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!.logout,
-                              ),
-                            ),
-                          ],
+                    builder: (context) => AlertDialog(
+                      title: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: theme.textTheme.titleLarge?.copyWith(
+                          fontSize: isSmallScreen ? 18 : 20,
                         ),
+                      ),
+                      content: Text(
+                        AppLocalizations.of(context)!.logoutConfirmation,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          fontSize: isSmallScreen ? 14 : 16,
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text(AppLocalizations.of(context)!.cancel),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            context.read<AuthBloc>().add(
+                              LogoutEvent(context: context),
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.logout),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
@@ -240,56 +233,55 @@ class SettingsPage extends StatelessWidget {
 
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(
-              AppLocalizations.of(context)!.selectTheme,
-              style: theme.textTheme.titleLarge?.copyWith(
-                fontSize: isSmallScreen ? 18 : 20,
-              ),
-            ),
-            contentPadding: EdgeInsets.fromLTRB(
-              24,
-              isSmallScreen ? 16 : 20,
-              24,
-              isSmallScreen ? 16 : 20,
-            ),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildThemeOption(
-                  context,
-                  ThemeMode.light,
-                  currentThemeMode,
-                  AppLocalizations.of(context)!.light,
-                  Icons.light_mode,
-                ),
-                _buildThemeOption(
-                  context,
-                  ThemeMode.dark,
-                  currentThemeMode,
-                  AppLocalizations.of(context)!.dark,
-                  Icons.dark_mode,
-                ),
-                _buildThemeOption(
-                  context,
-                  ThemeMode.system,
-                  currentThemeMode,
-                  AppLocalizations.of(context)!.systemDefault,
-                  Icons.settings_suggest,
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  AppLocalizations.of(context)!.cancel,
-                  style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
-                ),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(
+          AppLocalizations.of(context)!.selectTheme,
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontSize: isSmallScreen ? 18 : 20,
           ),
+        ),
+        contentPadding: EdgeInsets.fromLTRB(
+          24,
+          isSmallScreen ? 16 : 20,
+          24,
+          isSmallScreen ? 16 : 20,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildThemeOption(
+              context,
+              ThemeMode.light,
+              currentThemeMode,
+              AppLocalizations.of(context)!.light,
+              Icons.light_mode,
+            ),
+            _buildThemeOption(
+              context,
+              ThemeMode.dark,
+              currentThemeMode,
+              AppLocalizations.of(context)!.dark,
+              Icons.dark_mode,
+            ),
+            _buildThemeOption(
+              context,
+              ThemeMode.system,
+              currentThemeMode,
+              AppLocalizations.of(context)!.systemDefault,
+              Icons.settings_suggest,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              AppLocalizations.of(context)!.cancel,
+              style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -306,39 +298,35 @@ class SettingsPage extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
 
     // Use a more neutral color for icons in dark mode that contrasts well
-    final iconColor =
-        isSelected
-            ? (theme.brightness == Brightness.dark
-                ? Colors.white
-                : AppTheme.AppPrimary)
-            : theme.iconTheme.color;
+    final iconColor = isSelected
+        ? (theme.brightness == Brightness.dark
+              ? Colors.white
+              : AppTheme.AppPrimary)
+        : theme.iconTheme.color;
 
     return ListTile(
       leading: Icon(icon, color: iconColor, size: isSmallScreen ? 22 : 24),
       title: Text(
         title,
         style: TextStyle(
-          color:
-              isSelected
-                  ? (theme.brightness == Brightness.dark
-                      ? Colors.white
-                      : AppTheme.AppPrimary)
-                  : theme.textTheme.titleMedium?.color,
+          color: isSelected
+              ? (theme.brightness == Brightness.dark
+                    ? Colors.white
+                    : AppTheme.AppPrimary)
+              : theme.textTheme.titleMedium?.color,
           fontWeight: isSelected ? FontWeight.bold : null,
           fontSize: isSmallScreen ? 14 : 16,
         ),
       ),
-      trailing:
-          isSelected
-              ? Icon(
-                Icons.check,
-                color:
-                    theme.brightness == Brightness.dark
-                        ? Colors.white
-                        : AppTheme.AppPrimary,
-                size: isSmallScreen ? 20 : 22,
-              )
-              : null,
+      trailing: isSelected
+          ? Icon(
+              Icons.check,
+              color: theme.brightness == Brightness.dark
+                  ? Colors.white
+                  : AppTheme.AppPrimary,
+              size: isSmallScreen ? 20 : 22,
+            )
+          : null,
       contentPadding: EdgeInsets.symmetric(
         horizontal: isSmallScreen ? 12 : 16,
         vertical: isSmallScreen ? 6 : 8,

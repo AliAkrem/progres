@@ -127,13 +127,13 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
           );
 
           if (cachedExams != null && cachedAssessments != null) {
-            final examResults =
-                (cachedExams).map((e) => ExamResult.fromJson(e)).toList();
+            final examResults = (cachedExams)
+                .map((e) => ExamResult.fromJson(e))
+                .toList();
 
-            final continuousAssessments =
-                (cachedAssessments)
-                    .map((e) => ContinuousAssessment.fromJson(e))
-                    .toList();
+            final continuousAssessments = (cachedAssessments)
+                .map((e) => ContinuousAssessment.fromJson(e))
+                .toList();
 
             emit(
               AcademicsLoaded(

@@ -20,10 +20,9 @@ Widget buildGridCard(
         color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : const Color(0xFF3F3C34),
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : const Color(0xFF3F3C34),
         ),
         boxShadow: [
           BoxShadow(

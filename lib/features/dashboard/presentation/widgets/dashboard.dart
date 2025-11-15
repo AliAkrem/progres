@@ -14,10 +14,9 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
   final screenSize = MediaQuery.of(context).size;
   final isSmallScreen = screenSize.width < 360;
   final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
-  final studentName =
-      deviceLocale!.languageCode == 'ar'
-          ? state.basicInfo.prenomArabe
-          : state.basicInfo.prenomLatin;
+  final studentName = deviceLocale!.languageCode == 'ar'
+      ? state.basicInfo.prenomArabe
+      : state.basicInfo.prenomLatin;
 
   return SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
@@ -31,24 +30,23 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
               CircleAvatar(
                 radius: isSmallScreen ? 26 : 30,
                 backgroundColor: AppTheme.AppSecondary,
-                child:
-                    state.profileImage != null
-                        ? ClipRRect(
-                          borderRadius: BorderRadius.circular(
-                            isSmallScreen ? 26 : 30,
-                          ),
-                          child: Image.memory(
-                            _decodeBase64Image(state.profileImage!),
-                            width: isSmallScreen ? 52 : 60,
-                            height: isSmallScreen ? 52 : 60,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                        : Icon(
-                          Icons.person,
-                          size: isSmallScreen ? 26 : 30,
-                          color: AppTheme.AppPrimary,
+                child: state.profileImage != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          isSmallScreen ? 26 : 30,
                         ),
+                        child: Image.memory(
+                          _decodeBase64Image(state.profileImage!),
+                          width: isSmallScreen ? 52 : 60,
+                          height: isSmallScreen ? 52 : 60,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Icon(
+                        Icons.person,
+                        size: isSmallScreen ? 26 : 30,
+                        color: AppTheme.AppPrimary,
+                      ),
               ),
               SizedBox(width: isSmallScreen ? 12 : 16),
               Expanded(
@@ -92,18 +90,16 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
             children: [
               buildGridCard(
                 context,
-                title:
-                    AppLocalizations.of(
-                      context,
-                    )!.academicPerformancePageTitle,
+                title: AppLocalizations.of(
+                  context,
+                )!.academicPerformancePageTitle,
                 icon: Icons.assignment_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.academicPerformancePath),
               ),
               buildGridCard(
                 context,
-                title:
-                    AppLocalizations.of(context)!.subjectsAndCoefficients,
+                title: AppLocalizations.of(context)!.subjectsAndCoefficients,
                 icon: Icons.school_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.subjects),

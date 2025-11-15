@@ -11,12 +11,11 @@ class StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _getDecisionColor(status);
     final icon = _getDecisionIcon(status);
-    final formattedStatus =
-        status
-            .replaceAll('Admis(e)', AppLocalizations.of(context)!.passed)
-            .replaceAll('Ajourné(e)', AppLocalizations.of(context)!.failed)
-            .replaceAll('(session normale)', '')
-            .trim();
+    final formattedStatus = status
+        .replaceAll('Admis(e)', AppLocalizations.of(context)!.passed)
+        .replaceAll('Ajourné(e)', AppLocalizations.of(context)!.failed)
+        .replaceAll('(session normale)', '')
+        .trim();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

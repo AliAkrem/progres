@@ -131,10 +131,9 @@ class _SplashScreenState extends State<SplashScreen>
                   AppLocalizations.of(context)!.welcomeBack,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: isSmallScreen ? 14 : 16,
-                    color:
-                        theme.brightness == Brightness.dark
-                            ? Colors.white70
-                            : Colors.black54,
+                    color: theme.brightness == Brightness.dark
+                        ? Colors.white70
+                        : Colors.black54,
                   ),
                 ),
               ),

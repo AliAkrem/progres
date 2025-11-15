@@ -81,10 +81,9 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
         );
         if (cachedEvents != null && cachedEvents.isNotEmpty) {
           // Convert cached data back to CourseSession objects
-          final List<CourseSession> sessions =
-              List<Map<String, dynamic>>.from(
-                cachedEvents,
-              ).map((json) => CourseSession.fromJson(json)).toList();
+          final List<CourseSession> sessions = List<Map<String, dynamic>>.from(
+            cachedEvents,
+          ).map((json) => CourseSession.fromJson(json)).toList();
 
           emit(
             TimelineLoaded(
@@ -104,8 +103,9 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       );
 
       // Cache the results - convert CourseSession objects to JSON for caching
-      final List<Map<String, dynamic>> sessionsJson =
-          sessions.map((session) => session.toJson()).toList();
+      final List<Map<String, dynamic>> sessionsJson = sessions
+          .map((session) => session.toJson())
+          .toList();
       await timelineCacheService.cacheTimelineEvents(cacheKey, sessionsJson);
 
       final now = DateTime.now();

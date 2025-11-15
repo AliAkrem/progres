@@ -42,10 +42,9 @@ class ExamResultsCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : const Color(0xFF3F3C34),
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : const Color(0xFF3F3C34),
         ),
       ),
       child: Padding(
@@ -57,12 +56,11 @@ class ExamResultsCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder:
-                  (context, index) => const Divider(
-                    thickness: 0,
-                    color: Colors.transparent,
-                    height: 24,
-                  ),
+              separatorBuilder: (context, index) => const Divider(
+                thickness: 0,
+                color: Colors.transparent,
+                height: 24,
+              ),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseResults = groupedByCourse[courseTitle]!;
@@ -107,26 +105,25 @@ class ExamResultsCard extends StatelessWidget {
                                   ? Icons.check_circle_outline
                                   : Icons.info_outline,
                               size: 14,
-                              color:
-                                  courseResults.first.recoursDemande == true
-                                      ? Colors.orange
-                                      : Colors.grey,
+                              color: courseResults.first.recoursDemande == true
+                                  ? Colors.orange
+                                  : Colors.grey,
                             ),
                             const SizedBox(width: 4),
                             Text(
                               courseResults.first.recoursDemande == true
                                   ? AppLocalizations.of(
-                                    context,
-                                  )!.appealRequested
+                                      context,
+                                    )!.appealRequested
                                   : AppLocalizations.of(
-                                    context,
-                                  )!.appealAvailable,
+                                      context,
+                                    )!.appealAvailable,
                               style: TextStyle(
                                 fontSize: 12,
                                 color:
                                     courseResults.first.recoursDemande == true
-                                        ? Colors.orange
-                                        : Colors.grey,
+                                    ? Colors.orange
+                                    : Colors.grey,
                               ),
                             ),
                           ],
@@ -200,43 +197,41 @@ class ExamResultsCard extends StatelessWidget {
           Expanded(
             child: Divider(
               indent: 8,
-              color:
-                  theme.brightness == Brightness.light
-                      ? null
-                      : const Color(0xFF3F3C34),
+              color: theme.brightness == Brightness.light
+                  ? null
+                  : const Color(0xFF3F3C34),
             ),
           ),
 
           // Grade
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child:
-                result.noteExamen != null
-                    ? Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: _getGradeColor(result.noteExamen!),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '${result.noteExamen}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    )
-                    : Text(
-                      AppLocalizations.of(context)!.notAvailable,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: theme.textTheme.bodyMedium?.color,
+            child: result.noteExamen != null
+                ? Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _getGradeColor(result.noteExamen!),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${result.noteExamen}',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 13,
                       ),
                     ),
+                  )
+                : Text(
+                    AppLocalizations.of(context)!.notAvailable,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
           ),
         ],
       ),

@@ -84,10 +84,9 @@ WeekView<Object?> buildWeekView({
 
       return Container(
         decoration: BoxDecoration(
-          color:
-              date.day == DateTime.now().day
-                  ? AppTheme.AppPrimary.withValues(alpha: 0.1)
-                  : Colors.transparent,
+          color: date.day == DateTime.now().day
+              ? AppTheme.AppPrimary.withValues(alpha: 0.1)
+              : Colors.transparent,
           border: Border(
             bottom: BorderSide(
               color: AppTheme.AppPrimary.withValues(alpha: 0.2),
@@ -104,16 +103,18 @@ WeekView<Object?> buildWeekView({
               style: TextStyle(
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
-                color:
-                    date.day == DateTime.now().day ? AppTheme.AppPrimary : null,
+                color: date.day == DateTime.now().day
+                    ? AppTheme.AppPrimary
+                    : null,
               ),
             ),
             Text(
               dayOfMonth,
               style: TextStyle(
                 fontSize: 9,
-                color:
-                    date.day == DateTime.now().day ? AppTheme.AppPrimary : null,
+                color: date.day == DateTime.now().day
+                    ? AppTheme.AppPrimary
+                    : null,
               ),
             ),
           ],

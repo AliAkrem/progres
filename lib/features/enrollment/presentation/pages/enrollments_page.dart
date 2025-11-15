@@ -38,9 +38,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
               );
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(
-                    AppLocalizations.of(context)!.refreshingData,
-                  ),
+                  content: Text(AppLocalizations.of(context)!.refreshingData),
                   duration: Duration(seconds: 1),
                 ),
               );
@@ -73,9 +71,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
           } else if (state is EnrollmentsLoaded) {
             if (state.enrollments.isEmpty) {
               return Center(
-                child: Text(
-                  AppLocalizations.of(context)!.errorNoEnrollments,
-                ),
+                child: Text(AppLocalizations.of(context)!.errorNoEnrollments),
               );
             }
 
@@ -127,10 +123,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : Colors.grey.shade800,
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : Colors.grey.shade800,
         ),
       ),
       child: Padding(
@@ -163,10 +158,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 Icon(
                   Icons.school_outlined,
                   size: 18,
-                  color:
-                      theme.brightness == Brightness.light
-                          ? Colors.grey.shade700
-                          : Colors.grey.shade300,
+                  color: theme.brightness == Brightness.light
+                      ? Colors.grey.shade700
+                      : Colors.grey.shade300,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -190,10 +184,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 Icon(
                   Icons.book_outlined,
                   size: 18,
-                  color:
-                      theme.brightness == Brightness.light
-                          ? Colors.grey.shade700
-                          : Colors.grey.shade300,
+                  color: theme.brightness == Brightness.light
+                      ? Colors.grey.shade700
+                      : Colors.grey.shade300,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -243,10 +236,9 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                   Icon(
                     Icons.credit_card_outlined,
                     size: 18,
-                    color:
-                        theme.brightness == Brightness.light
-                            ? Colors.grey.shade700
-                            : Colors.grey.shade300,
+                    color: theme.brightness == Brightness.light
+                        ? Colors.grey.shade700
+                        : Colors.grey.shade300,
                   ),
                   const SizedBox(width: 8),
                   Expanded(

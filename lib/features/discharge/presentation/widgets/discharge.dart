@@ -74,10 +74,9 @@ class DischargeContent extends StatelessWidget {
             AppLocalizations.of(context)!.dischargeStatusDescription,
             style: TextStyle(
               fontSize: isSmallScreen ? 12 : 14,
-              color:
-                  theme.brightness == Brightness.light
-                      ? Colors.grey.shade700
-                      : Colors.grey.shade300,
+              color: theme.brightness == Brightness.light
+                  ? Colors.grey.shade700
+                  : Colors.grey.shade300,
             ),
           ),
         ],
@@ -98,8 +97,7 @@ class DischargeContent extends StatelessWidget {
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
           title: AppLocalizations.of(context)!.facultyLibraryLevel,
-          description:
-              AppLocalizations.of(context)!.facultyLibraryDescription,
+          description: AppLocalizations.of(context)!.facultyLibraryDescription,
           isCleared: discharge.sitBf,
           icon: Icons.local_library_outlined,
           isSmallScreen: isSmallScreen,
@@ -107,8 +105,7 @@ class DischargeContent extends StatelessWidget {
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
           title: AppLocalizations.of(context)!.centralLibraryLevel,
-          description:
-              AppLocalizations.of(context)!.centralLibraryDescription,
+          description: AppLocalizations.of(context)!.centralLibraryDescription,
           isCleared: discharge.sitBc,
           icon: Icons.library_books_outlined,
           isSmallScreen: isSmallScreen,
@@ -124,8 +121,9 @@ class DischargeContent extends StatelessWidget {
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
           title: AppLocalizations.of(context)!.scholarshipServiceLevel,
-          description:
-              AppLocalizations.of(context)!.scholarshipServiceDescription,
+          description: AppLocalizations.of(
+            context,
+          )!.scholarshipServiceDescription,
           isCleared: discharge.sitBrs,
           icon: Icons.school_outlined,
           isSmallScreen: isSmallScreen,
@@ -162,10 +160,9 @@ class DischargeCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : Colors.grey.shade800,
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : Colors.grey.shade800,
         ),
       ),
       child: Padding(
@@ -205,10 +202,9 @@ class DischargeCard extends StatelessWidget {
                         description,
                         style: TextStyle(
                           fontSize: isSmallScreen ? 11 : 12,
-                          color:
-                              theme.brightness == Brightness.light
-                                  ? Colors.grey.shade600
-                                  : Colors.grey.shade400,
+                          color: theme.brightness == Brightness.light
+                              ? Colors.grey.shade600
+                              : Colors.grey.shade400,
                         ),
                       ),
                     ],

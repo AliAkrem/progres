@@ -82,10 +82,9 @@ class ApiClient {
 
   // Generate a cache key string based on path and query parameters
   String _cacheKey(String path, Map<String, dynamic>? queryParameters) {
-    final queryStr =
-        queryParameters != null
-            ? Uri(queryParameters: queryParameters).query
-            : '';
+    final queryStr = queryParameters != null
+        ? Uri(queryParameters: queryParameters).query
+        : '';
     return '$path?$queryStr';
   }
 

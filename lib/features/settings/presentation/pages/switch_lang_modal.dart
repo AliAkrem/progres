@@ -112,13 +112,12 @@ class _SwitchLangModalState extends State<SwitchLangModal> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                    onPressed:
-                        newValue != _locale.languageCode
-                            ? () {
-                              confirm(newValue);
-                              Navigator.of(context).pop();
-                            }
-                            : null,
+                    onPressed: newValue != _locale.languageCode
+                        ? () {
+                            confirm(newValue);
+                            Navigator.of(context).pop();
+                          }
+                        : null,
                     child: Text(AppLocalizations.of(context)!.confirm),
                   ),
                   const SizedBox(width: 8.0),

@@ -42,10 +42,9 @@ class ContinuousAssessmentCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color:
-              theme.brightness == Brightness.light
-                  ? AppTheme.AppBorder
-                  : const Color(0xFF3F3C34),
+          color: theme.brightness == Brightness.light
+              ? AppTheme.AppBorder
+              : const Color(0xFF3F3C34),
         ),
       ),
       child: Padding(
@@ -57,9 +56,8 @@ class ContinuousAssessmentCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: groupedByCourse.length,
-              separatorBuilder:
-                  (context, index) =>
-                      const Divider(thickness: 0, color: Colors.transparent),
+              separatorBuilder: (context, index) =>
+                  const Divider(thickness: 0, color: Colors.transparent),
               itemBuilder: (context, index) {
                 final courseTitle = groupedByCourse.keys.elementAt(index);
                 final courseAssessments = groupedByCourse[courseTitle]!;
@@ -141,41 +139,39 @@ class ContinuousAssessmentCard extends StatelessWidget {
               Expanded(
                 child: Divider(
                   indent: 8,
-                  color:
-                      theme.brightness == Brightness.light
-                          ? null
-                          : const Color(0xFF3F3C34),
+                  color: theme.brightness == Brightness.light
+                      ? null
+                      : const Color(0xFF3F3C34),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child:
-                    assessment.note != null
-                        ? Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _getGradeColor(assessment.note!),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            '${assessment.note}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 13,
-                            ),
-                          ),
-                        )
-                        : Text(
-                          AppLocalizations.of(context)!.notAvailable,
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: theme.textTheme.bodyMedium?.color,
+                child: assessment.note != null
+                    ? Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _getGradeColor(assessment.note!),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          '${assessment.note}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 13,
                           ),
                         ),
+                      )
+                    : Text(
+                        AppLocalizations.of(context)!.notAvailable,
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: theme.textTheme.bodyMedium?.color,
+                        ),
+                      ),
               ),
             ],
           ),

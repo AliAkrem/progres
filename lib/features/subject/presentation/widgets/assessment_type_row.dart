@@ -42,41 +42,39 @@ class AssessmentTypeRow extends StatelessWidget {
           Expanded(
             child: Divider(
               indent: 8,
-              color:
-                  theme.brightness == Brightness.light
-                      ? null
-                      : const Color(0xFF3F3C34),
+              color: theme.brightness == Brightness.light
+                  ? null
+                  : const Color(0xFF3F3C34),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child:
-                coefficient > 0
-                    ? Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: typeColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        '$percentage%',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    )
-                    : Text(
-                      AppLocalizations.of(context)!.notAvailable,
-                      style: TextStyle(
-                        fontStyle: FontStyle.italic,
-                        color: theme.textTheme.bodyMedium?.color,
+            child: coefficient > 0
+                ? Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: typeColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '$percentage%',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 13,
                       ),
                     ),
+                  )
+                : Text(
+                    AppLocalizations.of(context)!.notAvailable,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      color: theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
           ),
         ],
       ),
