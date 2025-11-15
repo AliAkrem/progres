@@ -63,8 +63,9 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
 ## Getting Started
 
 ### Prerequisites
-- Flutter SDK (version 3.22.2)
-- Dart SDK (version 3.4.3) 
+- Flutter SDK (version 3.38.1)
+- Dart SDK (version 3.10.0)
+- [FVM (Flutter Version Management)](https://fvm.app/) - Recommended for managing Flutter versions
 
 ### Run Locally
 
@@ -77,16 +78,33 @@ So I decided to rebuild it from scratch, with a better design and offline suppor
    ```bash
    cd progres
    ```
-   
-3. Install dependencies
+
+3. Install FVM (if not already installed)
    ```bash
-   flutter pub get
+   dart pub global activate fvm
    ```
 
-4. Run the app
+4. Install the Flutter version specified in `.fvmrc`
    ```bash
-   flutter run
+   fvm install
    ```
+
+5. Use the configured Flutter version
+   ```bash
+   fvm use stable
+   ```
+   
+6. Install dependencies
+   ```bash
+   fvm flutter pub get
+   ```
+
+7. Run the app
+   ```bash
+   fvm flutter run
+   ```
+
+   > **Note:** If you prefer not to use FVM, you can run standard Flutter commands directly, but ensure you're using Flutter 3.38.1 and Dart 3.10.0.
 
 ## In The Future  
 
