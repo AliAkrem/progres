@@ -1,0 +1,64 @@
+# This workflow tests the Flutter build reproduction steps
+
+name: Flutter Build Reproduction Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-build-reproduction:
+    name: Test Dev Environment Setup (Linux)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+
+      - name: Install FVM
+        run: dart pub global activate fvm
+
+      - name: Add FVM to PATH
+        run: echo "$HOME/.pub-cache/bin" >> $GITHUB_PATH
+        shell: bash
+
+      - name: Install Flutter version from .fvm/fvm_config.json
+        run: fvm install
+
+      - name: Use FVM Flutter
+        run: fvm use --force
+
+      - name: Verify Flutter version
+        run: fvm flutter --version
+
+      - name: Flutter doctor
+        run: fvm flutter doctor -v
+
+      - name: Get dependencies
+        run: fvm flutter pub get
+
+      - name: Verify dependencies
+        run: fvm flutter pub deps
+
+      - name: Run code analysis
+        run: fvm flutter analyze
+        continue-on-error: false
+
+      - name: Run tests
+        run: fvm flutter test
+        continue-on-error: false
+
+      - name: Check formatting
+        run: fvm flutter format --set-exit-if-changed .
+        continue-on-error: false
+
+      - name: Build Android APK
+        run: fvm flutter build apk --debug
+        continue-on-error: false
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "✅ Build reproduction test completed"
