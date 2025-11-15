@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class ErrorLoadingSubjectState extends StatelessWidget {
   final String message;
@@ -25,7 +25,7 @@ class ErrorLoadingSubjectState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              GalleryLocalizations.of(context)!.errorNoSubjects,
+              AppLocalizations.of(context)!.errorNoSubjects,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
             ),
@@ -39,7 +39,7 @@ class ErrorLoadingSubjectState extends StatelessWidget {
                   ),
                 );
               },
-              child: Text(GalleryLocalizations.of(context)!.retry),
+              child: Text(AppLocalizations.of(context)!.retry),
             ),
           ],
         ),

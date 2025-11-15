@@ -2,7 +2,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/presentation/widgets/week_view.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 Widget buildTimeline(BuildContext context) {
   final GlobalKey<WeekViewState> weekViewKey = GlobalKey<WeekViewState>();
@@ -37,17 +37,17 @@ Widget _buildTimelineMap(BuildContext context) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       _buildLegendItem(
-        GalleryLocalizations.of(context)!.lecture,
+        AppLocalizations.of(context)!.lecture,
         AppTheme.accentGreen,
       ),
       const SizedBox(width: 8),
       _buildLegendItem(
-        GalleryLocalizations.of(context)!.tutorial,
+        AppLocalizations.of(context)!.tutorial,
         AppTheme.AppPrimary,
       ),
       const SizedBox(width: 8),
       _buildLegendItem(
-        GalleryLocalizations.of(context)!.practical,
+        AppLocalizations.of(context)!.practical,
         AppTheme.accentBlue,
       ),
     ],

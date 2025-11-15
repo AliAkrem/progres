@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -113,7 +113,7 @@ class _SplashScreenState extends State<SplashScreen>
               FadeTransition(
                 opacity: _fadeAnimation,
                 child: Text(
-                  GalleryLocalizations.of(context)?.studentPortal ??
+                  AppLocalizations.of(context)?.studentPortal ??
                       "Student Portal",
                   style: theme.textTheme.displayMedium?.copyWith(
                     fontSize: isSmallScreen ? 28 : 34,
@@ -128,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen>
               FadeTransition(
                 opacity: _fadeAnimation,
                 child: Text(
-                  GalleryLocalizations.of(context)!.welcomeBack,
+                  AppLocalizations.of(context)!.welcomeBack,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: isSmallScreen ? 14 : 16,
                     color:

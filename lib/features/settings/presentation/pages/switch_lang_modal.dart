@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progres/config/options.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "package:flutter_gen/gen_l10n/gallery_localizations.dart";
+import 'package:progres/l10n/gallery_localizations.dart';
 
 void showSwitchLangModal(
   BuildContext context, {
@@ -93,11 +93,11 @@ class _SwitchLangModalState extends State<SwitchLangModal> {
               items: [
                 DropdownMenuItem(
                   value: 'en',
-                  child: Text(GalleryLocalizations.of(context)!.english),
+                  child: Text(AppLocalizations.of(context)!.english),
                 ),
                 DropdownMenuItem(
                   value: 'ar',
-                  child: Text(GalleryLocalizations.of(context)!.arabic),
+                  child: Text(AppLocalizations.of(context)!.arabic),
                 ),
               ],
               onChanged: (value) async {
@@ -119,14 +119,14 @@ class _SwitchLangModalState extends State<SwitchLangModal> {
                               Navigator.of(context).pop();
                             }
                             : null,
-                    child: Text(GalleryLocalizations.of(context)!.confirm),
+                    child: Text(AppLocalizations.of(context)!.confirm),
                   ),
                   const SizedBox(width: 8.0),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(GalleryLocalizations.of(context)!.cancel),
+                    child: Text(AppLocalizations.of(context)!.cancel),
                   ),
                 ],
               ),

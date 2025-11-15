@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
@@ -88,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const CircularProgressIndicator(color: AppTheme.AppPrimary),
           const SizedBox(height: 24),
           Text(
-            GalleryLocalizations.of(context)!.loadingProfileData,
+            AppLocalizations.of(context)!.loadingProfileData,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color),
           ),
         ],
@@ -114,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
             Text(
-              GalleryLocalizations.of(context)!.somthingWentWrong,
+              AppLocalizations.of(context)!.somthingWentWrong,
               style: TextStyle(color: theme.textTheme.bodyMedium?.color),
               textAlign: TextAlign.center,
               maxLines: 3,
@@ -126,7 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 context.read<ProfileBloc>().add(LoadProfileEvent());
               },
               icon: const Icon(Icons.refresh),
-              label: Text(GalleryLocalizations.of(context)!.retry),
+              label: Text(AppLocalizations.of(context)!.retry),
             ),
           ],
         ),
@@ -159,39 +159,39 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: _buildInfoSection(
-                title: GalleryLocalizations.of(context)!.currentAcademicStatus,
+                title: AppLocalizations.of(context)!.currentAcademicStatus,
                 children: [
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.academicYear,
+                    AppLocalizations.of(context)!.academicYear,
                     latestEnrollment.anneeAcademiqueCode,
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.institution,
+                    AppLocalizations.of(context)!.institution,
                     deviceLocale.languageCode == 'ar'
                         ? latestEnrollment.llEtablissementArabe ?? ''
                         : latestEnrollment.llEtablissementLatin ?? '',
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.level,
+                    AppLocalizations.of(context)!.level,
                     deviceLocale.languageCode == 'ar'
                         ? latestEnrollment.niveauLibelleLongAr ?? ''
                         : latestEnrollment.niveauLibelleLongLt ?? '',
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.program,
+                    AppLocalizations.of(context)!.program,
                     deviceLocale.languageCode == 'ar'
                         ? latestEnrollment.ofLlDomaineArabe ?? ''
                         : latestEnrollment.ofLlDomaine ?? '',
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.specialization,
+                    AppLocalizations.of(context)!.specialization,
                     deviceLocale.languageCode == 'ar'
                         ? latestEnrollment.ofLlSpecialiteArabe ?? ''
                         : latestEnrollment.ofLlSpecialite ?? '',
                   ),
                   if (latestEnrollment.numeroInscription != null)
                     _buildInfoRow(
-                      GalleryLocalizations.of(context)!.registrationNumber,
+                      AppLocalizations.of(context)!.registrationNumber,
                       latestEnrollment.numeroInscription!,
                     ),
                 ],
@@ -203,22 +203,22 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: _buildInfoSection(
-                title: GalleryLocalizations.of(context)!.currentAcademicStatus,
+                title: AppLocalizations.of(context)!.currentAcademicStatus,
                 children: [
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.academicYear,
+                    AppLocalizations.of(context)!.academicYear,
                     state.academicYear.code,
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.level,
+                    AppLocalizations.of(context)!.level,
                     state.detailedInfo.niveauLibelleLongLt,
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.cycle,
+                    AppLocalizations.of(context)!.cycle,
                     state.detailedInfo.refLibelleCycle,
                   ),
                   _buildInfoRow(
-                    GalleryLocalizations.of(context)!.registrationNumber,
+                    AppLocalizations.of(context)!.registrationNumber,
                     state.detailedInfo.numeroInscription,
                   ),
                 ],
@@ -379,7 +379,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    GalleryLocalizations.of(context)!.transport + ": ",
+                    AppLocalizations.of(context)!.transport + ": ",
                     style: TextStyle(
                       fontSize: isSmallScreen ? 13 : 14,
                       color: theme.textTheme.bodyMedium?.color,
@@ -387,8 +387,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   Text(
                     state.detailedInfo.transportPaye
-                        ? GalleryLocalizations.of(context)!.paid
-                        : GalleryLocalizations.of(context)!.unpaid,
+                        ? AppLocalizations.of(context)!.paid
+                        : AppLocalizations.of(context)!.unpaid,
                     style: TextStyle(
                       fontSize: isSmallScreen ? 14 : 16,
                       fontWeight: FontWeight.bold,

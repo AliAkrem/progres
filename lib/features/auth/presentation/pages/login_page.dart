@@ -5,7 +5,7 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -44,10 +44,10 @@ class _LoginPageState extends State<LoginPage>
                   children: [
                     Text(
                       _showingCodeHelp
-                          ? GalleryLocalizations.of(
+                          ? AppLocalizations.of(
                             context,
                           )!.codeInformationTitle
-                          : GalleryLocalizations.of(
+                          : AppLocalizations.of(
                             context,
                           )!.passwordInformationTitle,
                       style: Theme.of(context).textTheme.titleLarge,
@@ -68,10 +68,10 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(height: 16.0),
                     Text(
                       _showingCodeHelp
-                          ? GalleryLocalizations.of(
+                          ? AppLocalizations.of(
                             context,
                           )!.codeInformationText
-                          : GalleryLocalizations.of(
+                          : AppLocalizations.of(
                             context,
                           )!.passwordInformationText,
                       textAlign: TextAlign.center,
@@ -89,7 +89,7 @@ class _LoginPageState extends State<LoginPage>
                                 });
                               },
                               child: Text(
-                                GalleryLocalizations.of(context)!.next,
+                                AppLocalizations.of(context)!.next,
                               ),
                             ),
                           )
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage>
                             child: ElevatedButton(
                               onPressed: () => Navigator.of(context).pop(),
                               child: Text(
-                                GalleryLocalizations.of(context)!.close,
+                                AppLocalizations.of(context)!.close,
                               ),
                             ),
                           ),
@@ -175,16 +175,16 @@ class _LoginPageState extends State<LoginPage>
             } else if (state is AuthError) {
               // Display a user-friendly error message
               String userFriendlyMessage =
-                  GalleryLocalizations.of(context)!.unableToSignIn;
+                  AppLocalizations.of(context)!.unableToSignIn;
 
               // Handle specific errors if we can identify them
               if (state.message.contains('403')) {
                 userFriendlyMessage =
-                    GalleryLocalizations.of(context)!.incorrectCredentials;
+                    AppLocalizations.of(context)!.incorrectCredentials;
               } else if (state.message.contains('timeout') ||
                   state.message.contains('connect')) {
                 userFriendlyMessage =
-                    GalleryLocalizations.of(context)!.networkError;
+                    AppLocalizations.of(context)!.networkError;
               }
 
               ScaffoldMessenger.of(context).showSnackBar(
@@ -256,7 +256,7 @@ class _LoginPageState extends State<LoginPage>
                               ),
                               SizedBox(height: isSmallScreen ? 28 : 32),
                               Text(
-                                GalleryLocalizations.of(context)!.studentPortal,
+                                AppLocalizations.of(context)!.studentPortal,
                                 style: theme.textTheme.displayMedium?.copyWith(
                                   fontSize: isSmallScreen ? 28 : 34,
                                   fontWeight: FontWeight.bold,
@@ -265,7 +265,7 @@ class _LoginPageState extends State<LoginPage>
                               ),
                               const SizedBox(height: 12),
                               Text(
-                                GalleryLocalizations.of(
+                                AppLocalizations.of(
                                   context,
                                 )!.signInToAccount,
                                 style: theme.textTheme.bodyMedium?.copyWith(
@@ -287,11 +287,11 @@ class _LoginPageState extends State<LoginPage>
                                       textDirection: TextDirection.ltr,
                                       decoration: InputDecoration(
                                         labelText:
-                                            GalleryLocalizations.of(
+                                            AppLocalizations.of(
                                               context,
                                             )!.studentCode,
                                         hintText:
-                                            GalleryLocalizations.of(
+                                            AppLocalizations.of(
                                               context,
                                             )!.enterStudentCode,
                                         prefixIcon: Icon(
@@ -305,7 +305,7 @@ class _LoginPageState extends State<LoginPage>
                                         suffixIcon: IconButton(
                                           icon: const Icon(Icons.info_outline),
                                           tooltip:
-                                              GalleryLocalizations.of(
+                                              AppLocalizations.of(
                                                 context,
                                               )!.helpIcon,
                                           onPressed:
@@ -331,7 +331,7 @@ class _LoginPageState extends State<LoginPage>
                                       ),
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return GalleryLocalizations.of(
+                                          return AppLocalizations.of(
                                             context,
                                           )!.pleaseEnterStudentCode;
                                         }
@@ -349,11 +349,11 @@ class _LoginPageState extends State<LoginPage>
                                 textDirection: TextDirection.ltr,
                                 decoration: InputDecoration(
                                   labelText:
-                                      GalleryLocalizations.of(
+                                      AppLocalizations.of(
                                         context,
                                       )!.password,
                                   hintText:
-                                      GalleryLocalizations.of(
+                                      AppLocalizations.of(
                                         context,
                                       )!.enterPassword,
                                   prefixIcon: Icon(
@@ -394,7 +394,7 @@ class _LoginPageState extends State<LoginPage>
                                 obscureText: _obscurePassword,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return GalleryLocalizations.of(
+                                    return AppLocalizations.of(
                                       context,
                                     )!.pleaseEnterPassword;
                                   }
@@ -451,7 +451,7 @@ class _LoginPageState extends State<LoginPage>
                                                     ),
                                               )
                                               : Text(
-                                                GalleryLocalizations.of(
+                                                AppLocalizations.of(
                                                   context,
                                                 )!.signIn,
                                                 style: TextStyle(

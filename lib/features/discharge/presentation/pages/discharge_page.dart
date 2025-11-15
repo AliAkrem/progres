@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart';
 import 'package:progres/features/discharge/presentation/widgets/error.dart';
 import 'package:progres/features/discharge/presentation/widgets/discharge.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class DischargePage extends StatefulWidget {
   const DischargePage({super.key});
@@ -34,12 +34,12 @@ class _DischargePageState extends State<DischargePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context)!.myDischarge),
+        title: Text(AppLocalizations.of(context)!.myDischarge),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _refreshDischarge,
-            tooltip: GalleryLocalizations.of(context)!.refreshDischarge,
+            tooltip: AppLocalizations.of(context)!.refreshDischarge,
           ),
         ],
       ),
@@ -76,13 +76,13 @@ class _DischargePageState extends State<DischargePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            GalleryLocalizations.of(context)!.noDischargeData,
+            AppLocalizations.of(context)!.noDischargeData,
             style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: _loadDischarge,
-            child: Text(GalleryLocalizations.of(context)!.loadDischarge),
+            child: Text(AppLocalizations.of(context)!.loadDischarge),
           ),
         ],
       ),

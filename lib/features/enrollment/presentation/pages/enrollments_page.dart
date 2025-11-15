@@ -5,7 +5,7 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class EnrollmentsPage extends StatefulWidget {
   const EnrollmentsPage({super.key});
@@ -27,11 +27,11 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context)!.academicHistory),
+        title: Text(AppLocalizations.of(context)!.academicHistory),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: GalleryLocalizations.of(context)!.refreshData,
+            tooltip: AppLocalizations.of(context)!.refreshData,
             onPressed: () {
               context.read<EnrollmentBloc>().add(
                 const LoadEnrollmentsEvent(forceRefresh: true),
@@ -39,7 +39,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    GalleryLocalizations.of(context)!.refreshingData,
+                    AppLocalizations.of(context)!.refreshingData,
                   ),
                   duration: Duration(seconds: 1),
                 ),
@@ -57,7 +57,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(GalleryLocalizations.of(context)!.somthingWentWrong),
+                  Text(AppLocalizations.of(context)!.somthingWentWrong),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
@@ -65,7 +65,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                         const LoadEnrollmentsEvent(),
                       );
                     },
-                    child: Text(GalleryLocalizations.of(context)!.retry),
+                    child: Text(AppLocalizations.of(context)!.retry),
                   ),
                 ],
               ),
@@ -74,7 +74,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             if (state.enrollments.isEmpty) {
               return Center(
                 child: Text(
-                  GalleryLocalizations.of(context)!.errorNoEnrollments,
+                  AppLocalizations.of(context)!.errorNoEnrollments,
                 ),
               );
             }
@@ -82,7 +82,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             return _buildEnrollmentsList(context, state.enrollments);
           } else {
             return Center(
-              child: Text(GalleryLocalizations.of(context)!.somthingWentWrong),
+              child: Text(AppLocalizations.of(context)!.somthingWentWrong),
             );
           }
         },
@@ -254,7 +254,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          GalleryLocalizations.of(context)!.registrationNumber,
+                          AppLocalizations.of(context)!.registrationNumber,
                           style: TextStyle(
                             fontSize: 12,
                             color: theme.textTheme.bodySmall?.color,

@@ -149,7 +149,7 @@ class AppTheme {
         hintStyle: const TextStyle(color: AppTextSecondary, fontSize: 16),
         errorStyle: const TextStyle(color: accentRed, fontSize: 12),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -182,7 +182,7 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppPrimary,
         unselectedLabelColor: AppTextSecondary,
         indicatorColor: AppPrimary,
@@ -366,7 +366,7 @@ class AppTheme {
         hintStyle: const TextStyle(color: Color(0xFFADAEBD), fontSize: 16),
         errorStyle: const TextStyle(color: accentRed, fontSize: 12),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
@@ -404,7 +404,7 @@ class AppTheme {
         thickness: 1,
         space: 1,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppPrimary,
         unselectedLabelColor: Color(0xFFADAEBD),
         indicatorColor: AppPrimary,

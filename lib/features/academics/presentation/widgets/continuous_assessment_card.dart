@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class ContinuousAssessmentCard extends StatelessWidget {
   final List<ContinuousAssessment> assessments;
@@ -17,7 +17,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
-            GalleryLocalizations.of(context)!.noAssessmentsYet,
+            AppLocalizations.of(context)!.noAssessmentsYet,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               color: theme.textTheme.bodyMedium?.color,
@@ -170,7 +170,7 @@ class ContinuousAssessmentCard extends StatelessWidget {
                           ),
                         )
                         : Text(
-                          GalleryLocalizations.of(context)!.notAvailable,
+                          AppLocalizations.of(context)!.notAvailable,
                           style: TextStyle(
                             fontStyle: FontStyle.italic,
                             color: theme.textTheme.bodyMedium?.color,
@@ -194,9 +194,9 @@ class ContinuousAssessmentCard extends StatelessWidget {
 
   // Helper method to get color based on assessment type
   Color _getTypeColor(String type, BuildContext context) {
-    var project = GalleryLocalizations.of(context)!.project;
-    var tutorialWork = GalleryLocalizations.of(context)!.tutorialWork;
-    var practicalWork = GalleryLocalizations.of(context)!.practicalWork;
+    var project = AppLocalizations.of(context)!.project;
+    var tutorialWork = AppLocalizations.of(context)!.tutorialWork;
+    var practicalWork = AppLocalizations.of(context)!.practicalWork;
 
     if (type == project) {
       return AppTheme.AppPrimary;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class ExamResultsCard extends StatelessWidget {
   final List<ExamResult> examResults;
@@ -17,7 +17,7 @@ class ExamResultsCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Center(
           child: Text(
-            GalleryLocalizations.of(context)!.noExamResultsYet,
+            AppLocalizations.of(context)!.noExamResultsYet,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               color: theme.textTheme.bodyMedium?.color,
@@ -115,10 +115,10 @@ class ExamResultsCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Text(
                               courseResults.first.recoursDemande == true
-                                  ? GalleryLocalizations.of(
+                                  ? AppLocalizations.of(
                                     context,
                                   )!.appealRequested
-                                  : GalleryLocalizations.of(
+                                  : AppLocalizations.of(
                                     context,
                                   )!.appealAvailable,
                               style: TextStyle(
@@ -182,7 +182,7 @@ class ExamResultsCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    GalleryLocalizations.of(
+                    AppLocalizations.of(
                       context,
                     )!.coefficient(result.rattachementMcCoefficient.toString()),
                     style: const TextStyle(
@@ -231,7 +231,7 @@ class ExamResultsCard extends StatelessWidget {
                       ),
                     )
                     : Text(
-                      GalleryLocalizations.of(context)!.notAvailable,
+                      AppLocalizations.of(context)!.notAvailable,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,

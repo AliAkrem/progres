@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class StatusBadge extends StatelessWidget {
   final String status;
@@ -13,8 +13,8 @@ class StatusBadge extends StatelessWidget {
     final icon = _getDecisionIcon(status);
     final formattedStatus =
         status
-            .replaceAll('Admis(e)', GalleryLocalizations.of(context)!.passed)
-            .replaceAll('Ajourné(e)', GalleryLocalizations.of(context)!.failed)
+            .replaceAll('Admis(e)', AppLocalizations.of(context)!.passed)
+            .replaceAll('Ajourné(e)', AppLocalizations.of(context)!.failed)
             .replaceAll('(session normale)', '')
             .trim();
 

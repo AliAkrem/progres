@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class AssessmentTypeRow extends StatelessWidget {
   final String type;
@@ -71,7 +71,7 @@ class AssessmentTypeRow extends StatelessWidget {
                       ),
                     )
                     : Text(
-                      GalleryLocalizations.of(context)!.notAvailable,
+                      AppLocalizations.of(context)!.notAvailable,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,

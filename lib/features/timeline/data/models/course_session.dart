@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class CourseSession {
   final String ap;
@@ -153,11 +153,11 @@ class CourseSession {
   String sessionType(BuildContext context) {
     switch (ap) {
       case 'CM':
-        return GalleryLocalizations.of(context)!.lecture;
+        return AppLocalizations.of(context)!.lecture;
       case 'TD':
-        return GalleryLocalizations.of(context)!.tutorial;
+        return AppLocalizations.of(context)!.tutorial;
       case 'TP':
-        return GalleryLocalizations.of(context)!.practical;
+        return AppLocalizations.of(context)!.practical;
       default:
         return ap;
     }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:calendar_view/calendar_view.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/timeline/data/models/course_session.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
@@ -45,7 +45,7 @@ class _TimelinePageState extends State<TimelinePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context)!.weeklySchedule),
+        title: Text(AppLocalizations.of(context)!.weeklySchedule),
       ),
       body: BlocListener<TimelineBloc, TimelineState>(
         listener: (context, state) {
@@ -131,7 +131,7 @@ class _TimelinePageState extends State<TimelinePage> {
       if (weekStart != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(GalleryLocalizations.of(context)!.noClassesThisWeek),
+            content: Text(AppLocalizations.of(context)!.noClassesThisWeek),
             duration: Duration(seconds: 3),
             behavior: SnackBarBehavior.floating,
           ),

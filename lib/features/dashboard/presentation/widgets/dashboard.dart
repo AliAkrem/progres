@@ -7,7 +7,7 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/dashboard/presentation/widgets/card.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 Widget buildDashboard(ProfileLoaded state, BuildContext context) {
   final theme = Theme.of(context);
@@ -56,7 +56,7 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      GalleryLocalizations.of(context)!.hello(studentName),
+                      AppLocalizations.of(context)!.hello(studentName),
                       style: theme.textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: isSmallScreen ? 20 : 24,
@@ -64,7 +64,7 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      GalleryLocalizations.of(
+                      AppLocalizations.of(
                         context,
                       )!.academicYearWrapper(state.academicYear.code),
                       style: theme.textTheme.bodyLarge?.copyWith(
@@ -93,7 +93,7 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
               buildGridCard(
                 context,
                 title:
-                    GalleryLocalizations.of(
+                    AppLocalizations.of(
                       context,
                     )!.academicPerformancePageTitle,
                 icon: Icons.assignment_rounded,
@@ -103,42 +103,42 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
               buildGridCard(
                 context,
                 title:
-                    GalleryLocalizations.of(context)!.subjectsAndCoefficients,
+                    AppLocalizations.of(context)!.subjectsAndCoefficients,
                 icon: Icons.school_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.subjects),
               ),
               buildGridCard(
                 context,
-                title: GalleryLocalizations.of(context)!.myGroups,
+                title: AppLocalizations.of(context)!.myGroups,
                 icon: Icons.group_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.groups),
               ),
               buildGridCard(
                 context,
-                title: GalleryLocalizations.of(context)!.academicHistory,
+                title: AppLocalizations.of(context)!.academicHistory,
                 icon: Icons.history_edu_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.enrollments),
               ),
               buildGridCard(
                 context,
-                title: GalleryLocalizations.of(context)!.weeklySchedule,
+                title: AppLocalizations.of(context)!.weeklySchedule,
                 icon: Icons.calendar_today_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.timeline),
               ),
               buildGridCard(
                 context,
-                title: GalleryLocalizations.of(context)!.academicTranscripts,
+                title: AppLocalizations.of(context)!.academicTranscripts,
                 icon: Icons.menu_book_rounded,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.transcripts),
               ),
               buildGridCard(
                 context,
-                title: GalleryLocalizations.of(context)!.myDischarge,
+                title: AppLocalizations.of(context)!.myDischarge,
                 icon: Icons.assignment_turned_in_outlined,
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.discharge),

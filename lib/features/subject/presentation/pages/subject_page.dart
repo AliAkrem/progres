@@ -7,7 +7,7 @@ import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/presentation/widgets/assessment_type_row.dart';
 import 'package:progres/features/subject/presentation/widgets/error_loading_subject.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
@@ -67,7 +67,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context)!.subjectsAndCoefficients),
+        title: Text(AppLocalizations.of(context)!.subjectsAndCoefficients),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -269,13 +269,13 @@ class InitialState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            GalleryLocalizations.of(context)!.errorNoSubjects,
+            AppLocalizations.of(context)!.errorNoSubjects,
             style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
           ),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: onReload,
-            child: Text(GalleryLocalizations.of(context)!.loadSubjects),
+            child: Text(AppLocalizations.of(context)!.loadSubjects),
           ),
         ],
       ),
@@ -301,7 +301,7 @@ class ErroLoadProfileData extends StatelessWidget {
     final isSmallScreen = screenSize.width < 360;
     return Center(
       child: Text(
-        GalleryLocalizations.of(context)!.errorLoadingProfile,
+        AppLocalizations.of(context)!.errorLoadingProfile,
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
       ),

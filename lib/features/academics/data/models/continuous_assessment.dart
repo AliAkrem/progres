@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class ContinuousAssessment {
   final bool absent;
@@ -72,11 +72,11 @@ class ContinuousAssessment {
   String assessmentTypeLabel(BuildContext context) {
     switch (apCode) {
       case 'PRJ':
-        return GalleryLocalizations.of(context)!.project;
+        return AppLocalizations.of(context)!.project;
       case 'TD':
-        return GalleryLocalizations.of(context)!.tutorialWork;
+        return AppLocalizations.of(context)!.tutorialWork;
       case 'TP':
-        return GalleryLocalizations.of(context)!.practicalWork;
+        return AppLocalizations.of(context)!.practicalWork;
       default:
         return apCode;
     }

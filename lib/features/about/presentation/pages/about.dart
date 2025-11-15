@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class _AboutPageState extends State<AboutPage> {
     final isSmallScreen = screenSize.width < 360;
     return Scaffold(
       appBar: AppBar(
-        title: Text(GalleryLocalizations.of(context)!.aboutPage),
+        title: Text(AppLocalizations.of(context)!.aboutPage),
         centerTitle: true,
         elevation: 0,
       ),
@@ -75,7 +75,7 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                   SizedBox(height: isSmallScreen ? 28 : 32),
                   Text(
-                    GalleryLocalizations.of(context)!.studentPortal,
+                    AppLocalizations.of(context)!.studentPortal,
                     style: theme.textTheme.displayMedium?.copyWith(
                       fontSize: isSmallScreen ? 28 : 34,
                       fontWeight: FontWeight.bold,
@@ -85,7 +85,7 @@ class _AboutPageState extends State<AboutPage> {
 
                   const SizedBox(height: 8),
                   Text(
-                    GalleryLocalizations.of(context)!.version(_version),
+                    AppLocalizations.of(context)!.version(_version),
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
 
@@ -96,39 +96,39 @@ class _AboutPageState extends State<AboutPage> {
 
             // Description
             Text(
-              GalleryLocalizations.of(context)!.description,
+              AppLocalizations.of(context)!.description,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
-            Text(GalleryLocalizations.of(context)!.descriptionText),
+            Text(AppLocalizations.of(context)!.descriptionText),
             const SizedBox(height: 24),
 
             // Purpose
             Text(
-              GalleryLocalizations.of(context)!.purpose,
+              AppLocalizations.of(context)!.purpose,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
-            Text(GalleryLocalizations.of(context)!.purposeText),
+            Text(AppLocalizations.of(context)!.purposeText),
             const SizedBox(height: 24),
 
             // License
             Text(
-              GalleryLocalizations.of(context)!.license,
+              AppLocalizations.of(context)!.license,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
-                  child: Text(GalleryLocalizations.of(context)!.licenseText),
+                  child: Text(AppLocalizations.of(context)!.licenseText),
                 ),
                 TextButton(
                   onPressed:
                       () => _launchUrl(
                         'https://github.com/AliAkrem/progres/blob/master/LICENSE',
                       ),
-                  child: Text(GalleryLocalizations.of(context)!.viewLicense),
+                  child: Text(AppLocalizations.of(context)!.viewLicense),
                 ),
               ],
             ),
@@ -136,17 +136,17 @@ class _AboutPageState extends State<AboutPage> {
 
             // Contribution
             Text(
-              GalleryLocalizations.of(context)!.contribution,
+              AppLocalizations.of(context)!.contribution,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
-            Text(GalleryLocalizations.of(context)!.projectStatusText),
+            Text(AppLocalizations.of(context)!.projectStatusText),
             const SizedBox(height: 24),
 
             Center(
               child: ElevatedButton.icon(
                 icon: const Icon(Icons.code),
-                label: Text(GalleryLocalizations.of(context)!.viewonGitHub),
+                label: Text(AppLocalizations.of(context)!.viewonGitHub),
                 onPressed:
                     () => _launchUrl('https://github.com/AliAkrem/progres'),
                 style: ElevatedButton.styleFrom(

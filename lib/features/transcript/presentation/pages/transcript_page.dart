@@ -9,7 +9,7 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/transcript/presentation/widgets/result_item.dart';
 import 'package:progres/features/transcript/presentation/widgets/status_badge.dart';
 import 'package:progres/features/transcript/presentation/widgets/semester_info_chip.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class TranscriptPage extends StatefulWidget {
   const TranscriptPage({super.key});
@@ -48,12 +48,12 @@ class _TranscriptPageState extends State<TranscriptPage>
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text(GalleryLocalizations.of(context)!.academicTranscripts),
+        title: Text(AppLocalizations.of(context)!.academicTranscripts),
         actions: [
           // Refresh button
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: GalleryLocalizations.of(context)!.refreshData,
+            tooltip: AppLocalizations.of(context)!.refreshData,
             onPressed: () {
               if (_enrollments.isNotEmpty) {
                 // Force refresh current data
@@ -68,7 +68,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      GalleryLocalizations.of(context)!.refreshingData,
+                      AppLocalizations.of(context)!.refreshingData,
                     ),
                     duration: Duration(seconds: 1),
                   ),
@@ -113,7 +113,7 @@ class _TranscriptPageState extends State<TranscriptPage>
           } else if (state is TranscriptError) {
             return Center(
               child: Text(
-                GalleryLocalizations.of(context)!.somthingWentWrong,
+                AppLocalizations.of(context)!.somthingWentWrong,
                 style: theme.textTheme.bodyLarge,
               ),
             );
@@ -168,7 +168,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ? _buildTranscriptsView(state, theme)
                   : Center(
                     child: Text(
-                      GalleryLocalizations.of(context)!.selectAcademicYear,
+                      AppLocalizations.of(context)!.selectAcademicYear,
                       style: TextStyle(
                         fontStyle: FontStyle.italic,
                         color: theme.textTheme.bodyMedium?.color,
@@ -203,7 +203,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    GalleryLocalizations.of(context)!.cachedData,
+                    AppLocalizations.of(context)!.cachedData,
                     style: TextStyle(
                       fontSize: 12,
                       color: theme.colorScheme.secondary,
@@ -258,7 +258,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                               ),
                               SizedBox(width: 8),
                               Text(
-                                GalleryLocalizations.of(context)!.annualResults,
+                                AppLocalizations.of(context)!.annualResults,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -273,7 +273,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                             children: [
                               ResultItem(
                                 label:
-                                    GalleryLocalizations.of(context)!.average,
+                                    AppLocalizations.of(context)!.average,
                                 value: annualSummary.moyenne.toStringAsFixed(2),
                                 color: AppTheme.AppPrimary,
                                 icon: Icons.bar_chart_rounded,
@@ -281,7 +281,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                               ),
                               ResultItem(
                                 label:
-                                    GalleryLocalizations.of(context)!.credits,
+                                    AppLocalizations.of(context)!.credits,
                                 value: annualSummary.creditAcquis.toString(),
                                 color: AppTheme.accentBlue,
                                 icon: Icons.school_rounded,
@@ -314,7 +314,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           const SizedBox(width: 8),
                           Text(
                             state.selectedEnrollment.niveauLibelleLongLt ??
-                                GalleryLocalizations.of(context)!.unknownLevel,
+                                AppLocalizations.of(context)!.unknownLevel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -334,7 +334,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            GalleryLocalizations.of(
+                            AppLocalizations.of(
                               context,
                             )!.academicYearWrapper(
                               state.selectedEnrollment.anneeAcademiqueCode,
@@ -536,7 +536,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      GalleryLocalizations.of(
+                      AppLocalizations.of(
                         context,
                       )!.coefficient(module.coefficient.toString()),
                       style: TextStyle(

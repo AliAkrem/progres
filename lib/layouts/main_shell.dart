@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class MainShell extends StatelessWidget {
   final Widget child;
@@ -49,13 +49,13 @@ class MainShell extends StatelessWidget {
                 context,
                 icon: Icons.dashboard_rounded,
                 selectedIcon: Icons.dashboard_rounded,
-                label: GalleryLocalizations.of(context)!.tabTitleDashboard,
+                label: AppLocalizations.of(context)!.tabTitleDashboard,
               ),
               _buildNavDestination(
                 context,
                 icon: Icons.person_outline_rounded,
                 selectedIcon: Icons.person_rounded,
-                label: GalleryLocalizations.of(context)!.tabTitleProfile,
+                label: AppLocalizations.of(context)!.tabTitleProfile,
               ),
             ],
             onDestinationSelected: (index) {

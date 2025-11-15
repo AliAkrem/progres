@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/discharge/data/models/discharge.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 class DischargeContent extends StatelessWidget {
   final StudentDischarge discharge;
@@ -59,7 +59,7 @@ class DischargeContent extends StatelessWidget {
               SizedBox(width: isSmallScreen ? 10 : 12),
               Expanded(
                 child: Text(
-                  GalleryLocalizations.of(context)!.dischargeStatus,
+                  AppLocalizations.of(context)!.dischargeStatus,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppTheme.AppPrimary,
@@ -71,7 +71,7 @@ class DischargeContent extends StatelessWidget {
           ),
           SizedBox(height: isSmallScreen ? 6 : 8),
           Text(
-            GalleryLocalizations.of(context)!.dischargeStatusDescription,
+            AppLocalizations.of(context)!.dischargeStatusDescription,
             style: TextStyle(
               fontSize: isSmallScreen ? 12 : 14,
               color:
@@ -89,43 +89,43 @@ class DischargeContent extends StatelessWidget {
     return Column(
       children: [
         DischargeCard(
-          title: GalleryLocalizations.of(context)!.departmentLevel,
-          description: GalleryLocalizations.of(context)!.departmentDescription,
+          title: AppLocalizations.of(context)!.departmentLevel,
+          description: AppLocalizations.of(context)!.departmentDescription,
           isCleared: discharge.sitDep,
           icon: Icons.domain_outlined,
           isSmallScreen: isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
-          title: GalleryLocalizations.of(context)!.facultyLibraryLevel,
+          title: AppLocalizations.of(context)!.facultyLibraryLevel,
           description:
-              GalleryLocalizations.of(context)!.facultyLibraryDescription,
+              AppLocalizations.of(context)!.facultyLibraryDescription,
           isCleared: discharge.sitBf,
           icon: Icons.local_library_outlined,
           isSmallScreen: isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
-          title: GalleryLocalizations.of(context)!.centralLibraryLevel,
+          title: AppLocalizations.of(context)!.centralLibraryLevel,
           description:
-              GalleryLocalizations.of(context)!.centralLibraryDescription,
+              AppLocalizations.of(context)!.centralLibraryDescription,
           isCleared: discharge.sitBc,
           icon: Icons.library_books_outlined,
           isSmallScreen: isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
-          title: GalleryLocalizations.of(context)!.residenceLevel,
-          description: GalleryLocalizations.of(context)!.residenceDescription,
+          title: AppLocalizations.of(context)!.residenceLevel,
+          description: AppLocalizations.of(context)!.residenceDescription,
           isCleared: discharge.sitRu,
           icon: Icons.home_outlined,
           isSmallScreen: isSmallScreen,
         ),
         SizedBox(height: isSmallScreen ? 10 : 12),
         DischargeCard(
-          title: GalleryLocalizations.of(context)!.scholarshipServiceLevel,
+          title: AppLocalizations.of(context)!.scholarshipServiceLevel,
           description:
-              GalleryLocalizations.of(context)!.scholarshipServiceDescription,
+              AppLocalizations.of(context)!.scholarshipServiceDescription,
           isCleared: discharge.sitBrs,
           icon: Icons.school_outlined,
           isSmallScreen: isSmallScreen,
@@ -234,8 +234,8 @@ class DischargeCard extends StatelessWidget {
                       SizedBox(width: isSmallScreen ? 4 : 6),
                       Text(
                         isCleared
-                            ? GalleryLocalizations.of(context)!.cleared
-                            : GalleryLocalizations.of(context)!.pending,
+                            ? AppLocalizations.of(context)!.cleared
+                            : AppLocalizations.of(context)!.pending,
                         style: TextStyle(
                           fontSize: isSmallScreen ? 10 : 12,
                           fontWeight: FontWeight.w600,
@@ -273,14 +273,14 @@ class EmptyDischarge extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            GalleryLocalizations.of(context)!.noDischargeData,
+            AppLocalizations.of(context)!.noDischargeData,
             style: theme.textTheme.titleLarge?.copyWith(
               fontSize: isSmallScreen ? 18 : 20,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            GalleryLocalizations.of(context)!.dischargeNotAvailable,
+            AppLocalizations.of(context)!.dischargeNotAvailable,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
@@ -320,7 +320,7 @@ class DischargeNotRequired extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            GalleryLocalizations.of(context)!.dischargeNotRequiredTitle,
+            AppLocalizations.of(context)!.dischargeNotRequiredTitle,
             style: theme.textTheme.titleLarge?.copyWith(
               fontSize: isSmallScreen ? 18 : 20,
               fontWeight: FontWeight.bold,
@@ -332,7 +332,7 @@ class DischargeNotRequired extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 24 : 32),
             child: Text(
-              GalleryLocalizations.of(context)!.dischargeNotRequiredDescription,
+              AppLocalizations.of(context)!.dischargeNotRequiredDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: theme.textTheme.bodyMedium?.color?.withValues(

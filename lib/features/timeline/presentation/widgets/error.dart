@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
-import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
+import 'package:progres/l10n/gallery_localizations.dart';
 
 Widget buildErrorState(TimelineError state, BuildContext context) {
   return Center(
@@ -11,7 +11,7 @@ Widget buildErrorState(TimelineError state, BuildContext context) {
       children: [
         const Icon(Icons.error_outline, size: 48, color: Colors.red),
         const SizedBox(height: 16),
-        Text(GalleryLocalizations.of(context)!.somthingWentWrong),
+        Text(AppLocalizations.of(context)!.somthingWentWrong),
         const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
@@ -25,7 +25,7 @@ Widget buildErrorState(TimelineError state, BuildContext context) {
               );
             }
           },
-          child: Text(GalleryLocalizations.of(context)!.retry),
+          child: Text(AppLocalizations.of(context)!.retry),
         ),
       ],
     ),

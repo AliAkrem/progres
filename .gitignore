@@ -51,3 +51,6 @@ app.*.map.json
 .env.test
 .env.development
 .env.production
+
+# FVM Version Cache
+.fvm/
