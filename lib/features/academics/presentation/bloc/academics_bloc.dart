@@ -92,7 +92,7 @@ class AcademicsError extends AcademicsState {
 
 // BLoC
 class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
-  final AcademicPerformencetRepositoryImpl academicPerformanceRepository;
+  final AcademicPerformanceRepositoryImpl academicPerformanceRepository;
   final AcademicsCacheService cacheService = AcademicsCacheService();
 
   AcademicsBloc({required this.academicPerformanceRepository})

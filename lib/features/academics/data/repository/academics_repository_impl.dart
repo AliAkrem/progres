@@ -2,10 +2,10 @@ import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 
-class AcademicPerformencetRepositoryImpl {
+class AcademicPerformanceRepositoryImpl {
   final ApiClient _apiClient;
 
-  AcademicPerformencetRepositoryImpl({ApiClient? apiClient})
+  AcademicPerformanceRepositoryImpl({ApiClient? apiClient})
     : _apiClient = apiClient ?? ApiClient();
 
   Future<List<ExamResult>> getExamResults(int cardId) async {

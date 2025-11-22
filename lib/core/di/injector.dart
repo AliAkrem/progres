@@ -52,7 +52,7 @@ Future<void> initDependencies() async {
     () => EnrollmentRepositoryImpl(apiClient: injector()),
   );
   injector.registerLazySingleton(
-    () => AcademicPerformencetRepositoryImpl(apiClient: injector()),
+    () => AcademicPerformanceRepositoryImpl(apiClient: injector()),
   );
   injector.registerLazySingleton(() => StudentDischargeRepositoryImpl());
   injector.registerLazySingleton(() => TimelineCacheService());
