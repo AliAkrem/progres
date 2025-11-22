@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
@@ -30,7 +29,7 @@ import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart
 final injector = GetIt.instance;
 
 Future<void> initDependencies() async {
-  injector.registerLazySingleton(() => kIsWeb ? WebApiClient() : ApiClient());
+  injector.registerLazySingleton(() =>  ApiClient());
   injector.registerLazySingleton(
     () => AuthRepositoryImpl(apiClient: injector()),
   );
