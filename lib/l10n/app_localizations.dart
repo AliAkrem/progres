@@ -745,6 +745,24 @@ abstract class AppLocalizations {
   /// **'Failed'**
   String get failed;
 
+  /// Status for passing the year with debts
+  ///
+  /// In en, this message translates to:
+  /// **'With Debts'**
+  String get withDebts;
+
+  /// Status for passing the year with resit session
+  ///
+  /// In en, this message translates to:
+  /// **'With Resit Session'**
+  String get withResitSession;
+
+  /// Status for passing year normal session
+  ///
+  /// In en, this message translates to:
+  /// **'normal session'**
+  String get normalSession;
+
   /// greating message
   ///
   /// In en, this message translates to:

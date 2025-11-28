@@ -350,6 +350,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get failed => 'Failed';
 
   @override
+  String get withDebts => 'With Debts';
+
+  @override
+  String get withResitSession => 'With Resit Session';
+
+  @override
+  String get normalSession => 'normal session';
+
+  @override
   String hello(String value) {
     return 'Hello, $value ';
   }

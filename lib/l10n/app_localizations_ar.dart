@@ -348,6 +348,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get failed => 'فشل';
 
   @override
+  String get withDebts => 'مع ديون';
+
+  @override
+  String get withResitSession => 'دورة استدراكية';
+
+  @override
+  String get normalSession => 'دورة عادية';
+
+  @override
   String hello(String value) {
     return 'مرحبًا، $value';
   }
