@@ -13,9 +13,10 @@ class DebtsRepositoryImpl {
       if (uuid == null) {
         throw Exception('UUID not found, please login again');
       }
-
       final response = await _apiClient.get('/infos/dettes/$uuid');
-
+      if (response.data == null) {
+        return [];
+      }
       final List<dynamic> debtsJson = response.data;
       return debtsJson
           .map((debtJson) => AcademicYearDebt.fromJson(debtJson))
