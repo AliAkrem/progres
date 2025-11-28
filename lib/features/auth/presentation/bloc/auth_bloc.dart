@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
+import 'package:progres/features/debts/presentation/bloc/debts_bloc.dart';
+import 'package:progres/features/debts/presentation/bloc/debts_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
@@ -110,6 +112,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.context?.read<ProfileBloc>().add(ClearProfileCacheEvent());
       } catch (e) {
         debugPrint('Note: Could not clear profile cache. ${e.toString()}');
+      }
+      try {
+        event.context?.read<DebtsBloc>().add(ClearDebtsCache());
+      } catch (e) {
+        debugPrint('Note: Could not clear debts cache. ${e.toString()}');
       }
 
       emit(AuthLoggedOut());

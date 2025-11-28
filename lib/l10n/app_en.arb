@@ -670,6 +670,52 @@
   "specialization":"Specialization",
   "@specialization":{
     "description": "Specialization"
+  },
+  "academicDebts": "Academic Debts",
+  "@academicDebts": {
+    "description": "Title for academic debts page"
+  },
+  "noDebts": "No Academic Debts",
+  "@noDebts": {
+    "description": "Title when student has no debts"
+  },
+  "noDebtsDescription": "Congratulations! You have no failed courses to retake.",
+  "@noDebtsDescription": {
+    "description": "Description when student has no debts"
+  },
+  "debtsSummary": "DEBTS SUMMARY",
+  "@debtsSummary": {
+    "description": "Title for debts summary section"
+  },
+  "totalDebts": "Total Debts",
+  "@totalDebts": {
+    "description": "Label for total number of debts"
+  },
+  "academicYears": "Academic Years",
+  "@academicYears": {
+    "description": "Label for number of academic years with debts"
+  },
+  "debtCoursesCount": "{count} failed {count, plural, =1{course} other{courses}}",
+  "@debtCoursesCount": {
+    "description": "Count of debt courses",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "finalGrade": "Final",
+  "@finalGrade": {
+    "description": "Label for final grade"
+  },
+  "gradeBreakdown": "Grade Breakdown",
+  "@gradeBreakdown": {
+    "description": "Title for grade breakdown section"
+  },
+  "continuousControl": "CC",
+  "@continuousControl": {
+    "description": "Label for continuous control grade"
   }
 
 

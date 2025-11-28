@@ -508,4 +508,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get specialization => 'التخصص';
+
+  @override
+  String get academicDebts => 'الديون الأكاديمية';
+
+  @override
+  String get noDebts => 'لا توجد ديون أكاديمية';
+
+  @override
+  String get noDebtsDescription =>
+      'تهانينا! ليس لديك أي مقاييس راسبة لإعادتها.';
+
+  @override
+  String get debtsSummary => 'ملخص الديون';
+
+  @override
+  String get totalDebts => 'إجمالي الديون';
+
+  @override
+  String get academicYears => 'السنوات الأكاديمية';
+
+  @override
+  String debtCoursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'مقاييس راسبة',
+      one: 'مقياس راسب',
+    );
+    return '$count $_temp0';
+  }
+
+  @override
+  String get finalGrade => 'النهائي';
+
+  @override
+  String get gradeBreakdown => 'تفصيل العلامات';
+
+  @override
+  String get continuousControl => 'المراقبة المستمرة';
 }

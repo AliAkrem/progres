@@ -25,11 +25,14 @@ import 'package:progres/features/transcript/data/services/transcript_cache_servi
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/discharge/data/repository/discharge_repository_impl.dart';
 import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart';
+import 'package:progres/features/debts/data/repositories/debts_repository_impl.dart';
+import 'package:progres/features/debts/data/services/debts_cache_service.dart';
+import 'package:progres/features/debts/presentation/bloc/debts_bloc.dart';
 
 final injector = GetIt.instance;
 
 Future<void> initDependencies() async {
-  injector.registerLazySingleton(() =>  ApiClient());
+  injector.registerLazySingleton(() => ApiClient());
   injector.registerLazySingleton(
     () => AuthRepositoryImpl(apiClient: injector()),
   );
@@ -55,11 +58,15 @@ Future<void> initDependencies() async {
     () => AcademicPerformanceRepositoryImpl(apiClient: injector()),
   );
   injector.registerLazySingleton(() => StudentDischargeRepositoryImpl());
+  injector.registerLazySingleton(
+    () => DebtsRepositoryImpl(apiClient: injector()),
+  );
   injector.registerLazySingleton(() => TimelineCacheService());
   injector.registerLazySingleton(() => EnrollmentCacheService());
   injector.registerLazySingleton(() => TranscriptCacheService());
   injector.registerLazySingleton(() => GroupsCacheService());
   injector.registerLazySingleton(() => SubjectCacheService());
+  injector.registerLazySingleton(() => DebtsCacheService());
 
   // Register BLoCs
   injector.registerFactory(() => ThemeBloc()..add(LoadTheme()));
@@ -109,5 +116,8 @@ Future<void> initDependencies() async {
   );
   injector.registerFactory(
     () => StudentDischargeBloc(studentDischargeRepository: injector()),
+  );
+  injector.registerFactory(
+    () => DebtsBloc(debtsRepository: injector(), debtsCacheService: injector()),
   );
 }

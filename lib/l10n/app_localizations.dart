@@ -1038,6 +1038,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Specialization'**
   String get specialization;
+
+  /// Title for academic debts page
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Debts'**
+  String get academicDebts;
+
+  /// Title when student has no debts
+  ///
+  /// In en, this message translates to:
+  /// **'No Academic Debts'**
+  String get noDebts;
+
+  /// Description when student has no debts
+  ///
+  /// In en, this message translates to:
+  /// **'Congratulations! You have no failed courses to retake.'**
+  String get noDebtsDescription;
+
+  /// Title for debts summary section
+  ///
+  /// In en, this message translates to:
+  /// **'DEBTS SUMMARY'**
+  String get debtsSummary;
+
+  /// Label for total number of debts
+  ///
+  /// In en, this message translates to:
+  /// **'Total Debts'**
+  String get totalDebts;
+
+  /// Label for number of academic years with debts
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Years'**
+  String get academicYears;
+
+  /// Count of debt courses
+  ///
+  /// In en, this message translates to:
+  /// **'{count} failed {count, plural, =1{course} other{courses}}'**
+  String debtCoursesCount(int count);
+
+  /// Label for final grade
+  ///
+  /// In en, this message translates to:
+  /// **'Final'**
+  String get finalGrade;
+
+  /// Title for grade breakdown section
+  ///
+  /// In en, this message translates to:
+  /// **'Grade Breakdown'**
+  String get gradeBreakdown;
+
+  /// Label for continuous control grade
+  ///
+  /// In en, this message translates to:
+  /// **'CC'**
+  String get continuousControl;
 }
 
 class _AppLocalizationsDelegate

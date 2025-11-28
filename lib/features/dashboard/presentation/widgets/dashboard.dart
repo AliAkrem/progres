@@ -139,6 +139,14 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
                 color: AppTheme.AppPrimary,
                 onTap: () => context.goNamed(AppRouter.discharge),
               ),
+
+              buildGridCard(
+                context,
+                title: AppLocalizations.of(context)!.academicDebts,
+                icon: Icons.assignment_late,
+                color: AppTheme.AppPrimary,
+                onTap: () => context.goNamed(AppRouter.debts),
+              ),
             ],
           ),
 
