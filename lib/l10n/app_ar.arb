@@ -688,5 +688,51 @@
   "specialization":"التخصص",
   "@specialization":{
     "description": "التخصص"
+  },
+  "academicDebts": "الديون الأكاديمية",
+  "@academicDebts": {
+    "description": "عنوان صفحة الديون الأكاديمية"
+  },
+  "noDebts": "لا توجد ديون أكاديمية",
+  "@noDebts": {
+    "description": "عنوان عندما لا يكون لدى الطالب ديون"
+  },
+  "noDebtsDescription": "تهانينا! ليس لديك أي مقاييس راسبة لإعادتها.",
+  "@noDebtsDescription": {
+    "description": "وصف عندما لا يكون لدى الطالب ديون"
+  },
+  "debtsSummary": "ملخص الديون",
+  "@debtsSummary": {
+    "description": "عنوان قسم ملخص الديون"
+  },
+  "totalDebts": "إجمالي الديون",
+  "@totalDebts": {
+    "description": "تسمية لإجمالي عدد الديون"
+  },
+  "academicYears": "السنوات الأكاديمية",
+  "@academicYears": {
+    "description": "تسمية لعدد السنوات الأكاديمية مع الديون"
+  },
+  "debtCoursesCount": "{count} {count, plural, =1{مقياس راسب} other{مقاييس راسبة}}",
+  "@debtCoursesCount": {
+    "description": "عدد المقاييس الراسبة",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+  "finalGrade": "النهائي",
+  "@finalGrade": {
+    "description": "تسمية للعلامة النهائية"
+  },
+  "gradeBreakdown": "تفصيل العلامات",
+  "@gradeBreakdown": {
+    "description": "عنوان قسم تفصيل العلامات"
+  },
+  "continuousControl": "المراقبة المستمرة",
+  "@continuousControl": {
+    "description": "تسمية لعلامة المراقبة المستمرة"
   }
 }
