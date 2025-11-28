@@ -461,6 +461,18 @@
   "@failed": {
     "description": "Status for failing a course or year"
   },
+  "withDebts": "With Debts",
+  "@withDebts": {
+    "description": "Status for passing the year with debts"
+  },
+  "withResitSession" : "With Resit Session",
+  "@withResitSession": {
+    "description": "Status for passing the year with resit session"
+  },
+  "normalSession" : "normal session",
+  "@normalSession": {
+    "description": "Status for passing year normal session"
+  },
   "hello": "Hello, {value} ",
   "@hello": {
     "description": "greating message",

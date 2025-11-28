@@ -503,6 +503,18 @@
   "@failed": {
     "description": "حالة فشل دورة أو سنة"
   },
+  "withDebts": "مع ديون",
+  "@withDebts": {
+    "description": "حالة اجتياز السنة مع وجود ديون"
+  },
+  "withResitSession" : "دورة استدراكية",
+  "@withResitSession": {
+    "description": "حالة اجتياز السنة مع دورة استدراكية"
+  },
+  "normalSession" : "دورة عادية",
+  "@normalSession": {
+    "description": "حالة اجتياز الدورة العادية السنوية"
+  },
   "aboutPage": "حول تطبيق Progres",
   "@aboutPage": {
     "description": "عنوان صفحة حول التطبيق"

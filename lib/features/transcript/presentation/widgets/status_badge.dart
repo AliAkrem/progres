@@ -14,7 +14,9 @@ class StatusBadge extends StatelessWidget {
     final formattedStatus = status
         .replaceAll('Admis(e)', AppLocalizations.of(context)!.passed)
         .replaceAll('Ajourné(e)', AppLocalizations.of(context)!.failed)
-        .replaceAll('(session normale)', '')
+        .replaceAll('(session normale)', "(${AppLocalizations.of(context)!.normalSession})")
+        .replaceAll('(session rattrapage)', "(${AppLocalizations.of(context)!.withResitSession})")
+        .replaceAll('avec dettes', "(${AppLocalizations.of(context)!.withDebts})")
         .trim();
 
     return Container(
