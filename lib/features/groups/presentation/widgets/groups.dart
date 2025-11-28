@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/groups/data/models/group.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class GroupsContent extends StatelessWidget {
   final List<StudentGroup> groups;

@@ -7,7 +7,7 @@ import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart
 import 'package:progres/features/academics/presentation/widgets/continuous_assessment_card.dart';
 import 'package:progres/features/academics/presentation/widgets/exam_results_card.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class AcademicPerformancePage extends StatefulWidget {
   final int initialTab;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class ErrorLoadingSubjectState extends StatelessWidget {
   final String message;

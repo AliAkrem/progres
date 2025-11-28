@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);

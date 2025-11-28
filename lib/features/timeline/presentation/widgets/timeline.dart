@@ -2,7 +2,7 @@ import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/timeline/presentation/widgets/week_view.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 Widget buildTimeline(BuildContext context) {
   final GlobalKey<WeekViewState> weekViewKey = GlobalKey<WeekViewState>();

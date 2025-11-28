@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/features/discharge/data/models/discharge.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class DischargeContent extends StatelessWidget {
   final StudentDischarge discharge;

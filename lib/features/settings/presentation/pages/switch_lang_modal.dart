@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progres/config/options.dart';
 import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 void showSwitchLangModal(
   BuildContext context, {

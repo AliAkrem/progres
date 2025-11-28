@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class ErrorState extends StatelessWidget {
   final StudentGroupsError state;

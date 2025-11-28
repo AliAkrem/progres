@@ -7,7 +7,7 @@ import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/features/subject/presentation/widgets/assessment_type_row.dart';
 import 'package:progres/features/subject/presentation/widgets/error_loading_subject.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});

@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'gallery_localizations_ar.dart' deferred as gallery_localizations_ar;
-import 'gallery_localizations_en.dart' deferred as gallery_localizations_en;
+import 'app_localizations_ar.dart' deferred as app_localizations_ar;
+import 'app_localizations_en.dart' deferred as app_localizations_en;
 
 // ignore_for_file: type=lint
 
@@ -17,7 +17,7 @@ import 'gallery_localizations_en.dart' deferred as gallery_localizations_en;
 /// `supportedLocales` list. For example:
 ///
 /// ```dart
-/// import 'l10n/gallery_localizations.dart';
+/// import 'l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
 ///   localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -1043,12 +1043,12 @@ Future<AppLocalizations> lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'ar':
-      return gallery_localizations_ar.loadLibrary().then(
-        (dynamic _) => gallery_localizations_ar.AppLocalizationsAr(),
+      return app_localizations_ar.loadLibrary().then(
+        (dynamic _) => app_localizations_ar.AppLocalizationsAr(),
       );
     case 'en':
-      return gallery_localizations_en.loadLibrary().then(
-        (dynamic _) => gallery_localizations_en.AppLocalizationsEn(),
+      return app_localizations_en.loadLibrary().then(
+        (dynamic _) => app_localizations_en.AppLocalizationsEn(),
       );
   }
 

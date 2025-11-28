@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class CourseSession {
   final String ap;

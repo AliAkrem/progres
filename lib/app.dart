@@ -15,7 +15,7 @@ import 'package:progres/features/subject/presentation/bloc/subject_bloc.dart';
 import 'package:progres/features/timeline/presentation/blocs/timeline_bloc.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class ProgresApp extends StatelessWidget {
   const ProgresApp({super.key});

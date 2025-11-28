@@ -6,7 +6,7 @@ import 'package:progres/features/about/presentation/pages/about.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 import 'package:progres/features/settings/presentation/pages/switch_lang_modal.dart';
 
 class SettingsPage extends StatelessWidget {

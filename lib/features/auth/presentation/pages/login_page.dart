@@ -5,7 +5,7 @@ import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
 
 class LoginPage extends StatefulWidget {

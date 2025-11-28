@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/discharge/presentation/bloc/discharge_bloc.dart';
 import 'package:progres/features/discharge/presentation/widgets/error.dart';
 import 'package:progres/features/discharge/presentation/widgets/discharge.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class DischargePage extends StatefulWidget {
   const DischargePage({super.key});

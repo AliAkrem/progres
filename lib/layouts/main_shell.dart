@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class MainShell extends StatelessWidget {
   final Widget child;

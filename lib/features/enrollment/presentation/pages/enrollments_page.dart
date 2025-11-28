@@ -5,7 +5,7 @@ import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class EnrollmentsPage extends StatefulWidget {
   const EnrollmentsPage({super.key});

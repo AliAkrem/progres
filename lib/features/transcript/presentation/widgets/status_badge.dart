@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:progres/config/theme/app_theme.dart';
-import 'package:progres/l10n/gallery_localizations.dart';
+import 'package:progres/l10n/app_localizations.dart';
 
 class StatusBadge extends StatelessWidget {
   final String status;
