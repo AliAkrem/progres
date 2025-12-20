@@ -95,7 +95,6 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.selectAcademicYear),
-          automaticallyImplyLeading: false,
         ),
         body: _isLoading
             ? const Center(child: CircularProgressIndicator())

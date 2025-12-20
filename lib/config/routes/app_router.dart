@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/core/splash_screen/splash_screen.dart';
-import 'package:progres/core/services/year_selection_service.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/debts/presentation/pages/debts_page.dart';
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
@@ -61,7 +60,7 @@ class AppRouter {
   AppRouter({required BuildContext context}) {
     router = GoRouter(
       initialLocation: splashPath,
-      redirect: (context, state) async {
+      redirect: (context, state) {
         // Skip redirection logic for splash screen
         if (state.matchedLocation == splashPath) {
           return null;
@@ -69,27 +68,13 @@ class AppRouter {
 
         final authState = context.read<AuthBloc>().state;
         final isLoginRoute = state.matchedLocation == loginPath;
-        final isYearSelectionRoute = state.matchedLocation == yearSelectionPath;
 
-        // Not authenticated - redirect to login
         if (authState is! AuthSuccess && !isLoginRoute) {
           return loginPath;
         }
 
-        // Authenticated but on login page - check year selection
         if (authState is AuthSuccess && isLoginRoute) {
-          final yearService = YearSelectionService();
-          final hasSelectedYear = await yearService.hasSelectedYear();
-          return hasSelectedYear ? dashboardPath : yearSelectionPath;
-        }
-
-        // Authenticated - check if year is selected for protected routes
-        if (authState is AuthSuccess && !isYearSelectionRoute) {
-          final yearService = YearSelectionService();
-          final hasSelectedYear = await yearService.hasSelectedYear();
-          if (!hasSelectedYear) {
-            return yearSelectionPath;
-          }
+          return dashboardPath;
         }
 
         return null;

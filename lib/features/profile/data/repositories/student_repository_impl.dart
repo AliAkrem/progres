@@ -13,8 +13,8 @@ class StudentRepositoryImpl {
   StudentRepositoryImpl({
     ApiClient? apiClient,
     YearSelectionService? yearSelectionService,
-  })  : _apiClient = apiClient ?? ApiClient(),
-        _yearSelectionService = yearSelectionService ?? YearSelectionService();
+  }) : _apiClient = apiClient ?? ApiClient(),
+       _yearSelectionService = yearSelectionService ?? YearSelectionService();
 
   Future<StudentBasicInfo> getStudentBasicInfo() async {
     try {
@@ -34,7 +34,8 @@ class StudentRepositoryImpl {
     try {
       // Check if student has manually selected a year
       final selectedYearId = await _yearSelectionService.getSelectedYearId();
-      final selectedYearCode = await _yearSelectionService.getSelectedYearCode();
+      final selectedYearCode = await _yearSelectionService
+          .getSelectedYearCode();
 
       if (selectedYearId != null && selectedYearCode != null) {
         // Return the manually selected year
@@ -58,11 +59,16 @@ class StudentRepositoryImpl {
         '/infos/AnneeAcademiqueEncours',
       );
 
-      final currentAcademicYear = AcademicYear.fromJson(currentYearRes.data);
+      var currentAcademicYear = AcademicYear.fromJson(currentYearRes.data);
 
       // Find the biggest year ID from enrollments
       int maxEnrollmentYearId = 0;
       String maxEnrollmentCode = "";
+
+      if (enrollments.isEmpty) {
+        return currentAcademicYear;
+      }
+
       for (var enrollment in enrollments) {
         if (enrollment.anneeAcademiqueId > maxEnrollmentYearId) {
           maxEnrollmentYearId = enrollment.anneeAcademiqueId;
@@ -73,11 +79,16 @@ class StudentRepositoryImpl {
       // If current year is bigger than the biggest enrollment year,
       // it means student has graduated or left college, so fall back to max enrollment year
       if (currentAcademicYear.id > maxEnrollmentYearId) {
-        return currentAcademicYear.copyWith(
+        currentAcademicYear = currentAcademicYear.copyWith(
           id: maxEnrollmentYearId,
           code: maxEnrollmentCode,
         );
       }
+
+      await _yearSelectionService.saveSelectedYear(
+        currentAcademicYear.id,
+        currentAcademicYear.code,
+      );
 
       return currentAcademicYear;
     } catch (e) {

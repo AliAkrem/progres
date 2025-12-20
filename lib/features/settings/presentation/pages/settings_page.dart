@@ -115,38 +115,40 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             },
           ),
-          ListTile(
-            leading: Icon(
-              Icons.calendar_today,
-              color: theme.iconTheme.color,
-              size: isSmallScreen ? 22 : 24,
-            ),
-            title: Text(
-              AppLocalizations.of(context)!.academicYear,
-              style: theme.textTheme.titleMedium?.copyWith(
-                fontSize: isSmallScreen ? 14 : 16,
+          if (authState is AuthSuccess)
+            ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+                color: theme.iconTheme.color,
+                size: isSmallScreen ? 22 : 24,
               ),
-            ),
-            subtitle: Text(
-              _selectedYearCode ?? AppLocalizations.of(context)!.notSelected,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontSize: isSmallScreen ? 12 : 14,
+              title: Text(
+                AppLocalizations.of(context)!.academicYear,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontSize: isSmallScreen ? 14 : 16,
+                ),
               ),
+              subtitle: Text(
+                _selectedYearCode ?? AppLocalizations.of(context)!.notSelected,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: isSmallScreen ? 12 : 14,
+                ),
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                size: isSmallScreen ? 14 : 16,
+                color: theme.iconTheme.color,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 16 : 24,
+                vertical: isSmallScreen ? 8 : 12,
+              ),
+              onTap: () async {
+                await context.pushNamed(AppRouter.yearSelection);
+                _loadSelectedYear();
+              },
             ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: isSmallScreen ? 14 : 16,
-              color: theme.iconTheme.color,
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: isSmallScreen ? 16 : 24,
-              vertical: isSmallScreen ? 8 : 12,
-            ),
-            onTap: () async {
-              await context.pushNamed(AppRouter.yearSelection);
-              _loadSelectedYear();
-            },
-          ),
+
           ListTile(
             leading: Icon(
               Icons.notifications,

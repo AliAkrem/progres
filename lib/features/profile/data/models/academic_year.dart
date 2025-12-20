@@ -8,8 +8,8 @@ class AcademicYear {
     return AcademicYear(id: json['id'] as int, code: json['code'] as String);
   }
 
-  AcademicYear copyWith({id, code}) {
-    return new AcademicYear(id: id, code: code);
+  AcademicYear copyWith({int? id, String? code}) {
+    return AcademicYear(id: id ?? this.id, code: code ?? this.code);
   }
 
   Map<String, dynamic> toJson() {
