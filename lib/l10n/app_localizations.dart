@@ -1098,6 +1098,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'CC'**
   String get continuousControl;
+
+  /// Description for year selection page
+  ///
+  /// In en, this message translates to:
+  /// **'Please select the academic year you want to view'**
+  String get selectYearDescription;
+
+  /// Error message when no year is selected
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an academic year'**
+  String get pleaseSelectYear;
+
+  /// Message when no enrollments are available
+  ///
+  /// In en, this message translates to:
+  /// **'No enrollments found'**
+  String get noEnrollmentsFound;
+
+  /// Generic error message for data loading
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading data'**
+  String get errorLoadingData;
+
+  /// Status when something is not selected
+  ///
+  /// In en, this message translates to:
+  /// **'Not selected'**
+  String get notSelected;
 }
 
 class _AppLocalizationsDelegate

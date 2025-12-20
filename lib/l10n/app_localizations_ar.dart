@@ -547,4 +547,20 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get continuousControl => 'المراقبة المستمرة';
+
+  @override
+  String get selectYearDescription =>
+      'يرجى اختيار السنة الأكاديمية التي تريد عرضها';
+
+  @override
+  String get pleaseSelectYear => 'يرجى اختيار سنة أكاديمية';
+
+  @override
+  String get noEnrollmentsFound => 'لم يتم العثور على تسجيلات';
+
+  @override
+  String get errorLoadingData => 'خطأ في تحميل البيانات';
+
+  @override
+  String get notSelected => 'غير محدد';
 }

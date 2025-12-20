@@ -15,12 +15,14 @@ import 'package:progres/features/dashboard/presentation/pages/dashboard_page.dar
 import 'package:progres/features/enrollment/presentation/pages/enrollments_page.dart';
 import 'package:progres/features/profile/presentation/pages/profile_page.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
+import 'package:progres/features/settings/presentation/pages/year_selection_page.dart';
 import 'package:progres/layouts/main_shell.dart';
 
 class AppRouter {
   // Route names as static constants
   static const String splash = 'splash';
   static const String login = 'login';
+  static const String yearSelection = 'year_selection';
   static const String dashboard = 'dashboard';
   static const String profile = 'profile';
   static const String settings = 'settings';
@@ -38,6 +40,7 @@ class AppRouter {
   // Route paths
   static const String splashPath = '/';
   static const String loginPath = '/login';
+  static const String yearSelectionPath = '/year-selection';
   static const String dashboardPath = '/dashboard';
   static const String profilePath = '/profile';
   static const String settingsPath = '/settings';
@@ -86,6 +89,11 @@ class AppRouter {
           path: loginPath,
           name: login,
           builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: yearSelectionPath,
+          name: yearSelection,
+          builder: (context, state) => const YearSelectionPage(),
         ),
         ShellRoute(
           builder: (context, state, child) {

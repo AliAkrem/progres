@@ -49,17 +49,22 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, profileState) {
           return BlocBuilder<EnrollmentBloc, EnrollmentState>(
             builder: (context, enrollmentState) {
-              // Get latest enrollment if available
-              Enrollment? latestEnrollment;
-              if (enrollmentState is EnrollmentsLoaded &&
+              // Get enrollment matching the current academic year
+              Enrollment? currentEnrollment;
+              if (profileState is ProfileLoaded &&
+                  enrollmentState is EnrollmentsLoaded &&
                   enrollmentState.enrollments.isNotEmpty) {
-                // Sort enrollments by academic year (newest first)
-                final sortedEnrollments =
-                    List<Enrollment>.from(enrollmentState.enrollments)..sort(
-                      (a, b) =>
-                          b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId),
-                    );
-                latestEnrollment = sortedEnrollments.first;
+                // Find enrollment that matches the current academic year
+                try {
+                  currentEnrollment = enrollmentState.enrollments.firstWhere(
+                    (enrollment) =>
+                        enrollment.anneeAcademiqueId ==
+                        profileState.academicYear.id,
+                  );
+                } catch (e) {
+                  // If no matching enrollment found, use null
+                  currentEnrollment = null;
+                }
               }
 
               if (profileState is ProfileLoading) {
@@ -67,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
               } else if (profileState is ProfileError) {
                 return _buildErrorState(profileState);
               } else if (profileState is ProfileLoaded) {
-                return _buildProfileContent(profileState, latestEnrollment);
+                return _buildProfileContent(profileState, currentEnrollment);
               } else {
                 return _buildLoadingState();
               }
@@ -136,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfileContent(
     ProfileLoaded state,
-    Enrollment? latestEnrollment,
+    Enrollment? currentEnrollment,
   ) {
     // Make sure we have the required imports and parameters
     final theme = Theme.of(context);
@@ -155,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: isSmallScreen ? 16 : 24),
 
           // Academic Information
-          if (latestEnrollment != null) ...[
+          if (currentEnrollment != null) ...[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
               child: _buildInfoSection(
@@ -163,36 +168,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   _buildInfoRow(
                     AppLocalizations.of(context)!.academicYear,
-                    latestEnrollment.anneeAcademiqueCode,
+                    currentEnrollment.anneeAcademiqueCode,
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.institution,
                     deviceLocale.languageCode == 'ar'
-                        ? latestEnrollment.llEtablissementArabe ?? ''
-                        : latestEnrollment.llEtablissementLatin ?? '',
+                        ? currentEnrollment.llEtablissementArabe ?? ''
+                        : currentEnrollment.llEtablissementLatin ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.level,
                     deviceLocale.languageCode == 'ar'
-                        ? latestEnrollment.niveauLibelleLongAr ?? ''
-                        : latestEnrollment.niveauLibelleLongLt ?? '',
+                        ? currentEnrollment.niveauLibelleLongAr ?? ''
+                        : currentEnrollment.niveauLibelleLongLt ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.program,
                     deviceLocale.languageCode == 'ar'
-                        ? latestEnrollment.ofLlDomaineArabe ?? ''
-                        : latestEnrollment.ofLlDomaine ?? '',
+                        ? currentEnrollment.ofLlDomaineArabe ?? ''
+                        : currentEnrollment.ofLlDomaine ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.specialization,
                     deviceLocale.languageCode == 'ar'
-                        ? latestEnrollment.ofLlSpecialiteArabe ?? ''
-                        : latestEnrollment.ofLlSpecialite ?? '',
+                        ? currentEnrollment.ofLlSpecialiteArabe ?? ''
+                        : currentEnrollment.ofLlSpecialite ?? '',
                   ),
-                  if (latestEnrollment.numeroInscription != null)
+                  if (currentEnrollment.numeroInscription != null)
                     _buildInfoRow(
                       AppLocalizations.of(context)!.registrationNumber,
-                      latestEnrollment.numeroInscription!,
+                      currentEnrollment.numeroInscription!,
                     ),
                 ],
               ),

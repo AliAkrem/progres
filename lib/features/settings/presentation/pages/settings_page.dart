@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/config/routes/app_router.dart';
+import 'package:progres/core/services/year_selection_service.dart';
 import 'package:progres/features/about/presentation/pages/about.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:progres/config/theme/app_theme.dart';
@@ -9,8 +10,29 @@ import 'package:progres/core/theme/theme_bloc.dart';
 import 'package:progres/l10n/app_localizations.dart';
 import 'package:progres/features/settings/presentation/pages/switch_lang_modal.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  final YearSelectionService _yearService = YearSelectionService();
+  String? _selectedYearCode;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedYear();
+  }
+
+  Future<void> _loadSelectedYear() async {
+    final yearCode = await _yearService.getSelectedYearCode();
+    setState(() {
+      _selectedYearCode = yearCode;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +115,40 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
+          if (authState is AuthSuccess)
+            ListTile(
+              leading: Icon(
+                Icons.calendar_today,
+                color: theme.iconTheme.color,
+                size: isSmallScreen ? 22 : 24,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.academicYear,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontSize: isSmallScreen ? 14 : 16,
+                ),
+              ),
+              subtitle: Text(
+                _selectedYearCode ?? AppLocalizations.of(context)!.notSelected,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontSize: isSmallScreen ? 12 : 14,
+                ),
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                size: isSmallScreen ? 14 : 16,
+                color: theme.iconTheme.color,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: isSmallScreen ? 16 : 24,
+                vertical: isSmallScreen ? 8 : 12,
+              ),
+              onTap: () async {
+                await context.pushNamed(AppRouter.yearSelection);
+                _loadSelectedYear();
+              },
+            ),
+
           ListTile(
             leading: Icon(
               Icons.notifications,
