@@ -513,4 +513,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get specialization => 'Specialization';
+
+  @override
+  String get academicDebts => 'Academic Debts';
+
+  @override
+  String get noDebts => 'No Academic Debts';
+
+  @override
+  String get noDebtsDescription =>
+      'Congratulations! You have no failed courses to retake.';
+
+  @override
+  String get debtsSummary => 'DEBTS SUMMARY';
+
+  @override
+  String get totalDebts => 'Total Debts';
+
+  @override
+  String get academicYears => 'Academic Years';
+
+  @override
+  String debtCoursesCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'courses',
+      one: 'course',
+    );
+    return '$count failed $_temp0';
+  }
+
+  @override
+  String get finalGrade => 'Final';
+
+  @override
+  String get gradeBreakdown => 'Grade Breakdown';
+
+  @override
+  String get continuousControl => 'CC';
 }

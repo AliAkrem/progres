@@ -8,6 +8,7 @@ import 'package:progres/core/di/injector.dart';
 import 'package:progres/core/theme/theme_bloc.dart';
 import 'package:progres/features/academics/presentation/bloc/academics_bloc.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:progres/features/debts/presentation/bloc/debts_bloc.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_bloc.dart';
 import 'package:progres/features/groups/presentation/bloc/groups_bloc.dart';
 import 'package:progres/features/profile/presentation/bloc/profile_bloc.dart';
@@ -34,6 +35,7 @@ class ProgresApp extends StatelessWidget {
         BlocProvider(create: (context) => injector<TranscriptBloc>()),
         BlocProvider(create: (context) => injector<EnrollmentBloc>()),
         BlocProvider(create: (context) => injector<StudentDischargeBloc>()),
+        BlocProvider(create: (context) => injector<DebtsBloc>()),
       ],
       child: CalendarControllerProvider(
         controller: EventController(),
