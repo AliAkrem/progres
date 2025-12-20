@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:progres/core/services/year_selection_service.dart';
 import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
 import 'package:progres/features/debts/presentation/bloc/debts_bloc.dart';
@@ -79,6 +80,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       emit(AuthLoading());
       await authRepository.logout();
+
+      // Clear selected year
+      try {
+        final yearService = YearSelectionService();
+        await yearService.clearSelectedYear();
+      } catch (e) {
+        debugPrint('Note: Could not clear selected year. ${e.toString()}');
+      }
 
       try {
         event.context?.read<TranscriptBloc>().add(const ClearTranscriptCache());

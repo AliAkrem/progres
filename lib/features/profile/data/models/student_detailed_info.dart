@@ -55,7 +55,7 @@ class StudentDetailedInfo {
       refLibelleCycle: json['refLibelleCycle'] as String,
       refLibelleCycleAr: json['refLibelleCycleAr'] as String,
       situationId: json['situationId'] as int,
-      transportPaye: json['transportPaye'] as bool,
+      transportPaye: (json['transportPaye'] ?? false) as bool,
     );
   }
 

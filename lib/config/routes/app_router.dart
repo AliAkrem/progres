@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:progres/core/splash_screen/splash_screen.dart';
+import 'package:progres/core/services/year_selection_service.dart';
 import 'package:progres/features/academics/presentation/pages/academic_performance_page.dart';
 import 'package:progres/features/debts/presentation/pages/debts_page.dart';
 import 'package:progres/features/groups/presentation/pages/groups_page.dart';
@@ -15,12 +16,14 @@ import 'package:progres/features/dashboard/presentation/pages/dashboard_page.dar
 import 'package:progres/features/enrollment/presentation/pages/enrollments_page.dart';
 import 'package:progres/features/profile/presentation/pages/profile_page.dart';
 import 'package:progres/features/settings/presentation/pages/settings_page.dart';
+import 'package:progres/features/settings/presentation/pages/year_selection_page.dart';
 import 'package:progres/layouts/main_shell.dart';
 
 class AppRouter {
   // Route names as static constants
   static const String splash = 'splash';
   static const String login = 'login';
+  static const String yearSelection = 'year_selection';
   static const String dashboard = 'dashboard';
   static const String profile = 'profile';
   static const String settings = 'settings';
@@ -38,6 +41,7 @@ class AppRouter {
   // Route paths
   static const String splashPath = '/';
   static const String loginPath = '/login';
+  static const String yearSelectionPath = '/year-selection';
   static const String dashboardPath = '/dashboard';
   static const String profilePath = '/profile';
   static const String settingsPath = '/settings';
@@ -57,7 +61,7 @@ class AppRouter {
   AppRouter({required BuildContext context}) {
     router = GoRouter(
       initialLocation: splashPath,
-      redirect: (context, state) {
+      redirect: (context, state) async {
         // Skip redirection logic for splash screen
         if (state.matchedLocation == splashPath) {
           return null;
@@ -65,13 +69,27 @@ class AppRouter {
 
         final authState = context.read<AuthBloc>().state;
         final isLoginRoute = state.matchedLocation == loginPath;
+        final isYearSelectionRoute = state.matchedLocation == yearSelectionPath;
 
+        // Not authenticated - redirect to login
         if (authState is! AuthSuccess && !isLoginRoute) {
           return loginPath;
         }
 
+        // Authenticated but on login page - check year selection
         if (authState is AuthSuccess && isLoginRoute) {
-          return dashboardPath;
+          final yearService = YearSelectionService();
+          final hasSelectedYear = await yearService.hasSelectedYear();
+          return hasSelectedYear ? dashboardPath : yearSelectionPath;
+        }
+
+        // Authenticated - check if year is selected for protected routes
+        if (authState is AuthSuccess && !isYearSelectionRoute) {
+          final yearService = YearSelectionService();
+          final hasSelectedYear = await yearService.hasSelectedYear();
+          if (!hasSelectedYear) {
+            return yearSelectionPath;
+          }
         }
 
         return null;
@@ -86,6 +104,11 @@ class AppRouter {
           path: loginPath,
           name: login,
           builder: (context, state) => const LoginPage(),
+        ),
+        GoRoute(
+          path: yearSelectionPath,
+          name: yearSelection,
+          builder: (context, state) => const YearSelectionPage(),
         ),
         ShellRoute(
           builder: (context, state, child) {

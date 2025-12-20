@@ -734,5 +734,25 @@
   "continuousControl": "المراقبة المستمرة",
   "@continuousControl": {
     "description": "تسمية لعلامة المراقبة المستمرة"
+  },
+  "selectYearDescription": "يرجى اختيار السنة الأكاديمية التي تريد عرضها",
+  "@selectYearDescription": {
+    "description": "وصف صفحة اختيار السنة"
+  },
+  "pleaseSelectYear": "يرجى اختيار سنة أكاديمية",
+  "@pleaseSelectYear": {
+    "description": "رسالة خطأ عند عدم اختيار سنة"
+  },
+  "noEnrollmentsFound": "لم يتم العثور على تسجيلات",
+  "@noEnrollmentsFound": {
+    "description": "رسالة عند عدم توفر تسجيلات"
+  },
+  "errorLoadingData": "خطأ في تحميل البيانات",
+  "@errorLoadingData": {
+    "description": "رسالة خطأ عامة لتحميل البيانات"
+  },
+  "notSelected": "غير محدد",
+  "@notSelected": {
+    "description": "حالة عندما لا يتم تحديد شيء"
   }
 }

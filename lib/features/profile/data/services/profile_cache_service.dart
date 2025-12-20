@@ -4,15 +4,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileCacheService {
   // Keys for SharedPreferences
-  static const String _profileKey = 'cached_profile_data';
-  static const String _lastUpdatedKey = 'last_updated_profile';
+  static const String _profileKeyPrefix = 'cached_profile_data';
+  static const String _lastUpdatedKeyPrefix = 'last_updated_profile';
+  static const String _currentYearKey = 'cached_year_id';
 
-  // Save profile data to cache
-  Future<bool> cacheProfileData(Map<String, dynamic> profileData) async {
+  // Get cache key for specific year
+  String _getProfileKey(int yearId) => '${_profileKeyPrefix}_$yearId';
+  String _getLastUpdatedKey(int yearId) => '${_lastUpdatedKeyPrefix}_$yearId';
+
+  // Save profile data to cache with year ID
+  Future<bool> cacheProfileData(
+    Map<String, dynamic> profileData,
+    int yearId,
+  ) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_profileKey, jsonEncode(profileData));
-      await prefs.setString(_lastUpdatedKey, DateTime.now().toIso8601String());
+      await prefs.setString(_getProfileKey(yearId), jsonEncode(profileData));
+      await prefs.setString(
+        _getLastUpdatedKey(yearId),
+        DateTime.now().toIso8601String(),
+      );
+      await prefs.setInt(_currentYearKey, yearId);
       return true;
     } catch (e) {
       debugPrint('Error caching profile data: $e');
@@ -20,11 +32,11 @@ class ProfileCacheService {
     }
   }
 
-  // Retrieve profile data from cache
-  Future<Map<String, dynamic>?> getCachedProfileData() async {
+  // Retrieve profile data from cache for specific year
+  Future<Map<String, dynamic>?> getCachedProfileData(int yearId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final profileDataString = prefs.getString(_profileKey);
+      final profileDataString = prefs.getString(_getProfileKey(yearId));
 
       if (profileDataString == null) return null;
 
@@ -35,11 +47,11 @@ class ProfileCacheService {
     }
   }
 
-  // Get last update timestamp for profile data
-  Future<DateTime?> getLastUpdated() async {
+  // Get last update timestamp for profile data of specific year
+  Future<DateTime?> getLastUpdated(int yearId) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final timestamp = prefs.getString(_lastUpdatedKey);
+      final timestamp = prefs.getString(_getLastUpdatedKey(yearId));
       if (timestamp == null) return null;
 
       return DateTime.parse(timestamp);
@@ -49,12 +61,26 @@ class ProfileCacheService {
     }
   }
 
-  // Clear profile data cache
-  Future<bool> clearCache() async {
+  // Clear profile data cache for specific year
+  Future<bool> clearCache([int? yearId]) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.remove(_profileKey);
-      await prefs.remove(_lastUpdatedKey);
+      
+      if (yearId != null) {
+        // Clear specific year cache
+        await prefs.remove(_getProfileKey(yearId));
+        await prefs.remove(_getLastUpdatedKey(yearId));
+      } else {
+        // Clear all profile caches
+        final keys = prefs.getKeys();
+        for (final key in keys) {
+          if (key.startsWith(_profileKeyPrefix) ||
+              key.startsWith(_lastUpdatedKeyPrefix)) {
+            await prefs.remove(key);
+          }
+        }
+        await prefs.remove(_currentYearKey);
+      }
       return true;
     } catch (e) {
       debugPrint('Error clearing profile cache: $e');

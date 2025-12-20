@@ -552,4 +552,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continuousControl => 'CC';
+
+  @override
+  String get selectYearDescription =>
+      'Please select the academic year you want to view';
+
+  @override
+  String get pleaseSelectYear => 'Please select an academic year';
+
+  @override
+  String get noEnrollmentsFound => 'No enrollments found';
+
+  @override
+  String get errorLoadingData => 'Error loading data';
+
+  @override
+  String get notSelected => 'Not selected';
 }

@@ -716,6 +716,26 @@
   "continuousControl": "CC",
   "@continuousControl": {
     "description": "Label for continuous control grade"
+  },
+  "selectYearDescription": "Please select the academic year you want to view",
+  "@selectYearDescription": {
+    "description": "Description for year selection page"
+  },
+  "pleaseSelectYear": "Please select an academic year",
+  "@pleaseSelectYear": {
+    "description": "Error message when no year is selected"
+  },
+  "noEnrollmentsFound": "No enrollments found",
+  "@noEnrollmentsFound": {
+    "description": "Message when no enrollments are available"
+  },
+  "errorLoadingData": "Error loading data",
+  "@errorLoadingData": {
+    "description": "Generic error message for data loading"
+  },
+  "notSelected": "Not selected",
+  "@notSelected": {
+    "description": "Status when something is not selected"
   }
 
 
