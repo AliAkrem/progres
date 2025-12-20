@@ -2,7 +2,7 @@ name: progres
 description: A student portal application for university students.
 publish_to: "none"
 
-version: 1.2.0+3
+version: 1.3.1+4
 
 environment:
   sdk: ^3.10.0
