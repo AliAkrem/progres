@@ -18,9 +18,11 @@ class DebtsRepositoryImpl {
         return [];
       }
       final List<dynamic> debtsJson = response.data;
-      return debtsJson
+      final debts = debtsJson
           .map((debtJson) => AcademicYearDebt.fromJson(debtJson))
           .toList();
+      debts.sort((a, b) => b.idAnneeAcademique.compareTo(a.idAnneeAcademique));
+      return debts;
     } catch (e) {
       rethrow;
     }
