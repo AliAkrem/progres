@@ -45,9 +45,7 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
       final enrollments = await _enrollmentRepo.getStudentEnrollments();
 
       // Sort by year ID descending (most recent first)
-      enrollments.sort(
-        (a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId),
-      );
+      enrollments.sort((a, b) => b.academicYearId.compareTo(a.academicYearId));
 
       setState(() {
         _enrollments = enrollments;
@@ -72,12 +70,12 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
     }
 
     final selectedEnrollment = _enrollments!.firstWhere(
-      (e) => e.anneeAcademiqueId == _selectedYearId,
+      (e) => e.academicYearId == _selectedYearId,
     );
 
     await _yearService.saveSelectedYear(
-      selectedEnrollment.anneeAcademiqueId,
-      selectedEnrollment.anneeAcademiqueCode,
+      selectedEnrollment.academicYearId,
+      selectedEnrollment.academicYearCode,
     );
 
     await _cacheService.clearCache();
@@ -157,7 +155,7 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
                       itemBuilder: (context, index) {
                         final enrollment = _enrollments![index];
                         final isSelected =
-                            _selectedYearId == enrollment.anneeAcademiqueId;
+                            _selectedYearId == enrollment.academicYearId;
                         final locale = Localizations.localeOf(context);
                         final localizedEnrollment = LocalizedEnrollment(
                           deviceLocale: locale,
@@ -181,7 +179,7 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
                           child: InkWell(
                             onTap: () {
                               setState(() {
-                                _selectedYearId = enrollment.anneeAcademiqueId;
+                                _selectedYearId = enrollment.academicYearId;
                               });
                             },
                             borderRadius: BorderRadius.circular(12),
@@ -190,7 +188,7 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
                               child: Row(
                                 children: [
                                   Radio<int>(
-                                    value: enrollment.anneeAcademiqueId,
+                                    value: enrollment.academicYearId,
                                     groupValue: _selectedYearId,
                                     onChanged: (value) {
                                       setState(() {
@@ -205,7 +203,7 @@ class _YearSelectionPageState extends State<YearSelectionPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          enrollment.anneeAcademiqueCode,
+                                          enrollment.academicYearCode,
                                           style: theme.textTheme.titleMedium
                                               ?.copyWith(
                                                 fontWeight: FontWeight.bold,

@@ -90,7 +90,7 @@ class DischargeContent extends StatelessWidget {
         DischargeCard(
           title: AppLocalizations.of(context)!.departmentLevel,
           description: AppLocalizations.of(context)!.departmentDescription,
-          isCleared: discharge.sitDep,
+          isCleared: discharge.departmentStatus,
           icon: Icons.domain_outlined,
           isSmallScreen: isSmallScreen,
         ),
@@ -98,7 +98,7 @@ class DischargeContent extends StatelessWidget {
         DischargeCard(
           title: AppLocalizations.of(context)!.facultyLibraryLevel,
           description: AppLocalizations.of(context)!.facultyLibraryDescription,
-          isCleared: discharge.sitBf,
+          isCleared: discharge.facultyLibraryStatus,
           icon: Icons.local_library_outlined,
           isSmallScreen: isSmallScreen,
         ),
@@ -106,7 +106,7 @@ class DischargeContent extends StatelessWidget {
         DischargeCard(
           title: AppLocalizations.of(context)!.centralLibraryLevel,
           description: AppLocalizations.of(context)!.centralLibraryDescription,
-          isCleared: discharge.sitBc,
+          isCleared: discharge.centralLibraryStatus,
           icon: Icons.library_books_outlined,
           isSmallScreen: isSmallScreen,
         ),
@@ -114,7 +114,7 @@ class DischargeContent extends StatelessWidget {
         DischargeCard(
           title: AppLocalizations.of(context)!.residenceLevel,
           description: AppLocalizations.of(context)!.residenceDescription,
-          isCleared: discharge.sitRu,
+          isCleared: discharge.residenceStatus,
           icon: Icons.home_outlined,
           isSmallScreen: isSmallScreen,
         ),
@@ -124,7 +124,7 @@ class DischargeContent extends StatelessWidget {
           description: AppLocalizations.of(
             context,
           )!.scholarshipServiceDescription,
-          isCleared: discharge.sitBrs,
+          isCleared: discharge.scholarshipStatus,
           icon: Icons.school_outlined,
           isSmallScreen: isSmallScreen,
         ),

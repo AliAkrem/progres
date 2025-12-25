@@ -92,7 +92,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
   ) {
     // Sort enrollments by academic year (newest first)
     final sortedEnrollments = List<Enrollment>.from(enrollments)
-      ..sort((a, b) => b.anneeAcademiqueId.compareTo(a.anneeAcademiqueId));
+      ..sort((a, b) => b.academicYearId.compareTo(a.academicYearId));
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -141,7 +141,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
-                enrollment.anneeAcademiqueCode,
+                enrollment.academicYearCode,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -230,7 +230,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
             const SizedBox(height: 12),
 
             // Registration number
-            if (enrollment.numeroInscription != null)
+            if (enrollment.registrationNumber != null)
               Row(
                 children: [
                   Icon(
@@ -253,7 +253,7 @@ class _EnrollmentsPageState extends State<EnrollmentsPage> {
                           ),
                         ),
                         Text(
-                          enrollment.numeroInscription!,
+                          enrollment.registrationNumber!,
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'monospace',

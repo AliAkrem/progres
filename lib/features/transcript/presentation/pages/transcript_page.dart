@@ -148,7 +148,7 @@ class _TranscriptPageState extends State<TranscriptPage>
             isScrollable: true,
             indicatorColor: AppTheme.AppSecondary,
             tabs: _enrollments.map((enrollment) {
-              return Tab(text: enrollment.anneeAcademiqueCode);
+              return Tab(text: enrollment.academicYearCode);
             }).toList(),
           ),
 
@@ -266,14 +266,14 @@ class _TranscriptPageState extends State<TranscriptPage>
                             children: [
                               ResultItem(
                                 label: AppLocalizations.of(context)!.average,
-                                value: annualSummary.moyenne.toStringAsFixed(2),
+                                value: annualSummary.average.toStringAsFixed(2),
                                 color: AppTheme.AppPrimary,
                                 icon: Icons.bar_chart_rounded,
                                 compact: true,
                               ),
                               ResultItem(
                                 label: AppLocalizations.of(context)!.credits,
-                                value: annualSummary.creditAcquis.toString(),
+                                value: annualSummary.creditsAcquired.toString(),
                                 color: AppTheme.accentBlue,
                                 icon: Icons.school_rounded,
                                 compact: true,
@@ -282,7 +282,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           ),
                           const SizedBox(height: 16),
                           StatusBadge(
-                            status: annualSummary.typeDecisionLibelleFr,
+                            status: annualSummary.decisionTypeLabelFr,
                           ),
                         ],
                       ),
@@ -304,7 +304,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            state.selectedEnrollment.niveauLibelleLongLt ??
+                            state.selectedEnrollment.levelLabelLongLat ??
                                 AppLocalizations.of(context)!.unknownLevel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -326,7 +326,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                           const SizedBox(width: 8),
                           Text(
                             AppLocalizations.of(context)!.academicYearWrapper(
-                              state.selectedEnrollment.anneeAcademiqueCode,
+                              state.selectedEnrollment.academicYearCode,
                             ),
                             style: theme.textTheme.bodyMedium,
                           ),
@@ -375,7 +375,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  transcript.periodeLibelleFr,
+                  transcript.periodLabelFr,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -384,12 +384,12 @@ class _TranscriptPageState extends State<TranscriptPage>
                 ),
                 const Spacer(),
                 SemesterInfoChip(
-                  label: 'Avg: ${transcript.moyenne.toStringAsFixed(2)}',
+                  label: 'Avg: ${transcript.average.toStringAsFixed(2)}',
                   color: AppTheme.AppPrimary,
                 ),
                 const SizedBox(width: 6),
                 SemesterInfoChip(
-                  label: 'CR: ${transcript.creditAcquis}',
+                  label: 'CR: ${transcript.creditsAcquired}',
                   color: AppTheme.accentBlue,
                 ),
               ],
@@ -401,10 +401,10 @@ class _TranscriptPageState extends State<TranscriptPage>
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: transcript.bilanUes.length,
+              itemCount: transcript.unitAssessments.length,
               separatorBuilder: (context, index) => const Divider(height: 24),
               itemBuilder: (context, index) =>
-                  _buildTeachingUnit(transcript.bilanUes[index], theme),
+                  _buildTeachingUnit(transcript.unitAssessments[index], theme),
             ),
           ],
         ),
@@ -423,11 +423,11 @@ class _TranscriptPageState extends State<TranscriptPage>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: _getUeColor(unit.ueNatureLcFr),
+                color: _getUeColor(unit.unitNatureLabelFr),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                unit.ueNatureLcFr,
+                unit.unitNatureLabelFr,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
@@ -439,20 +439,22 @@ class _TranscriptPageState extends State<TranscriptPage>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                color: _getUeColor(unit.ueNatureLcFr).withValues(alpha: 0.1),
+                color: _getUeColor(
+                  unit.unitNatureLabelFr,
+                ).withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: _getUeColor(unit.ueNatureLcFr)),
+                border: Border.all(color: _getUeColor(unit.unitNatureLabelFr)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Avg: ${unit.moyenne.toStringAsFixed(2)}',
+                    'Avg: ${unit.average.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: _getUeColor(unit.ueNatureLcFr),
+                      color: _getUeColor(unit.unitNatureLabelFr),
                     ),
                   ),
                   const SizedBox(width: 4),
@@ -465,11 +467,11 @@ class _TranscriptPageState extends State<TranscriptPage>
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
-                      'CR: ${unit.creditAcquis}/${unit.credit}',
+                      'CR: ${unit.creditsAcquired}/${unit.credit}',
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
-                        color: _getUeColor(unit.ueNatureLcFr),
+                        color: _getUeColor(unit.unitNatureLabelFr),
                       ),
                     ),
                   ),
@@ -485,9 +487,9 @@ class _TranscriptPageState extends State<TranscriptPage>
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: unit.bilanMcs.length,
+          itemCount: unit.moduleAssessments.length,
           itemBuilder: (context, index) =>
-              _buildModuleRow(unit.bilanMcs[index], theme),
+              _buildModuleRow(unit.moduleAssessments[index], theme),
         ),
       ],
     );
@@ -501,7 +503,7 @@ class _TranscriptPageState extends State<TranscriptPage>
         children: [
           // Module name
           Text(
-            module.mcLibelleFr,
+            module.subjectLabelFr,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -533,7 +535,7 @@ class _TranscriptPageState extends State<TranscriptPage>
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'CR: ${module.creditObtenu}',
+                      'CR: ${module.creditsObtained}',
                       style: TextStyle(
                         fontSize: 11,
                         color: theme.textTheme.bodySmall?.color,
@@ -560,11 +562,11 @@ class _TranscriptPageState extends State<TranscriptPage>
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: _getGradeColor(module.moyenneGenerale),
+                  color: _getGradeColor(module.generalAverage),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  module.moyenneGenerale.toString(),
+                  module.generalAverage.toString(),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

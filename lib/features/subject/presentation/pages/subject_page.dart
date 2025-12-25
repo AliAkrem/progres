@@ -27,9 +27,8 @@ class _SubjectPageState extends State<SubjectPage> {
     final profileState = context.read<ProfileBloc>().state;
 
     if (profileState is ProfileLoaded) {
-      ouvertureOffreFormationId =
-          profileState.detailedInfo.ouvertureOffreFormationId;
-      niveauId = profileState.detailedInfo.niveauId;
+      ouvertureOffreFormationId = profileState.detailedInfo.trainingOfferId;
+      niveauId = profileState.detailedInfo.levelId;
       _loadSubjects();
     }
   }
@@ -192,7 +191,7 @@ class SubjectsContent extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Text(
-                            localizedCourseCoefficient.mcLibelle,
+                            localizedCourseCoefficient.subjectLabel,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -202,20 +201,21 @@ class SubjectsContent extends StatelessWidget {
                         ),
                         AssessmentTypeRow(
                           type: 'Continuous Assessment',
-                          coefficient: coefficient.coefficientControleContinu,
+                          coefficient:
+                              coefficient.continuousAssessmentCoefficient,
                           typeColor: AppTheme.AppSecondary,
                           theme: theme,
                         ),
                         AssessmentTypeRow(
                           type: 'Intermediate Assessment',
                           coefficient:
-                              coefficient.coefficientControleIntermediaire,
+                              coefficient.intermediaryAssessmentCoefficient,
                           typeColor: AppTheme.accentBlue,
                           theme: theme,
                         ),
                         AssessmentTypeRow(
                           type: 'Final Examination',
-                          coefficient: coefficient.coefficientExamen,
+                          coefficient: coefficient.examCoefficient,
                           typeColor: AppTheme.accentGreen,
                           theme: theme,
                         ),
@@ -241,13 +241,11 @@ class SubjectsContent extends StatelessWidget {
       );
 
       if (!coursesByPeriod.containsKey(
-        localizedCourseCoefficient.periodeLibelle,
+        localizedCourseCoefficient.periodLabel,
       )) {
-        coursesByPeriod[localizedCourseCoefficient.periodeLibelle] = [];
+        coursesByPeriod[localizedCourseCoefficient.periodLabel] = [];
       }
-      coursesByPeriod[localizedCourseCoefficient.periodeLibelle]!.add(
-        coefficient,
-      );
+      coursesByPeriod[localizedCourseCoefficient.periodLabel]!.add(coefficient);
     }
     return coursesByPeriod;
   }

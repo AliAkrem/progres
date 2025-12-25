@@ -132,7 +132,7 @@ class _DebtsPageState extends State<DebtsPage> {
     // Calculate total debts
     final totalDebts = state.debts.fold<int>(
       0,
-      (sum, year) => sum + year.dette.length,
+      (sum, year) => sum + year.debts.length,
     );
 
     return SingleChildScrollView(
@@ -271,12 +271,12 @@ class _DebtsPageState extends State<DebtsPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Year header
-        YearSummaryCard(year: yearDebt.annee, debtCount: yearDebt.dette.length),
+        YearSummaryCard(year: yearDebt.year, debtCount: yearDebt.debts.length),
 
         const SizedBox(height: 12),
 
         // Debt courses
-        ...yearDebt.dette.map((course) => DebtCourseCard(course: course)),
+        ...yearDebt.debts.map((course) => DebtCourseCard(course: course)),
 
         const SizedBox(height: 16),
       ],

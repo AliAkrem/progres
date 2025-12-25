@@ -1,40 +1,40 @@
 class AcademicTranscript {
-  final double moyenne;
-  final double moyenneSemestre;
-  final double moyenneSn;
-  final int creditAcquis;
+  final double average;
+  final double semesterAverage;
+  final double averageSn;
+  final int creditsAcquired;
   final int id;
-  final String niveauLibelleLongAr;
-  final String niveauLibelleLongLt;
-  final String periodeLibelleAr;
-  final String periodeLibelleFr;
-  final List<TranscriptUnit> bilanUes;
+  final String levelLabelLongAr;
+  final String levelLabelLongLat;
+  final String periodLabelAr;
+  final String periodLabelFr;
+  final List<TranscriptUnit> unitAssessments;
 
   AcademicTranscript({
-    required this.moyenne,
-    required this.moyenneSemestre,
-    required this.moyenneSn,
-    required this.creditAcquis,
+    required this.average,
+    required this.semesterAverage,
+    required this.averageSn,
+    required this.creditsAcquired,
     required this.id,
-    required this.niveauLibelleLongAr,
-    required this.niveauLibelleLongLt,
-    required this.periodeLibelleAr,
-    required this.periodeLibelleFr,
-    required this.bilanUes,
+    required this.levelLabelLongAr,
+    required this.levelLabelLongLat,
+    required this.periodLabelAr,
+    required this.periodLabelFr,
+    required this.unitAssessments,
   });
 
   factory AcademicTranscript.fromJson(Map<String, dynamic> json) {
     return AcademicTranscript(
-      moyenne: (json['moyenne'] as num).toDouble(),
-      moyenneSemestre: (json['moyenneSemestre'] as num).toDouble(),
-      moyenneSn: (json['moyenneSn'] as num).toDouble(),
-      creditAcquis: json['creditAcquis'] as int,
+      average: (json['moyenne'] as num).toDouble(),
+      semesterAverage: (json['moyenneSemestre'] as num).toDouble(),
+      averageSn: (json['moyenneSn'] as num).toDouble(),
+      creditsAcquired: json['creditAcquis'] as int,
       id: json['id'] as int,
-      niveauLibelleLongAr: json['niveauLibelleLongAr'] as String,
-      niveauLibelleLongLt: json['niveauLibelleLongLt'] as String,
-      periodeLibelleAr: json['periodeLibelleAr'] as String,
-      periodeLibelleFr: json['periodeLibelleFr'] as String,
-      bilanUes: (json['bilanUes'] as List<dynamic>)
+      levelLabelLongAr: json['niveauLibelleLongAr'] as String,
+      levelLabelLongLat: json['niveauLibelleLongLt'] as String,
+      periodLabelAr: json['periodeLibelleAr'] as String,
+      periodLabelFr: json['periodeLibelleFr'] as String,
+      unitAssessments: (json['bilanUes'] as List<dynamic>)
           .map((e) => TranscriptUnit.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -42,54 +42,54 @@ class AcademicTranscript {
 
   Map<String, dynamic> toJson() {
     return {
-      'moyenne': moyenne,
-      'moyenneSemestre': moyenneSemestre,
-      'moyenneSn': moyenneSn,
-      'creditAcquis': creditAcquis,
+      'moyenne': average,
+      'moyenneSemestre': semesterAverage,
+      'moyenneSn': averageSn,
+      'creditAcquis': creditsAcquired,
       'id': id,
-      'niveauLibelleLongAr': niveauLibelleLongAr,
-      'niveauLibelleLongLt': niveauLibelleLongLt,
-      'periodeLibelleAr': periodeLibelleAr,
-      'periodeLibelleFr': periodeLibelleFr,
-      'bilanUes': bilanUes.map((e) => e.toJson()).toList(),
+      'niveauLibelleLongAr': levelLabelLongAr,
+      'niveauLibelleLongLt': levelLabelLongLat,
+      'periodeLibelleAr': periodLabelAr,
+      'periodeLibelleFr': periodLabelFr,
+      'bilanUes': unitAssessments.map((e) => e.toJson()).toList(),
     };
   }
 }
 
 class TranscriptUnit {
-  final double moyenne;
+  final double average;
   final int credit;
-  final int creditAcquis;
-  final int id_bilan_session;
-  final String ueLibelleAr;
-  final String ueLibelleFr;
-  final String ueNatureLcAr;
-  final String ueNatureLcFr;
-  final List<TranscriptModuleComponent> bilanMcs;
+  final int creditsAcquired;
+  final int sessionAssessmentId;
+  final String unitLabelAr;
+  final String unitLabelFr;
+  final String unitNatureLabelAr;
+  final String unitNatureLabelFr;
+  final List<TranscriptModuleComponent> moduleAssessments;
 
   TranscriptUnit({
-    required this.moyenne,
+    required this.average,
     required this.credit,
-    required this.creditAcquis,
-    required this.id_bilan_session,
-    required this.ueLibelleAr,
-    required this.ueLibelleFr,
-    required this.ueNatureLcAr,
-    required this.ueNatureLcFr,
-    required this.bilanMcs,
+    required this.creditsAcquired,
+    required this.sessionAssessmentId,
+    required this.unitLabelAr,
+    required this.unitLabelFr,
+    required this.unitNatureLabelAr,
+    required this.unitNatureLabelFr,
+    required this.moduleAssessments,
   });
 
   factory TranscriptUnit.fromJson(Map<String, dynamic> json) {
     return TranscriptUnit(
-      moyenne: (json['moyenne'] as num).toDouble(),
+      average: (json['moyenne'] as num).toDouble(),
       credit: json['credit'] as int,
-      creditAcquis: json['creditAcquis'] as int,
-      id_bilan_session: json['id_bilan_session'] as int,
-      ueLibelleAr: json['ueLibelleAr'] as String,
-      ueLibelleFr: json['ueLibelleFr'] as String,
-      ueNatureLcAr: json['ueNatureLcAr'] as String,
-      ueNatureLcFr: json['ueNatureLcFr'] as String,
-      bilanMcs: (json['bilanMcs'] as List<dynamic>)
+      creditsAcquired: json['creditAcquis'] as int,
+      sessionAssessmentId: json['id_bilan_session'] as int,
+      unitLabelAr: json['ueLibelleAr'] as String,
+      unitLabelFr: json['ueLibelleFr'] as String,
+      unitNatureLabelAr: json['ueNatureLcAr'] as String,
+      unitNatureLabelFr: json['ueNatureLcFr'] as String,
+      moduleAssessments: (json['bilanMcs'] as List<dynamic>)
           .map(
             (e) =>
                 TranscriptModuleComponent.fromJson(e as Map<String, dynamic>),
@@ -100,55 +100,55 @@ class TranscriptUnit {
 
   Map<String, dynamic> toJson() {
     return {
-      'moyenne': moyenne,
+      'moyenne': average,
       'credit': credit,
-      'creditAcquis': creditAcquis,
-      'id_bilan_session': id_bilan_session,
-      'ueLibelleAr': ueLibelleAr,
-      'ueLibelleFr': ueLibelleFr,
-      'ueNatureLcAr': ueNatureLcAr,
-      'ueNatureLcFr': ueNatureLcFr,
-      'bilanMcs': bilanMcs.map((e) => e.toJson()).toList(),
+      'creditAcquis': creditsAcquired,
+      'id_bilan_session': sessionAssessmentId,
+      'ueLibelleAr': unitLabelAr,
+      'ueLibelleFr': unitLabelFr,
+      'ueNatureLcAr': unitNatureLabelAr,
+      'ueNatureLcFr': unitNatureLabelFr,
+      'bilanMcs': moduleAssessments.map((e) => e.toJson()).toList(),
     };
   }
 }
 
 class TranscriptModuleComponent {
   final int coefficient;
-  final int creditObtenu;
-  final int id_bilan_ue;
-  final String mcLibelleAr;
-  final String mcLibelleFr;
-  final double moyenneGenerale;
+  final int creditsObtained;
+  final int unitAssessmentId;
+  final String subjectLabelAr;
+  final String subjectLabelFr;
+  final double generalAverage;
 
   TranscriptModuleComponent({
     required this.coefficient,
-    required this.creditObtenu,
-    required this.id_bilan_ue,
-    required this.mcLibelleAr,
-    required this.mcLibelleFr,
-    required this.moyenneGenerale,
+    required this.creditsObtained,
+    required this.unitAssessmentId,
+    required this.subjectLabelAr,
+    required this.subjectLabelFr,
+    required this.generalAverage,
   });
 
   factory TranscriptModuleComponent.fromJson(Map<String, dynamic> json) {
     return TranscriptModuleComponent(
       coefficient: json['coefficient'] as int,
-      creditObtenu: json['creditObtenu'] as int,
-      id_bilan_ue: json['id_bilan_ue'] as int,
-      mcLibelleAr: json['mcLibelleAr'] as String,
-      mcLibelleFr: json['mcLibelleFr'] as String,
-      moyenneGenerale: (json['moyenneGenerale'] as num).toDouble(),
+      creditsObtained: json['creditObtenu'] as int,
+      unitAssessmentId: json['id_bilan_ue'] as int,
+      subjectLabelAr: json['mcLibelleAr'] as String,
+      subjectLabelFr: json['mcLibelleFr'] as String,
+      generalAverage: (json['moyenneGenerale'] as num).toDouble(),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'coefficient': coefficient,
-      'creditObtenu': creditObtenu,
-      'id_bilan_ue': id_bilan_ue,
-      'mcLibelleAr': mcLibelleAr,
-      'mcLibelleFr': mcLibelleFr,
-      'moyenneGenerale': moyenneGenerale,
+      'creditObtenu': creditsObtained,
+      'id_bilan_ue': unitAssessmentId,
+      'mcLibelleAr': subjectLabelAr,
+      'mcLibelleFr': subjectLabelFr,
+      'moyenneGenerale': generalAverage,
     };
   }
 }

@@ -88,12 +88,11 @@ class _TimelinePageState extends State<TimelinePage> {
       final day = session.getDayDateTime(weekStart: currentWeekStart);
 
       // Increment counter for this jourId
-      eventsByJourId[session.jourId] =
-          (eventsByJourId[session.jourId] ?? 0) + 1;
+      eventsByJourId[session.dayId] = (eventsByJourId[session.dayId] ?? 0) + 1;
 
       // Get start and end times
-      final startParts = session.plageHoraireHeureDebut.split(':');
-      final endParts = session.plageHoraireHeureFin.split(':');
+      final startParts = session.timeSlotStartTime.split(':');
+      final endParts = session.timeSlotEndTime.split(':');
 
       final startTime = DateTime(
         day.year,
@@ -115,9 +114,9 @@ class _TimelinePageState extends State<TimelinePage> {
         date: startTime,
         startTime: startTime,
         endTime: endTime,
-        title: session.matiere,
+        title: session.subject,
         description:
-            '${session.sessionType} - ${session.refLieuDesignation ?? ""}',
+            '${session.sessionType} - ${session.locationDesignation ?? ""}',
         event: session,
       );
 

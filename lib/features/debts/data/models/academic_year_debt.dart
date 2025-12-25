@@ -1,24 +1,24 @@
 import 'package:progres/features/debts/data/models/debt_course.dart';
 
 class AcademicYearDebt {
-  final String annee;
-  final int idAnneeAcademique;
-  final int rang;
-  final List<DebtCourse> dette;
+  final String year;
+  final int academicYearId;
+  final int rank;
+  final List<DebtCourse> debts;
 
   AcademicYearDebt({
-    required this.annee,
-    required this.idAnneeAcademique,
-    required this.rang,
-    required this.dette,
+    required this.year,
+    required this.academicYearId,
+    required this.rank,
+    required this.debts,
   });
 
   factory AcademicYearDebt.fromJson(Map<String, dynamic> json) {
     return AcademicYearDebt(
-      annee: json['annee'] as String,
-      idAnneeAcademique: json['id_annee_academique'] as int,
-      rang: json['rang'] as int,
-      dette: (json['dette'] as List<dynamic>)
+      year: json['annee'] as String,
+      academicYearId: json['id_annee_academique'] as int,
+      rank: json['rang'] as int,
+      debts: (json['dette'] as List<dynamic>)
           .map((e) => DebtCourse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
@@ -26,10 +26,10 @@ class AcademicYearDebt {
 
   Map<String, dynamic> toJson() {
     return {
-      'annee': annee,
-      'id_annee_academique': idAnneeAcademique,
-      'rang': rang,
-      'dette': dette.map((e) => e.toJson()).toList(),
+      'annee': year,
+      'id_annee_academique': academicYearId,
+      'rang': rank,
+      'dette': debts.map((e) => e.toJson()).toList(),
     };
   }
 }

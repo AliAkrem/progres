@@ -70,9 +70,9 @@ class StudentRepositoryImpl {
       }
 
       for (var enrollment in enrollments) {
-        if (enrollment.anneeAcademiqueId > maxEnrollmentYearId) {
-          maxEnrollmentYearId = enrollment.anneeAcademiqueId;
-          maxEnrollmentCode = enrollment.anneeAcademiqueCode;
+        if (enrollment.academicYearId > maxEnrollmentYearId) {
+          maxEnrollmentYearId = enrollment.academicYearId;
+          maxEnrollmentCode = enrollment.academicYearCode;
         }
       }
 

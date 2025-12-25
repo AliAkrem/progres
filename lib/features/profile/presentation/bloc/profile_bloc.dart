@@ -157,7 +157,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       // Fetch academic periods
       final academicPeriods = await studentRepository.getAcademicPeriods(
-        detailedInfo.niveauId,
+        detailedInfo.levelId,
       );
 
       // Optional data that we'll try to fetch but continue if unavailable
@@ -184,17 +184,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
 
       // Cache latest profile data with year ID
-      await cacheService.cacheProfileData(
-        {
-          'basicInfo': basicInfo.toJson(),
-          'academicYear': academicYear.toJson(),
-          'detailedInfo': detailedInfo.toJson(),
-          'academicPeriods': academicPeriods.map((e) => e.toJson()).toList(),
-          'profileImage': profileImage,
-          'institutionLogo': institutionLogo,
-        },
-        academicYear.id,
-      );
+      await cacheService.cacheProfileData({
+        'basicInfo': basicInfo.toJson(),
+        'academicYear': academicYear.toJson(),
+        'detailedInfo': detailedInfo.toJson(),
+        'academicPeriods': academicPeriods.map((e) => e.toJson()).toList(),
+        'profileImage': profileImage,
+        'institutionLogo': institutionLogo,
+      }, academicYear.id);
 
       emit(
         ProfileLoaded(

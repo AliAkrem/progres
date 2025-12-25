@@ -30,10 +30,10 @@ class ExamResultsCard extends StatelessWidget {
     // Group exam results by course
     final Map<String, List<ExamResult>> groupedByCourse = {};
     for (var result in examResults) {
-      if (!groupedByCourse.containsKey(result.mcLibelleFr)) {
-        groupedByCourse[result.mcLibelleFr] = [];
+      if (!groupedByCourse.containsKey(result.subjectLabelFr)) {
+        groupedByCourse[result.subjectLabelFr] = [];
       }
-      groupedByCourse[result.mcLibelleFr]!.add(result);
+      groupedByCourse[result.subjectLabelFr]!.add(result);
     }
 
     return Card(
@@ -92,26 +92,26 @@ class ExamResultsCard extends StatelessWidget {
                     // Appeal information if available
                     if (courseResults.any(
                       (result) =>
-                          result.autorisationDemandeRecours &&
-                          result.dateDebutDepotRecours != null &&
-                          result.dateLimiteDepotRecours != null,
+                          result.requestAppealAuthorization &&
+                          result.appealStartDate != null &&
+                          result.appealEndDate != null,
                     ))
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Row(
                           children: [
                             Icon(
-                              courseResults.first.recoursDemande == true
+                              courseResults.first.appealRequested == true
                                   ? Icons.check_circle_outline
                                   : Icons.info_outline,
                               size: 14,
-                              color: courseResults.first.recoursDemande == true
+                              color: courseResults.first.appealRequested == true
                                   ? Colors.orange
                                   : Colors.grey,
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              courseResults.first.recoursDemande == true
+                              courseResults.first.appealRequested == true
                                   ? AppLocalizations.of(
                                       context,
                                     )!.appealRequested
@@ -121,7 +121,7 @@ class ExamResultsCard extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 12,
                                 color:
-                                    courseResults.first.recoursDemande == true
+                                    courseResults.first.appealRequested == true
                                     ? Colors.orange
                                     : Colors.grey,
                               ),
@@ -181,7 +181,7 @@ class ExamResultsCard extends StatelessWidget {
                   child: Text(
                     AppLocalizations.of(
                       context,
-                    )!.coefficient(result.rattachementMcCoefficient.toString()),
+                    )!.coefficient(result.subjectCoefficient.toString()),
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       color: AppTheme.accentGreen,
@@ -206,18 +206,18 @@ class ExamResultsCard extends StatelessWidget {
           // Grade
           Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: result.noteExamen != null
+            child: result.examMark != null
                 ? Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: _getGradeColor(result.noteExamen!),
+                      color: _getGradeColor(result.examMark!),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
-                      '${result.noteExamen}',
+                      '${result.examMark}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

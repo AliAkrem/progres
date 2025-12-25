@@ -21,7 +21,7 @@ class DebtsRepositoryImpl {
       final debts = debtsJson
           .map((debtJson) => AcademicYearDebt.fromJson(debtJson))
           .toList();
-      debts.sort((a, b) => b.idAnneeAcademique.compareTo(a.idAnneeAcademique));
+      debts.sort((a, b) => b.academicYearId.compareTo(a.academicYearId));
       return debts;
     } catch (e) {
       rethrow;

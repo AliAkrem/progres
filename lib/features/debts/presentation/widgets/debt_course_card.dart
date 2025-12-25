@@ -37,7 +37,7 @@ class DebtCourseCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        course.mcFr,
+                        course.subjectLabelFr,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -58,7 +58,7 @@ class DebtCourseCard extends StatelessWidget {
                               border: Border.all(color: AppTheme.AppPrimary),
                             ),
                             child: Text(
-                              course.nfr,
+                              course.levelLabelFr,
                               style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
@@ -78,7 +78,7 @@ class DebtCourseCard extends StatelessWidget {
                               border: Border.all(color: AppTheme.accentBlue),
                             ),
                             child: Text(
-                              course.pfr,
+                              course.periodLabelFr,
                               style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w500,
@@ -104,7 +104,7 @@ class DebtCourseCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        course.md.toStringAsFixed(2),
+                        course.debtAverage.toStringAsFixed(2),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -162,19 +162,19 @@ class DebtCourseCard extends StatelessWidget {
                       _buildGradeItem(
                         context,
                         AppLocalizations.of(context)!.continuousControl,
-                        course.ccd,
+                        course.continuousAssessmentDebt,
                         Icons.assignment_outlined,
                       ),
                       _buildGradeItem(
                         context,
                         AppLocalizations.of(context)!.exam,
-                        course.exd,
+                        course.examDebt,
                         Icons.edit_note_outlined,
                       ),
                       _buildGradeItem(
                         context,
                         AppLocalizations.of(context)!.average,
-                        course.m,
+                        course.average,
                         Icons.bar_chart_rounded,
                       ),
                     ],

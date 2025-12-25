@@ -232,7 +232,7 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
                 final period = profileState.academicPeriods.firstWhere(
                   (p) => p.id == periodId,
                 );
-                periodName = period.libelleLongLt;
+                periodName = period.labelLongLat;
               } catch (e) {
                 // Not found, use default name
               }
@@ -344,10 +344,10 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
     final result = <int, List<ExamResult>>{};
 
     for (final exam in exams) {
-      if (!result.containsKey(exam.idPeriode)) {
-        result[exam.idPeriode] = [];
+      if (!result.containsKey(exam.periodId)) {
+        result[exam.periodId] = [];
       }
-      result[exam.idPeriode]!.add(exam);
+      result[exam.periodId]!.add(exam);
     }
 
     return result;
@@ -360,10 +360,10 @@ class _AcademicPerformancePageState extends State<AcademicPerformancePage>
     final result = <String, List<ContinuousAssessment>>{};
 
     for (final assessment in assessments) {
-      if (!result.containsKey(assessment.llPeriode)) {
-        result[assessment.llPeriode] = [];
+      if (!result.containsKey(assessment.periodLabel)) {
+        result[assessment.periodLabel] = [];
       }
-      result[assessment.llPeriode]!.add(assessment);
+      result[assessment.periodLabel]!.add(assessment);
     }
 
     return result;

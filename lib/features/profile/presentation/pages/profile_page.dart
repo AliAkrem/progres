@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 try {
                   currentEnrollment = enrollmentState.enrollments.firstWhere(
                     (enrollment) =>
-                        enrollment.anneeAcademiqueId ==
+                        enrollment.academicYearId ==
                         profileState.academicYear.id,
                   );
                 } catch (e) {
@@ -168,36 +168,36 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   _buildInfoRow(
                     AppLocalizations.of(context)!.academicYear,
-                    currentEnrollment.anneeAcademiqueCode,
+                    currentEnrollment.academicYearCode,
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.institution,
                     deviceLocale.languageCode == 'ar'
-                        ? currentEnrollment.llEtablissementArabe ?? ''
-                        : currentEnrollment.llEtablissementLatin ?? '',
+                        ? currentEnrollment.establishmentLabelAr ?? ''
+                        : currentEnrollment.establishmentLabelFr ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.level,
                     deviceLocale.languageCode == 'ar'
-                        ? currentEnrollment.niveauLibelleLongAr ?? ''
-                        : currentEnrollment.niveauLibelleLongLt ?? '',
+                        ? currentEnrollment.levelLabelLongAr ?? ''
+                        : currentEnrollment.levelLabelLongLat ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.program,
                     deviceLocale.languageCode == 'ar'
-                        ? currentEnrollment.ofLlDomaineArabe ?? ''
-                        : currentEnrollment.ofLlDomaine ?? '',
+                        ? currentEnrollment.ofDomainLabelAr ?? ''
+                        : currentEnrollment.ofDomainLabel ?? '',
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.specialization,
                     deviceLocale.languageCode == 'ar'
-                        ? currentEnrollment.ofLlSpecialiteArabe ?? ''
-                        : currentEnrollment.ofLlSpecialite ?? '',
+                        ? currentEnrollment.ofSpecialtyLabelAr ?? ''
+                        : currentEnrollment.ofSpecialtyLabel ?? '',
                   ),
-                  if (currentEnrollment.numeroInscription != null)
+                    if (currentEnrollment.registrationNumber != null)
                     _buildInfoRow(
                       AppLocalizations.of(context)!.registrationNumber,
-                      currentEnrollment.numeroInscription!,
+                      currentEnrollment.registrationNumber!,
                     ),
                 ],
               ),
@@ -216,15 +216,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.level,
-                    state.detailedInfo.niveauLibelleLongLt,
+                    state.detailedInfo.levelLabelLongLat,
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.cycle,
-                    state.detailedInfo.refLibelleCycle,
+                    state.detailedInfo.cycleLabel,
                   ),
                   _buildInfoRow(
                     AppLocalizations.of(context)!.registrationNumber,
-                    state.detailedInfo.numeroInscription,
+                    state.detailedInfo.registrationNumber,
                   ),
                 ],
               ),
@@ -297,7 +297,7 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: isSmallScreen ? 12 : 16),
           // Student name in Latin
           Text(
-            '${state.basicInfo.prenomLatin} ${state.basicInfo.nomLatin}',
+            '${state.basicInfo.firstNameFr} ${state.basicInfo.lastNameFr}',
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: isSmallScreen ? 20 : 24,
@@ -307,7 +307,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 4),
           // Student name in Arabic
           Text(
-            '${state.basicInfo.prenomArabe} ${state.basicInfo.nomArabe}',
+            '${state.basicInfo.firstNameAr} ${state.basicInfo.lastNameAr}',
             style: theme.textTheme.bodyLarge?.copyWith(
               fontSize: isSmallScreen ? 16 : 18,
               fontWeight: FontWeight.w500,
@@ -333,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    state.basicInfo.dateNaissance,
+                    state.basicInfo.dateOfBirth,
                     style: TextStyle(
                       fontSize: isSmallScreen ? 13 : 14,
                       color: theme.textTheme.bodyMedium?.color?.withValues(
@@ -356,8 +356,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(width: 6),
                   Text(
                     deviceLocale.languageCode == 'ar'
-                        ? state.basicInfo.lieuNaissanceArabe
-                        : state.basicInfo.lieuNaissance,
+                        ? state.basicInfo.placeOfBirthAr
+                        : state.basicInfo.placeOfBirth,
                     style: TextStyle(
                       fontSize: isSmallScreen ? 13 : 14,
                       color: theme.textTheme.bodyMedium?.color?.withValues(
@@ -386,13 +386,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Text(
-                    state.detailedInfo.transportPaye
+                    state.detailedInfo.transportPaid
                         ? AppLocalizations.of(context)!.paid
                         : AppLocalizations.of(context)!.unpaid,
                     style: TextStyle(
                       fontSize: isSmallScreen ? 14 : 16,
                       fontWeight: FontWeight.bold,
-                      color: state.detailedInfo.transportPaye
+                      color: state.detailedInfo.transportPaid
                           ? Colors.green
                           : Colors.red,
                     ),

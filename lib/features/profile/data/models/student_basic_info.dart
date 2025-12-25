@@ -1,51 +1,51 @@
 class StudentBasicInfo {
-  final String dateNaissance;
+  final String dateOfBirth;
   final int id;
-  final String lieuNaissance;
-  final String lieuNaissanceArabe;
-  final String nomArabe;
-  final String nomLatin;
+  final String placeOfBirth;
+  final String placeOfBirthAr;
+  final String lastNameAr;
+  final String lastNameFr;
   final String nss;
-  final String prenomArabe;
-  final String prenomLatin;
+  final String firstNameAr;
+  final String firstNameFr;
 
   StudentBasicInfo({
-    required this.dateNaissance,
+    required this.dateOfBirth,
     required this.id,
-    required this.lieuNaissance,
-    required this.lieuNaissanceArabe,
-    required this.nomArabe,
-    required this.nomLatin,
+    required this.placeOfBirth,
+    required this.placeOfBirthAr,
+    required this.lastNameAr,
+    required this.lastNameFr,
     required this.nss,
-    required this.prenomArabe,
-    required this.prenomLatin,
+    required this.firstNameAr,
+    required this.firstNameFr,
   });
 
   factory StudentBasicInfo.fromJson(Map<String, dynamic> json) {
     return StudentBasicInfo(
-      dateNaissance: json['dateNaissance'] as String,
+      dateOfBirth: json['dateNaissance'] as String,
       id: json['id'] as int,
-      lieuNaissance: json['lieuNaissance'] as String,
-      lieuNaissanceArabe: json['lieuNaissanceArabe'] as String,
-      nomArabe: json['nomArabe'] as String,
-      nomLatin: json['nomLatin'] as String,
+      placeOfBirth: json['lieuNaissance'] as String,
+      placeOfBirthAr: json['lieuNaissanceArabe'] as String,
+      lastNameAr: json['nomArabe'] as String,
+      lastNameFr: json['nomLatin'] as String,
       nss: json['nss'] as String,
-      prenomArabe: json['prenomArabe'] as String,
-      prenomLatin: json['prenomLatin'] as String,
+      firstNameAr: json['prenomArabe'] as String,
+      firstNameFr: json['prenomLatin'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'dateNaissance': dateNaissance,
+      'dateNaissance': dateOfBirth,
       'id': id,
-      'lieuNaissance': lieuNaissance,
-      'lieuNaissanceArabe': lieuNaissanceArabe,
-      'nomArabe': nomArabe,
-      'nomLatin': nomLatin,
+      'lieuNaissance': placeOfBirth,
+      'lieuNaissanceArabe': placeOfBirthAr,
+      'nomArabe': lastNameAr,
+      'nomLatin': lastNameFr,
       'nss': nss,
-      'prenomArabe': prenomArabe,
-      'prenomLatin': prenomLatin,
+      'prenomArabe': firstNameAr,
+      'prenomLatin': firstNameFr,
     };
   }
 }

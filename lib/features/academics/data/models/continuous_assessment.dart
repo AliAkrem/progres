@@ -4,49 +4,49 @@ import 'package:progres/l10n/app_localizations.dart';
 class ContinuousAssessment {
   final bool absent;
   final String apCode; // Assessment type code (PRJ, TD, TP)
-  final bool autorisationDemandeRecours;
+  final bool requestAppealAuthorization;
   final int id;
-  final int idDia;
-  final String llPeriode;
-  final String llPeriodeAr;
+  final int diaId;
+  final String periodLabel;
+  final String periodLabelAr;
   final double? note;
   final String? observation;
-  final String rattachementMcMcLibelleAr;
-  final String rattachementMcMcLibelleFr;
-  final bool? recoursAccorde;
-  final bool? recoursDemande;
+  final String subjectLabelAr;
+  final String subjectLabelFr;
+  final bool? appealGranted;
+  final bool? appealRequested;
 
   ContinuousAssessment({
     required this.absent,
     required this.apCode,
-    required this.autorisationDemandeRecours,
+    required this.requestAppealAuthorization,
     required this.id,
-    required this.idDia,
-    required this.llPeriode,
-    required this.llPeriodeAr,
+    required this.diaId,
+    required this.periodLabel,
+    required this.periodLabelAr,
     this.note,
     this.observation,
-    required this.rattachementMcMcLibelleAr,
-    required this.rattachementMcMcLibelleFr,
-    this.recoursAccorde,
-    this.recoursDemande,
+    required this.subjectLabelAr,
+    required this.subjectLabelFr,
+    this.appealGranted,
+    this.appealRequested,
   });
 
   factory ContinuousAssessment.fromJson(Map<String, dynamic> json) {
     return ContinuousAssessment(
       absent: json['absent'] as bool,
       apCode: json['apCode'] as String,
-      autorisationDemandeRecours: json['autorisationDemandeRecours'] as bool,
+      requestAppealAuthorization: json['autorisationDemandeRecours'] as bool,
       id: json['id'] as int,
-      idDia: json['id_dia'] as int,
-      llPeriode: json['llPeriode'] as String,
-      llPeriodeAr: json['llPeriodeAr'] as String,
+      diaId: json['id_dia'] as int,
+      periodLabel: json['llPeriode'] as String,
+      periodLabelAr: json['llPeriodeAr'] as String,
       note: json['note'] != null ? (json['note'] as num).toDouble() : null,
       observation: json['observation'] as String?,
-      rattachementMcMcLibelleAr: json['rattachementMcMcLibelleAr'] as String,
-      rattachementMcMcLibelleFr: json['rattachementMcMcLibelleFr'] as String,
-      recoursAccorde: json['recoursAccorde'] as bool?,
-      recoursDemande: json['recoursDemande'] as bool?,
+      subjectLabelAr: json['rattachementMcMcLibelleAr'] as String,
+      subjectLabelFr: json['rattachementMcMcLibelleFr'] as String,
+      appealGranted: json['recoursAccorde'] as bool?,
+      appealRequested: json['recoursDemande'] as bool?,
     );
   }
 
@@ -54,17 +54,17 @@ class ContinuousAssessment {
     return {
       'absent': absent,
       'apCode': apCode,
-      'autorisationDemandeRecours': autorisationDemandeRecours,
+      'autorisationDemandeRecours': requestAppealAuthorization,
       'id': id,
-      'id_dia': idDia,
-      'llPeriode': llPeriode,
-      'llPeriodeAr': llPeriodeAr,
+      'id_dia': diaId,
+      'llPeriode': periodLabel,
+      'llPeriodeAr': periodLabelAr,
       'note': note,
       'observation': observation,
-      'rattachementMcMcLibelleAr': rattachementMcMcLibelleAr,
-      'rattachementMcMcLibelleFr': rattachementMcMcLibelleFr,
-      'recoursAccorde': recoursAccorde,
-      'recoursDemande': recoursDemande,
+      'rattachementMcMcLibelleAr': subjectLabelAr,
+      'rattachementMcMcLibelleFr': subjectLabelFr,
+      'recoursAccorde': appealGranted,
+      'recoursDemande': appealRequested,
     };
   }
 

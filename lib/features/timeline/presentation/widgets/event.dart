@@ -71,10 +71,10 @@ Widget eventBuilder(
             overflow: TextOverflow.ellipsis,
           ),
         ],
-        if (!isShortEvent && courseSession?.refLieuDesignation != null) ...[
+        if (!isShortEvent && courseSession?.locationDesignation != null) ...[
           const SizedBox(height: 2),
           Text(
-            courseSession!.refLieuDesignation!,
+            courseSession!.locationDesignation!,
             style: const TextStyle(color: Colors.white, fontSize: 9),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

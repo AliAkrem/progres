@@ -15,8 +15,8 @@ Widget buildDashboard(ProfileLoaded state, BuildContext context) {
   final isSmallScreen = screenSize.width < 360;
   final horizontalPadding = isSmallScreen ? 16.0 : 24.0;
   final studentName = deviceLocale!.languageCode == 'ar'
-      ? state.basicInfo.prenomArabe
-      : state.basicInfo.prenomLatin;
+      ? state.basicInfo.firstNameAr
+      : state.basicInfo.firstNameFr;
 
   return SingleChildScrollView(
     physics: const BouncingScrollPhysics(),

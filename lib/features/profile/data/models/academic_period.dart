@@ -1,37 +1,37 @@
 class AcademicPeriod {
   final String code;
   final int id;
-  final String libelleLongAr;
-  final String libelleLongArCycle;
-  final String libelleLongArNiveau;
-  final String libelleLongFrCycle;
-  final String libelleLongFrNiveau;
-  final String libelleLongLt;
-  final int rang;
+  final String labelLongAr;
+  final String cycleLabelLongAr;
+  final String levelLabelLongAr;
+  final String cycleLabelLongFr;
+  final String levelLabelLongFr;
+  final String labelLongLat;
+  final int rank;
 
   AcademicPeriod({
     required this.code,
     required this.id,
-    required this.libelleLongAr,
-    required this.libelleLongArCycle,
-    required this.libelleLongArNiveau,
-    required this.libelleLongFrCycle,
-    required this.libelleLongFrNiveau,
-    required this.libelleLongLt,
-    required this.rang,
+    required this.labelLongAr,
+    required this.cycleLabelLongAr,
+    required this.levelLabelLongAr,
+    required this.cycleLabelLongFr,
+    required this.levelLabelLongFr,
+    required this.labelLongLat,
+    required this.rank,
   });
 
   factory AcademicPeriod.fromJson(Map<String, dynamic> json) {
     return AcademicPeriod(
       code: json['code'] as String,
       id: json['id'] as int,
-      libelleLongAr: json['libelleLongAr'] as String,
-      libelleLongArCycle: json['libelleLongArCycle'] as String,
-      libelleLongArNiveau: json['libelleLongArNiveau'] as String,
-      libelleLongFrCycle: json['libelleLongFrCycle'] as String,
-      libelleLongFrNiveau: json['libelleLongFrNiveau'] as String,
-      libelleLongLt: json['libelleLongLt'] as String,
-      rang: json['rang'] as int,
+      labelLongAr: json['libelleLongAr'] as String,
+      cycleLabelLongAr: json['libelleLongArCycle'] as String,
+      levelLabelLongAr: json['libelleLongArNiveau'] as String,
+      cycleLabelLongFr: json['libelleLongFrCycle'] as String,
+      levelLabelLongFr: json['libelleLongFrNiveau'] as String,
+      labelLongLat: json['libelleLongLt'] as String,
+      rank: json['rang'] as int,
     );
   }
 
@@ -39,13 +39,13 @@ class AcademicPeriod {
     return {
       'code': code,
       'id': id,
-      'libelleLongAr': libelleLongAr,
-      'libelleLongArCycle': libelleLongArCycle,
-      'libelleLongArNiveau': libelleLongArNiveau,
-      'libelleLongFrCycle': libelleLongFrCycle,
-      'libelleLongFrNiveau': libelleLongFrNiveau,
-      'libelleLongLt': libelleLongLt,
-      'rang': rang,
+      'libelleLongAr': labelLongAr,
+      'libelleLongArCycle': cycleLabelLongAr,
+      'libelleLongArNiveau': levelLabelLongAr,
+      'libelleLongFrCycle': cycleLabelLongFr,
+      'libelleLongFrNiveau': levelLabelLongFr,
+      'libelleLongLt': labelLongLat,
+      'rang': rank,
     };
   }
 }

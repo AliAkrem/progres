@@ -1,35 +1,35 @@
 class StudentGroup {
   final int id;
-  final String nomGroupePedagogique;
-  final String nomSection;
-  final int periodeId;
-  final String periodeLibelleLongLt;
+  final String pedagogicalGroupName;
+  final String sectionName;
+  final int periodId;
+  final String periodLabelLongLat;
 
   StudentGroup({
     required this.id,
-    required this.nomGroupePedagogique,
-    required this.nomSection,
-    required this.periodeId,
-    required this.periodeLibelleLongLt,
+    required this.pedagogicalGroupName,
+    required this.sectionName,
+    required this.periodId,
+    required this.periodLabelLongLat,
   });
 
   factory StudentGroup.fromJson(Map<String, dynamic> json) {
     return StudentGroup(
       id: json['id'] as int,
-      nomGroupePedagogique: json['nomGroupePedagogique'] as String,
-      nomSection: json['nomSection'] as String,
-      periodeId: json['periodeId'] as int,
-      periodeLibelleLongLt: json['periodeLibelleLongLt'] as String,
+      pedagogicalGroupName: json['nomGroupePedagogique'] as String,
+      sectionName: json['nomSection'] as String,
+      periodId: json['periodeId'] as int,
+      periodLabelLongLat: json['periodeLibelleLongLt'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'nomGroupePedagogique': nomGroupePedagogique,
-      'nomSection': nomSection,
-      'periodeId': periodeId,
-      'periodeLibelleLongLt': periodeLibelleLongLt,
+      'nomGroupePedagogique': pedagogicalGroupName,
+      'nomSection': sectionName,
+      'periodeId': periodId,
+      'periodeLibelleLongLt': periodLabelLongLat,
     };
   }
 }

@@ -1,49 +1,49 @@
 import 'package:flutter/material.dart';
 
 class CourseCoefficient {
-  final double coefficientControleContinu;
-  final double coefficientControleIntermediaire;
-  final double coefficientExamen;
-  final String mcLibelleAr;
-  final String mcLibelleFr;
-  final String periodeLibelleAr;
-  final String periodeLibelleFr;
+  final double continuousAssessmentCoefficient;
+  final double intermediaryAssessmentCoefficient;
+  final double examCoefficient;
+  final String subjectLabelAr;
+  final String subjectLabelFr;
+  final String periodLabelAr;
+  final String periodLabelFr;
 
   CourseCoefficient({
-    required this.coefficientControleContinu,
-    required this.coefficientControleIntermediaire,
-    required this.coefficientExamen,
-    required this.mcLibelleAr,
-    required this.mcLibelleFr,
-    required this.periodeLibelleAr,
-    required this.periodeLibelleFr,
+    required this.continuousAssessmentCoefficient,
+    required this.intermediaryAssessmentCoefficient,
+    required this.examCoefficient,
+    required this.subjectLabelAr,
+    required this.subjectLabelFr,
+    required this.periodLabelAr,
+    required this.periodLabelFr,
   });
 
   factory CourseCoefficient.fromJson(Map<String, dynamic> json) {
     return CourseCoefficient(
-      coefficientControleContinu: _parseDouble(
+      continuousAssessmentCoefficient: _parseDouble(
         json['coefficientControleContinu'],
       ),
-      coefficientControleIntermediaire: _parseDouble(
+      intermediaryAssessmentCoefficient: _parseDouble(
         json['coefficientControleIntermediaire'],
       ),
-      coefficientExamen: _parseDouble(json['coefficientExamen']),
-      mcLibelleAr: json['mcLibelleAr'] as String,
-      mcLibelleFr: json['mcLibelleFr'] as String,
-      periodeLibelleAr: json['periodeLibelleAr'] as String,
-      periodeLibelleFr: json['periodeLibelleFr'] as String,
+      examCoefficient: _parseDouble(json['coefficientExamen']),
+      subjectLabelAr: json['mcLibelleAr'] as String,
+      subjectLabelFr: json['mcLibelleFr'] as String,
+      periodLabelAr: json['periodeLibelleAr'] as String,
+      periodLabelFr: json['periodeLibelleFr'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'coefficientControleContinu': coefficientControleContinu,
-      'coefficientControleIntermediaire': coefficientControleIntermediaire,
-      'coefficientExamen': coefficientExamen,
-      'mcLibelleAr': mcLibelleAr,
-      'mcLibelleFr': mcLibelleFr,
-      'periodeLibelleAr': periodeLibelleAr,
-      'periodeLibelleFr': periodeLibelleFr,
+      'coefficientControleContinu': continuousAssessmentCoefficient,
+      'coefficientControleIntermediaire': intermediaryAssessmentCoefficient,
+      'coefficientExamen': examCoefficient,
+      'mcLibelleAr': subjectLabelAr,
+      'mcLibelleFr': subjectLabelFr,
+      'periodeLibelleAr': periodLabelAr,
+      'periodeLibelleFr': periodLabelFr,
     };
   }
 
@@ -71,15 +71,15 @@ class LocalizedCourseCoefficient {
     return deviceLocal.languageCode.startsWith('ar');
   }
 
-  String get mcLibelle {
+  String get subjectLabel {
     return isAr()
-        ? courseCoefficient.mcLibelleAr
-        : courseCoefficient.mcLibelleFr;
+        ? courseCoefficient.subjectLabelAr
+        : courseCoefficient.subjectLabelFr;
   }
 
-  String get periodeLibelle {
+  String get periodLabel {
     return isAr()
-        ? courseCoefficient.periodeLibelleAr
-        : courseCoefficient.periodeLibelleFr;
+        ? courseCoefficient.periodLabelAr
+        : courseCoefficient.periodLabelFr;
   }
 }

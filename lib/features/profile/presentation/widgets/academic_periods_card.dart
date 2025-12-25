@@ -29,18 +29,18 @@ class AcademicPeriodsCard extends StatelessWidget {
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    '${period.code} - ${period.libelleLongLt}',
+                    '${period.code} - ${period.labelLongLat}',
                     style: const TextStyle(fontWeight: FontWeight.w500),
                   ),
                   subtitle: Text(
-                    period.libelleLongFrNiveau,
+                    period.levelLabelLongFr,
                     style: const TextStyle(fontSize: 12),
                   ),
                   trailing: CircleAvatar(
                     radius: 14,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     child: Text(
-                      '${period.rang}',
+                      '${period.rank}',
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ),

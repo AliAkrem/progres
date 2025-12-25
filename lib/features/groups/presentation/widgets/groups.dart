@@ -81,7 +81,7 @@ class GroupCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        group.nomGroupePedagogique,
+                        group.pedagogicalGroupName,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           fontSize: isSmallScreen ? 14 : 16,
@@ -101,7 +101,7 @@ class GroupCard extends StatelessWidget {
                           Text(
                             AppLocalizations.of(
                               context,
-                            )!.section(group.nomSection),
+                            )!.section(group.sectionName),
                             style: TextStyle(
                               fontSize: isSmallScreen ? 12 : 14,
                               color: theme.brightness == Brightness.light
@@ -158,10 +158,10 @@ class PeriodHeader extends StatelessWidget {
 Map<String, List<StudentGroup>> _getGroupByPeriod(List<StudentGroup> groups) {
   final Map<String, List<StudentGroup>> groupsByPeriod = {};
   for (var group in groups) {
-    if (!groupsByPeriod.containsKey(group.periodeLibelleLongLt)) {
-      groupsByPeriod[group.periodeLibelleLongLt] = [];
+    if (!groupsByPeriod.containsKey(group.periodLabelLongLat)) {
+      groupsByPeriod[group.periodLabelLongLat] = [];
     }
-    groupsByPeriod[group.periodeLibelleLongLt]!.add(group);
+    groupsByPeriod[group.periodLabelLongLat]!.add(group);
   }
   return groupsByPeriod;
 }

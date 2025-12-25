@@ -1,35 +1,35 @@
 class StudentDischarge {
-  final bool sitDep;
-  final bool sitBf;
-  final bool sitBc;
-  final bool sitRu;
-  final bool sitBrs;
+  final bool departmentStatus;
+  final bool facultyLibraryStatus;
+  final bool centralLibraryStatus;
+  final bool residenceStatus;
+  final bool scholarshipStatus;
 
   StudentDischarge({
-    this.sitDep = false,
-    this.sitBf = false,
-    this.sitBc = false,
-    this.sitRu = false,
-    this.sitBrs = false,
+    this.departmentStatus = false,
+    this.facultyLibraryStatus = false,
+    this.centralLibraryStatus = false,
+    this.residenceStatus = false,
+    this.scholarshipStatus = false,
   });
 
   factory StudentDischarge.fromJson(Map<String, dynamic> json) {
     return StudentDischarge(
-      sitDep: toBool((json['sitDep'])),
-      sitBf: toBool(json['sitBf']),
-      sitBc: toBool(json['sitBc']),
-      sitRu: toBool(json['sitRu']),
-      sitBrs: toBool(json['sitBrs']),
+      departmentStatus: toBool((json['sitDep'])),
+      facultyLibraryStatus: toBool(json['sitBf']),
+      centralLibraryStatus: toBool(json['sitBc']),
+      residenceStatus: toBool(json['sitRu']),
+      scholarshipStatus: toBool(json['sitBrs']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'sitDep': sitDep,
-      'sitBf': sitBf,
-      'sitBc': sitBc,
-      'sitRu': sitRu,
-      'sitBrs': sitBrs,
+      'sitDep': departmentStatus,
+      'sitBf': facultyLibraryStatus,
+      'sitBc': centralLibraryStatus,
+      'sitRu': residenceStatus,
+      'sitBrs': scholarshipStatus,
     };
   }
 }

@@ -1,83 +1,83 @@
 class StudentDetailedInfo {
-  final String anneeAcademiqueCode;
-  final int anneeAcademiqueId;
+  final String academicYearCode;
+  final int academicYearId;
   final int id;
-  final String individuNomArabe;
-  final String individuNomLatin;
-  final String individuPrenomArabe;
-  final String individuPrenomLatin;
-  final int niveauId;
-  final String niveauLibelleLongAr;
-  final String niveauLibelleLongLt;
-  final String numeroInscription;
-  final int ouvertureOffreFormationId;
+  final String individualLastNameAr;
+  final String individualLastNameFr;
+  final String individualFirstNameAr;
+  final String individualFirstNameFr;
+  final int levelId;
+  final String levelLabelLongAr;
+  final String levelLabelLongLat;
+  final String registrationNumber;
+  final int trainingOfferId;
   final String photo;
-  final String refLibelleCycle;
-  final String refLibelleCycleAr;
-  final int situationId;
-  final bool transportPaye;
+  final String cycleLabel;
+  final String cycleLabelAr;
+  final int statusId;
+  final bool transportPaid;
 
   StudentDetailedInfo({
-    required this.anneeAcademiqueCode,
-    required this.anneeAcademiqueId,
+    required this.academicYearCode,
+    required this.academicYearId,
     required this.id,
-    required this.individuNomArabe,
-    required this.individuNomLatin,
-    required this.individuPrenomArabe,
-    required this.individuPrenomLatin,
-    required this.niveauId,
-    required this.niveauLibelleLongAr,
-    required this.niveauLibelleLongLt,
-    required this.numeroInscription,
-    required this.ouvertureOffreFormationId,
+    required this.individualLastNameAr,
+    required this.individualLastNameFr,
+    required this.individualFirstNameAr,
+    required this.individualFirstNameFr,
+    required this.levelId,
+    required this.levelLabelLongAr,
+    required this.levelLabelLongLat,
+    required this.registrationNumber,
+    required this.trainingOfferId,
     required this.photo,
-    required this.refLibelleCycle,
-    required this.refLibelleCycleAr,
-    required this.situationId,
-    required this.transportPaye,
+    required this.cycleLabel,
+    required this.cycleLabelAr,
+    required this.statusId,
+    required this.transportPaid,
   });
 
   factory StudentDetailedInfo.fromJson(Map<String, dynamic> json) {
     return StudentDetailedInfo(
-      anneeAcademiqueCode: json['anneeAcademiqueCode'] as String,
-      anneeAcademiqueId: json['anneeAcademiqueId'] as int,
+      academicYearCode: json['anneeAcademiqueCode'] as String,
+      academicYearId: json['anneeAcademiqueId'] as int,
       id: json['id'] as int,
-      individuNomArabe: json['individuNomArabe'] as String,
-      individuNomLatin: json['individuNomLatin'] as String,
-      individuPrenomArabe: json['individuPrenomArabe'] as String,
-      individuPrenomLatin: json['individuPrenomLatin'] as String,
-      niveauId: json['niveauId'] as int,
-      niveauLibelleLongAr: json['niveauLibelleLongAr'] as String,
-      niveauLibelleLongLt: json['niveauLibelleLongLt'] as String,
-      numeroInscription: json['numeroInscription'] as String,
-      ouvertureOffreFormationId: json['ouvertureOffreFormationId'] as int,
+      individualLastNameAr: json['individuNomArabe'] as String,
+      individualLastNameFr: json['individuNomLatin'] as String,
+      individualFirstNameAr: json['individuPrenomArabe'] as String,
+      individualFirstNameFr: json['individuPrenomLatin'] as String,
+      levelId: json['niveauId'] as int,
+      levelLabelLongAr: json['niveauLibelleLongAr'] as String,
+      levelLabelLongLat: json['niveauLibelleLongLt'] as String,
+      registrationNumber: json['numeroInscription'] as String,
+      trainingOfferId: json['ouvertureOffreFormationId'] as int,
       photo: json['photo'] as String,
-      refLibelleCycle: json['refLibelleCycle'] as String,
-      refLibelleCycleAr: json['refLibelleCycleAr'] as String,
-      situationId: json['situationId'] as int,
-      transportPaye: json['transportPaye'] as bool? ?? false,
+      cycleLabel: json['refLibelleCycle'] as String,
+      cycleLabelAr: json['refLibelleCycleAr'] as String,
+      statusId: json['situationId'] as int,
+      transportPaid: json['transportPaye'] as bool? ?? false,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'anneeAcademiqueCode': anneeAcademiqueCode,
-      'anneeAcademiqueId': anneeAcademiqueId,
+      'anneeAcademiqueCode': academicYearCode,
+      'anneeAcademiqueId': academicYearId,
       'id': id,
-      'individuNomArabe': individuNomArabe,
-      'individuNomLatin': individuNomLatin,
-      'individuPrenomArabe': individuPrenomArabe,
-      'individuPrenomLatin': individuPrenomLatin,
-      'niveauId': niveauId,
-      'niveauLibelleLongAr': niveauLibelleLongAr,
-      'niveauLibelleLongLt': niveauLibelleLongLt,
-      'numeroInscription': numeroInscription,
-      'ouvertureOffreFormationId': ouvertureOffreFormationId,
+      'individuNomArabe': individualLastNameAr,
+      'individuNomLatin': individualLastNameFr,
+      'individuPrenomArabe': individualFirstNameAr,
+      'individuPrenomLatin': individualFirstNameFr,
+      'niveauId': levelId,
+      'niveauLibelleLongAr': levelLabelLongAr,
+      'niveauLibelleLongLt': levelLabelLongLat,
+      'numeroInscription': registrationNumber,
+      'ouvertureOffreFormationId': trainingOfferId,
       'photo': photo,
-      'refLibelleCycle': refLibelleCycle,
-      'refLibelleCycleAr': refLibelleCycleAr,
-      'situationId': situationId,
-      'transportPaye': transportPaye,
+      'refLibelleCycle': cycleLabel,
+      'refLibelleCycleAr': cycleLabelAr,
+      'situationId': statusId,
+      'transportPaye': transportPaid,
     };
   }
 }

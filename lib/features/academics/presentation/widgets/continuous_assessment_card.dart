@@ -30,10 +30,10 @@ class ContinuousAssessmentCard extends StatelessWidget {
     // Group assessments by course
     final Map<String, List<ContinuousAssessment>> groupedByCourse = {};
     for (var assessment in assessments) {
-      if (!groupedByCourse.containsKey(assessment.rattachementMcMcLibelleFr)) {
-        groupedByCourse[assessment.rattachementMcMcLibelleFr] = [];
+      if (!groupedByCourse.containsKey(assessment.subjectLabelFr)) {
+        groupedByCourse[assessment.subjectLabelFr] = [];
       }
-      groupedByCourse[assessment.rattachementMcMcLibelleFr]!.add(assessment);
+      groupedByCourse[assessment.subjectLabelFr]!.add(assessment);
     }
 
     return Card(
