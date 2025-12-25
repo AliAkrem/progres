@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
 import 'package:progres/features/academics/data/services/academics_cache_service.dart';
-import 'package:progres/features/academics/data/repository/academics_repository_impl.dart';
+import 'package:progres/features/academics/domain/usecases/get_continuous_assessments.dart';
+import 'package:progres/features/academics/domain/usecases/get_exam_results.dart';
 
 // Events
 abstract class AcademicsEvent extends Equatable {
@@ -92,11 +93,14 @@ class AcademicsError extends AcademicsState {
 
 // BLoC
 class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
-  final AcademicPerformanceRepositoryImpl academicPerformanceRepository;
+  final GetExamResults getExamResults;
+  final GetContinuousAssessments getContinuousAssessments;
   final AcademicsCacheService cacheService = AcademicsCacheService();
 
-  AcademicsBloc({required this.academicPerformanceRepository})
-    : super(AcademicsInitial()) {
+  AcademicsBloc({
+    required this.getExamResults,
+    required this.getContinuousAssessments,
+  }) : super(AcademicsInitial()) {
     on<LoadAcademicPerformance>(_onLoadAcademicPerformance);
   }
 
@@ -148,11 +152,9 @@ class AcademicsBloc extends Bloc<AcademicsEvent, AcademicsState> {
       }
 
       // Fetch exam results and continuous assessments in parallel
-      final examResults = await academicPerformanceRepository.getExamResults(
-        event.cardId,
-      );
-      final continuousAssessments = await academicPerformanceRepository
-          .getContinuousAssessments(event.cardId);
+      final examResults = await getExamResults(event.cardId);
+      final continuousAssessments =
+          await getContinuousAssessments(event.cardId);
 
       // Cache the results
       await cacheService.cacheAcademicsData(

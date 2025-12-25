@@ -1,13 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:progres/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:progres/features/auth/domain/usecases/get_establishment_id.dart';
 import 'package:progres/features/enrollment/data/models/enrollment.dart';
 import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
-import 'package:progres/features/profile/data/repositories/student_repository_impl.dart';
 import 'package:progres/features/profile/data/services/profile_cache_service.dart';
+import 'package:progres/features/profile/domain/usecases/get_academic_periods.dart';
+import 'package:progres/features/profile/domain/usecases/get_current_academic_year.dart';
+import 'package:progres/features/profile/domain/usecases/get_institution_logo.dart';
+import 'package:progres/features/profile/domain/usecases/get_student_basic_info.dart';
+import 'package:progres/features/profile/domain/usecases/get_student_detailed_info.dart';
+import 'package:progres/features/profile/domain/usecases/get_student_profile_image.dart';
 
 // Events
 abstract class ProfileEvent extends Equatable {
@@ -67,13 +72,13 @@ class ProfileLoaded extends ProfileState {
 
   @override
   List<Object?> get props => [
-    basicInfo,
-    academicYear,
-    detailedInfo,
-    academicPeriods,
-    profileImage,
-    institutionLogo,
-  ];
+        basicInfo,
+        academicYear,
+        detailedInfo,
+        academicPeriods,
+        profileImage,
+        institutionLogo,
+      ];
 }
 
 class ProfileError extends ProfileState {
@@ -88,17 +93,26 @@ class ProfileError extends ProfileState {
 // BLoC
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final StudentRepositoryImpl studentRepository;
-  final AuthRepositoryImpl authRepository;
+  final GetStudentBasicInfo getStudentBasicInfo;
+  final GetCurrentAcademicYear getCurrentAcademicYear;
+  final GetStudentDetailedInfo getStudentDetailedInfo;
+  final GetStudentProfileImage getStudentProfileImage;
+  final GetInstitutionLogo getInstitutionLogo;
+  final GetAcademicPeriods getAcademicPeriods;
+  final GetEstablishmentIdUseCase getEstablishmentId;
   final ProfileCacheService cacheService;
 
   ProfileBloc({
-    required this.studentRepository,
-    required this.authRepository,
+    required this.getStudentBasicInfo,
+    required this.getCurrentAcademicYear,
+    required this.getStudentDetailedInfo,
+    required this.getStudentProfileImage,
+    required this.getInstitutionLogo,
+    required this.getAcademicPeriods,
+    required this.getEstablishmentId,
     required this.cacheService,
   }) : super(ProfileInitial()) {
     on<LoadProfileEvent>(_onLoadProfile);
-    // on<LoadEnrollmentsEvent>(_onLoadEnrollments);
     on<ClearProfileCacheEvent>((event, emit) async {
       await cacheService.clearCache();
     });
@@ -110,7 +124,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async {
     try {
       // Fetch current academic year first to know which cache to check
-      final academicYear = await studentRepository.getCurrentAcademicYear();
+      final academicYear = await getCurrentAcademicYear();
 
       // Try to load cached profile for this specific year
       final cachedProfileData = await cacheService.getCachedProfileData(
@@ -131,7 +145,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             .map<AcademicPeriod>((item) => AcademicPeriod.fromJson(item))
             .toList();
         final profileImage = cachedProfileData['profileImage'] as String?;
-        final institutionLogo = cachedProfileData['institutionLogo'] as String?;
+        final institutionLogo =
+            cachedProfileData['institutionLogo'] as String?;
 
         emit(
           ProfileLoaded(
@@ -148,15 +163,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoading());
 
       // Fetch basic info
-      final basicInfo = await studentRepository.getStudentBasicInfo();
+      final basicInfo = await getStudentBasicInfo();
 
       // Fetch detailed info
-      final detailedInfo = await studentRepository.getStudentDetailedInfo(
+      final detailedInfo = await getStudentDetailedInfo(
         academicYear.id,
       );
 
       // Fetch academic periods
-      final academicPeriods = await studentRepository.getAcademicPeriods(
+      final academicPeriods = await getAcademicPeriods(
         detailedInfo.levelId,
       );
 
@@ -165,18 +180,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       String? institutionLogo;
 
       try {
-        profileImage = await studentRepository.getStudentProfileImage();
+        profileImage = await getStudentProfileImage();
       } catch (e) {
         // Profile image not available, continue without it
       }
 
       try {
         // Get the etablissementId from auth repository
-        final etablissementIdStr = await authRepository.getEstablishmentId();
-        if (etablissementIdStr != null) {
-          final etablissementId = int.parse(etablissementIdStr);
-          institutionLogo = await studentRepository.getInstitutionLogo(
-            etablissementId,
+        final establishmentId = await getEstablishmentId();
+        if (establishmentId != null) {
+          institutionLogo = await getInstitutionLogo(
+            int.parse(establishmentId),
           );
         }
       } catch (e) {
@@ -188,7 +202,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         'basicInfo': basicInfo.toJson(),
         'academicYear': academicYear.toJson(),
         'detailedInfo': detailedInfo.toJson(),
-        'academicPeriods': academicPeriods.map((e) => e.toJson()).toList(),
+        'academicPeriods':
+            academicPeriods.map((e) => e.toJson()).toList(),
         'profileImage': profileImage,
         'institutionLogo': institutionLogo,
       }, academicYear.id);
@@ -206,7 +221,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } catch (e) {
       // On error, try to get academic year and fallback to cache
       try {
-        final academicYear = await studentRepository.getCurrentAcademicYear();
+        final academicYear = await getCurrentAcademicYear();
         final cachedProfileData = await cacheService.getCachedProfileData(
           academicYear.id,
         );

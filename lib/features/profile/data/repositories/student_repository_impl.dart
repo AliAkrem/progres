@@ -5,17 +5,19 @@ import 'package:progres/features/profile/data/models/academic_period.dart';
 import 'package:progres/features/profile/data/models/academic_year.dart';
 import 'package:progres/features/profile/data/models/student_basic_info.dart';
 import 'package:progres/features/profile/data/models/student_detailed_info.dart';
+import 'package:progres/features/profile/domain/repositories/student_repository.dart';
 
-class StudentRepositoryImpl {
+class StudentRepositoryImpl implements StudentRepository {
   final ApiClient _apiClient;
   final YearSelectionService _yearSelectionService;
 
   StudentRepositoryImpl({
     ApiClient? apiClient,
     YearSelectionService? yearSelectionService,
-  }) : _apiClient = apiClient ?? ApiClient(),
-       _yearSelectionService = yearSelectionService ?? YearSelectionService();
+  })  : _apiClient = apiClient ?? ApiClient(),
+        _yearSelectionService = yearSelectionService ?? YearSelectionService();
 
+  @override
   Future<StudentBasicInfo> getStudentBasicInfo() async {
     try {
       final uuid = await _apiClient.getUuid();
@@ -30,12 +32,13 @@ class StudentRepositoryImpl {
     }
   }
 
+  @override
   Future<AcademicYear> getCurrentAcademicYear() async {
     try {
       // Check if student has manually selected a year
       final selectedYearId = await _yearSelectionService.getSelectedYearId();
-      final selectedYearCode = await _yearSelectionService
-          .getSelectedYearCode();
+      final selectedYearCode =
+          await _yearSelectionService.getSelectedYearCode();
 
       if (selectedYearId != null && selectedYearCode != null) {
         // Return the manually selected year
@@ -96,7 +99,9 @@ class StudentRepositoryImpl {
     }
   }
 
-  Future<StudentDetailedInfo> getStudentDetailedInfo(int academicYearId) async {
+  @override
+  Future<StudentDetailedInfo> getStudentDetailedInfo(
+      int academicYearId) async {
     try {
       final uuid = await _apiClient.getUuid();
       if (uuid == null) {
@@ -112,6 +117,7 @@ class StudentRepositoryImpl {
     }
   }
 
+  @override
   Future<String> getStudentProfileImage() async {
     try {
       final uuid = await _apiClient.getUuid();
@@ -126,6 +132,7 @@ class StudentRepositoryImpl {
     }
   }
 
+  @override
   Future<String> getInstitutionLogo(int etablissementId) async {
     try {
       final response = await _apiClient.get(
@@ -137,6 +144,7 @@ class StudentRepositoryImpl {
     }
   }
 
+  @override
   Future<List<AcademicPeriod>> getAcademicPeriods(int niveauId) async {
     try {
       final response = await _apiClient.get('/infos/niveau/$niveauId/periodes');
