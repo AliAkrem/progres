@@ -39,13 +39,13 @@ void main() {
       expect(authResponse, isA<AuthResponse>());
       expect(authResponse.token, isNotEmpty);
       expect(authResponse.uuid, isNotEmpty);
-      expect(authResponse.etablissementId, isNotNull);
+      expect(authResponse.establishmentId, isNotNull);
 
       // Verify data was saved
       final isLoggedIn = await authRepository.isLoggedIn();
       expect(isLoggedIn, true);
 
-      final etablissementId = await authRepository.getEtablissementId();
+      final etablissementId = await authRepository.getEstablishmentId();
       expect(etablissementId, isNotNull);
 
       // Cleanup
@@ -86,7 +86,7 @@ void main() {
       final isLoggedIn = await authRepository.isLoggedIn();
       expect(isLoggedIn, false);
 
-      final etablissementId = await authRepository.getEtablissementId();
+      final etablissementId = await authRepository.getEstablishmentId();
       expect(etablissementId, isNull);
     });
   });

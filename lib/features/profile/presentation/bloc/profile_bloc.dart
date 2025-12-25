@@ -172,7 +172,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
       try {
         // Get the etablissementId from auth repository
-        final etablissementIdStr = await authRepository.getEtablissementId();
+        final etablissementIdStr = await authRepository.getEstablishmentId();
         if (etablissementIdStr != null) {
           final etablissementId = int.parse(etablissementIdStr);
           institutionLogo = await studentRepository.getInstitutionLogo(

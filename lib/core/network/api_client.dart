@@ -57,7 +57,7 @@ class ApiClient {
     await _secureStorage.write(key: 'uuid', value: uuid);
   }
 
-  Future<void> saveEtablissementId(String etablissementId) async {
+  Future<void> saveEstablishmentId(String etablissementId) async {
     await _secureStorage.write(key: 'etablissement_id', value: etablissementId);
   }
 
@@ -65,7 +65,7 @@ class ApiClient {
     return await _secureStorage.read(key: 'uuid');
   }
 
-  Future<String?> getEtablissementId() async {
+  Future<String?> getEstablishmentId() async {
     return await _secureStorage.read(key: 'etablissement_id');
   }
 

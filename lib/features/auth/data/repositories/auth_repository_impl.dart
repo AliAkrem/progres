@@ -19,8 +19,8 @@ class AuthRepositoryImpl {
       // Save token and UUID for future API calls
       await _apiClient.saveToken(authResponse.token);
       await _apiClient.saveUuid(authResponse.uuid);
-      await _apiClient.saveEtablissementId(
-        authResponse.etablissementId.toString(),
+      await _apiClient.saveEstablishmentId(
+        authResponse.establishmentId.toString(),
       );
 
       return authResponse;
@@ -37,7 +37,7 @@ class AuthRepositoryImpl {
     return await _apiClient.isLoggedIn();
   }
 
-  Future<String?> getEtablissementId() async {
-    return await _apiClient.getEtablissementId();
+  Future<String?> getEstablishmentId() async {
+    return await _apiClient.getEstablishmentId();
   }
 }
