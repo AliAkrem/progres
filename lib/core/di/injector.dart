@@ -12,6 +12,7 @@ import 'package:progres/features/auth/domain/usecases/is_logged_in.dart';
 import 'package:progres/features/auth/domain/usecases/login.dart';
 import 'package:progres/features/auth/domain/usecases/logout.dart';
 import 'package:progres/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:progres/features/auth/domain/usecases/get_establishment_id.dart';
 import 'package:progres/features/debts/data/repositories/debts_repository_impl.dart';
 import 'package:progres/features/debts/data/services/debts_cache_service.dart';
 import 'package:progres/features/debts/domain/repositories/debts_repository.dart';
@@ -56,7 +57,6 @@ import 'package:progres/features/transcript/data/services/transcript_cache_servi
 import 'package:progres/features/transcript/domain/repositories/transcript_repository.dart';
 import 'package:progres/features/transcript/domain/usecases/get_academic_transcripts.dart';
 import 'package:progres/features/transcript/domain/usecases/get_annual_transcript_summary.dart';
-import 'package:progres/features/transcript/domain/usecases/get_student_enrollments.dart';
 import 'package:progres/features/transcript/presentation/bloc/transcript_bloc.dart';
 
 final injector = GetIt.instance;
@@ -152,8 +152,8 @@ Future<void> initDependencies() async {
   injector.registerLazySingleton(() => GetStudentGroups(injector()));
   injector.registerLazySingleton(() => GetCourseCoefficients(injector()));
   injector.registerLazySingleton(() => GetWeeklyTimetable(injector()));
-  injector
-      .registerLazySingleton(() => GetAcademicTranscripts(injector()));
+  injector.registerLazySingleton(
+      () => GetAcademicTranscripts(injector()));
   injector.registerLazySingleton(
       () => GetAnnualTranscriptSummary(injector()));
 

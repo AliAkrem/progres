@@ -10,7 +10,6 @@ class TranscriptRepositoryImpl implements TranscriptRepository {
   TranscriptRepositoryImpl({ApiClient? apiClient})
       : _apiClient = apiClient ?? ApiClient();
 
-
   @override
   Future<List<AcademicTranscript>> getAcademicTranscripts(
     int enrollmentId,
