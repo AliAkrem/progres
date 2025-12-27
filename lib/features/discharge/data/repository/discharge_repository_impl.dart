@@ -1,12 +1,14 @@
 import 'package:progres/features/discharge/data/models/discharge.dart';
 import 'package:progres/features/discharge/data/services/discharge_api_client.dart';
+import 'package:progres/features/discharge/domain/repositories/discharge_repository.dart';
 
-class StudentDischargeRepositoryImpl {
+class StudentDischargeRepositoryImpl implements StudentDischargeRepository {
   final DischargeApiClient _apiClient;
 
   StudentDischargeRepositoryImpl({DischargeApiClient? apiClient})
-    : _apiClient = apiClient ?? DischargeApiClient();
+      : _apiClient = apiClient ?? DischargeApiClient();
 
+  @override
   Future<StudentDischarge> getStudentDischarge() async {
     try {
       final uuid = await _apiClient.getUuid();

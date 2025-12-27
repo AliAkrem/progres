@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/groups/data/models/group.dart';
-import 'package:progres/features/groups/data/repository/group_repository_impl.dart';
 import 'package:progres/features/groups/data/services/groups_cache_service.dart';
+import 'package:progres/features/groups/domain/usecases/get_student_groups.dart';
 
 class StudentGroupsEvent extends Equatable {
   @override
@@ -49,11 +49,11 @@ class StudentGroupsError extends StudentGroupsState {
 }
 
 class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
-  final StudentGroupsRepositoryImpl studentGroupsRepository;
+  final GetStudentGroups getStudentGroups;
   final GroupsCacheService cacheService;
 
   StudentGroupsBloc({
-    required this.studentGroupsRepository,
+    required this.getStudentGroups,
     required this.cacheService,
   }) : super(StudentGroupsInitial()) {
     on<LoadStudentGroups>(_onLoadStudentGroups);
@@ -74,9 +74,7 @@ class StudentGroupsBloc extends Bloc<StudentGroupsEvent, StudentGroupsState> {
       }
 
       // If cache is stale or empty, fetch from API
-      final studentGroups = await studentGroupsRepository.getStudentGroups(
-        event.cardId,
-      );
+      final studentGroups = await getStudentGroups(event.cardId);
 
       // Cache the results
       await cacheService.cacheGroups(studentGroups);

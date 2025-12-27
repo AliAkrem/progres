@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:progres/features/debts/data/repositories/debts_repository_impl.dart';
 import 'package:progres/features/debts/data/services/debts_cache_service.dart';
+import 'package:progres/features/debts/domain/usecases/get_student_debts.dart';
 import 'package:progres/features/debts/presentation/bloc/debts_event.dart';
 import 'package:progres/features/debts/presentation/bloc/debts_state.dart';
 
 class DebtsBloc extends Bloc<DebtsEvent, DebtsState> {
-  final DebtsRepositoryImpl debtsRepository;
+  final GetStudentDebts getStudentDebts;
   final DebtsCacheService debtsCacheService;
 
-  DebtsBloc({required this.debtsRepository, required this.debtsCacheService})
-    : super(DebtsInitial()) {
+  DebtsBloc({required this.getStudentDebts, required this.debtsCacheService})
+      : super(DebtsInitial()) {
     on<LoadDebts>(_onLoadDebts);
     on<ClearDebtsCache>(_onClearCache);
   }
@@ -35,7 +35,7 @@ class DebtsBloc extends Bloc<DebtsEvent, DebtsState> {
         }
       }
 
-      final debts = await debtsRepository.getStudentDebts();
+      final debts = await getStudentDebts();
 
       // Cache the results
       await debtsCacheService.cacheDebts(debts);

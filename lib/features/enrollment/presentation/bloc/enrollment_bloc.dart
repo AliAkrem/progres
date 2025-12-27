@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:progres/features/enrollment/data/repositories/enrollment_repository_impl.dart';
 import 'package:progres/features/enrollment/data/services/enrollment_cache_service.dart';
+import 'package:progres/features/enrollment/domain/usecases/get_student_enrollments.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_event.dart';
 import 'package:progres/features/enrollment/presentation/bloc/enrollment_state.dart';
 
 class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
-  final EnrollmentRepositoryImpl enrollmentRepository;
+  final GetStudentEnrollments getStudentEnrollments;
   final EnrollmentCacheService cacheService;
 
   EnrollmentBloc({
-    required this.enrollmentRepository,
+    required this.getStudentEnrollments,
     required this.cacheService,
   }) : super(EnrollmentInitial()) {
     on<LoadEnrollmentsEvent>(_onLoadEnrollments);
@@ -35,7 +35,7 @@ class EnrollmentBloc extends Bloc<EnrollmentEvent, EnrollmentState> {
         }
       }
 
-      final enrollments = await enrollmentRepository.getStudentEnrollments();
+      final enrollments = await getStudentEnrollments();
 
       // Cache the results
       await cacheService.cacheEnrollments(enrollments);

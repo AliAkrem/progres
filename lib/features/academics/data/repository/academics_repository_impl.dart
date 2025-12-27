@@ -1,13 +1,15 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/academics/data/models/continuous_assessment.dart';
 import 'package:progres/features/academics/data/models/exam_result.dart';
+import 'package:progres/features/academics/domain/repositories/academics_repository.dart';
 
-class AcademicPerformanceRepositoryImpl {
+class AcademicPerformanceRepositoryImpl implements AcademicPerformanceRepository {
   final ApiClient _apiClient;
 
   AcademicPerformanceRepositoryImpl({ApiClient? apiClient})
-    : _apiClient = apiClient ?? ApiClient();
+      : _apiClient = apiClient ?? ApiClient();
 
+  @override
   Future<List<ExamResult>> getExamResults(int cardId) async {
     try {
       final response = await _apiClient.get(
@@ -23,6 +25,7 @@ class AcademicPerformanceRepositoryImpl {
     }
   }
 
+  @override
   Future<List<ContinuousAssessment>> getContinuousAssessments(
     int cardId,
   ) async {

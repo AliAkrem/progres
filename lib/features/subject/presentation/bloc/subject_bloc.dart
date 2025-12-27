@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:progres/features/subject/data/repositories/subject_repository_impl.dart';
 import 'package:progres/features/subject/data/services/subject_cache_service.dart';
+import 'package:progres/features/subject/domain/usecases/get_course_coefficients.dart';
 import '../../data/models/course_coefficient.dart';
 
 abstract class SubjectEvent extends Equatable {
@@ -61,11 +61,12 @@ class SubjectError extends SubjectState {
 }
 
 class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
-  final SubjectRepositoryImpl subjectRepository;
+  final GetCourseCoefficients getCourseCoefficients;
   final SubjectCacheService cacheService;
 
-  SubjectBloc({required this.subjectRepository, required this.cacheService})
-    : super(SubjectInitial()) {
+  SubjectBloc(
+      {required this.getCourseCoefficients, required this.cacheService})
+      : super(SubjectInitial()) {
     on<LoadSubjectCoefficients>(_onLoadSubjectCoefficients);
     on<ClearSubjectCache>(_onClearSubjectCache);
   }
@@ -76,11 +77,11 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
   ) async {
     try {
       emit(SubjectLoading());
-      final cachedCoefficients = await cacheService
-          .getCachedSubjectCoefficients(
-            event.ouvertureOffreFormationId,
-            event.niveauId,
-          );
+      final cachedCoefficients =
+          await cacheService.getCachedSubjectCoefficients(
+        event.ouvertureOffreFormationId,
+        event.niveauId,
+      );
 
       if (cachedCoefficients != null) {
         emit(SubjectLoaded(courseCoefficients: cachedCoefficients));
@@ -88,7 +89,7 @@ class SubjectBloc extends Bloc<SubjectEvent, SubjectState> {
       }
 
       // If cache is stale or empty, fetch from API
-      final coefficients = await subjectRepository.getCourseCoefficients(
+      final coefficients = await getCourseCoefficients(
         event.ouvertureOffreFormationId,
         event.niveauId,
       );

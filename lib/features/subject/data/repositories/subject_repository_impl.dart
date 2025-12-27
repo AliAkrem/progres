@@ -1,12 +1,14 @@
 import 'package:progres/core/network/api_client.dart';
+import 'package:progres/features/subject/domain/repositories/subject_repository.dart';
 import '../../data/models/course_coefficient.dart';
 
-class SubjectRepositoryImpl {
+class SubjectRepositoryImpl implements SubjectRepository {
   final ApiClient _apiClient;
 
   SubjectRepositoryImpl({required ApiClient apiClient})
-    : _apiClient = apiClient;
+      : _apiClient = apiClient;
 
+  @override
   Future<List<CourseCoefficient>> getCourseCoefficients(
     int ouvertureOffreFormationId,
     int niveauId,
