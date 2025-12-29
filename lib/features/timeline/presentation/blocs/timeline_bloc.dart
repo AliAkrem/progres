@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:progres/features/timeline/data/models/course_session.dart';
-import 'package:progres/features/timeline/data/repositories/timeline_repository_impl.dart';
 import 'package:progres/features/timeline/data/services/timeline_cache_service.dart';
+import 'package:progres/features/timeline/domain/usecases/get_weekly_timetable.dart';
 
 abstract class TimelineEvent extends Equatable {
   @override
@@ -40,7 +40,7 @@ class TimelineLoaded extends TimelineState {
   final DateTime loadedAt;
 
   TimelineLoaded({required this.sessions, DateTime? loadedAt})
-    : loadedAt = loadedAt ?? DateTime.now();
+      : loadedAt = loadedAt ?? DateTime.now();
 
   @override
   List<Object?> get props => [sessions, loadedAt];
@@ -57,11 +57,11 @@ class TimelineError extends TimelineState {
 
 // BLoC
 class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
-  final TimeLineRepositoryImpl timeLineRepositoryImpl;
+  final GetWeeklyTimetable getWeeklyTimetable;
   final TimelineCacheService timelineCacheService;
 
   TimelineBloc({
-    required this.timeLineRepositoryImpl,
+    required this.getWeeklyTimetable,
     required this.timelineCacheService,
   }) : super(TimelineInitial()) {
     on<LoadWeeklyTimetable>(_onLoadWeeklyTimetable);
@@ -76,12 +76,14 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       final String cacheKey = 'weekly_${event.enrollmentId}';
 
       if (!event.forceReload) {
-        final cachedEvents = await timelineCacheService.getCachedTimelineEvents(
+        final cachedEvents =
+            await timelineCacheService.getCachedTimelineEvents(
           cacheKey,
         );
         if (cachedEvents != null && cachedEvents.isNotEmpty) {
           // Convert cached data back to CourseSession objects
-          final List<CourseSession> sessions = List<Map<String, dynamic>>.from(
+          final List<CourseSession> sessions =
+              List<Map<String, dynamic>>.from(
             cachedEvents,
           ).map((json) => CourseSession.fromJson(json)).toList();
 
@@ -98,14 +100,11 @@ class TimelineBloc extends Bloc<TimelineEvent, TimelineState> {
       emit(TimelineLoading());
 
       // Load from network
-      final sessions = await timeLineRepositoryImpl.getWeeklyTimetable(
-        event.enrollmentId,
-      );
+      final sessions = await getWeeklyTimetable(event.enrollmentId);
 
       // Cache the results - convert CourseSession objects to JSON for caching
-      final List<Map<String, dynamic>> sessionsJson = sessions
-          .map((session) => session.toJson())
-          .toList();
+      final List<Map<String, dynamic>> sessionsJson =
+          sessions.map((session) => session.toJson()).toList();
       await timelineCacheService.cacheTimelineEvents(cacheKey, sessionsJson);
 
       final now = DateTime.now();

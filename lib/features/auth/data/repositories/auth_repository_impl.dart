@@ -1,12 +1,14 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/auth/data/models/auth_response.dart';
+import 'package:progres/features/auth/domain/repositories/auth_repository.dart';
 
-class AuthRepositoryImpl {
+class AuthRepositoryImpl implements AuthRepository {
   final ApiClient _apiClient;
 
   AuthRepositoryImpl({ApiClient? apiClient})
-    : _apiClient = apiClient ?? ApiClient();
+      : _apiClient = apiClient ?? ApiClient();
 
+  @override
   Future<AuthResponse> login(String username, String password) async {
     try {
       final response = await _apiClient.post(
@@ -29,14 +31,17 @@ class AuthRepositoryImpl {
     }
   }
 
+  @override
   Future<void> logout() async {
     await _apiClient.logout();
   }
 
+  @override
   Future<bool> isLoggedIn() async {
     return await _apiClient.isLoggedIn();
   }
 
+  @override
   Future<String?> getEstablishmentId() async {
     return await _apiClient.getEstablishmentId();
   }

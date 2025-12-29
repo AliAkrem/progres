@@ -1,12 +1,14 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/debts/data/models/academic_year_debt.dart';
+import 'package:progres/features/debts/domain/repositories/debts_repository.dart';
 
-class DebtsRepositoryImpl {
+class DebtsRepositoryImpl implements DebtsRepository {
   final ApiClient _apiClient;
 
   DebtsRepositoryImpl({ApiClient? apiClient})
-    : _apiClient = apiClient ?? ApiClient();
+      : _apiClient = apiClient ?? ApiClient();
 
+  @override
   Future<List<AcademicYearDebt>> getStudentDebts() async {
     try {
       final uuid = await _apiClient.getUuid();

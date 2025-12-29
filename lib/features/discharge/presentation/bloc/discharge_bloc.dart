@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:progres/features/discharge/data/models/discharge.dart';
 import 'package:progres/features/discharge/data/repository/discharge_repository_impl.dart';
+import 'package:progres/features/discharge/domain/usecases/get_student_discharge.dart';
 
 class StudentDischargeEvent extends Equatable {
   @override
@@ -42,10 +43,10 @@ class StudentDischargeError extends StudentDischargeState {
 
 class StudentDischargeBloc
     extends Bloc<StudentDischargeEvent, StudentDischargeState> {
-  final StudentDischargeRepositoryImpl studentDischargeRepository;
+  final GetStudentDischarge getStudentDischarge;
 
-  StudentDischargeBloc({required this.studentDischargeRepository})
-    : super(StudentDischargeInitial()) {
+  StudentDischargeBloc({required this.getStudentDischarge})
+      : super(StudentDischargeInitial()) {
     on<LoadStudentDischarge>(_onLoadStudentDischarge);
   }
 
@@ -56,8 +57,7 @@ class StudentDischargeBloc
     emit(StudentDischargeLoading());
     try {
       // Always fetch fresh data from API
-      final studentDischarge = await studentDischargeRepository
-          .getStudentDischarge();
+      final studentDischarge = await getStudentDischarge();
 
       emit(StudentDischargeLoaded(studentDischarge: studentDischarge));
     } on DischargeNotRequiredException {

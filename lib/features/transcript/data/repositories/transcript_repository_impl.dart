@@ -1,32 +1,15 @@
 import 'package:progres/core/network/api_client.dart';
 import 'package:progres/features/transcript/data/models/academic_transcript.dart';
 import 'package:progres/features/transcript/data/models/annual_transcript_summary.dart';
-import 'package:progres/features/enrollment/data/models/enrollment.dart';
+import 'package:progres/features/transcript/domain/repositories/transcript_repository.dart';
 
-class TranscriptRepositoryImpl {
+class TranscriptRepositoryImpl implements TranscriptRepository {
   final ApiClient _apiClient;
 
   TranscriptRepositoryImpl({ApiClient? apiClient})
-    : _apiClient = apiClient ?? ApiClient();
+      : _apiClient = apiClient ?? ApiClient();
 
-  Future<List<Enrollment>> getStudentEnrollments() async {
-    try {
-      final uuid = await _apiClient.getUuid();
-      if (uuid == null) {
-        throw Exception('UUID not found, please login again');
-      }
-
-      final response = await _apiClient.get('/infos/bac/$uuid/dias');
-
-      final List<dynamic> enrollmentsJson = response.data;
-      return enrollmentsJson
-          .map((enrollmentJson) => Enrollment.fromJson(enrollmentJson))
-          .toList();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
+  @override
   Future<List<AcademicTranscript>> getAcademicTranscripts(
     int enrollmentId,
   ) async {
@@ -49,6 +32,7 @@ class TranscriptRepositoryImpl {
     }
   }
 
+  @override
   Future<AnnualTranscriptSummary> getAnnualTranscriptSummary(
     int enrollmentId,
   ) async {
